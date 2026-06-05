@@ -17,7 +17,8 @@ import {
   Workflow,
 } from 'lucide-react';
 
-const logo = '/praetor-forge-logo.png';
+const logoMark = '/praetor-forge-mark.webp';
+const heroSeal = '/praetor-forge-hero.webp';
 
 const pains = [
   'Agents loop, stall, or answer in circles instead of shipping work.',
@@ -139,7 +140,7 @@ function App() {
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Praetor Forge home">
-          <img src={logo} alt="" />
+          <img src={logoMark} alt="" />
           <span>Praetor Forge</span>
         </a>
         <nav aria-label="Primary navigation">
@@ -154,7 +155,7 @@ function App() {
       </header>
 
       <section id="top" className="hero">
-        <img className="hero-seal" src={logo} alt="" />
+        <img className="hero-seal" src={heroSeal} alt="" />
         <div className="hero-content">
           <p className="domain">Custom AI Agent Command Harnesses</p>
           <h1>Praetor Forge</h1>
@@ -301,7 +302,7 @@ function App() {
       </section>
 
       <section className="final-cta">
-        <img src={logo} alt="" />
+        <img src={logoMark} alt="" />
         <h2>Forge the command layer before everyone else sells the template.</h2>
         <p>
           Praetor Forge is the narrow version of Apex Build: custom AI agent harnesses
