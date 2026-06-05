@@ -14,7 +14,10 @@ import {
   ScrollText,
   ShieldCheck,
   Swords,
+  Terminal,
+  Wrench,
   Workflow,
+  Zap,
 } from 'lucide-react';
 
 const logoMark = '/praetor-forge-mark.webp';
@@ -87,13 +90,13 @@ const steps = [
 
 const pricing = [
   {
-    name: 'Customize',
+    name: 'Diagnostic Tuning',
     price: '$149',
-    note: 'Existing Hermes or OpenClaw config tuned to your workflow.',
-    items: ['Config review', 'Agent role cleanup', 'Approval gate defaults', 'Model routing notes'],
+    note: 'Existing Hermes or OpenClaw config reviewed and tuned to your workflow.',
+    items: ['Config review and audit', 'Agent role cleanup', 'Approval gate defaults', 'Model routing notes'],
   },
   {
-    name: 'Hybrid',
+    name: 'Deep Rebuild',
     price: '$399',
     note: 'Existing foundation plus custom extensions, skills, memory, and delivery docs.',
     items: ['Custom agents and skills', 'Telegram or CLI approval', 'Smoke test scaffold', 'Install runbook'],
@@ -148,7 +151,7 @@ function App() {
           <a href="#process">Process</a>
           <a href="#pricing">Pricing</a>
           <a className="nav-cta" href="mailto:s.teague@apex-build.dev?subject=Praetor%20Forge%20diagnostic">
-            Start
+            Get the build
             <ArrowRight aria-hidden="true" />
           </a>
         </nav>
@@ -158,11 +161,13 @@ function App() {
         <img className="hero-seal" src={heroSeal} alt="" />
         <div className="hero-content">
           <p className="domain">Custom AI Agent Command Harnesses</p>
-          <h1>Praetor Forge</h1>
+          <h1>
+            Your agents <span className="accent">are powerful</span>.<br />
+            Your command structure is not.
+          </h1>
           <p className="hero-copy">
-            Custom AI agent command harnesses for founders, agencies, and operators who want
-            Claude, Codex, Hermes, OpenClaw, OpenCode, and lower-cost workers moving as one
-            disciplined system.
+            Praetor Forge turns scattered AI tools into a customer-owned operating harness 
+            with rules, roles, memory, status, approval, and tests. Flat fee. Your keys. Your code.
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="mailto:s.teague@apex-build.dev?subject=Praetor%20Forge%20diagnostic">
@@ -174,11 +179,22 @@ function App() {
               <ScrollText aria-hidden="true" />
             </a>
           </div>
-          <ul className="hero-proof" aria-label="Core offer">
-            <IconLine icon={LockKeyhole}>Flat fee</IconLine>
-            <IconLine icon={KeyRound}>Your keys</IconLine>
-            <IconLine icon={Code2}>Your code</IconLine>
-          </ul>
+          <div className="terminal-preview">
+            <div className="terminal-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div className="terminal-line">
+              <span className="terminal-prompt">$</span>
+              <span className="terminal-cmd">praetor-forge init --stack hermes,codex,telegram</span>
+            </div>
+            <div className="terminal-line">
+              <span className="terminal-prompt">$</span>
+              <span className="terminal-cmd">praetor-forge forge --profile my-team</span>
+            </div>
+            <div className="terminal-line">
+              <span className="terminal-comment"># harness built, smoke-tested, delivered → your repo</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -195,8 +211,8 @@ function App() {
 
       <section className="section split">
         <div>
-          <p className="section-number">I. The Problem</p>
-          <h2>Your agents are powerful. Your command structure is weak.</h2>
+          <p className="section-number">01 — The Problem</p>
+          <h2>Six agents, zero command discipline.</h2>
         </div>
         <div className="pain-list">
           {pains.map((pain) => (
@@ -210,7 +226,7 @@ function App() {
 
       <section id="forge" className="section">
         <div className="section-heading">
-          <p className="section-number">II. What Gets Forged</p>
+          <p className="section-number">02 — What Gets Forged</p>
           <h2>One harness. Clear hierarchy. Hard gates. Owned forever.</h2>
           <p>
             Praetor Forge turns scattered AI tools into a customer-owned operating harness
@@ -228,15 +244,37 @@ function App() {
         </div>
       </section>
 
+      {/* ─── PROMINENT EXISTING HARNESS CTA ─── */}
+      <div className="existing-harness-cta">
+        <div className="eh-text">
+          <h3>Already have <span className="highlight">Hermes or OpenClaw</span>?</h3>
+          <p>We fix, tune, and harden existing harnesses. Diagnostic audit or deep rebuild.</p>
+        </div>
+        <div className="eh-prices">
+          <div className="eh-price-tag">
+            <span className="amount">$149</span>
+            <span className="label">Diagnostic</span>
+          </div>
+          <div className="eh-price-tag">
+            <span className="amount">$399</span>
+            <span className="label">Deep Rebuild</span>
+          </div>
+        </div>
+        <a className="primary-button" href="mailto:s.teague@apex-build.dev?subject=Existing%20harness%20tuning">
+          Tune my harness
+          <Wrench aria-hidden="true" />
+        </a>
+      </div>
+
       <section id="process" className="section process">
         <div className="section-heading">
-          <p className="section-number">III. The Campaign</p>
+          <p className="section-number">03 — The Campaign</p>
           <h2>Built narrow, tested hard, handed off clean.</h2>
         </div>
         <div className="steps">
           {steps.map((step) => (
             <article className="step" key={step.title}>
-              <span>{step.label}</span>
+              <span className="step-label">{step.label}</span>
               <div>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
@@ -248,7 +286,7 @@ function App() {
 
       <section className="section command-band">
         <div>
-          <p className="section-number">IV. Quality Doctrine</p>
+          <p className="section-number">04 — Quality Doctrine</p>
           <h2>If it cannot be tested, it does not ship.</h2>
         </div>
         <ul>
@@ -261,7 +299,7 @@ function App() {
 
       <section id="pricing" className="section">
         <div className="section-heading">
-          <p className="section-number">V. Founding Offer</p>
+          <p className="section-number">05 — Founding Offer</p>
           <h2>Start manual. Turn the pattern into the product.</h2>
           <p>
             Three flat-fee paths. No subscriptions. Support is finite, explicit, and optional.
@@ -288,7 +326,7 @@ function App() {
 
       <section className="section faq">
         <div className="section-heading">
-          <p className="section-number">VI. Terms Of Command</p>
+          <p className="section-number">06 — Terms Of Command</p>
           <h2>Simple answers before money changes hands.</h2>
         </div>
         <div className="faq-list">
