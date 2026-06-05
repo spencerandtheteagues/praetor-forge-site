@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: praetor-forge
+    name: the-harness-lab
     runtime: static
     buildCommand: npm ci && npm run build
     staticPublishPath: dist

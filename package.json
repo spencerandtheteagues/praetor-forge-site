@@ -1,7 +1,7 @@
 {
-  "name": "praetor-forge-site",
+  "name": "the-harness-lab-site",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
