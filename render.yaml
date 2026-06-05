@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: praetor-forge
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: false
+    envVars:
+      - key: NODE_VERSION
+        value: 24.16.0
