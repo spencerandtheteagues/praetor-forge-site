@@ -185,7 +185,7 @@ Run:
 
 ```bash
 ssh kali 'set -euo pipefail
-TASK_JSON=$(hermes kanban create "Build company archetype template library" --body "$(cat /root/harness-lab/company-archetype-template-library-task.md)" --workspace dir:/root/harness-lab --priority 100 --max-runtime 4h --idempotency-key company-archetype-template-library-2026-06-06 --json)
+TASK_JSON=$(hermes kanban create "Build company archetype template library" --body "$(cat /root/harness-lab/company-archetype-template-library-task.md)" --assignee default --workspace dir:/root/harness-lab --priority 100 --max-runtime 4h --idempotency-key company-archetype-template-library-2026-06-06 --json)
 printf "%s\n" "$TASK_JSON"
 TASK_JSON="$TASK_JSON" python3 - <<'"'"'PY'"'"' > /root/harness-lab/company-archetype-template-library.task-id
 import json
