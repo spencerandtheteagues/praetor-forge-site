@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">The Harness Lab</title>
+  <desc id="desc">HL monogram inside a technical harness frame.</desc>
+  <rect width="512" height="512" rx="80" fill="#050807"/>
+  <path d="M88 142c0-29.8 24.2-54 54-54h228c29.8 0 54 24.2 54 54v228c0 29.8-24.2 54-54 54H142c-29.8 0-54-24.2-54-54V142Z" fill="#0d1210" stroke="#5cffaa" stroke-width="18"/>
+  <path d="M143 153h50v82h126v-82h50v206h-50v-82H193v82h-50V153Z" fill="#f4f8f4"/>
+  <path d="M286 153h51v162h94v44H286V153Z" fill="#72e7ff" opacity=".92"/>
+  <path d="M111 112 64 64M401 112l47-48M111 400l-47 48M401 400l47 48" stroke="#5cffaa" stroke-width="18" stroke-linecap="round"/>
+</svg>

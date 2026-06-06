@@ -1,952 +1,605 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
-  Activity,
   ArrowRight,
   Bot,
   Check,
-  ChevronRight,
-  CircleDollarSign,
+  ClipboardCheck,
+  Copy,
   FileCheck2,
   GitBranch,
+  Mail,
   MessageSquareText,
-  ScrollText,
+  PhoneCall,
   ShieldCheck,
-  Swords,
+  TerminalSquare,
+  TimerReset,
   Workflow,
-  HeartPulse,
-  Hammer,
-  Settings,
-  Crown,
-  Star,
-  Clock,
-  FileText,
-  Send,
-  AlertTriangle,
-  Users,
-  Download,
-  Eye,
+  Wrench,
 } from 'lucide-react';
 
-const logoMark = '/harnesslab-mark.svg';
-const heroSeal = '/harnesslab-hero.svg';
+const SALES_EMAIL = 'sales@theharnesslab.dev';
+const TECH_EMAIL = 'tech@theharnesslab.dev';
 
-/* ─── COPY FROM SPEC ─── */
+const serviceOptions = [
+  {
+    name: 'Reliability Audit',
+    price: '$750 fixed fee',
+    short: 'Map failure modes, cost risk, security gaps, and the fastest repair path.',
+    outcome: 'You receive a written failure map, prioritized fix list, and a 30-minute handoff call.',
+    fit: 'Best when an existing agent workflow is looping, stalling, leaking context, or failing silently.',
+  },
+  {
+    name: 'Foundation Harness',
+    price: '$3,000-$7,000',
+    short: 'One customer-owned agent harness around one defined workflow and one approval path.',
+    outcome: 'Private repo, setup script, env template, runbook, smoke tests, and failure-path walkthrough.',
+    fit: 'Best for founders and agencies that need one dependable workflow delivered and owned.',
+    featured: true,
+  },
+  {
+    name: 'Multi-Agent Harness',
+    price: '$8,000-$18,000',
+    short: '2-10 agents with routing, handoffs, model lanes, cost limits, and human gates.',
+    outcome: 'Architecture, implementation, health checks, recovery plan, and operating docs.',
+    fit: 'Best for teams already coordinating Codex, Claude, Hermes, OpenCode, OpenClaw, Cursor, or MCP tools.',
+  },
+  {
+    name: 'Enterprise Fleet',
+    price: '$20,000-$50,000',
+    short: 'A tenant-aware reliability layer for larger agent operations and agency delivery teams.',
+    outcome: 'Scoped after audit: fleet routing, role isolation, deployment scripts, dashboards, and support plan.',
+    fit: 'Best when multiple clients, repos, tools, or security boundaries are involved.',
+  },
+];
 
-const pains = [
-  'Agents loop, stall, or answer in circles instead of shipping work.',
-  'Claude, Codex, OpenCode, Hermes, OpenClaw, and local models all live in separate silos.',
-  'No human approval gate before spend, commits, messages, or destructive actions.',
-  'Model routing is expensive, brittle, and impossible to debug at 2 a.m.',
-  'Your setup works only while you are watching it.',
-  'Every new workflow turns into another half-finished config file.',
+const proofItems = [
+  ['Founder-led', 'Every engagement is scoped and reviewed by Spencer, not routed through a generic agency bench.'],
+  ['Customer-owned', 'You receive the repo, scripts, docs, and operating model. No rented dashboard lock-in.'],
+  ['No hosted secrets', 'API keys stay in your environment, vault, or infrastructure. Do not paste secrets into intake.'],
+  ['Evidence-first', 'Deliveries include smoke tests, failure notes, runbooks, and handoff criteria.'],
+  ['Recovery-minded', 'Backups, health checks, dispatch probes, and canaries are designed into the harness.'],
+];
+
+const processSteps = [
+  {
+    step: '01',
+    title: 'Diagnose',
+    icon: ClipboardCheck,
+    body: 'We map the workflow, agent roles, failure points, approvals, cost exposure, and secret boundaries.',
+    artifact: 'Diagnostic report',
+  },
+  {
+    step: '02',
+    title: 'Build',
+    icon: Wrench,
+    body: 'We implement the harness in a customer-owned repo with explicit routing, gates, scripts, and docs.',
+    artifact: 'Setup script + repo',
+  },
+  {
+    step: '03',
+    title: 'Stress test',
+    icon: TimerReset,
+    body: 'We run happy-path and failure-path checks so stuck workers, broken dispatch, and bad state are visible.',
+    artifact: 'Smoke tests + recovery notes',
+  },
+  {
+    step: '04',
+    title: 'Handoff',
+    icon: FileCheck2,
+    body: 'We walk through how to run, inspect, recover, and safely change the harness after delivery.',
+    artifact: 'Runbook + acceptance checklist',
+  },
 ];
 
 const deliverables = [
-  {
-    icon: Workflow,
-    title: 'Command Harness',
-    text: 'A custom agent workflow built around your stack, tools, approval rules, and exact operating rhythm.',
-  },
-  {
-    icon: MessageSquareText,
-    title: 'Telegram Gate',
-    text: 'Manager agents report, request approval, and accept directives in a shared command channel you control.',
-  },
-  {
-    icon: Bot,
-    title: 'Agent Hierarchy',
-    text: 'Codex, Claude, Hermes, OpenClaw, OpenCode, and lower-cost workers get clear authority boundaries.',
-  },
-  {
-    icon: CircleDollarSign,
-    title: 'Cost Lanes',
-    text: 'Model routing, concurrency caps, fallback keys, and approval-only expensive providers are configured up front.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Reliability Gates',
-    text: 'Smoke tests, secret scans, dead-agent checks, loop detection, and runbooks ship with the harness.',
-  },
-  {
-    icon: GitBranch,
-    title: 'Owned Code',
-    text: 'You receive the repo, config, setup script, and operating docs. No rented dashboard. No lock-in.',
-  },
+  ['Agent authority map', 'Role boundaries, model lanes, task ownership, and escalation rules.'],
+  ['Human approval gate', 'Telegram, Slack, CLI, or manual review before spend, commits, deploys, or destructive actions.'],
+  ['Cost and model routing', 'Cheap lanes for easy work, high-effort lanes for hard work, and fallback behavior.'],
+  ['Secret isolation', 'No hardcoded keys, scoped identities, env templates, and redaction checks.'],
+  ['Health and recovery', 'DB backups, watchdog checks, dispatch probes, canaries, and incident notes where needed.'],
+  ['Operating package', 'Setup script, runbook, smoke tests, handoff recording notes, and change-order boundary.'],
 ];
 
-const steps = [
-  {
-    label: 'I',
-    title: 'Diagnostic',
-    text: 'We map the workflow, tools, models, risk level, human approval points, and what success must look like.',
-  },
-  {
-    label: 'II',
-    title: 'Forge',
-    text: 'Your harness is built from hardened patterns, then customized for your repos, agents, gates, and channels.',
-  },
-  {
-    label: 'III',
-    title: 'Trial By Fire',
-    text: 'It runs against real tasks with smoke tests, logs, cost caps, and failure recovery before handoff.',
-  },
-  {
-    label: 'IV',
-    title: 'Handoff',
-    text: 'You get the code, runbook, setup guide, and walkthrough. The harness runs on your machine or VPS.',
-  },
+const problemTags = [
+  'Agent loop or stalls',
+  'Workers die silently',
+  'No approval gate',
+  'Bad model routing',
+  'Cost runaway',
+  'Context leakage',
+  'Tool/MCP failures',
+  'No runbook',
+  'Need new build',
+  'Need audit call',
 ];
 
-/* Cash-flow service tiers from spec */
-const existingHarnessTiers = [
-  {
-    icon: HeartPulse,
-    name: 'Health Check',
-    price: '$299',
-    note: 'Existing harness audit: config review, agent role cleanup, approval gate defaults, model routing notes. You keep the report whether you hire us or not.',
-    items: [
-      'Full config and agent audit',
-      'Agent role and authority map cleanup',
-      'Approval gate defaults documented',
-      'Model routing and cost lane notes',
-      'Written report with prioritized fixes',
-    ],
-  },
-  {
-    icon: Hammer,
-    name: 'Fix & Stabilize Sprint',
-    price: '$750',
-    note: 'Take an existing harness that is broken, looping, or burning budget and make it run reliably. One focused sprint.',
-    items: [
-      'Root-cause the failures',
-      'Patch agent loops and permission errors',
-      'Tighten cost lanes and fallback routing',
-      'Add monitoring and heartbeat checks',
-      'Smoke test and handoff runbook',
-    ],
-  },
-  {
-    icon: Settings,
-    name: 'Customization Sprint',
-    price: '$1,500',
-    note: 'Add workflows, skills, memory, or tool integrations to a working harness. Extends what you already own.',
-    items: [
-      'New skills, tools, or integrations',
-      'Memory and context tuning',
-      'Workflow sequencing and branching',
-      'Extended smoke test coverage',
-      'Updated docs and setup runbook',
-    ],
-  },
-];
-
-/* Flagship custom harness builds */
-const customBuildTiers = [
-  {
-    icon: Crown,
-    name: 'Founding Custom Harness',
-    price: '$2,500',
-    note: 'First 10 customers only. Full custom harness built from your diagnostic, delivered with code, runbook, and walkthrough.',
-    items: [
-      'Complete diagnostic intake',
-      'Custom architecture from scratch',
-      'Full multi-agent hierarchy',
-      'Cost and lane policy configuration',
-      'Telegram or CLI approval gates',
-      'Smoke test suite and delivery package',
-    ],
-    featured: true,
-    badge: 'Founding — Limited',
-  },
-  {
-    icon: Star,
-    name: 'Standard Custom Harness',
-    price: '$4,500',
-    note: 'Full custom harness for standard engagements. Same deliverables, full production quality.',
-    items: [
-      'Complete diagnostic intake',
-      'Custom architecture from scratch',
-      'Full multi-agent hierarchy',
-      'Cost and lane policy configuration',
-      'Telegram or CLI approval gates',
-      'Smoke test suite and delivery package',
-    ],
-  },
-];
-
-const supportPack = {
-  price: '$399',
-  period: '30 days',
-  tickets: 5,
-  note: 'Post-delivery support: bug fixes, minor config changes, and questions. One pack per 30-day period, maximum 5 tickets.',
+const defaultRequest = {
+  requestType: 'Foundation Harness',
+  name: '',
+  email: '',
+  company: '',
+  website: '',
+  role: '',
+  urgency: 'This month',
+  budget: '$3,000-$7,000',
+  currentStack: '',
+  infrastructure: '',
+  approvalPath: 'Telegram',
+  problems: [],
+  desiredWorkflow: '',
+  failureDetails: '',
+  successCriteria: '',
+  accessPlan: '',
+  callWindow: '',
 };
 
-const changeOrderNote = 'Change orders start at $750. Scoped and quoted before work begins. No surprise invoices.';
+function buildBrief(request) {
+  return `THE HARNESS LAB INTAKE
 
-const faqs = [
-  {
-    question: 'Is this another SaaS subscription?',
-    answer: 'No. The Harness Lab delivers flat-fee. You own the harness and run it yourself. No monthly billing after delivery.',
-  },
-  {
-    question: 'Do you store API keys or customer secrets?',
-    answer: 'No. Generated harnesses use your environment files and your infrastructure. Secrets are never hardcoded into the delivered repo.',
-  },
-  {
-    question: 'Which agents and tools can it support?',
-    answer: 'The target stack includes Claude Code, Codex, Hermes, OpenClaw, OpenCode, Ollama Cloud, Telegram, Firecrawl, Brave Search, and MCP tools when they fit the workflow.',
-  },
-  {
-    question: 'What happens if the harness does not run?',
-    answer: 'Every delivery includes setup docs and smoke tests. For Phase 1 builds, acceptance terms are written into the build order before payment.',
-  },
-  {
-    question: 'What is the Apex Build roadmap?',
-    answer: 'Apex Build is a planned self-serve harness builder — same workflow, automated packaging. It is not available yet and will not be sold until it ships. Current service is hands-on custom harness delivery only.',
-  },
-  {
-    question: 'Can I get just a health check without committing to a build?',
-    answer: 'Yes. The Health Check is standalone. You keep the written report regardless of whether you proceed with further work.',
-  },
-];
+Request type: ${request.requestType}
+Urgency: ${request.urgency}
+Budget range: ${request.budget}
 
-/* Questionnaire form fields */
-const serviceOptions = [
-  'Health Check ($299)',
-  'Fix & Stabilize Sprint ($750)',
-  'Customization Sprint ($1,500)',
-  'Founding Custom Harness ($2,500)',
-  'Standard Custom Harness ($4,500)',
-  'Support Pack ($399/30 days)',
-  'Not sure — diagnose me first',
-];
+Contact
+- Name: ${request.name}
+- Email: ${request.email}
+- Company: ${request.company}
+- Website/repo: ${request.website}
+- Role: ${request.role}
+- Best call window: ${request.callWindow}
 
-const agentOptions = [
-  'Claude Code',
-  'Codex',
-  'Hermes',
-  'OpenClaw',
-  'OpenCode',
-  'Ollama Cloud',
-  'Other',
-];
+Current setup
+- Stack/tools: ${request.currentStack}
+- Infrastructure: ${request.infrastructure}
+- Approval path: ${request.approvalPath}
+- Problem categories: ${request.problems.join(', ') || 'None selected'}
 
-/* Mock leads for internal-only admin prototype */
-const mockLeads = [
-  {
-    id: 'THL-001',
-    name: 'Alex Rivera',
-    email: 'alex@example.com',
-    service: 'Health Check',
-    priority: 75,
-    status: 'triage',
-    created: '2026-06-04',
-  },
-  {
-    id: 'THL-002',
-    name: 'Jordan Chen',
-    email: 'jordan@example.com',
-    service: 'Founding Custom Harness',
-    priority: 90,
-    status: 'intake',
-    created: '2026-06-04',
-  },
-  {
-    id: 'THL-003',
-    name: 'Sam Okonkwo',
-    email: 'sam@example.com',
-    service: 'Fix & Stabilize Sprint',
-    priority: 60,
-    status: 'awaiting_secret',
-    created: '2026-06-05',
-  },
-];
+Desired workflow
+${request.desiredWorkflow}
 
-const STATUS_COLORS = {
-  triage: '#eab308',
-  intake: '#3b82f6',
-  awaiting_secret: '#f97316',
-  building: '#22d3ee',
-  review: '#a855f7',
-  delivered: '#22c55e',
-};
+Current failure details
+${request.failureDetails}
 
-function IconLine({ icon: Icon, children }) {
+Success criteria
+${request.successCriteria}
+
+Access plan
+${request.accessPlan}
+
+Security note: do not send API keys, passwords, private keys, production secrets, or raw .env files in first contact.
+`;
+}
+
+function mailtoFor(request, subjectPrefix = 'The Harness Lab request') {
+  const subject = encodeURIComponent(`${subjectPrefix} - ${request.requestType || 'Intake'}`);
+  const body = encodeURIComponent(buildBrief(request));
+  return `mailto:${SALES_EMAIL}?subject=${subject}&body=${body}`;
+}
+
+function Field({ label, children, hint, wide = false }) {
   return (
-    <li>
-      <Icon aria-hidden="true" />
-      <span>{children}</span>
-    </li>
+    <label className={`field ${wide ? 'wide' : ''}`}>
+      <span>{label}</span>
+      {children}
+      {hint ? <em>{hint}</em> : null}
+    </label>
   );
 }
 
-/* ─── INTAKE / QUESTIONNAIRE FORM ─── */
-function IntakeForm() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    service: '',
-    agents: [],
-    currentSetup: '',
-    brokenWorkflow: '',
-    repoAccess: '',
-    symptoms: '',
-    budget: '',
-    deadline: '',
-    successCriteria: '',
-    workMethod: '',
-    approvalGates: '',
-    secretsHandling: '',
-    additionalInfo: '',
-  });
+function App() {
+  const [request, setRequest] = useState(defaultRequest);
+  const [copyText, setCopyText] = useState('Copy brief');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (type === 'checkbox') {
-      const prev = form.agents || [];
-      setForm((f) => ({
-        ...f,
-        agents: checked ? [...prev, value] : prev.filter((a) => a !== value),
-      }));
-    } else {
-      setForm((f) => ({ ...f, [name]: value }));
+  const brief = useMemo(() => buildBrief(request), [request]);
+
+  function update(key, value) {
+    setRequest((current) => ({ ...current, [key]: value }));
+  }
+
+  function toggleProblem(problem) {
+    setRequest((current) => {
+      const selected = current.problems.includes(problem);
+      return {
+        ...current,
+        problems: selected
+          ? current.problems.filter((item) => item !== problem)
+          : [...current.problems, problem],
+      };
+    });
+  }
+
+  async function copyBrief() {
+    try {
+      await navigator.clipboard.writeText(brief);
+      setCopyText('Copied');
+    } catch {
+      setCopyText('Select brief');
     }
-  };
+    window.setTimeout(() => setCopyText('Copy brief'), 1800);
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // In production this would POST to a backend or email service.
-    // For now, display a confirmation.
+  function submitRequest(event) {
+    event.preventDefault();
     setSubmitted(true);
-  };
-
-  if (submitted) {
-    return (
-      <div className="form-success">
-        <Check aria-hidden="true" />
-        <h3>Intake received.</h3>
-        <p>
-          We will review your diagnostic and follow up within one business day. Check your email for a
-          confirmation. No payment is required at this stage.
-        </p>
-        <a className="primary-button" href="#top" onClick={() => setSubmitted(false)}>
-          Submit another
-          <ArrowRight aria-hidden="true" />
-        </a>
-      </div>
-    );
+    window.location.href = mailtoFor(request);
   }
 
   return (
-    <form className="intake-form" onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>Contact</legend>
-        <div className="form-row">
-          <label>
-            Full name <span className="required">*</span>
-            <input type="text" name="name" value={form.name} onChange={handleChange} required />
-          </label>
-          <label>
-            Email <span className="required">*</span>
-            <input type="email" name="email" value={form.email} onChange={handleChange} required />
-          </label>
-        </div>
-        <div className="form-row">
-          <label>
-            Phone
-            <input type="tel" name="phone" value={form.phone} onChange={handleChange} />
-          </label>
-          <label>
-            Company
-            <input type="text" name="company" value={form.company} onChange={handleChange} />
-          </label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Service selection</legend>
-        <label>
-          What do you need? <span className="required">*</span>
-          <select name="service" value={form.service} onChange={handleChange} required>
-            <option value="">— Select a service —</option>
-            {serviceOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
-        </label>
-      </fieldset>
-
-      <fieldset>
-        <legend>Current stack</legend>
-        <label className="checkbox-group-label">
-          Which agents / tools are you running?
-          <div className="checkbox-grid">
-            {agentOptions.map((agent) => (
-              <label key={agent} className="checkbox-item">
-                <input
-                  type="checkbox"
-                  name="agents"
-                  value={agent}
-                  checked={(form.agents || []).includes(agent)}
-                  onChange={handleChange}
-                />
-                <span>{agent}</span>
-              </label>
-            ))}
-          </div>
-        </label>
-        <label>
-          Describe your current setup (VPS, local, Docker, etc.)
-          <textarea
-            name="currentSetup"
-            rows={3}
-            value={form.currentSetup}
-            onChange={handleChange}
-            placeholder="e.g. Ubuntu VPS on DigitalOcean, running Hermes + Claude Code + Codex via Telegram…"
-          />
-        </label>
-      </fieldset>
-
-      <fieldset>
-        <legend>Problem description</legend>
-        <label>
-          What is broken, stuck, or missing? <span className="required">*</span>
-          <textarea
-            name="brokenWorkflow"
-            rows={4}
-            value={form.brokenWorkflow}
-            onChange={handleChange}
-            required
-            placeholder="Describe in as much detail as you can. The more precise the problem, the better the diagnostic."
-          />
-        </label>
-        <label>
-          Specific symptoms or error logs
-          <textarea
-            name="symptoms"
-            rows={3}
-            value={form.symptoms}
-            onChange={handleChange}
-            placeholder="Paste relevant log output, error messages, or agent behavior descriptions."
-          />
-        </label>
-      </fieldset>
-
-      <fieldset>
-        <legend>Access &amp; security</legend>
-        <label>
-          How do you share repo / VPS access?
-          <textarea
-            name="repoAccess"
-            rows={2}
-            value={form.repoAccess}
-            onChange={handleChange}
-            placeholder="e.g. GitHub collaborator invite, SSH key, or temporary access…"
-          />
-        </label>
-        <label>
-          Approval gates and human-in-the-loop requirements
-          <textarea
-            name="approvalGates"
-            rows={2}
-            value={form.approvalGates}
-            onChange={handleChange}
-            placeholder="Which actions should require your explicit approval? Commits? Deploys? Spending? Messages?"
-          />
-        </label>
-        <label>
-          How should secrets and tokens be handled?
-          <textarea
-            name="secretsHandling"
-            rows={2}
-            value={form.secretsHandling}
-            onChange={handleChange}
-            placeholder="e.g. .env files, 1Password, Vault, one-time secret links — we never ask for raw secrets in forms."
-          />
-        </label>
-      </fieldset>
-
-      <fieldset>
-        <legend>Success criteria &amp; logistics</legend>
-        <label>
-          What does success look like for this engagement?
-          <textarea
-            name="successCriteria"
-            rows={2}
-            value={form.successCriteria}
-            onChange={handleChange}
-            placeholder="e.g. Agents stop looping, costs stay under $X/month, deploys require my approval…"
-          />
-        </label>
-        <div className="form-row">
-          <label>
-            Budget range
-            <select name="budget" value={form.budget} onChange={handleChange}>
-              <option value="">— Select —</option>
-              <option value="299-749">$299 — $749</option>
-              <option value="750-1499">$750 — $1,499</option>
-              <option value="1500-2499">$1,500 — $2,499</option>
-              <option value="2500-4499">$2,500 — $4,499</option>
-              <option value="4500+">$4,500+</option>
-              <option value="flexible">Flexible / discuss</option>
-            </select>
-          </label>
-          <label>
-            Deadline
-            <select name="deadline" value={form.deadline} onChange={handleChange}>
-              <option value="">— Select —</option>
-              <option value="asap">ASAP</option>
-              <option value="1week">Within 1 week</option>
-              <option value="2weeks">Within 2 weeks</option>
-              <option value="1month">Within 1 month</option>
-              <option value="flexible">Flexible</option>
-            </select>
-          </label>
-        </div>
-        <label>
-          Preferred work method
-          <select name="workMethod" value={form.workMethod} onChange={handleChange}>
-            <option value="">— Select —</option>
-            <option value="async">Mostly async (email / Telegram)</option>
-            <option value="sync">Scheduled sync calls</option>
-            <option value="mixed">Mixed — async first, calls when needed</option>
-          </select>
-        </label>
-      </fieldset>
-
-      <fieldset>
-        <legend>Anything else?</legend>
-        <label>
-          Additional context, questions, or requirements
-          <textarea
-            name="additionalInfo"
-            rows={3}
-            value={form.additionalInfo}
-            onChange={handleChange}
-            placeholder="Anything that did not fit above."
-          />
-        </label>
-      </fieldset>
-
-      <div className="form-disclaimer">
-        <AlertTriangle aria-hidden="true" />
-        <p>
-          <strong>No payment is required at intake.</strong> We review every submission and follow up
-          with a scope and quote before any money changes hands. Never send API keys, passwords, or
-          secrets through this form — we will provide a secure handoff link after intake.
-        </p>
-      </div>
-
-      <button type="submit" className="primary-button submit-button">
-        <Send aria-hidden="true" />
-        Submit intake
-      </button>
-    </form>
-  );
-}
-
-/* ─── INTERNAL LEADS MOCK (admin-only prototype) ─── */
-function LeadsDashboard() {
-  return (
-    <section id="leads" className="section leads-admin">
-      <div className="section-heading">
-        <p className="section-number">INTERNAL — Leads</p>
-        <h2>Lead pipeline <span className="badge-local">local prototype</span></h2>
-        <p>
-          This section is a static mock for internal review only. No real customer data is stored or
-          displayed. In production this will be behind authentication.
-        </p>
-      </div>
-      <div className="leads-toolbar">
-        <span className="leads-count">
-          <Users aria-hidden="true" /> {mockLeads.length} leads
-        </span>
-        <span className="leads-actions">
-          <button className="secondary-button small" disabled title="Export not wired in prototype">
-            <Download aria-hidden="true" /> CSV
-          </button>
-          <button className="secondary-button small" disabled title="Export not wired in prototype">
-            <Download aria-hidden="true" /> JSON
-          </button>
-        </span>
-      </div>
-      <div className="leads-table-wrap">
-        <table className="leads-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Service</th>
-              <th>Priority</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mockLeads.map((lead) => (
-              <tr key={lead.id}>
-                <td className="mono">{lead.id}</td>
-                <td>{lead.name}</td>
-                <td>{lead.service}</td>
-                <td>
-                  <span className="priority-score" style={{ '--score-color': lead.priority >= 80 ? '#22c55e' : lead.priority >= 50 ? '#eab308' : '#94a3b8' }}>
-                    {lead.priority}
-                  </span>
-                </td>
-                <td>
-                  <span className="status-pill" style={{ '--pill-bg': STATUS_COLORS[lead.status] || '#64748b' }}>
-                    {lead.status}
-                  </span>
-                </td>
-                <td className="mono">{lead.created}</td>
-                <td>
-                  <button className="icon-btn" disabled title="View not wired in prototype">
-                    <Eye aria-hidden="true" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="leads-disclaimer">
-        <AlertTriangle aria-hidden="true" />
-        <p>
-          <strong>Prototype only.</strong> No real leads are stored here. Export, status changes, and
-          detail views will be wired to the backend when auth is in place. Internal dashboard must be
-          excluded from the public build pipeline until HTTPS, auth, and audit logging are active.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-/* ─── MAIN APP ─── */
-function App() {
-  const [page, setPage] = useState('home');
-
-  return (
-    <main>
+    <main id="top">
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="The Harness Lab home" onClick={() => setPage('home')}>
-          <img src={logoMark} alt="" />
+        <a className="brand" href="#top" aria-label="The Harness Lab home">
+          <img src="/hermes-mark.png" alt="" width="44" height="44" />
           <span>The Harness Lab</span>
         </a>
         <nav aria-label="Primary navigation">
-          <a href="#forge" onClick={() => setPage('home')}>Harness</a>
-          <a href="#process" onClick={() => setPage('home')}>Process</a>
-          <a href="#pricing" onClick={() => setPage('home')}>Pricing</a>
-          <a href="#intake" onClick={() => setPage('intake')}>Intake</a>
-          <a className="nav-cta" href="#intake" onClick={() => setPage('intake')}>
-            Start intake
-            <ArrowRight aria-hidden="true" />
-          </a>
+          <a href="#services">Services</a>
+          <a href="#process">Process</a>
+          <a href="#proof">Proof</a>
+          <a href="#intake">Intake</a>
+          <a href={`mailto:${SALES_EMAIL}`}>Contact</a>
         </nav>
-      </header>
-
-      {page === 'home' ? <HomePage onIntake={() => setPage('intake')} /> : <IntakePage />}
-    </main>
-  );
-}
-
-/* ─── HOME PAGE ─── */
-function HomePage({ onIntake }) {
-  return (
-    <>
-      <section id="top" className="hero">
-        <img className="hero-seal" src={heroSeal} alt="" />
-        <div className="hero-content">
-          <p className="domain">theharnesslab.dev</p>
-          <h1>
-            Your agents <span className="accent">are powerful</span>.<br />
-            Your command structure is not.
-          </h1>
-          <p className="hero-copy">
-            The Harness Lab turns scattered AI tools into a customer-owned operating harness
-            with rules, roles, memory, status, approval, and tests. Flat fee. Your keys. Your code.
-          </p>
-          <div className="hero-actions">
-            <a className="primary-button" href="#intake" onClick={(e) => { e.preventDefault(); onIntake(); }}>
-              Start intake
-              <ArrowRight aria-hidden="true" />
-            </a>
-            <a className="secondary-button" href="#pricing">
-              View pricing
-              <ScrollText aria-hidden="true" />
-            </a>
-          </div>
-          <div className="terminal-preview">
-            <div className="terminal-dots">
-              <span></span><span></span><span></span>
-            </div>
-            <div className="terminal-line">
-              <span className="terminal-prompt">$</span>
-              <span className="terminal-cmd">harness-lab init --stack hermes,codex,telegram</span>
-            </div>
-            <div className="terminal-line">
-              <span className="terminal-prompt">$</span>
-              <span className="terminal-cmd">harness-lab forge --profile my-team</span>
-            </div>
-            <div className="terminal-line">
-              <span className="terminal-comment"># harness built, smoke-tested, delivered → your repo</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="marquee" aria-label="Supported command stack">
-        <span>Claude Code</span>
-        <span>Codex</span>
-        <span>Hermes</span>
-        <span>OpenClaw</span>
-        <span>OpenCode</span>
-        <span>Ollama Cloud</span>
-        <span>Telegram</span>
-        <span>MCP</span>
-      </section>
-
-      {/* PROBLEM */}
-      <section className="section split">
-        <div>
-          <p className="section-number">01 — The Problem</p>
-          <h2>Six agents, zero command discipline.</h2>
-        </div>
-        <div className="pain-list">
-          {pains.map((pain) => (
-            <div className="pain-row" key={pain}>
-              <Swords aria-hidden="true" />
-              <p>{pain}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* DELIVERABLES */}
-      <section id="forge" className="section">
-        <div className="section-heading">
-          <p className="section-number">02 — What Gets Forged</p>
-          <h2>One harness. Clear hierarchy. Hard gates. Owned forever.</h2>
-          <p>
-            The Harness Lab turns scattered AI tools into a customer-owned operating harness
-            with rules, roles, memory, status, approval, and tests.
-          </p>
-        </div>
-        <div className="deliverable-grid">
-          {deliverables.map(({ icon: Icon, title, text }) => (
-            <article className="deliverable" key={title}>
-              <Icon aria-hidden="true" />
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* EXISTING HARNESS SERVICES */}
-      <div className="section-heading center-heading">
-        <p className="section-number">03 — Existing Harness Services</p>
-        <h2>Already running Hermes, OpenClaw, or another harness?</h2>
-        <p>
-          We diagnose, fix, stabilize, and customize existing AI agent setups. Three flat-fee service tiers, no subscription.
-        </p>
-      </div>
-      <div className="pricing-grid three-col">
-        {existingHarnessTiers.map((tier) => (
-          <article className="price-card" key={tier.name}>
-            <div className="price-card-icon">
-              <tier.icon aria-hidden="true" />
-            </div>
-            <h3>{tier.name}</h3>
-            <p className="price">{tier.price}</p>
-            <p className="price-note">{tier.note}</p>
-            <ul>
-              {tier.items.map((item) => (
-                <IconLine icon={Check} key={item}>{item}</IconLine>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </div>
-
-      {/* CUSTOM BUILD TIERS */}
-      <section id="pricing" className="section">
-        <div className="section-heading">
-          <p className="section-number">04 — Custom Harness Builds</p>
-          <h2>From diagnostic to delivery. Your code. Your keys. No lock-in.</h2>
-          <p>
-            Full custom harness builds delivered flat-fee. You own the repo, the config, and the operating docs.
-          </p>
-        </div>
-        <div className="pricing-grid two-col">
-          {customBuildTiers.map((tier) => (
-            <article className={`price-card ${tier.featured ? 'featured' : ''}`} key={tier.name}>
-              {tier.badge ? <span className="featured-label">{tier.badge}</span> : null}
-              <div className="price-card-icon">
-                <tier.icon aria-hidden="true" />
-              </div>
-              <h3>{tier.name}</h3>
-              <p className="price">{tier.price}</p>
-              <p className="price-note">{tier.note}</p>
-              <ul>
-                {tier.items.map((item) => (
-                  <IconLine icon={ChevronRight} key={item}>{item}</IconLine>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-
-        <div className="support-pack-row">
-          <div className="support-pack-card">
-            <div className="sp-icon-label">
-              <Clock aria-hidden="true" />
-              <div>
-                <h3>Support Pack</h3>
-                <p>{supportPack.price} / {supportPack.period} / {supportPack.tickets} tickets</p>
-              </div>
-            </div>
-            <p className="price-note">{supportPack.note}</p>
-          </div>
-          <p className="change-order-note">
-            <FileText aria-hidden="true" />
-            {changeOrderNote}
-          </p>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section id="process" className="section process">
-        <div className="section-heading">
-          <p className="section-number">05 — The Campaign</p>
-          <h2>Built narrow, tested hard, handed off clean.</h2>
-        </div>
-        <div className="steps">
-          {steps.map((step) => (
-            <article className="step" key={step.title}>
-              <span className="step-label">{step.label}</span>
-              <div>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* QUALITY DOCTRINE */}
-      <section className="section command-band">
-        <div>
-          <p className="section-number">06 — Quality Doctrine</p>
-          <h2>If it cannot be tested, it does not ship.</h2>
-        </div>
-        <ul>
-          <IconLine icon={Activity}>Heartbeat and dead-agent checks</IconLine>
-          <IconLine icon={ShieldCheck}>Approval gates before risky actions</IconLine>
-          <IconLine icon={FileCheck2}>Secrets redaction before delivery</IconLine>
-          <IconLine icon={Check}>Smoke test before handoff</IconLine>
-        </ul>
-      </section>
-
-      {/* FAQ */}
-      <section className="section faq">
-        <div className="section-heading">
-          <p className="section-number">07 — Terms Of Command</p>
-          <h2>Simple answers before money changes hands.</h2>
-        </div>
-        <div className="faq-list">
-          {faqs.map((faq) => (
-            <article className="faq-item" key={faq.question}>
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* RISK DISCLOSURE */}
-      <section className="section risk-disclosure">
-        <div className="section-heading">
-          <p className="section-number">08 — Honest Boundaries</p>
-          <h2>What we will not claim.</h2>
-        </div>
-        <div className="risk-grid">
-          <div className="risk-col">
-            <h3>We do claim</h3>
-            <ul>
-              <li><Check aria-hidden="true" /> Flat-fee delivery with clear scope</li>
-              <li><Check aria-hidden="true" /> You own all code, config, and docs</li>
-              <li><Check aria-hidden="true" /> Smoke tests and runbooks included</li>
-              <li><Check aria-hidden="true" /> Real agents, real workflows, real VPS deployments</li>
-              <li><Check aria-hidden="true" /> Support packs available post-delivery</li>
-            </ul>
-          </div>
-          <div className="risk-col">
-            <h3>We do not claim</h3>
-            <ul>
-              <li><Swords aria-hidden="true" /> Guaranteed uptime or SLA (support packs are limited)</li>
-              <li><Swords aria-hidden="true" /> &ldquo;Set and forget&rdquo; — harnesses need monitoring</li>
-              <li><Swords aria-hidden="true" /> Zero hallucination — models can still break</li>
-              <li><Swords aria-hidden="true" /> Apex Build is available today (it is a roadmap item)</li>
-              <li><Swords aria-hidden="true" /> Any specific revenue or ROI outcome</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="final-cta">
-        <img src={logoMark} alt="" />
-        <h2>Forge the command layer before everyone else sells the template.</h2>
-        <p>
-          The Harness Lab builds custom AI agent harnesses
-          delivered fast, owned by the customer, and built for one real workflow at a time.
-        </p>
-        <a className="primary-button" href="#intake" onClick={(e) => { e.preventDefault(); onIntake(); }}>
-          Start the intake
+        <a className="nav-cta" href="#intake">
+          Request an audit
           <ArrowRight aria-hidden="true" />
         </a>
+      </header>
+
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <h1 id="hero-title">AI agent harnesses that keep working after you stop watching.</h1>
+          <p>
+            The Harness Lab builds and repairs customer-owned reliability harnesses for teams
+            using Claude, Codex, Hermes, OpenCode, OpenClaw, Cursor, Ollama, and MCP tools.
+            You get the code, the runbook, and the failure-path evidence. Your keys stay yours.
+          </p>
+          <div className="hero-actions">
+            <a className="primary-button" href="#intake">
+              Request an audit
+              <ArrowRight aria-hidden="true" />
+            </a>
+            <a className="secondary-button" href="#services">
+              Build my harness
+              <Workflow aria-hidden="true" />
+            </a>
+          </div>
+          <dl className="hero-facts" aria-label="Core operating facts">
+            <div>
+              <dt>Ownership</dt>
+              <dd>Private repo + setup script</dd>
+            </div>
+            <div>
+              <dt>Security</dt>
+              <dd>BYOK, no hosted secrets</dd>
+            </div>
+            <div>
+              <dt>Delivery</dt>
+              <dd>Audit, build, stress test, handoff</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="hero-visual" aria-label="The Harness Lab Hermes emblem">
+          <div className="circuit-plane" />
+          <img
+            src="/advancedhermes-hero.png"
+            alt="The Harness Lab Hermes winged helmet emblem"
+            width="900"
+            height="900"
+            fetchPriority="high"
+          />
+        </div>
       </section>
 
-      {/* INTERNAL LEADS PROTOTYPE */}
-      <LeadsDashboard />
+      <section id="proof" className="trust-band reveal" aria-label="Trust proof">
+        <h2>Founder-led. Customer-owned. No hosted secrets.</h2>
+        <div className="proof-grid">
+          {proofItems.map(([title, body]) => (
+            <article key={title}>
+              <ShieldCheck aria-hidden="true" />
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-      <footer>
-        <span>The Harness Lab</span>
-        <span>theharnesslab.dev</span>
-        <span>San Angelo, Texas</span>
-      </footer>
-    </>
-  );
-}
-
-/* ─── INTAKE PAGE ─── */
-function IntakePage() {
-  return (
-    <div className="page-intake">
-      <section className="section intake-hero">
+      <section id="services" className="section reveal">
         <div className="section-heading">
-          <p className="section-number">Intake</p>
-          <h2>Tell us what is broken, missing, or needed.</h2>
+          <p>Services</p>
+          <h2>Buy the level of reliability work your agent system actually needs.</h2>
+          <span>
+            Pricing is scoped around concrete workflows, not vague retainers. First contact starts
+            with the audit path unless the build scope is already clear.
+          </span>
+        </div>
+        <div className="service-grid">
+          {serviceOptions.map((service) => (
+            <article className={`service-card ${service.featured ? 'featured' : ''}`} key={service.name}>
+              {service.featured ? <strong className="flag">Most common starting build</strong> : null}
+              <div className="service-head">
+                <h3>{service.name}</h3>
+                <span>{service.price}</span>
+              </div>
+              <p>{service.short}</p>
+              <dl>
+                <div>
+                  <dt>Outcome</dt>
+                  <dd>{service.outcome}</dd>
+                </div>
+                <div>
+                  <dt>Best fit</dt>
+                  <dd>{service.fit}</dd>
+                </div>
+              </dl>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section split reveal">
+        <div className="section-heading left">
+          <p>What We Deliver</p>
+          <h2>Not a prompt pack. A controlled operating layer.</h2>
+          <span>
+            The work is practical: routing rules, approval boundaries, failure detection, cost
+            control, documentation, and recovery procedures that a team can actually run.
+          </span>
+        </div>
+        <div className="deliverable-list">
+          {deliverables.map(([title, body]) => (
+            <article key={title}>
+              <Check aria-hidden="true" />
+              <div>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="process" className="section process-section reveal">
+        <div className="section-heading">
+          <p>Process</p>
+          <h2>Built like infrastructure, handed off like an operating system.</h2>
+          <span>
+            Every step produces a concrete artifact. That keeps the engagement inspectable and
+            prevents “the bot said it was done” from becoming the acceptance standard.
+          </span>
+        </div>
+        <div className="process-line">
+          {processSteps.map((item) => {
+            const Icon = item.icon;
+            return (
+              <article key={item.step}>
+                <div className="process-icon">
+                  <Icon aria-hidden="true" />
+                </div>
+                <span>{item.step}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                <small>Artifact: {item.artifact}</small>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="section proof-console reveal">
+        <div>
+          <p className="mini-label">Proof of Process</p>
+          <h2>The lab runs on the same discipline it sells.</h2>
           <p>
-            No payment required. We review every submission and reply with a scope and quote before any
-            work begins. Long-form answers help us give you a better diagnostic.
+            The internal Hermes harness uses verified kanban backups, health checks, task-state
+            alerts, dispatch probes, and synthetic worker canaries. Those patterns inform customer
+            builds when the same failure modes apply.
           </p>
         </div>
-        <IntakeForm />
+        <div className="console-panel" aria-label="Reliability status example">
+          <div className="console-top">
+            <span />
+            <strong>harness health</strong>
+            <em>sample operating pattern</em>
+          </div>
+          <ul>
+            <li>
+              <TimerReset aria-hidden="true" />
+              Healthcheck timer: every 30 seconds
+            </li>
+            <li>
+              <GitBranch aria-hidden="true" />
+              Verified kanban backup: every 2 minutes
+            </li>
+            <li>
+              <Bot aria-hidden="true" />
+              Synthetic worker canary: proves real task execution
+            </li>
+            <li>
+              <TerminalSquare aria-hidden="true" />
+              Recovery path: preserve incident, restore latest-good, notify operator
+            </li>
+          </ul>
+        </div>
       </section>
 
-      <footer>
-        <span>The Harness Lab</span>
-        <span>theharnesslab.dev</span>
-        <span>San Angelo, Texas</span>
+      <section id="intake" className="section intake-section reveal">
+        <div className="section-heading left">
+          <p>Start Here</p>
+          <h2>Request an audit, call, or full harness build.</h2>
+          <span>
+            Fill out what you can. The form builds an email-ready brief for {SALES_EMAIL}. Do not
+            include passwords, API keys, private keys, or raw production secrets.
+          </span>
+        </div>
+
+        <form className="intake-grid" onSubmit={submitRequest}>
+          <div className="form-panel">
+            <h3>Contact and scope</h3>
+            <div className="form-grid">
+              <Field label="Request type">
+                <select value={request.requestType} onChange={(event) => update('requestType', event.target.value)}>
+                  {serviceOptions.map((service) => (
+                    <option key={service.name}>{service.name}</option>
+                  ))}
+                  <option>More information / sales call</option>
+                </select>
+              </Field>
+              <Field label="Urgency">
+                <select value={request.urgency} onChange={(event) => update('urgency', event.target.value)}>
+                  <option>This week</option>
+                  <option>Next two weeks</option>
+                  <option>This month</option>
+                  <option>Researching for later</option>
+                </select>
+              </Field>
+              <Field label="Name">
+                <input required value={request.name} onChange={(event) => update('name', event.target.value)} placeholder="Your name" />
+              </Field>
+              <Field label="Email">
+                <input required type="email" value={request.email} onChange={(event) => update('email', event.target.value)} placeholder="you@company.com" />
+              </Field>
+              <Field label="Company">
+                <input value={request.company} onChange={(event) => update('company', event.target.value)} placeholder="Company or project" />
+              </Field>
+              <Field label="Website / repo">
+                <input value={request.website} onChange={(event) => update('website', event.target.value)} placeholder="https://" />
+              </Field>
+              <Field label="Role">
+                <input value={request.role} onChange={(event) => update('role', event.target.value)} placeholder="Founder, CTO, agency owner..." />
+              </Field>
+              <Field label="Budget">
+                <select value={request.budget} onChange={(event) => update('budget', event.target.value)}>
+                  <option>$750 audit</option>
+                  <option>$3,000-$7,000</option>
+                  <option>$8,000-$18,000</option>
+                  <option>$20,000-$50,000</option>
+                  <option>Need recommendation</option>
+                </select>
+              </Field>
+            </div>
+
+            <h3>System details</h3>
+            <div className="form-grid">
+              <Field label="Current stack" wide>
+                <textarea value={request.currentStack} onChange={(event) => update('currentStack', event.target.value)} placeholder="Claude Code, Codex, Hermes, Cursor, GitHub, Slack, Telegram, Render, MCP servers..." />
+              </Field>
+              <Field label="Where it runs">
+                <textarea value={request.infrastructure} onChange={(event) => update('infrastructure', event.target.value)} placeholder="Mac, Linux desktop, VPS, Docker, Render, customer cloud..." />
+              </Field>
+              <Field label="Approval path">
+                <select value={request.approvalPath} onChange={(event) => update('approvalPath', event.target.value)}>
+                  <option>Telegram</option>
+                  <option>Slack</option>
+                  <option>CLI</option>
+                  <option>Email</option>
+                  <option>Manual review</option>
+                  <option>Need recommendation</option>
+                </select>
+              </Field>
+            </div>
+
+            <div className="problem-picker" aria-label="Problem checklist">
+              {problemTags.map((problem) => (
+                <button
+                  className={request.problems.includes(problem) ? 'selected' : ''}
+                  key={problem}
+                  onClick={() => toggleProblem(problem)}
+                  type="button"
+                >
+                  {problem}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <aside className="form-panel brief-panel">
+            <h3>Order brief preview</h3>
+            <pre>{brief}</pre>
+            <div className="form-actions">
+              <button className="secondary-button" type="button" onClick={copyBrief}>
+                <Copy aria-hidden="true" />
+                {copyText}
+              </button>
+              <button className="primary-button" type="submit">
+                <Mail aria-hidden="true" />
+                Send request
+              </button>
+            </div>
+            {submitted ? (
+              <p className="submit-note">
+                Your email client should open with the completed brief. If it does not, copy the
+                brief and email it to {SALES_EMAIL}.
+              </p>
+            ) : null}
+          </aside>
+
+          <div className="form-panel wide-fields">
+            <h3>Workflow, failure mode, and acceptance criteria</h3>
+            <Field label="Desired workflow" wide>
+              <textarea value={request.desiredWorkflow} onChange={(event) => update('desiredWorkflow', event.target.value)} placeholder="Example: support ticket -> triage -> research -> patch plan -> human approval -> PR package." />
+            </Field>
+            <Field label="Current failure details" wide>
+              <textarea value={request.failureDetails} onChange={(event) => update('failureDetails', event.target.value)} placeholder="What breaks, where it breaks, what logs or symptoms you see, and what has already been tried." />
+            </Field>
+            <Field label="Success criteria" wide>
+              <textarea value={request.successCriteria} onChange={(event) => update('successCriteria', event.target.value)} placeholder="What must be true before the audit/build is considered complete?" />
+            </Field>
+            <Field label="Access plan" wide hint="Safe options: screen share, temporary repo access, redacted logs, disposable VPS user, or sanitized zip.">
+              <textarea value={request.accessPlan} onChange={(event) => update('accessPlan', event.target.value)} placeholder="How can The Harness Lab inspect or work on this without exposing secrets?" />
+            </Field>
+            <Field label="Best call window" wide>
+              <input value={request.callWindow} onChange={(event) => update('callWindow', event.target.value)} placeholder="Example: weekdays after 2pm Central" />
+            </Field>
+          </div>
+        </form>
+      </section>
+
+      <section className="final-cta reveal">
+        <img src="/hermes-mark.png" alt="" width="96" height="96" />
+        <h2>Bring the broken workflow. Leave with a harness you can operate.</h2>
+        <p>
+          Start with an audit if the failure mode is unclear. Start with a build if the workflow
+          and acceptance criteria are already defined.
+        </p>
+        <div className="hero-actions">
+          <a className="primary-button" href="#intake">
+            Start the intake
+            <ArrowRight aria-hidden="true" />
+          </a>
+          <a className="secondary-button" href={`mailto:${SALES_EMAIL}?subject=The%20Harness%20Lab%20call%20request`}>
+            <PhoneCall aria-hidden="true" />
+            Ask for a call
+          </a>
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <div>
+          <a className="brand" href="#top">
+            <img src="/hermes-mark.png" alt="" width="38" height="38" />
+            <span>The Harness Lab</span>
+          </a>
+          <p>Customer-owned AI agent reliability harnesses. Built, repaired, tested, and handed off.</p>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <a href={`mailto:${SALES_EMAIL}`}>
+            <Mail aria-hidden="true" />
+            {SALES_EMAIL}
+          </a>
+          <a href={`mailto:${TECH_EMAIL}`}>
+            <MessageSquareText aria-hidden="true" />
+            {TECH_EMAIL}
+          </a>
+        </div>
+        <div>
+          <h3>Model</h3>
+          <p>Flat-fee engagements. No hosted customer secrets. You own the code, config, and runbook.</p>
+        </div>
+        <small>© 2026 The Harness Lab. The first call is for fit and scope, not credential exchange.</small>
       </footer>
-    </div>
+    </main>
   );
 }
 
