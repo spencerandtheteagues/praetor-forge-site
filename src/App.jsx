@@ -251,7 +251,8 @@ function App() {
           <p>
             The Harness Lab builds and repairs customer-owned reliability harnesses for teams
             using Claude, Codex, Hermes, OpenCode, OpenClaw, Cursor, Ollama, and MCP tools.
-            You get the code, the runbook, and the failure-path evidence. Your keys stay yours.
+            A harness is the operating layer around an agent: routing, approvals, evals, alerts,
+            tests, and recovery. You get the code, runbook, and failure-path evidence.
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#intake">
