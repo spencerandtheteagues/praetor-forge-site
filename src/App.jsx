@@ -282,7 +282,7 @@ function App() {
         <div className="hero-visual" aria-label="The Harness Lab Hermes emblem">
           <div className="circuit-plane" />
           <img
-            src="/advancedhermes-hero.png"
+            src="/advancedhermes-hero-round.png"
             alt="The Harness Lab Hermes winged helmet emblem"
             width="900"
             height="900"
