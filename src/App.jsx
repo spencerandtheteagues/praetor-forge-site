@@ -19,6 +19,7 @@ import {
 
 const SALES_EMAIL = 'sales@theharnesslab.dev';
 const TECH_EMAIL = 'tech@theharnesslab.dev';
+const INTAKE_URL = 'https://harness-lab-intake.onrender.com/api/intake';
 
 const serviceOptions = [
   {
@@ -204,6 +205,7 @@ const defaultRequest = {
   successCriteria: '',
   accessPlan: '',
   callWindow: '',
+  hp: '',
 };
 
 function buildBrief(request) {
@@ -262,7 +264,7 @@ function Field({ label, children, hint, wide = false }) {
 function App() {
   const [request, setRequest] = useState(defaultRequest);
   const [copyText, setCopyText] = useState('Copy brief');
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | fallback
 
   const brief = useMemo(() => buildBrief(request), [request]);
 
@@ -292,10 +294,23 @@ function App() {
     window.setTimeout(() => setCopyText('Copy brief'), 1800);
   }
 
-  function submitRequest(event) {
+  async function submitRequest(event) {
     event.preventDefault();
-    setSubmitted(true);
-    window.location.href = mailtoFor(request);
+    if (status === 'sending') return;
+    setStatus('sending');
+    try {
+      const res = await fetch(INTAKE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(request),
+      });
+      if (!res.ok) throw new Error(`intake ${res.status}`);
+      setStatus('sent');
+    } catch {
+      // Reliable fallback: open the mail client with the prefilled brief.
+      setStatus('fallback');
+      window.location.href = mailtoFor(request);
+    }
   }
 
   return (
@@ -578,6 +593,16 @@ function App() {
         </div>
 
         <form className="intake-grid" onSubmit={submitRequest}>
+          <input
+            type="text"
+            name="company_website_hp"
+            className="hp-field"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            value={request.hp}
+            onChange={(event) => update('hp', event.target.value)}
+          />
           <div className="form-panel">
             <h3>Contact and scope</h3>
             <div className="form-grid">
@@ -669,15 +694,21 @@ function App() {
                 <Copy aria-hidden="true" />
                 {copyText}
               </button>
-              <button className="primary-button" type="submit">
+              <button className="primary-button" type="submit" disabled={status === 'sending'}>
                 <Mail aria-hidden="true" />
-                Send request
+                {status === 'sending' ? 'Sending...' : 'Send request'}
               </button>
             </div>
-            {submitted ? (
+            {status === 'sent' ? (
               <p className="submit-note">
-                Your email client should open with the completed brief. If it does not, copy the
-                brief and email it to {SALES_EMAIL}.
+                Request received — it is in front of the team now. We will reply by email shortly.
+                Need a faster path? Email {SALES_EMAIL}.
+              </p>
+            ) : null}
+            {status === 'fallback' ? (
+              <p className="submit-note">
+                Opening your email app with the completed brief. If nothing opens, use Copy brief
+                and send it to {SALES_EMAIL}.
               </p>
             ) : null}
           </aside>

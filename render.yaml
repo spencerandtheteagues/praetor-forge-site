@@ -8,3 +8,22 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 24.16.0
+
+  # Lead intake bridge: receives the website intake POST and posts the lead into
+  # the team's Telegram group (durable record + instant notification).
+  - type: web
+    name: harness-lab-intake
+    runtime: node
+    rootDir: intake-service
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: LEAD_CHAT_ID
+        value: "-5036189020"
+      - key: ALLOWED_ORIGIN
+        value: https://theharnesslab.dev
