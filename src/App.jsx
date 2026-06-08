@@ -314,7 +314,8 @@ function App() {
           <a href={`mailto:${SALES_EMAIL}`}>Contact</a>
         </nav>
         <a className="nav-cta" href="#intake">
-          Start audit
+          <span className="nav-cta-full">Start audit</span>
+          <span className="nav-cta-short">Audit</span>
           <ArrowRight aria-hidden="true" />
         </a>
       </header>

@@ -210,6 +210,10 @@ img {
   height: 18px;
 }
 
+.nav-cta-short {
+  display: none;
+}
+
 .hero {
   position: relative;
   display: grid;
@@ -1095,6 +1099,15 @@ textarea:focus {
     min-height: 42px;
     padding: 0 12px;
     font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .nav-cta-full {
+    display: none;
+  }
+
+  .nav-cta-short {
+    display: inline;
   }
 
   .hero {
