@@ -16,8 +16,11 @@ This folder contains the working sales and delivery system for early customer en
 Keep public prices at the current early-customer ladder until there are a few customers or case studies:
 
 - Reliability Audit: $750 fixed fee
+- Harness Setup: $1,500-$3,000
+- Harness Rescue: $1,500-$5,000
 - Foundation Harness: $3,000-$7,000
 - Multi-Agent Harness: $8,000-$18,000
 - Enterprise Fleet: $20,000-$50,000
+- Care Plan: $500-$2,000/month
 
 Higher pricing from market research is an internal future option, not current public copy.

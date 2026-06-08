@@ -14,10 +14,14 @@ The offer is not generic AI automation, not a chatbot build, and not a hosted ag
 
 | Package | Public price | Scope boundary |
 |---|---:|---|
+| Free Teardown Call | $0 / 20 min | Fit and likely failure-mode call. No implementation or diagnosis report. |
 | Reliability Audit | $750 fixed fee | Diagnostic only. No implementation unless explicitly quoted. |
+| Harness Setup | $1,500-$3,000 | Install and verify Hermes/OpenClaw/clawctl-style harness tooling, BYOK config, smoke tests, and runbook. |
+| Harness Rescue | $1,500-$5,000 | Repair an existing broken harness or agent workflow after audit/scope confirmation. |
 | Foundation Harness | $3,000-$7,000 | One workflow, one repo, one approval path, one handoff package. |
 | Multi-Agent Harness | $8,000-$18,000 | 2-10 agents, routing, model lanes, handoffs, gates, cost limits, health checks. |
 | Enterprise Fleet | $20,000-$50,000 | Larger scoped build with multiple repos, tenants, clients, or security boundaries. |
+| Care Plan | $500-$2,000/month | Scheduled checks, model/provider review, small fixes, and support lane after delivery. |
 
 Do not publish the higher research-backed pricing yet. Keep it as a future pricing option after early customer proof.
 
@@ -76,7 +80,61 @@ Not included:
 Acceptance:
 
 - Client receives a written report with clear next actions.
-- Report identifies whether the next step is no-build, fix, Foundation Harness, Multi-Agent Harness, or Enterprise Fleet.
+- Report identifies whether the next step is no-build, client self-fix, Harness Setup, Harness Rescue, Foundation Harness, Multi-Agent Harness, Enterprise Fleet, or Care Plan.
+
+## Harness Setup Scope
+
+Goal: stand up a known harness stack so the client can run it in their own environment.
+
+Included:
+
+- Environment prerequisite review
+- Hermes/OpenClaw/clawctl-style setup where applicable
+- BYOK configuration path
+- Basic approval path setup
+- Setup notes or setup script
+- Smoke tests
+- Live handoff or recording notes
+
+Not included:
+
+- Custom business workflow implementation
+- Production incident support
+- Compliance certification
+- Large UI/dashboard work
+- Ongoing operation by The Harness Lab
+
+Acceptance:
+
+- Client can run the setup in the agreed environment.
+- Client can run the smoke tests.
+- Client receives setup notes and operating instructions.
+
+## Harness Rescue Scope
+
+Goal: repair a broken existing agent workflow or harness enough for the agreed acceptance tests to pass.
+
+Included:
+
+- Root-cause review from audit/scope notes
+- Targeted patch or rebuild of the broken path
+- Failure-path notes
+- Smoke tests for the repaired path
+- Handoff notes
+
+Not included unless separately quoted:
+
+- Full rewrite of unrelated systems
+- Additional workflows
+- New integrations not named in scope
+- Ongoing production monitoring
+- Data cleanup
+
+Acceptance:
+
+- The agreed failure mode is reproduced or documented.
+- The repaired path passes the agreed smoke tests.
+- Remaining known limitations are written down.
 
 ## Foundation Harness Scope
 
@@ -168,3 +226,23 @@ Use these guardrails before taking money:
 - Confirm whether the client expects ongoing operation after handoff.
 
 If the customer expects The Harness Lab to run their agents forever, this is not a fit without a separate operations agreement.
+
+## Care Plan Scope
+
+Goal: keep a delivered harness from drifting quietly as providers, models, costs, and workflows change.
+
+Included examples:
+
+- Scheduled health check review
+- Model/provider routing review
+- Small fixes within the monthly support cap
+- Monthly reliability notes
+- Priority lane for questions
+
+Excluded unless separately quoted:
+
+- 24/7 incident response
+- Major new features
+- New workflow builds
+- Compliance certification
+- Taking custody of client secrets

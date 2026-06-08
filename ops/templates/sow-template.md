@@ -16,10 +16,14 @@ Primary contact: [name/email]
 
 Selected package:
 
+- [ ] Free Teardown Call - $0 / 20 min
 - [ ] Reliability Audit - $750 fixed fee
+- [ ] Harness Setup - $1,500-$3,000
+- [ ] Harness Rescue - $1,500-$5,000
 - [ ] Foundation Harness - $3,000-$7,000
 - [ ] Multi-Agent Harness - $8,000-$18,000
 - [ ] Enterprise Fleet - $20,000-$50,000
+- [ ] Care Plan - $500-$2,000/month
 
 Final agreed fee: $[amount]
 
