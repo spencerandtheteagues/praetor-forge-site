@@ -40,7 +40,7 @@ const serviceOptions = [
   {
     name: 'Harness Setup',
     price: '$1,500-$3,000',
-    short: 'Stand up Hermes, OpenClaw, clawctl, model keys, approval paths, smoke tests, and a working runbook.',
+    short: 'Set up the agent workspace, model keys, approval paths, smoke tests, and a working runbook.',
     outcome: 'Self-checking setup, environment validation, BYOK config, smoke tests, and live handoff.',
     fit: 'Best when you want a proven harness stack installed and verified on your machine.',
   },
@@ -63,7 +63,7 @@ const serviceOptions = [
     price: '$8,000-$18,000',
     short: '2-10 agents with routing, handoffs, model lanes, cost limits, and human gates.',
     outcome: 'Architecture, implementation, health checks, recovery plan, operating docs, and acceptance tests.',
-    fit: 'Best for teams coordinating Codex, Claude, Hermes, OpenCode, OpenClaw, Cursor, or MCP tools.',
+    fit: 'Best for teams coordinating multiple coding agents, browser tools, workflow apps, or custom automations.',
   },
   {
     name: 'Enterprise Fleet',
@@ -138,7 +138,7 @@ const processSteps = [
     step: '02',
     title: 'Build or repair',
     icon: Wrench,
-    body: 'Our internal Hermes factory helps produce the setup, rescue patch, or custom harness package.',
+    body: 'Our delivery workflow produces the setup, rescue patch, or custom harness package against the agreed scope.',
     artifact: 'Customer-owned repo or package',
   },
   {
@@ -181,7 +181,7 @@ const problemTags = [
   'No backup/recovery',
   'Bad model routing',
   'No runbook',
-  'Need Hermes/OpenClaw setup',
+  'Need agent setup',
   'Need rescue',
   'Need new build',
 ];
@@ -326,7 +326,7 @@ function App() {
           <p>
             The Harness Lab helps businesses save time, money, and labor by making AI
             workflows harder to break and easier to operate. We audit broken setups,
-            install Hermes/OpenClaw stacks, rescue unreliable agents, and deliver
+            install reliable operating layers, rescue unreliable agents, and deliver
             customer-owned harnesses with tests, runbooks, and proof.
           </p>
           <div className="hero-actions">
@@ -355,11 +355,11 @@ function App() {
           </dl>
         </div>
 
-        <div className="hero-visual" aria-label="The Harness Lab Hermes emblem">
+        <div className="hero-visual" aria-label="The Harness Lab winged helmet emblem">
           <div className="circuit-plane" />
           <img
             src="/advancedhermes-hero-round.png"
-            alt="The Harness Lab Hermes winged helmet emblem"
+            alt="The Harness Lab winged helmet emblem"
             width="900"
             height="900"
             fetchPriority="high"
@@ -533,11 +533,11 @@ function App() {
       <section className="section proof-console reveal">
         <div>
           <p className="mini-label">How The Lab Works</p>
-          <h2>The Hermes VPS is the factory. The client receives the finished operating package.</h2>
+          <h2>Our lab workflow builds and verifies the package. You receive the finished operating system.</h2>
           <p>
-            Internally, we use Hermes, Codex, MasterHarness diagnostics, and clawctl where
-            useful to build and verify the work. Publicly, the deliverable is simple:
-            customer-owned code, setup, tests, runbook, and evidence.
+            Behind the scenes, we scope, build, inspect, and verify the work against
+            the acceptance criteria. The deliverable stays simple: customer-owned code,
+            setup, tests, runbook, and evidence.
           </p>
         </div>
         <div className="console-panel" aria-label="Reliability delivery example">
@@ -549,11 +549,11 @@ function App() {
           <ul>
             <li>
               <GitBranch aria-hidden="true" />
-              Intake brief becomes an internal Hermes factory task
+              Intake brief becomes a scoped delivery plan
             </li>
             <li>
               <Bot aria-hidden="true" />
-              Codex and review agents build, inspect, and package the result
+              Build and review passes inspect the package before handoff
             </li>
             <li>
               <TerminalSquare aria-hidden="true" />
@@ -630,10 +630,10 @@ function App() {
             <h3>System details</h3>
             <div className="form-grid">
               <Field label="Current stack" wide>
-                <textarea value={request.currentStack} onChange={(event) => update('currentStack', event.target.value)} placeholder="Claude Code, Codex, Hermes, OpenClaw, Cursor, GitHub, Slack, Telegram, Render, MCP servers, n8n, Make..." />
+                <textarea value={request.currentStack} onChange={(event) => update('currentStack', event.target.value)} placeholder="Coding agents, browser tools, GitHub, chat apps, cloud host, workflow tools, queues, databases..." />
               </Field>
               <Field label="Where it runs">
-                <textarea value={request.infrastructure} onChange={(event) => update('infrastructure', event.target.value)} placeholder="Mac, Linux desktop, VPS, Docker, Render, customer cloud, local machine..." />
+                <textarea value={request.infrastructure} onChange={(event) => update('infrastructure', event.target.value)} placeholder="Mac, Linux desktop, cloud server, Docker, Render, customer cloud, local machine..." />
               </Field>
               <Field label="Approval path">
                 <select value={request.approvalPath} onChange={(event) => update('approvalPath', event.target.value)}>
@@ -693,7 +693,7 @@ function App() {
             <Field label="Success criteria" wide>
               <textarea value={request.successCriteria} onChange={(event) => update('successCriteria', event.target.value)} placeholder="What must be true before the audit/build is considered complete?" />
             </Field>
-            <Field label="Access plan" wide hint="Safe options: screen share, temporary repo access, redacted logs, disposable VPS user, or sanitized zip.">
+            <Field label="Access plan" wide hint="Safe options: screen share, temporary repo access, redacted logs, temporary server user, or sanitized zip.">
               <textarea value={request.accessPlan} onChange={(event) => update('accessPlan', event.target.value)} placeholder="How can The Harness Lab inspect or work on this without exposing secrets?" />
             </Field>
             <Field label="Best call window" wide>
