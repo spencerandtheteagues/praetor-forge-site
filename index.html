@@ -15,7 +15,13 @@
       content="AI agent reliability services: audits, Hermes/OpenClaw setup, rescue work, customer-owned builds, smoke tests, and handoff with no hosted secrets."
     />
     <meta property="og:image" content="/advancedhermes.png" />
-    <meta property="og:url" content="https://theharnesslab.dev" />
+    <link rel="canonical" href="https://theharnesslab.com/" />
+    <meta property="og:url" content="https://theharnesslab.com/" />
+    <script>
+      if (window.location.hostname === 'theharnesslab.dev' || window.location.hostname === 'www.theharnesslab.dev') {
+        window.location.replace('https://theharnesslab.com' + window.location.pathname + window.location.search + window.location.hash);
+      }
+    </script>
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/hermes-mark.png" />

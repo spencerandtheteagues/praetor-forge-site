@@ -17,8 +17,8 @@ import {
   Wrench,
 } from 'lucide-react';
 
-const SALES_EMAIL = 'sales@theharnesslab.dev';
-const TECH_EMAIL = 'tech@theharnesslab.dev';
+const SALES_EMAIL = 'sales@theharnesslab.com';
+const TECH_EMAIL = 'tech@theharnesslab.com';
 const INTAKE_URL = 'https://harness-lab-intake.onrender.com/api/intake';
 
 const serviceOptions = [

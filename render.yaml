@@ -26,4 +26,4 @@ services:
       - key: LEAD_CHAT_ID
         value: "-5036189020"
       - key: ALLOWED_ORIGIN
-        value: https://theharnesslab.dev
+        value: https://theharnesslab.com,https://www.theharnesslab.com

@@ -117,7 +117,7 @@ function formatLead(r) {
   if (r.failureDetails) L.push(`\nFailure details: ${clip(r.failureDetails, 700)}`);
   if (r.successCriteria) L.push(`\nSuccess criteria: ${clip(r.successCriteria, 500)}`);
   if (r.accessPlan) L.push(`\nAccess plan: ${clip(r.accessPlan, 400)}`);
-  L.push('\n— via theharnesslab.dev intake');
+  L.push('\n— via theharnesslab.com intake');
   return L.join('\n').slice(0, TG_LIMIT);
 }
 
