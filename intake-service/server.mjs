@@ -6,14 +6,33 @@
 //   PORT                (provided by Render)
 //   TELEGRAM_BOT_TOKEN  (required) — Hermes bot token, used to post the lead
 //   LEAD_CHAT_ID        (required) — target chat id (e.g. -5036189020)
-//   ALLOWED_ORIGIN      (optional) — CORS origin, default https://theharnesslab.dev
+//   ALLOWED_ORIGIN      (optional) — extra CORS origins, comma-separated; these
+//                       are added to the built-in canonical hosts below.
 import http from 'node:http';
 import https from 'node:https';
 
 const PORT = process.env.PORT || 8080;
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const LEAD_CHAT_ID = process.env.LEAD_CHAT_ID || '';
-const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://theharnesslab.dev';
+// Browser origins we accept. Union of the canonical hosts (.com is the main site,
+// .dev kept for the transition) plus anything in ALLOWED_ORIGIN. We reflect the
+// caller's Origin when it is on the list, so apex + www of both domains work
+// through the .dev -> .com switch without a redeploy.
+const DEFAULT_ORIGINS = [
+  'https://theharnesslab.com',
+  'https://www.theharnesslab.com',
+  'https://theharnesslab.dev',
+  'https://www.theharnesslab.dev',
+];
+const ALLOWED_ORIGINS = new Set(
+  [...DEFAULT_ORIGINS, ...(process.env.ALLOWED_ORIGIN || '').split(',')]
+    .map((s) => s.trim())
+    .filter(Boolean),
+);
+const pickOrigin = (req) => {
+  const o = req.headers.origin;
+  return o && ALLOWED_ORIGINS.has(o) ? o : '';
+};
 const MAX_BODY = 64 * 1024; // 64 KB
 const TG_LIMIT = 3900; // keep under Telegram's 4096
 
@@ -30,7 +49,7 @@ function rateLimited(ip) {
 }
 
 function cors(res) {
-  res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
+  if (res.__allowOrigin) res.setHeader('Access-Control-Allow-Origin', res.__allowOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Vary', 'Origin');
@@ -103,6 +122,7 @@ function formatLead(r) {
 }
 
 const server = http.createServer((req, res) => {
+  res.__allowOrigin = pickOrigin(req);
   if (req.method === 'OPTIONS') {
     cors(res);
     res.writeHead(204);
