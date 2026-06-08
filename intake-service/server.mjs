@@ -29,6 +29,7 @@ const ALLOWED_ORIGINS = new Set(
     .map((s) => s.trim())
     .filter(Boolean),
 );
+const LEGACY_HOSTS = new Set(['theharnesslab.dev', 'www.theharnesslab.dev']);
 const pickOrigin = (req) => {
   const o = req.headers.origin;
   return o && ALLOWED_ORIGINS.has(o) ? o : '';
@@ -58,6 +59,15 @@ function json(res, code, obj) {
   cors(res);
   res.writeHead(code, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(obj));
+}
+
+function redirectLegacyDomain(req, res) {
+  const host = String(req.headers.host || '').split(':')[0].toLowerCase();
+  if (!LEGACY_HOSTS.has(host) || (req.method !== 'GET' && req.method !== 'HEAD')) return false;
+  const path = String(req.url || '/').startsWith('/') ? req.url : '/';
+  res.writeHead(301, { Location: `https://theharnesslab.com${path}` });
+  res.end();
+  return true;
 }
 
 function sendTelegram(text) {
@@ -122,6 +132,7 @@ function formatLead(r) {
 }
 
 const server = http.createServer((req, res) => {
+  if (redirectLegacyDomain(req, res)) return;
   res.__allowOrigin = pickOrigin(req);
   if (req.method === 'OPTIONS') {
     cors(res);
