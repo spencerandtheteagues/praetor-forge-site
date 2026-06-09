@@ -99,6 +99,12 @@ const businessOutcomes = [
   ['Prove delivery', 'Hand clients evidence: what was tested, what failed, what was fixed, and how to recover.'],
 ];
 
+const diagramPoints = [
+  ['Work enters', 'Requests, leads, tickets, browser tasks, records, and existing agent workflows.'],
+  ['Controls run', 'Routing, human approvals, budget caps, retry paths, secret redaction, and smoke tests.'],
+  ['Proof leaves', 'Triaged work, safer handoffs, failure notes, evidence bundles, and an owned runbook.'],
+];
+
 const failureModes = [
   ['Dropped messages', 'No acknowledgement, retry queue, or dead-letter path means customer work disappears.'],
   ['Runaway spend', 'Agents loop, retry too fast, or use expensive models for cheap work.'],
@@ -322,6 +328,7 @@ function App() {
         </a>
         <nav aria-label="Primary navigation">
           <a href="#services">Services</a>
+          <a href="#diagram">Diagram</a>
           <a href="#failures">Failures</a>
           <a href="#who">Who benefits</a>
           <a href="#process">Process</a>
@@ -413,6 +420,57 @@ function App() {
               <p>{body}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section id="diagram" className="section diagram-section reveal">
+        <div className="section-heading">
+          <p>Shareable Diagram</p>
+          <h2>A clearer picture of what the harness adds.</h2>
+          <span>
+            Use this with prospects when the word harness needs a plain-English explanation:
+            work comes in, a controlled operating layer runs, and tested evidence leaves.
+          </span>
+        </div>
+        <div className="diagram-layout">
+          <a className="diagram-frame" href="/marketing/harness-value-diagram.png" aria-label="Open The Harness Lab value diagram">
+            <img
+              src="/marketing/harness-value-diagram.png"
+              alt="Diagram showing business work entering The Harness Lab reliability layer, then leaving as controlled, tested, customer-owned output."
+              width="1600"
+              height="1020"
+              loading="lazy"
+            />
+          </a>
+          <aside className="diagram-copy">
+            <h3>Built for email outreach and sales calls.</h3>
+            <p>
+              The diagram avoids guaranteed ROI claims. It explains the repeatable value:
+              fewer manual checks, controlled spend, recoverable failures, and customer-owned
+              proof instead of blind automation.
+            </p>
+            <div className="diagram-points">
+              {diagramPoints.map(([title, body]) => (
+                <article key={title}>
+                  <Check aria-hidden="true" />
+                  <div>
+                    <h4>{title}</h4>
+                    <p>{body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="diagram-actions">
+              <a className="secondary-button" href="/marketing/harness-value-diagram.png" download>
+                <FileCheck2 aria-hidden="true" />
+                Download PNG
+              </a>
+              <a className="primary-button" href="#intake">
+                Start audit
+                <ArrowRight aria-hidden="true" />
+              </a>
+            </div>
+          </aside>
         </div>
       </section>
 

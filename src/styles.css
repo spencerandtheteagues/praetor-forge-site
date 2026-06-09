@@ -518,6 +518,100 @@ img {
   margin: 9px 0 0;
 }
 
+.diagram-section {
+  border-top: 1px solid rgba(128, 213, 194, 0.18);
+  border-bottom: 1px solid rgba(128, 213, 194, 0.18);
+}
+
+.diagram-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
+  gap: 26px;
+  align-items: stretch;
+}
+
+.diagram-frame {
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: rgba(5, 7, 9, 0.82);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.diagram-frame img {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.diagram-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(14, 22, 22, 0.9), rgba(7, 12, 13, 0.94)),
+    radial-gradient(420px 220px at 50% 0%, rgba(244, 124, 68, 0.08), transparent 72%);
+}
+
+.diagram-copy h3 {
+  margin: 0;
+  color: var(--marble);
+  font-family: var(--font-roman);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.diagram-copy > p,
+.diagram-points p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.62;
+}
+
+.diagram-points {
+  display: grid;
+  gap: 1px;
+  border: 1px solid rgba(128, 213, 194, 0.22);
+  background: rgba(128, 213, 194, 0.12);
+}
+
+.diagram-points article {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 13px;
+  padding: 15px;
+  background: rgba(7, 6, 4, 0.74);
+}
+
+.diagram-points svg {
+  width: 20px;
+  height: 20px;
+  color: var(--gold-bright);
+}
+
+.diagram-points h4 {
+  margin: 0 0 4px;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.diagram-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: auto;
+}
+
 .service-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1079,9 +1173,15 @@ textarea:focus {
   .section-heading,
   .split,
   .proof-console,
+  .diagram-layout,
   .intake-grid,
   .site-footer {
     grid-template-columns: 1fr;
+  }
+
+  .diagram-frame img {
+    height: auto;
+    min-height: 0;
   }
 
   .brief-panel {
