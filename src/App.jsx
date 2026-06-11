@@ -543,7 +543,7 @@ function App() {
         <div className="mythos-shell" aria-label="Mythos OS demo preview">
           <div className="mythos-copy">
             <p className="mini-label">Audit-call preview</p>
-            <h3>This is what a prospect should see before they buy a build.</h3>
+            <h3>See the control room before the build starts.</h3>
             <p>
               The demo makes the value visual: where work is queued, which model lane is safe,
               what needs approval, which tasks saved proof, and where failures get recovered
@@ -828,7 +828,7 @@ function App() {
                   {serviceOptions.map((service) => (
                     <option key={service.name}>{service.name}</option>
                   ))}
-                  <option>More information / sales call</option>
+                  <option>More information / fit call</option>
                 </select>
               </Field>
               <Field label="Urgency">
