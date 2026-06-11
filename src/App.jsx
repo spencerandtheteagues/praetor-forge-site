@@ -480,9 +480,9 @@ function App() {
           <p>Shareable Diagram</p>
           <h2>A plain-English map of how the harness runs business work.</h2>
           <span>
-            Use this with prospects when they need to see the setup: pick a repeated
-            workflow, connect the business tools, automate the safe steps, and keep
-            owner approval on risky actions.
+            See the setup in one pass: choose a repeated workflow, connect the tools
+            already in use, let the harness handle safe steps, and keep approval with
+            the owner for actions that matter.
           </span>
         </div>
         <div className="diagram-layout">
@@ -496,7 +496,7 @@ function App() {
             />
           </a>
           <aside className="diagram-copy">
-            <h3>Built for business owners, sales calls, and email outreach.</h3>
+            <h3>Built for owners, operators, and technical leads.</h3>
             <p>
               The diagram shows where the harness sits in a normal business workflow:
               between repeated work and the tools already used every day. It explains
