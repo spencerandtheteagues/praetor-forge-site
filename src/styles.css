@@ -438,6 +438,7 @@ img {
 .section {
   padding-top: 92px;
   padding-bottom: 92px;
+  scroll-margin-top: 92px;
 }
 
 .trust-band {
@@ -609,9 +610,9 @@ img {
 
 .diagram-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
-  gap: 26px;
-  align-items: stretch;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  align-items: start;
 }
 
 .diagram-frame {
@@ -625,16 +626,17 @@ img {
 
 .diagram-frame img {
   width: 100%;
-  height: 100%;
-  min-height: 420px;
-  object-fit: cover;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
   object-position: center;
 }
 
 .diagram-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+  gap: 20px 26px;
+  align-items: start;
   padding: 28px;
   border: 1px solid var(--line);
   background:
@@ -652,6 +654,12 @@ img {
   text-transform: uppercase;
 }
 
+.diagram-copy h3,
+.diagram-copy > p,
+.diagram-actions {
+  grid-column: 1;
+}
+
 .diagram-copy > p,
 .diagram-points p {
   margin: 0;
@@ -660,6 +668,8 @@ img {
 }
 
 .diagram-points {
+  grid-column: 2;
+  grid-row: 1 / span 3;
   display: grid;
   gap: 1px;
   border: 1px solid rgba(199, 201, 255, 0.18);
@@ -691,9 +701,310 @@ img {
 
 .diagram-actions {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.mythos-preview {
+  border-bottom: 1px solid rgba(199, 201, 255, 0.14);
+}
+
+.mythos-shell {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.36fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.mythos-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(19, 19, 37, 0.9), rgba(10, 10, 21, 0.94)),
+    radial-gradient(420px 220px at 50% 0%, rgba(52, 227, 208, 0.08), transparent 72%);
+}
+
+.mythos-copy h3 {
+  margin: 0;
+  color: var(--marble);
+  font-family: var(--font-display);
+  font-size: clamp(25px, 2.8vw, 34px);
+  font-weight: 560;
+  line-height: 1.08;
+}
+
+.mythos-copy p:not(.mini-label) {
+  margin: 0;
+  color: var(--marble-soft);
+  line-height: 1.65;
+}
+
+.mythos-actions {
+  display: grid;
   gap: 12px;
   margin-top: auto;
+}
+
+.mythos-window {
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(180deg, rgba(12, 12, 24, 0.94), rgba(6, 6, 13, 0.96)),
+    radial-gradient(760px 320px at 60% 0%, rgba(109, 107, 255, 0.11), transparent 70%);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.mythos-topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--line);
+  color: var(--gold-bright);
+  font-family: var(--font-mono);
+}
+
+.mythos-topbar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--aurora-a);
+  box-shadow: 0 0 14px rgba(52, 227, 208, 0.9);
+}
+
+.mythos-topbar strong {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mythos-topbar em {
+  color: var(--dim);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.mythos-dashboard {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  min-height: 560px;
+}
+
+.mythos-rail {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 18px 14px;
+  border-right: 1px solid var(--line);
+  background: rgba(5, 5, 11, 0.62);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.mythos-rail strong {
+  margin-bottom: 6px;
+  color: var(--gold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mythos-rail span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+}
+
+.mythos-rail span.active {
+  border-color: rgba(52, 227, 208, 0.36);
+  color: var(--marble);
+  background: rgba(52, 227, 208, 0.09);
+}
+
+.mythos-main {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px;
+}
+
+.mythos-meters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mythos-meters article,
+.mythos-panel-grid article,
+.mythos-ledger {
+  border: 1px solid rgba(199, 201, 255, 0.16);
+  border-radius: 7px;
+  background: rgba(16, 16, 31, 0.82);
+}
+
+.mythos-meters article {
+  display: grid;
+  gap: 11px;
+  min-height: 148px;
+  padding: 16px;
+}
+
+.mythos-meters article > div {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mythos-meters h4,
+.mythos-panel-grid h4,
+.mythos-ledger h4 {
+  margin: 0;
+  color: var(--marble);
+}
+
+.mythos-meters h4 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.mythos-meters strong {
+  color: var(--gold-bright);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.mythos-meters p,
+.mythos-panel-grid p,
+.mythos-ledger p,
+.mythos-ledger span {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.meter-track {
+  display: block;
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(199, 201, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(5, 5, 11, 0.86);
+}
+
+.meter-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--grad-aurora);
+}
+
+.mythos-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mythos-panel-grid article {
+  min-height: 164px;
+  padding: 16px;
+}
+
+.mythos-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.mythos-panel-head svg {
+  width: 22px;
+  height: 22px;
+  color: var(--gold-bright);
+}
+
+.mythos-panel-head span {
+  color: var(--aurora-a);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mythos-panel-grid h4 {
+  font-family: var(--font-roman);
+  font-size: 17px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mythos-panel-grid p {
+  margin-top: 8px;
+}
+
+.mythos-ledger {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.34fr) minmax(0, 1fr);
+  gap: 14px;
+  padding: 16px;
+}
+
+.mythos-ledger h4 {
+  font-family: var(--font-roman);
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mythos-ledger p {
+  margin-top: 8px;
+}
+
+.mythos-ledger ul {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 1px;
+  border: 1px solid rgba(199, 201, 255, 0.12);
+  border-radius: 7px;
+  background: rgba(199, 201, 255, 0.09);
+  list-style: none;
+  overflow: hidden;
+}
+
+.mythos-ledger li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 12px;
+  background: rgba(8, 8, 17, 0.76);
+}
+
+.mythos-ledger svg {
+  width: 18px;
+  height: 18px;
+  color: var(--aurora-a);
+}
+
+.mythos-ledger strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--marble);
+  font-size: 14px;
 }
 
 .service-grid {
@@ -1310,14 +1621,46 @@ textarea:focus {
   .split,
   .proof-console,
   .diagram-layout,
+  .mythos-shell,
   .intake-grid,
   .site-footer {
     grid-template-columns: 1fr;
   }
 
-  .diagram-frame img {
-    height: auto;
-    min-height: 0;
+  .diagram-copy {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-copy h3,
+  .diagram-copy > p,
+  .diagram-actions,
+  .diagram-points {
+    grid-column: 1;
+  }
+
+  .diagram-points {
+    grid-row: auto;
+  }
+
+  .mythos-dashboard {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .mythos-rail {
+    grid-template-columns: repeat(5, minmax(92px, 1fr));
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mythos-rail strong {
+    grid-column: 1 / -1;
+  }
+
+  .mythos-meters,
+  .mythos-ledger {
+    grid-template-columns: 1fr;
   }
 
   .brief-panel {
@@ -1392,6 +1735,7 @@ textarea:focus {
   .service-grid,
   .process-line,
   .proof-grid,
+  .mythos-panel-grid,
   .form-grid,
   .form-actions {
     grid-template-columns: 1fr;
@@ -1430,8 +1774,32 @@ textarea:focus {
   }
 
   .form-panel,
-  .service-card {
+  .service-card,
+  .diagram-copy,
+  .mythos-copy {
     padding: 22px;
+  }
+
+  .diagram-actions,
+  .mythos-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .mythos-main {
+    padding: 14px;
+  }
+
+  .mythos-topbar {
+    grid-template-columns: auto 1fr;
+  }
+
+  .mythos-topbar em {
+    display: none;
+  }
+
+  .mythos-rail {
+    grid-template-columns: repeat(5, minmax(84px, 1fr));
+    padding: 12px;
   }
 
   .process-line::before {

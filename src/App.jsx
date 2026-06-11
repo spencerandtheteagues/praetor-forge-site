@@ -104,9 +104,50 @@ const businessOutcomes = [
 ];
 
 const diagramPoints = [
-  ['Work enters', 'Requests, leads, tickets, browser tasks, records, and existing agent workflows.'],
-  ['Controls run', 'Routing, human approvals, budget caps, retry paths, secret redaction, and smoke tests.'],
-  ['Proof leaves', 'Triaged work, safer handoffs, failure notes, evidence bundles, and an owned runbook.'],
+  ['Pick one repeated workflow', 'Leads, tickets, invoices, records, browser checks, or any weekly task staff already repeats.'],
+  ['Connect the tools already used', 'Inbox, CRM, sheets, calendar, files, browser apps, existing agents, scripts, and workflow tools.'],
+  ['Automate the safe steps', 'The harness drafts, checks, routes, updates, retries, and escalates while approvals stay with the owner.'],
+  ['Show where savings happen', 'Less checking, capped spend, recoverable failures, and proof the customer owns.'],
+];
+
+const mythosMeters = [
+  ['Claude 5h lane', 'Usage watched', 'No blind calls when a subscription window is tight.', 64],
+  ['Claude 7d lane', 'Fallback ready', 'Work can route before one model lane blocks the job.', 46],
+  ['Local / Ollama lane', 'Cheap checks', 'Low-risk classification and summaries stay off premium lanes.', 72],
+];
+
+const mythosPanels = [
+  {
+    title: 'Rate-limit meters',
+    icon: TimerReset,
+    body: 'Track model windows, queue risky bursts, and route the next task before a 429 storm wastes the day.',
+    status: 'capacity visible',
+  },
+  {
+    title: 'Audit kit',
+    icon: ClipboardCheck,
+    body: 'Turn the 26-point teardown into a visual checklist: cost exposure, secrets, approvals, retries, and recovery.',
+    status: 'findings mapped',
+  },
+  {
+    title: 'Agent ledger',
+    icon: GitBranch,
+    body: 'Show what ran, what stalled, what retried, what needs approval, and what evidence was saved.',
+    status: 'handoffs traced',
+  },
+  {
+    title: 'Remote desktop',
+    icon: TerminalSquare,
+    body: 'Watch browser, VPS, and test surfaces during the build so customer workflows are proven on the right machine.',
+    status: 'canaries checked',
+  },
+];
+
+const mythosEvents = [
+  ['Lead follow-up', 'Draft ready, waiting on owner send approval'],
+  ['Support triage', 'Refund path blocked until human review'],
+  ['Ops record', 'Invoice extracted, totals verified, proof saved'],
+  ['Browser check', 'Session expired, retry note added to runbook'],
 ];
 
 const failureModes = [
@@ -333,6 +374,7 @@ function App() {
         <nav aria-label="Primary navigation">
           <a href="#services">Services</a>
           <a href="#diagram">Diagram</a>
+          <a href="#mythos-demo">Demo</a>
           <a href="#failures">Failures</a>
           <a href="#who">Who benefits</a>
           <a href="#process">Process</a>
@@ -436,10 +478,11 @@ function App() {
       <section id="diagram" className="section diagram-section reveal">
         <div className="section-heading">
           <p>Shareable Diagram</p>
-          <h2>A clearer picture of what the harness adds.</h2>
+          <h2>A plain-English map of how the harness runs business work.</h2>
           <span>
-            Use this with prospects when the word harness needs a plain-English explanation:
-            work comes in, a controlled operating layer runs, and tested evidence leaves.
+            Use this with prospects when they need to see the setup: pick a repeated
+            workflow, connect the business tools, automate the safe steps, and keep
+            owner approval on risky actions.
           </span>
         </div>
         <div className="diagram-layout">
@@ -453,11 +496,12 @@ function App() {
             />
           </a>
           <aside className="diagram-copy">
-            <h3>Built for email outreach and sales calls.</h3>
+            <h3>Built for business owners, sales calls, and email outreach.</h3>
             <p>
-              The diagram avoids guaranteed ROI claims. It explains the repeatable value:
-              fewer manual checks, controlled spend, recoverable failures, and customer-owned
-              proof instead of blind automation.
+              The diagram shows where the harness sits in a normal business workflow:
+              between repeated work and the tools already used every day. It explains
+              how time, money, and labor savings come from safer routing, fewer manual
+              checks, owner approvals, and proof that failures can be recovered.
             </p>
             <div className="diagram-points">
               {diagramPoints.map(([title, body]) => (
@@ -481,6 +525,109 @@ function App() {
               </a>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section id="mythos-demo" className="section mythos-preview reveal">
+        <div className="section-heading">
+          <p>Mythos OS Demo</p>
+          <h2>A preview of the control room behind each harness build.</h2>
+          <span>
+            Mythos OS is the internal cockpit we use to show model limits, audit
+            findings, agent activity, and remote test surfaces during a build. The
+            customer deliverable is still owned code, setup, tests, and a runbook on
+            your infrastructure.
+          </span>
+        </div>
+
+        <div className="mythos-shell" aria-label="Mythos OS demo preview">
+          <div className="mythos-copy">
+            <p className="mini-label">Audit-call preview</p>
+            <h3>This is what a prospect should see before they buy a build.</h3>
+            <p>
+              The demo makes the value visual: where work is queued, which model lane is safe,
+              what needs approval, which tasks saved proof, and where failures get recovered
+              instead of disappearing.
+            </p>
+            <div className="mythos-actions">
+              <a className="primary-button" href="#intake">
+                Request the demo walkthrough
+                <ArrowRight aria-hidden="true" />
+              </a>
+              <a className="secondary-button" href="#diagram">
+                View setup map
+                <FileCheck2 aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+
+          <div className="mythos-window">
+            <div className="mythos-topbar">
+              <span />
+              <strong>mythos os / harness lab cockpit</strong>
+              <em>sanitized preview</em>
+            </div>
+            <div className="mythos-dashboard">
+              <aside className="mythos-rail" aria-label="Demo navigation">
+                <strong>Fleet</strong>
+                <span className="active">Overview</span>
+                <span>Audit kit</span>
+                <span>Ledger</span>
+                <span>Remote</span>
+              </aside>
+
+              <div className="mythos-main">
+                <div className="mythos-meters">
+                  {mythosMeters.map(([label, value, note, width]) => (
+                    <article key={label}>
+                      <div>
+                        <h4>{label}</h4>
+                        <strong>{value}</strong>
+                      </div>
+                      <p>{note}</p>
+                      <span className="meter-track">
+                        <span style={{ width: `${width}%` }} />
+                      </span>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="mythos-panel-grid">
+                  {mythosPanels.map((panel) => {
+                    const Icon = panel.icon;
+                    return (
+                      <article key={panel.title}>
+                        <div className="mythos-panel-head">
+                          <Icon aria-hidden="true" />
+                          <span>{panel.status}</span>
+                        </div>
+                        <h4>{panel.title}</h4>
+                        <p>{panel.body}</p>
+                      </article>
+                    );
+                  })}
+                </div>
+
+                <div className="mythos-ledger">
+                  <div>
+                    <h4>Agent ledger</h4>
+                    <p>Example events from one audited workflow.</p>
+                  </div>
+                  <ul>
+                    {mythosEvents.map(([title, body]) => (
+                      <li key={title}>
+                        <Check aria-hidden="true" />
+                        <div>
+                          <strong>{title}</strong>
+                          <span>{body}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

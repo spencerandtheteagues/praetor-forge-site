@@ -3,439 +3,806 @@
 <head>
 <meta charset="utf-8" />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
 
   :root {
-    --obsidian: #050709;
-    --obsidian-2: #071014;
-    --panel: #0d1717;
-    --panel-2: #111d1c;
-    --panel-3: #15110c;
-    --line: rgba(155, 214, 200, 0.24);
-    --line-2: rgba(155, 214, 200, 0.46);
-    --teal: #9bd6c8;
-    --teal-soft: #ddfff5;
-    --ember: #f47c44;
-    --ember-soft: #ffb07c;
-    --gold: #e0a93b;
-    --cream: #f3f6f1;
-    --muted: #cad6d0;
-    --dim: #788a84;
-    --green: #7fd39a;
+    --obsidian: #06060c;
+    --obsidian-2: #0a0a14;
+    --panel: rgba(17, 17, 32, 0.86);
+    --panel-solid: #10101f;
+    --panel-2: #121225;
+    --marble: #f5f3ff;
+    --marble-soft: #c9cbe8;
+    --muted: #a6a8c4;
+    --dim: #6b6e8e;
+    --gold: #f4c87a;
+    --gold-bright: #ffe6b0;
+    --gold-ink: #1c1206;
+    --aurora-a: #34e3d0;
+    --aurora-b: #6d6bff;
+    --aurora-c: #d96bff;
+    --line: rgba(199, 201, 255, 0.14);
+    --line-strong: rgba(244, 200, 122, 0.45);
+    --grad-aurora: linear-gradient(92deg, var(--aurora-a) 0%, var(--aurora-b) 50%, var(--aurora-c) 100%);
+    --grad-gold: linear-gradient(135deg, #ffe6b0 0%, #f4c87a 55%, #e2a85c 100%);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: var(--obsidian); }
-  body { font-family: 'Spline Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Spline Sans', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
 
   .canvas {
     width: 1600px;
     height: 1020px;
     position: relative;
     overflow: hidden;
-    color: var(--cream);
-    padding: 42px 54px 34px;
+    color: var(--marble);
+    padding: 34px 54px 30px;
     background:
-      radial-gradient(980px 500px at 84% 2%, rgba(244, 124, 68, 0.17), transparent 62%),
-      radial-gradient(920px 560px at 8% 16%, rgba(155, 214, 200, 0.13), transparent 58%),
-      linear-gradient(180deg, #050709 0%, #071014 52%, #040607 100%);
+      radial-gradient(1100px 600px at 82% -8%, rgba(109, 107, 255, 0.16), transparent 58%),
+      radial-gradient(900px 560px at -6% 16%, rgba(52, 227, 208, 0.11), transparent 56%),
+      radial-gradient(820px 700px at 52% 112%, rgba(217, 107, 255, 0.09), transparent 62%),
+      linear-gradient(180deg, #06060c 0%, #0a0a14 48%, #050509 100%);
   }
 
   .canvas::before {
     content: "";
     position: absolute;
     inset: 0;
-    opacity: 0.5;
     pointer-events: none;
+    opacity: 0.55;
     background-image:
-      linear-gradient(rgba(155, 214, 200, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(155, 214, 200, 0.035) 1px, transparent 1px);
-    background-size: 74px 74px;
-    mask-image: radial-gradient(120% 92% at 50% 0%, #000 22%, transparent 84%);
+      linear-gradient(rgba(199, 201, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(199, 201, 255, 0.035) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(120% 92% at 50% 0%, #000 25%, transparent 84%);
   }
 
   .canvas::after {
     content: "";
     position: absolute;
     inset: 18px;
-    border: 1px solid rgba(155, 214, 200, 0.14);
-    border-radius: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
     pointer-events: none;
   }
 
-  .head { display: flex; align-items: center; justify-content: space-between; gap: 30px; position: relative; z-index: 2; }
-  .brand { display: flex; align-items: center; gap: 16px; }
+  .aurora-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--grad-aurora);
+    opacity: 0.9;
+  }
+
+  .content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
+
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    min-height: 64px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 15px; }
   .brand img {
-    width: 62px;
-    height: 62px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     box-shadow:
-      0 0 0 1px rgba(155, 214, 200, 0.5),
-      0 0 28px rgba(244, 124, 68, 0.34);
+      0 0 0 1px rgba(199, 201, 255, 0.55),
+      0 0 28px -8px rgba(244, 200, 122, 0.7);
   }
-  .brand .wm .k {
-    font-family: 'Spline Sans Mono', monospace;
+  .brand .k {
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
     font-size: 10px;
-    letter-spacing: 0.34em;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: var(--ember-soft);
+    color: var(--gold);
   }
-  .brand .wm h1 {
+  .brand h1 {
     margin-top: 3px;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
+    font-family: 'Cinzel', Georgia, serif;
     font-size: 25px;
     line-height: 1.05;
-    letter-spacing: 0.1em;
-    color: var(--cream);
+    letter-spacing: 0.08em;
+    color: var(--marble);
   }
-  .hvp { max-width: 600px; text-align: right; }
-  .hvp p {
-    font-family: 'Fraunces', serif;
-    font-size: 19px;
-    line-height: 1.42;
-    color: var(--teal-soft);
-    font-weight: 500;
+
+  .offer {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border: 1px solid rgba(244, 200, 122, 0.36);
+    border-radius: 999px;
+    color: var(--gold-bright);
+    background: rgba(16, 16, 31, 0.72);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
-  .hvp p b { color: var(--ember-soft); font-weight: 600; }
 
   .rule {
     height: 1px;
-    background: linear-gradient(90deg, rgba(155, 214, 200, 0), rgba(155, 214, 200, 0.58), rgba(244, 124, 68, 0.48), rgba(155, 214, 200, 0));
-    margin: 22px 0 18px;
+    margin: 10px 0 12px;
+    background: linear-gradient(90deg, transparent, rgba(199, 201, 255, 0.22), rgba(244, 200, 122, 0.38), transparent);
   }
 
-  .sectitle { text-align: center; margin-bottom: 18px; position: relative; z-index: 2; }
-  .sectitle h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
+  .title {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .title .line { height: 1px; background: rgba(199, 201, 255, 0.12); }
+  .title-copy { text-align: center; }
+  .title-copy .eyebrow {
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .title-copy h2 {
+    margin-top: 6px;
+    font-family: 'Fraunces', Georgia, serif;
     font-size: 31px;
-    letter-spacing: 0.01em;
-    color: var(--cream);
+    line-height: 1.02;
+    font-weight: 600;
+    color: var(--marble);
   }
-  .sectitle h2 b { color: var(--teal-soft); font-weight: 600; }
-  .sectitle span {
-    display: block;
-    margin-top: 7px;
-    font-family: 'Spline Sans Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .pipe { display: flex; align-items: stretch; gap: 0; position: relative; z-index: 2; }
-  .col { flex: 1; display: flex; flex-direction: column; }
-  .col.center { flex: 1.42; }
-  .gutter { width: 74px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .arrow { display: flex; flex-direction: column; align-items: center; gap: 7px; }
-  .arrow .lbl {
-    font-family: 'Spline Sans Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--teal-soft);
-  }
-  .arrow svg { filter: drop-shadow(0 0 8px rgba(155, 214, 200, 0.35)); }
-
-  .pcard {
-    flex: 1;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 20px 20px 18px;
-    background:
-      linear-gradient(180deg, rgba(13, 23, 23, 0.96), rgba(8, 14, 14, 0.98)),
-      radial-gradient(440px 240px at 50% 0%, rgba(155, 214, 200, 0.09), transparent 72%);
-    box-shadow: 0 18px 46px -26px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.035);
-    display: flex;
-    flex-direction: column;
-  }
-  .pcard .ph { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-  .pcard .ph .num {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    color: var(--obsidian);
-    background: var(--teal);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    box-shadow: 0 0 14px rgba(155, 214, 200, 0.4);
-  }
-  .pcard .ph .t {
-    font-family: 'Spline Sans Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .pcard h3 {
-    margin-bottom: 14px;
-    font-family: 'Cinzel', serif;
-    font-size: 21px;
-    letter-spacing: 0.03em;
-    color: var(--cream);
-  }
-
-  ul.items { list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1; }
-  ul.items li { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: var(--muted); line-height: 1.3; }
-  ul.items li .ic {
-    flex: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--line);
-    background: rgba(255, 255, 255, 0.025);
-  }
-  .col.out ul.items li .ic { border-color: #2f5a3c; background: rgba(127, 211, 154, 0.07); }
-  .pcard .cap { margin-top: 14px; font-size: 12.5px; font-style: italic; color: var(--dim); font-family: 'Fraunces', serif; }
-
-  .col.center .pcard {
-    border-color: var(--line-2);
-    position: relative;
-    overflow: hidden;
-    background:
-      linear-gradient(180deg, rgba(17, 29, 28, 0.98), rgba(14, 15, 11, 0.98)),
-      radial-gradient(560px 300px at 50% 0%, rgba(155, 214, 200, 0.16), transparent 72%);
-    box-shadow:
-      0 0 0 1px rgba(155, 214, 200, 0.22),
-      0 26px 60px -28px rgba(244, 124, 68, 0.35);
-  }
-  .col.center .pcard .watermark { position: absolute; right: -48px; bottom: -50px; width: 300px; opacity: 0.055; pointer-events: none; }
-  .orb {
-    border: 1px solid var(--line-2);
-    border-radius: 13px;
-    padding: 13px 15px;
-    margin-bottom: 13px;
-    position: relative;
-    z-index: 2;
-    background: radial-gradient(120% 120% at 50% 0%, rgba(155, 214, 200, 0.12), rgba(155, 214, 200, 0) 70%), rgba(255, 255, 255, 0.025);
-  }
-  .orb .ti { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
-  .orb .ti svg { filter: drop-shadow(0 0 8px rgba(155, 214, 200, 0.4)); }
-  .orb .ti b { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 0.05em; color: var(--teal-soft); }
-  .orb p { font-size: 13px; color: var(--muted); line-height: 1.42; }
-  .agents { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; position: relative; z-index: 2; margin-bottom: 13px; }
-  .agent { border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; background: rgba(255, 255, 255, 0.022); display: flex; align-items: center; gap: 9px; }
-  .agent .d { width: 9px; height: 9px; border-radius: 50%; flex: none; box-shadow: 0 0 8px currentColor; }
-  .agent .nm { font-size: 13px; font-weight: 600; color: var(--cream); line-height: 1.1; }
-  .agent .sb { font-family: 'Spline Sans Mono', monospace; font-size: 9.5px; color: var(--dim); margin-top: 2px; }
-  .guard { border: 1px solid rgba(244, 124, 68, 0.38); border-radius: 11px; padding: 11px 13px; background: rgba(244, 124, 68, 0.045); position: relative; z-index: 2; }
-  .guard .gt {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 9px;
-    font-family: 'Spline Sans Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ember-soft);
-  }
-  .guard .gchips { display: flex; flex-wrap: wrap; gap: 7px; }
-  .guard .gchips span { font-size: 11.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); border-radius: 7px; padding: 4px 9px; }
-
-  .value { margin-top: 26px; position: relative; z-index: 2; }
-  .vhdr { text-align: center; font-family: 'Spline Sans Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 13px; }
-  .vhdr b { color: var(--teal-soft); }
-  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .tile {
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 18px 18px;
-    background: linear-gradient(180deg, rgba(13, 23, 23, 0.96), rgba(8, 14, 14, 0.98));
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .tile::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--teal), var(--ember)); }
-  .tile .big {
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    font-size: 34px;
-    line-height: 1;
-    letter-spacing: 0.01em;
-    background: linear-gradient(180deg, var(--teal-soft), var(--ember-soft));
+  .title-copy h2 .gradient {
+    font-style: italic;
+    background: var(--grad-aurora);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .tile .ic2 { margin-bottom: 9px; display: flex; justify-content: center; }
-  .tile .lab { margin-top: 9px; font-size: 13px; color: var(--muted); line-height: 1.35; }
-  .tile .lab b { color: var(--cream); font-weight: 600; }
-
-  .foot { margin-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; z-index: 2; }
-  .cta { display: flex; align-items: center; gap: 16px; }
-  .cta .badge {
-    font-family: 'Spline Sans Mono', monospace;
-    font-size: 12px;
-    color: #fff4e8;
-    background: linear-gradient(135deg, rgba(244, 124, 68, 0.96), rgba(155, 54, 15, 0.92));
-    padding: 9px 16px;
-    border-radius: 9px;
-    font-weight: 600;
-    box-shadow: 0 0 22px rgba(244, 124, 68, 0.3);
+  .title-copy p {
+    margin-top: 5px;
+    color: var(--marble-soft);
+    font-size: 13px;
   }
-  .cta .txt { font-family: 'Fraunces', serif; font-size: 16px; color: var(--cream); }
-  .cta .txt b { color: var(--teal-soft); }
-  .url { text-align: right; }
-  .url .u { font-family: 'Cinzel', serif; font-size: 20px; letter-spacing: 0.06em; color: var(--teal-soft); }
-  .url .tag { font-family: 'Spline Sans Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); margin-top: 3px; }
 
-  .note { position: absolute; left: 0; right: 0; bottom: 9px; text-align: center; font-family: 'Spline Sans Mono', monospace; font-size: 9.5px; color: #6e7b77; letter-spacing: 0.04em; }
+  .setup-map {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .map-step {
+    position: relative;
+    min-height: 60px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: rgba(15, 15, 30, 0.74);
+  }
+  .map-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 27px;
+    right: -16px;
+    width: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(52, 227, 208, 0.18), rgba(244, 200, 122, 0.8));
+  }
+  .map-step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    right: -18px;
+    border-left: 8px solid var(--gold);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    z-index: 2;
+  }
+  .map-step .num {
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+  .map-step strong {
+    display: block;
+    margin-top: 3px;
+    color: var(--marble);
+    font-size: 14px;
+  }
+  .map-step span {
+    display: block;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.24;
+  }
+
+  .flow {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.18fr 1fr;
+    gap: 16px;
+    height: 438px;
+  }
+  .stage {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    overflow: hidden;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background:
+      linear-gradient(180deg, rgba(17, 17, 32, 0.92), rgba(9, 9, 18, 0.96)),
+      radial-gradient(400px 210px at 50% 0%, rgba(109, 107, 255, 0.08), transparent 72%);
+  }
+  .stage.setup {
+    border-color: rgba(199, 201, 255, 0.2);
+    background:
+      linear-gradient(180deg, rgba(18, 18, 38, 0.94), rgba(9, 9, 18, 0.96)),
+      radial-gradient(420px 230px at 50% 0%, rgba(52, 227, 208, 0.08), transparent 72%);
+  }
+  .stage.run {
+    border-color: rgba(244, 200, 122, 0.32);
+    background:
+      linear-gradient(180deg, rgba(22, 19, 26, 0.95), rgba(9, 9, 18, 0.96)),
+      radial-gradient(420px 230px at 55% 0%, rgba(244, 200, 122, 0.11), transparent 70%);
+  }
+
+  .stage-head { display: flex; gap: 10px; align-items: flex-start; }
+  .badge {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--gold-ink);
+    background: var(--grad-gold);
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: inset 0 1px 0 rgba(255, 230, 176, 0.8);
+  }
+  .stage-head .small {
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .stage h3 {
+    margin-top: 3px;
+    color: var(--marble);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px;
+    line-height: 1.03;
+    font-weight: 600;
+  }
+  .stage .sub {
+    color: var(--marble-soft);
+    font-size: 12px;
+    line-height: 1.28;
+  }
+
+  .task-list,
+  .result-list {
+    list-style: none;
+    display: grid;
+    gap: 6px;
+  }
+  .task-list li,
+  .result-list li {
+    display: grid;
+    grid-template-columns: 27px 1fr;
+    gap: 9px;
+    align-items: start;
+    padding: 7px 8px;
+    border: 1px solid rgba(199, 201, 255, 0.12);
+    border-radius: 7px;
+    background: rgba(10, 10, 20, 0.72);
+  }
+  .icon {
+    width: 27px;
+    height: 27px;
+    border-radius: 7px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(199, 201, 255, 0.16);
+    color: var(--gold-bright);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .task-list strong,
+  .result-list strong {
+    display: block;
+    color: var(--marble);
+    font-size: 13px;
+    line-height: 1.12;
+  }
+  .task-list span,
+  .result-list span {
+    display: block;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 10.8px;
+    line-height: 1.22;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .tool {
+    min-height: 44px;
+    padding: 7px 9px;
+    border: 1px solid rgba(199, 201, 255, 0.13);
+    border-radius: 7px;
+    background: rgba(10, 10, 20, 0.72);
+  }
+  .tool strong { display: block; color: var(--marble); font-size: 12px; }
+  .tool span { display: block; margin-top: 2px; color: var(--muted); font-size: 10.5px; line-height: 1.18; }
+
+  .rules {
+    padding: 9px 10px;
+    border: 1px solid rgba(244, 200, 122, 0.28);
+    border-radius: 7px;
+    background: rgba(244, 200, 122, 0.045);
+  }
+  .rules h4,
+  .chips-title {
+    margin-bottom: 6px;
+    color: var(--gold);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .rules-row {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 8px;
+    padding: 5px 0;
+    border-top: 1px solid rgba(199, 201, 255, 0.08);
+  }
+  .rules-row:first-of-type { border-top: 0; padding-top: 0; }
+  .rules-row b { color: var(--gold-bright); font-size: 11px; }
+  .rules-row span { color: var(--marble-soft); font-size: 10.8px; line-height: 1.2; }
+  .guardline {
+    padding: 7px 8px;
+    border: 1px solid rgba(199, 201, 255, 0.14);
+    border-radius: 7px;
+    background: rgba(10, 10, 20, 0.72);
+    color: var(--muted);
+    font-size: 10.5px;
+    line-height: 1.25;
+  }
+  .guardline b { color: var(--gold-bright); }
+
+  .workflow {
+    padding: 9px 10px;
+    border: 1px solid rgba(244, 200, 122, 0.24);
+    border-radius: 7px;
+    background: rgba(10, 10, 20, 0.68);
+  }
+  .workflow h4 {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 7px;
+    color: var(--marble);
+    font-size: 12.5px;
+  }
+  .workflow h4 span {
+    color: var(--gold);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .step {
+    min-height: 39px;
+    display: grid;
+    place-items: center;
+    padding: 5px;
+    border: 1px solid rgba(199, 201, 255, 0.12);
+    border-radius: 7px;
+    color: var(--muted);
+    background: rgba(17, 17, 32, 0.74);
+    font-size: 10px;
+    line-height: 1.18;
+    text-align: center;
+  }
+  .step.approve {
+    border-color: rgba(244, 200, 122, 0.42);
+    color: var(--gold-bright);
+    background: rgba(244, 200, 122, 0.08);
+    font-weight: 700;
+  }
+  .run-note {
+    margin-top: auto;
+    padding: 9px 10px;
+    border: 1px solid rgba(52, 227, 208, 0.26);
+    border-radius: 7px;
+    background: rgba(52, 227, 208, 0.045);
+    color: var(--marble-soft);
+    font-size: 11.5px;
+    line-height: 1.28;
+  }
+  .run-note b { color: var(--aurora-a); }
+
+  .owner-panel {
+    padding: 10px;
+    border: 1px solid rgba(199, 201, 255, 0.14);
+    border-radius: 7px;
+    background: rgba(10, 10, 20, 0.72);
+  }
+  .owner-panel h4 {
+    margin-bottom: 7px;
+    color: var(--gold-bright);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .queue {
+    display: grid;
+    gap: 7px;
+  }
+  .queue-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 8px;
+    border: 1px solid rgba(199, 201, 255, 0.12);
+    border-radius: 7px;
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .queue-row b { color: var(--marble); }
+  .queue-row span {
+    padding: 3px 6px;
+    border-radius: 6px;
+    color: var(--gold-ink);
+    background: var(--grad-gold);
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .queue-row .review {
+    color: #061311;
+    background: linear-gradient(135deg, #9dfff4, #34e3d0);
+  }
+
+  .value {
+    margin-top: 11px;
+  }
+  .value-title {
+    margin-bottom: 11px;
+    text-align: center;
+    color: var(--muted);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .value-title b { color: var(--gold-bright); }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .tile {
+    min-height: 90px;
+    position: relative;
+    overflow: hidden;
+    padding: 13px 16px 12px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: linear-gradient(180deg, rgba(17, 17, 32, 0.92), rgba(9, 9, 18, 0.96));
+  }
+  .tile::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--grad-aurora);
+    opacity: 0.85;
+  }
+  .tile .big {
+    color: var(--gold-bright);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    line-height: 1.05;
+    font-weight: 600;
+  }
+  .tile .lab {
+    margin-top: 8px;
+    color: var(--marble-soft);
+    font-size: 12px;
+    line-height: 1.32;
+  }
+
+  .foot {
+    margin-top: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+  }
+  .cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .cta .tag {
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 13px;
+    border: 1px solid rgba(255, 230, 176, 0.55);
+    border-radius: 7px;
+    color: var(--gold-ink);
+    background: var(--grad-gold);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .cta .txt {
+    color: var(--marble);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 15px;
+  }
+  .cta .txt b { color: var(--gold-bright); }
+  .url { text-align: right; }
+  .url .u {
+    color: var(--marble);
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+  }
+  .url .own {
+    margin-top: 3px;
+    color: var(--dim);
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .note {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8px;
+    color: #6b6e8e;
+    text-align: center;
+    font-family: 'Spline Sans Mono', ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+  }
 </style>
 </head>
 <body>
 <div class="canvas">
-  <div class="head">
-    <div class="brand">
-      <img src="../public/hermes-mark.png" alt="The Harness Lab" />
-      <div class="wm">
-        <div class="k">AI agent reliability - customer-owned harnesses</div>
-        <h1>THE HARNESS LAB</h1>
+  <div class="aurora-line"></div>
+  <div class="content">
+    <header class="head">
+      <div class="brand">
+        <img src="../public/hermes-mark.png" alt="The Harness Lab" />
+        <div>
+          <div class="k">customer-owned agent harnesses</div>
+          <h1>THE HARNESS LAB</h1>
+        </div>
       </div>
-    </div>
-    <div class="hvp">
-      <p>We build the operating layer around your AI workflows: <b>routing, approvals, cost controls, tests, and recovery.</b></p>
-    </div>
-  </div>
+      <div class="offer">founding pricing - 30% off the first 10 builds</div>
+    </header>
 
-  <div class="rule"></div>
+    <div class="rule"></div>
 
-  <div class="sectitle">
-    <h2>What a <b>harness</b> adds to your business</h2>
-    <span>work enters - controlled agents run - tested evidence leaves</span>
-  </div>
+    <section class="title" aria-label="Diagram title">
+      <div class="line"></div>
+      <div class="title-copy">
+        <div class="eyebrow">plain-English setup map</div>
+        <h2>How a <span class="gradient">harness</span> runs daily business work</h2>
+        <p>Pick one repeated workflow. Connect the tools. Automate safe steps. Keep approvals and proof.</p>
+      </div>
+      <div class="line"></div>
+    </section>
 
-  <div class="pipe">
-    <div class="col in">
-      <div class="pcard">
-        <div class="ph"><span class="num">1</span><span class="t">Live work</span></div>
-        <h3>What comes in</h3>
-        <ul class="items">
-          <li><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9bd6c8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span>Customer requests and support tickets</li>
-          <li><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9bd6c8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 3-5 5.5-5s4.9 1.8 5.5 5"/><path d="M18.5 8v5M16 10.5h5"/></svg></span>Sales leads and intake forms</li>
-          <li><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9bd6c8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H4z"/><path d="M8 21h8M12 15v6"/></svg></span>Browser tasks, research, and data checks</li>
-          <li><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9bd6c8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>Invoices, records, and ops updates</li>
-          <li><span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9bd6c8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12a6 6 0 0 1 12 0"/><path d="M6 12v5a2 2 0 0 0 2 2h1"/><path d="M18 12v5a2 2 0 0 1-2 2h-1"/><path d="M12 5V3"/></svg></span>Existing agents, scripts, and workflow tools</li>
+    <section class="setup-map" aria-label="Simple harness setup path">
+      <div class="map-step">
+        <div class="num">01</div>
+        <strong>Repeated task</strong>
+        <span>Lead, ticket, invoice, record, or browser workflow.</span>
+      </div>
+      <div class="map-step">
+        <div class="num">02</div>
+        <strong>Connected tools</strong>
+        <span>Inbox, CRM, sheets, calendar, files, browser apps.</span>
+      </div>
+      <div class="map-step">
+        <div class="num">03</div>
+        <strong>Harness rules</strong>
+        <span>What can run, what needs approval, what must stop.</span>
+      </div>
+      <div class="map-step">
+        <div class="num">04</div>
+        <strong>AI/tool workers</strong>
+        <span>Draft, check, route, update, retry, and escalate.</span>
+      </div>
+      <div class="map-step">
+        <div class="num">05</div>
+        <strong>Owner proof</strong>
+        <span>Approvals, logs, tests, evidence, and runbook.</span>
+      </div>
+    </section>
+
+    <section class="flow" aria-label="Harness workflow detail">
+      <article class="stage">
+        <div class="stage-head">
+          <div class="badge">1</div>
+          <div>
+            <div class="small">where time disappears today</div>
+            <h3>Choose repeat work</h3>
+          </div>
+        </div>
+        <p class="sub">Start with one high-friction workflow the owner or staff repeat every week.</p>
+        <ul class="task-list">
+          <li><span class="icon">L</span><div><strong>New leads</strong><span>Qualify, research, draft follow-up, log CRM notes.</span></div></li>
+          <li><span class="icon">T</span><div><strong>Support tickets</strong><span>Triage, draft answers, flag refunds or escalations.</span></div></li>
+          <li><span class="icon">I</span><div><strong>Invoices and records</strong><span>Extract fields, compare totals, update files.</span></div></li>
+          <li><span class="icon">B</span><div><strong>Browser and agent checks</strong><span>Research facts, cite evidence, retry stuck work.</span></div></li>
         </ul>
-        <div class="cap">Useful work already exists. The risk is trusting it without controls.</div>
-      </div>
-    </div>
+      </article>
 
-    <div class="gutter">
-      <div class="arrow">
-        <span class="lbl">in</span>
-        <svg width="56" height="22" viewBox="0 0 56 22" fill="none"><defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#9bd6c8" stop-opacity=".3"/><stop offset="1" stop-color="#9bd6c8"/></linearGradient></defs><path d="M2 11h44" stroke="url(#g1)" stroke-width="2.4" stroke-linecap="round"/><path d="M44 4l10 7-10 7z" fill="#9bd6c8"/></svg>
-      </div>
-    </div>
-
-    <div class="col center">
-      <div class="pcard">
-        <img class="watermark" src="../public/hermes-mark.png" alt="" />
-        <div class="ph"><span class="num">2</span><span class="t">Controlled operating layer</span></div>
-        <h3>The Harness</h3>
-
-        <div class="orb">
-          <div class="ti">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ddfff5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.4"/><circle cx="12" cy="4" r="1.8"/><circle cx="12" cy="20" r="1.8"/><circle cx="4.5" cy="8" r="1.8"/><circle cx="19.5" cy="8" r="1.8"/><circle cx="4.5" cy="16" r="1.8"/><circle cx="19.5" cy="16" r="1.8"/><path d="M12 6.4v3.2M10 11l-4-2M14 11l4-2M10 13.2l-4.2 2.3M14 13.2l4.2 2.3M12 14.4v3.8"/></svg>
-            <b>ORCHESTRATOR</b>
-          </div>
-          <p>Routes each request to the right agent or tool, keeps state, applies budgets, and checks outputs before action.</p>
-        </div>
-
-        <div class="agents">
-          <div class="agent"><span class="d" style="color:#f47c44;background:#f47c44"></span><div><div class="nm">Intake</div><div class="sb">qualify - route - log</div></div></div>
-          <div class="agent"><span class="d" style="color:#6fb3c9;background:#6fb3c9"></span><div><div class="nm">Support</div><div class="sb">triage - draft - escalate</div></div></div>
-          <div class="agent"><span class="d" style="color:#7fd39a;background:#7fd39a"></span><div><div class="nm">Research</div><div class="sb">browser - verify - cite</div></div></div>
-          <div class="agent"><span class="d" style="color:#b48ce0;background:#b48ce0"></span><div><div class="nm">Operations</div><div class="sb">records - handoff - status</div></div></div>
-          <div class="agent" style="grid-column:1 / span 2"><span class="d" style="color:#e0a93b;background:#e0a93b"></span><div><div class="nm">Your Current Tools</div><div class="sb">Claude, Codex, Cursor, n8n, Slack, Telegram, MCP, GitHub, browser agents</div></div></div>
-        </div>
-
-        <div class="guard">
-          <div class="gt">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffb07c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-            Built-in guardrails - you stay in control
-          </div>
-          <div class="gchips">
-            <span>Human approvals</span>
-            <span>Budget caps</span>
-            <span>Retry and recovery</span>
-            <span>Secret redaction</span>
-            <span>Audit log</span>
-            <span>Smoke tests</span>
+      <article class="stage setup">
+        <div class="stage-head">
+          <div class="badge">2</div>
+          <div>
+            <div class="small">set up once around your business</div>
+            <h3>Connect tools + rules</h3>
           </div>
         </div>
-      </div>
-    </div>
+        <p class="sub">The harness wraps the tools already in use, then defines what automation is allowed to do.</p>
+        <div class="tool-grid">
+          <div class="tool"><strong>Inbox/forms</strong><span>requests, leads, tickets</span></div>
+          <div class="tool"><strong>CRM/sheets</strong><span>contacts, notes, status</span></div>
+          <div class="tool"><strong>Calendar/tasks</strong><span>follow-ups, reminders</span></div>
+          <div class="tool"><strong>Docs/files</strong><span>proof, reports, handoffs</span></div>
+          <div class="tool"><strong>Accounting</strong><span>invoices, receipts, totals</span></div>
+          <div class="tool"><strong>AI/browser tools</strong><span>agents, scripts, MCP, n8n</span></div>
+        </div>
+        <div class="rules">
+          <h4>Rules entered before it runs</h4>
+          <div class="rules-row"><b>Auto-run</b><span>Lookups, sorting, summaries, drafts, low-risk updates.</span></div>
+          <div class="rules-row"><b>Approve</b><span>Customer sends, payments, refunds, deletes, records.</span></div>
+          <div class="rules-row"><b>Block</b><span>Secrets in prompts, uncapped loops, unlogged actions.</span></div>
+        </div>
+      </article>
 
-    <div class="gutter">
-      <div class="arrow">
-        <span class="lbl">out</span>
-        <svg width="56" height="22" viewBox="0 0 56 22" fill="none"><defs><linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#f47c44" stop-opacity=".35"/><stop offset="1" stop-color="#f47c44"/></linearGradient></defs><path d="M2 11h44" stroke="url(#g2)" stroke-width="2.4" stroke-linecap="round"/><path d="M44 4l10 7-10 7z" fill="#f47c44"/></svg>
-      </div>
-    </div>
+      <article class="stage run">
+        <div class="stage-head">
+          <div class="badge">3</div>
+          <div>
+            <div class="small">daily operating loop</div>
+            <h3>Automate safe steps</h3>
+          </div>
+        </div>
+        <p class="sub">Agents handle repeat work. The harness checks output, keeps state, and asks a human when risk appears.</p>
 
-    <div class="col out">
-      <div class="pcard">
-        <div class="ph"><span class="num">3</span><span class="t">Reliable results</span></div>
-        <h3>Work delivered</h3>
-        <ul class="items">
-          <li><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd39a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>Requests triaged, drafted, or escalated</li>
-          <li><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd39a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>CRM and ops records updated with trace</li>
-          <li><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd39a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>Risky actions queued for approval</li>
-          <li><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd39a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>Failures saved for retry or review</li>
-          <li><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd39a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>Evidence bundle and operating runbook</li>
+        <div class="workflow">
+          <h4>Lead follow-up <span>sales</span></h4>
+          <div class="steps">
+            <div class="step">new lead</div>
+            <div class="step">qualify</div>
+            <div class="step">draft reply</div>
+            <div class="step">CRM note</div>
+            <div class="step approve">owner send</div>
+          </div>
+        </div>
+
+        <div class="workflow">
+          <h4>Support triage <span>service</span></h4>
+          <div class="steps">
+            <div class="step">ticket</div>
+            <div class="step">classify</div>
+            <div class="step">draft answer</div>
+            <div class="step approve">refund?</div>
+            <div class="step">log result</div>
+          </div>
+        </div>
+
+        <div class="workflow">
+          <h4>Ops admin <span>back office</span></h4>
+          <div class="steps">
+            <div class="step">invoice</div>
+            <div class="step">extract</div>
+            <div class="step">verify</div>
+            <div class="step approve">approve</div>
+            <div class="step">file proof</div>
+          </div>
+        </div>
+
+        <div class="run-note"><b>Labor shifts:</b> people stop checking every small step and review exceptions, approvals, and business decisions.</div>
+      </article>
+
+      <article class="stage out">
+        <div class="stage-head">
+          <div class="badge">4</div>
+          <div>
+            <div class="small">what the owner sees</div>
+            <h3>Control + proof</h3>
+          </div>
+        </div>
+        <p class="sub">The business gets completed work, clear review points, and evidence it can keep.</p>
+        <div class="owner-panel">
+          <h4>Owner approval queue</h4>
+          <div class="queue">
+            <div class="queue-row"><b>Send proposal reply</b><span class="review">review</span></div>
+            <div class="queue-row"><b>Issue refund</b><span>approve</span></div>
+            <div class="queue-row"><b>Change CRM stage</b><span class="review">review</span></div>
+          </div>
+        </div>
+        <ul class="result-list">
+          <li><span class="icon">U</span><div><strong>Systems updated</strong><span>CRM, inbox, sheets, task boards, files, and browser apps.</span></div></li>
+          <li><span class="icon">E</span><div><strong>Exceptions surfaced</strong><span>Failures are saved for retry or human review.</span></div></li>
+          <li><span class="icon">P</span><div><strong>Proof owned by you</strong><span>Logs, tests, screenshots, repo, setup, and runbook stay yours.</span></div></li>
         </ul>
-        <div class="cap">Outputs are reviewed, logged, and recoverable - not mystery automation.</div>
-      </div>
-    </div>
-  </div>
+      </article>
+    </section>
 
-  <div class="value">
-    <div class="vhdr">What that can protect - <b>validated in the audit before a build is scoped</b></div>
-    <div class="tiles">
-      <div class="tile">
-        <div class="ic2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ddfff5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-        <div class="big">10-20 hrs</div>
-        <div class="lab">manual checking/rework <b>can be reduced</b> on the right workflow</div>
+    <section class="value" aria-label="Where savings come from">
+      <div class="value-title">Where time, money, and labor savings come from - <b>validated in the audit before build scope</b></div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="big">Less checking</div>
+          <div class="lab">Owners stop babysitting every agent run. The harness logs status, stalls, retries, and proof.</div>
+        </div>
+        <div class="tile">
+          <div class="big">Capped spend</div>
+          <div class="lab">Model routing, budgets, and retry limits help prevent loops from turning into surprise bills.</div>
+        </div>
+        <div class="tile">
+          <div class="big">Labor moves up</div>
+          <div class="lab">Staff handle approvals and exceptions instead of repeating copy, check, draft, and update work.</div>
+        </div>
+        <div class="tile">
+          <div class="big">Recoverable work</div>
+          <div class="lab">Failures leave notes, evidence, and a runbook so the system can be repaired instead of guessed at.</div>
+        </div>
       </div>
-      <div class="tile">
-        <div class="ic2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ddfff5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
-        <div class="big">Spend caps</div>
-        <div class="lab">model routing and budgets help stop <b>runaway loops</b> before they get expensive</div>
-      </div>
-      <div class="tile">
-        <div class="ic2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ddfff5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></div>
-        <div class="big">Fewer surprises</div>
-        <div class="lab">health checks and recovery paths catch stalls <b>before customers do</b></div>
-      </div>
-      <div class="tile">
-        <div class="ic2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ddfff5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M6 7v12h12V7M9 7V5h6v2"/><path d="M9 12h6M9 16h4"/></svg></div>
-        <div class="big">100% yours</div>
-        <div class="lab">repo, setup, tests, and runbook - <b>no hosted customer secrets</b></div>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <div class="foot">
-    <div class="cta">
-      <span class="badge">START - FREE TEARDOWN / $750 AUDIT</span>
-      <span class="txt">Audit first. Then <b>setup, rescue, or build only what the scope proves.</b></span>
-    </div>
-    <div class="url">
-      <div class="u">theharnesslab.com</div>
-      <div class="tag">built bespoke - owned by you</div>
-    </div>
+    <footer class="foot">
+      <div class="cta">
+        <span class="tag">start - free teardown / $750 audit</span>
+        <span class="txt">Start with one workflow. <b>Prove the savings path before building.</b></span>
+      </div>
+      <div class="url">
+        <div class="u">theharnesslab.com</div>
+        <div class="own">built bespoke - owned by you</div>
+      </div>
+    </footer>
   </div>
-
-  <div class="note">Illustrative example. Outcomes depend on scoped workflow, access, volume, and acceptance tests; figures vary by business.</div>
+  <div class="note">Illustrative operating example. Outcomes depend on workflow volume, access, baseline labor, tool quality, and acceptance tests.</div>
 </div>
 </body>
 </html>
