@@ -353,13 +353,13 @@ function App() {
             Founding pricing — 30% off the first 10 builds
           </p>
           <h1 id="hero-title">
-            We fix and build the <em className="aurora-text">safety layer</em> around AI agents.
+            We build the <em className="aurora-text">harness</em> your AI agents run on.
           </h1>
           <p>
-            The Harness Lab helps businesses save time, money, and labor by making AI
-            workflows harder to break and easier to operate. We audit broken setups,
-            install reliable operating layers, rescue unreliable agents, and deliver
-            customer-owned harnesses with tests, runbooks, and proof.
+            The Harness Lab sets up, builds, and rescues agent harnesses — the operating
+            layer that routes work between your models and tools, gates risky actions,
+            caps spend, and recovers when things break. Every build is customer-owned
+            and handed off with tests, runbooks, and proof.
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#intake">
@@ -829,7 +829,7 @@ function App() {
             <img src="/hermes-mark.png" alt="" width="38" height="38" />
             <span>The Harness Lab</span>
           </a>
-          <p>AI agent reliability services. Audited, set up, rescued, built, tested, and handed off.</p>
+          <p>Custom AI agent harnesses. Set up, built, rescued, audited, tested, and handed off.</p>
         </div>
         <div>
           <h3>Contact</h3>
