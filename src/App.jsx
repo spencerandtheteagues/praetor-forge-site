@@ -12,6 +12,7 @@ import {
   MessageSquareText,
   PhoneCall,
   ShieldCheck,
+  Sparkles,
   TerminalSquare,
   TimerReset,
   Wrench,
@@ -32,7 +33,7 @@ const serviceOptions = [
   {
     name: 'Reliability Audit',
     price: '$750 fixed fee',
-    short: 'The default first paid step: map failures, cost exposure, security gaps, and the fastest repair path.',
+    short: 'The default first paid step: a 26-point audit mapping failures, cost exposure, security gaps, and the fastest repair path.',
     outcome: 'Written failure map, prioritized fix list, recommended package, and a 30-minute handoff call.',
     fit: 'Best when an existing agent workflow is looping, stalling, dropping work, leaking context, or failing silently.',
     featured: true,
@@ -55,6 +56,7 @@ const serviceOptions = [
   {
     name: 'Foundation Harness',
     price: '$3,000-$7,000',
+    founding: '$2,100-$4,900 for founding clients',
     short: 'One customer-owned reliability harness around one defined workflow and one approval path.',
     outcome: 'Private repo, setup script, env template, runbook, smoke tests, evidence bundle, and handoff call.',
     fit: 'Best for founders, agencies, and teams that need one dependable workflow delivered and owned.',
@@ -62,6 +64,7 @@ const serviceOptions = [
   {
     name: 'Multi-Agent Harness',
     price: '$8,000-$18,000',
+    founding: '$5,600-$12,600 for founding clients',
     short: '2-10 agents with routing, handoffs, model lanes, cost limits, and human gates.',
     outcome: 'Architecture, implementation, health checks, recovery plan, operating docs, and acceptance tests.',
     fit: 'Best for teams coordinating multiple coding agents, browser tools, workflow apps, or custom automations.',
@@ -69,6 +72,7 @@ const serviceOptions = [
   {
     name: 'Enterprise Fleet',
     price: '$20,000-$50,000',
+    founding: '$14,000-$35,000 for founding clients',
     short: 'A tenant-aware reliability layer for larger agent operations and agency delivery teams.',
     outcome: 'Scoped after audit: fleet routing, role isolation, deployment scripts, dashboards, and support plan.',
     fit: 'Best when multiple clients, repos, tools, security boundaries, or operators are involved.',
@@ -344,7 +348,13 @@ function App() {
 
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <h1 id="hero-title">We fix and build the safety layer around AI agents.</h1>
+          <p className="hero-badge">
+            <Sparkles aria-hidden="true" />
+            Founding pricing — 30% off the first 10 builds
+          </p>
+          <h1 id="hero-title">
+            We fix and build the <em className="aurora-text">safety layer</em> around AI agents.
+          </h1>
           <p>
             The Harness Lab helps businesses save time, money, and labor by making AI
             workflows harder to break and easier to operate. We audit broken setups,
@@ -490,6 +500,7 @@ function App() {
               <div className="service-head">
                 <h3>{service.name}</h3>
                 <span>{service.price}</span>
+                {service.founding ? <strong className="founding-price">{service.founding}</strong> : null}
               </div>
               <p>{service.short}</p>
               <dl>
@@ -506,7 +517,8 @@ function App() {
           ))}
         </div>
         <p className="pricing-note">
-          Founding-client offer: the first 10 build clients receive 30% off the build fee.
+          <strong>Founding-client offer</strong> — the first 10 build clients receive 30% off the
+          build fee, locked for 12 months. The discounted ranges are shown on each build card.
           Enterprise and regulated workflows are quoted only after a paid audit.
         </p>
       </section>
