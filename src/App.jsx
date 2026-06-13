@@ -1243,15 +1243,15 @@ function App() {
               </div>
             </div>
             <blockquote className="review-quote">
-              "I've been investing for over 20 years and I've never had a tool that puts this
-              kind of firepower in one place. The Wealth &amp; Powers OS does things I genuinely
-              didn't think were possible — Midas Mode returned a profit the very first week,
-              the research engine goes deeper than anything I've paid an analyst to produce,
-              and Item Search found me something I'd been hunting for months in under ten
-              minutes. Spencer had the entire system installed and running in one session. I
-              hit a small snag during setup and he had it solved before I could even finish
-              explaining the problem. Outstanding work, outstanding speed, and the results
-              have been outstanding too. I gave them five stars and I'd give them ten if I could."
+              "I've been investing for over 20 years and I've never had a single tool that puts
+              this much firepower in one place. The Wealth &amp; Powers OS does things I genuinely
+              didn't think were possible. Midas Mode made money its first week — but what sold me
+              is that I could see exactly why every trade was proposed and approve it before a dollar
+              moved. The research engine goes deeper than analysts I've paid for, and Item Search
+              tracked down something I'd been hunting for months in under ten minutes. Spencer built
+              and installed the whole system in a single session; when I hit a snag during setup, he
+              had it fixed before I finished explaining it. Fast, sharp, and it works exactly the way
+              he said it would. Five stars — and I'd give ten if the scale went that high."
             </blockquote>
           </article>
         </div>
