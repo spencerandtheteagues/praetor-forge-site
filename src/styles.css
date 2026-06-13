@@ -1961,6 +1961,28 @@ textarea:focus {
   font-weight: 600;
 }
 
+.cs-os-close {
+  text-align: center;
+}
+
+.cs-os-close p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.72;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.cs-os-close a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(244, 200, 122, 0.4);
+}
+
+.cs-os-close a:hover {
+  border-bottom-color: var(--gold);
+}
+
 /* ─── Reviews Section ─────────────────────────────────────────────────── */
 
 .reviews-section {

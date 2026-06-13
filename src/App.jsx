@@ -374,6 +374,7 @@ function App() {
         <nav aria-label="Primary navigation">
           <a href="#services">Services</a>
           <a href="#case-study">Case Study</a>
+          <a href="#our-os">Our OS</a>
           <a href="#diagram">Diagram</a>
           <a href="#mythos-demo">Demo</a>
           <a href="#failures">Failures</a>
@@ -1209,6 +1210,266 @@ function App() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── Walkthrough: Mythos OS (our own harness) ── */}
+      <section id="our-os" className="section case-study-section reveal">
+        <div className="section-heading">
+          <p>Our Own Harness</p>
+          <h2>We don't just build these. We run on one.</h2>
+          <span>
+            Mythos OS is the AI Harness we built for ourselves. Spencer Teague, The Harness Lab's
+            founder, engineered it for internal use — a single command cockpit that runs every
+            model subscription, orchestrates a fleet of AI agents in parallel across this Mac, an
+            Omen workstation, and a Kali VPS, and folds the entire operation into one queryable
+            system. It is the clearest example we can show of the custom engineering that goes into
+            a harness: dozens of agents, each owning a different job, working in concert behind one
+            screen. The same architecture can be tailored to almost any business and the exact work
+            it needs done — audits, research, sales, support, logistics, trading, anything a
+            workflow can describe. This one is ours. Here is the full walkthrough.
+          </span>
+        </div>
+
+        {/* Hero — Mission Control */}
+        <div className="cs-hero-wrap">
+          <div className="cs-hero-frame">
+            <img
+              src="/walkthrough/mission-control.jpg"
+              alt="Mythos OS Mission Control home screen showing open pipeline, audits, forge jobs, OpenRouter spend, value estimate, and every module as a card"
+              loading="lazy"
+            />
+          </div>
+          <p className="cs-hero-caption">
+            <strong>Mission Control.</strong> The home cockpit — open pipeline, live audits, forge
+            jobs, real OpenRouter spend, and estimated value, with every tool one click away. This
+            is the first screen we see every morning.
+          </p>
+        </div>
+
+        {/* Group: The cockpit */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">The Cockpit</span>
+            <h3>One screen runs the entire operation.</h3>
+            <p>
+              Every engine, provider, and agent reports into a single control surface — and any of
+              them can be driven from one console without leaving the dashboard.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-3">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/harnesses-one-roof.jpg" alt="Mythos OS Mission Control showing seven harnesses online, providers and auth, plan-limit windows, and models in use" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Every harness under one roof.</strong> Seven engines — Claude Code, Hermes,
+                Codex, OpenClaw, Graphify, Ollama Cloud, and the Kali VPS — report live status,
+                alongside provider auth, plan-limit windows, and the exact models in use. All OAuth
+                and subscriptions, no loose API keys.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/hermes-agent.jpg" alt="Hermes Agent dashboard showing 296 sessions, 15299 messages, connected Telegram platform, and recent sessions" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Hermes, the orchestrator.</strong> The master-plan agent runs the show
+                across hundreds of sessions and 15,000+ messages, wired to Telegram, cron, and the
+                CLI. It decomposes the work and dispatches each piece to the right engine.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/console.jpg" alt="Mythos OS Console messaging Hermes on the VPS, with a detailed table answer about where a lead-research job ran" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>One console for every agent.</strong> Message any harness — local or on the
+                VPS — and get back diagrams, charts, and file previews. Here Hermes explains exactly
+                where and how it ran a lead-research job.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Group: Delivery factory */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">Delivery Factory</span>
+            <h3>Audit, research, build, ship — as one pipeline.</h3>
+            <p>
+              The same flow we sell to clients runs end to end inside the OS: tear a system down,
+              research the ground truth, compose a build brief, and account for every piece of work
+              an agent actually completed.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-2">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/audit-kit.jpg" alt="Audit Kit reliability audit showing a 75/100 score, one critical finding, file and LOC counts, and a generated report" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Audit Kit.</strong> A deep reliability teardown of any repo or folder —
+                score, control fails, and critical findings (here a real secrets-in-repo catch)
+                turned into a remediation roadmap and a sales-ready report.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/research.jpg" alt="Mythos Research Platform showing an investigation assignment, intensity and returned-data controls, and source scope selection" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Research platform.</strong> Professional OSINT dossiers with source leads,
+                intensity controls, independent verification, and full reports — lawful public-source
+                only, grounded before any model runs.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/forge.jpg" alt="The Forge build-brief composer with client, audit evidence, service, target harness, and model selectors and a dispatch button" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>The Forge.</strong> Composes an evidence-grounded build brief from client
+                and audit data, then dispatches it to any harness on a chosen model. The factory
+                floor between "audited" and "shipped."
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/work-ledger.jpg" alt="Agents and Work ledger showing 7 agents, 120 work items, 100 completed, and sourced completed-work entries from Claude Code" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Work ledger.</strong> Real completed-work signals from every agent — Claude,
+                Codex, the Hermes kanban, git history, and the VPS — so nothing is claimed that
+                wasn't actually done. 120 work items, 7 agents, fully sourced.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Group: The brain */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">The Brain</span>
+            <h3>It learns, remembers, and improves itself.</h3>
+            <p>
+              Knowledge doesn't evaporate between sessions. The OS keeps a graph of everything it
+              knows, a library of reusable skills, and a nightly review loop that tunes itself.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-3">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/memory-graph.jpg" alt="Memory and knowledge graph view showing 20911 graph nodes, 164 communities, 13 memory files, and a force-directed graph" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Memory &amp; knowledge graph.</strong> Code, repos, and memory fused into one
+                queryable Graphify graph — 20,911 nodes across 164 communities. The OS can be asked
+                about itself.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/skills.jpg" alt="Skills page listing 60 capabilities including agent-orchestrator, browser-agent, deep-code-review, and api-integrator" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Skills.</strong> 60 installed capabilities — agent orchestration, deep code
+                review, browser automation, API integration, and more — each a reusable, composable
+                command.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/dream.jpg" alt="Dream review screen showing four self-improvement suggestions across skill, memory, cost, and workflow categories" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Dream.</strong> Every night the OS reviews its own usage and proposes
+                concrete improvements — consolidate these skills, curate this memory, cut this cost,
+                fix this workflow. It tunes itself while we sleep.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Group: Infrastructure & reach */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">Infrastructure &amp; Reach</span>
+            <h3>Wired into every machine, file, and inbox.</h3>
+            <p>
+              The harness isn't trapped in a browser tab. It reaches across the whole fleet — remote
+              desktops, filesystems, mailboxes, and devices — from one place.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-3">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/connections.jpg" alt="Connections page showing 15 of 15 sources connected with in-dashboard remote terminals and harness status cards" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Connections.</strong> Fifteen of fifteen sources — every harness, provider,
+                and knowledge base — connected under one roof, with in-dashboard terminals and
+                desktops.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/remote-access.jpg" alt="Remote Access page showing HP Omen, Kali VPS desktops and SSH paths over Tailscale plus a device transfer panel" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Remote access.</strong> Omen workstation, Kali VPS, and SSH paths reachable
+                over Tailscale, plus device transfer between Mac, Omen, VPS, and phone — all from the
+                cockpit.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/kali-desktop.jpg" alt="A full Kali Linux xfce desktop streamed into the Mythos OS dashboard over noVNC" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>The VPS, in the browser.</strong> A full Kali desktop streamed into the
+                dashboard over noVNC — no separate RDP client, no context switch.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/vps-files.jpg" alt="Remote Files browser showing the Kali VPS filesystem over Tailscale SSH with metadata-first listings" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Remote files.</strong> Browse the Kali VPS filesystem over Tailscale SSH with
+                metadata-first listings and secrets automatically redacted in previews.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/mail-desk.jpg" alt="Mail Desk showing company mailbox accounts, an inbox, and a compose pane sending from theharnesslab.com" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Mail Desk.</strong> A native inbox and sender for the company mailboxes — no
+                Gmail send-as detour — built straight into the OS.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img src="/walkthrough/settings.jpg" alt="Settings onboarding showing an auto-detected stack and Claude subscription auto-fallback across two accounts" loading="lazy" />
+              </div>
+              <p className="cs-caption">
+                <strong>Settings.</strong> The OS auto-detects the whole stack on launch and rotates
+                across Claude subscriptions automatically, falling back the moment one is exhausted —
+                each account isolated, the terminal login untouched.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Close */}
+        <div className="cs-group cs-os-close">
+          <p>
+            Every screen above was custom-engineered for how we actually operate. That is the point
+            of a harness: it is shaped to the business, not the other way around.{' '}
+            <a href="#intake">Tell us what your operation needs</a> and we'll scope the one that fits
+            it.
+          </p>
         </div>
       </section>
 
