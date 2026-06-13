@@ -1220,9 +1220,14 @@ function App() {
         <div className="reviews-grid">
           <article className="review-card">
             <div className="review-top">
-              <div className="review-avatar" aria-label="Jayson Powers photo placeholder">
-                <span>Photo</span>
-                <em>coming soon</em>
+              <div className="review-avatar">
+                <img
+                  src="/case-studies/jayson/jayson-powers.jpg"
+                  alt="Jayson Powers"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                />
               </div>
               <div className="review-meta">
                 <strong>Jayson Powers</strong>
