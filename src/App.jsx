@@ -1014,8 +1014,9 @@ function App() {
               cycle, journals every decision, scans social and news sentiment, hunts arbitrage,
               and explores every legal side hustle it can find. Hard risk controls — kill switch
               at drawdown %, max single position size, daily-loss pause — are enforced by the
-              engine itself. The model cannot override them. Midas Mode has returned a profit
-              every single run so far.
+              engine itself. The model cannot override them. Across every run so far, Midas Mode
+              has stayed inside the risk envelope it was handed — no kill-switch breach, no runaway
+              position, no surprise drawdown.
             </p>
           </div>
           <div className="cs-grid cs-grid-2">
