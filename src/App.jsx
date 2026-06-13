@@ -373,11 +373,12 @@ function App() {
         </a>
         <nav aria-label="Primary navigation">
           <a href="#services">Services</a>
+          <a href="#case-study">Case Study</a>
           <a href="#diagram">Diagram</a>
           <a href="#mythos-demo">Demo</a>
           <a href="#failures">Failures</a>
           <a href="#who">Who benefits</a>
-          <a href="#process">Process</a>
+          <a href="#reviews">Reviews</a>
           <a href="#intake">Intake</a>
           <a href={`mailto:${SALES_EMAIL}`}>Contact</a>
         </nav>
@@ -949,6 +950,301 @@ function App() {
             </Field>
           </div>
         </form>
+      </section>
+
+      {/* ── Case Study: Jayson Powers ── */}
+      <section id="case-study" className="section case-study-section reveal">
+        <div className="section-heading">
+          <p>Real-World Harness</p>
+          <h2>Jayson Powers hired The Harness Lab. We built him an empire.</h2>
+          <span>
+            Jayson Powers is a private investor from Missouri with a complex, active
+            portfolio spanning stocks, crypto, precious metals, and real estate.
+            He came to The Harness Lab with a clear challenge: he needed one unified
+            command center where every asset was visible, every AI decision was
+            verified and human-approved, and where an autonomous agent could be
+            handed a cash stake and set loose to grow it — legally, transparently,
+            and with hard kill-switches enforced by the engine, not trusted to the
+            model. The result is the <strong>Wealth &amp; Powers OS</strong> — a fully
+            custom investor dashboard built and installed remotely in a single session.
+            It runs live cross-verified market data across 18 symbols simultaneously,
+            surfaces deep AI research grounded in real-time prices and headlines,
+            watches real estate listings nationwide, hunts down obscure items across
+            every marketplace on the internet, and lets Midas Mode — powered by
+            Claude Fable 5 — autonomously trade and hustle its way to profit within
+            whatever risk envelope Jayson sets. Every trade requires Jayson's explicit
+            approval before execution. Every model decision is audited by an
+            independent model. Jayson called the work outstanding and said the setup
+            was faster than he ever expected. He gave it five stars.
+          </span>
+        </div>
+
+        {/* Hero image — large, standalone */}
+        <div className="cs-hero-wrap">
+          <div className="cs-hero-frame">
+            <img
+              src="/case-studies/jayson/screen-4.jpg"
+              alt="Wealth & Powers OS — Jayson's command center showing live market ticker, Midas Mode engagement, portfolio stats, and all 11 modules at a glance"
+              width="1512"
+              height="807"
+              loading="lazy"
+            />
+          </div>
+          <p className="cs-hero-caption">
+            The command center. One screen shows Jayson his full portfolio at live-verified prices,
+            the Midas Mode engage button, 18/18 quotes verified live, active research jobs,
+            and every module — from stocks and crypto to real estate and item search —
+            two clicks away. The Oracle AI assistant is always one click from anywhere on the dashboard.
+          </p>
+        </div>
+
+        {/* Midas Mode group */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">Midas Mode</span>
+            <h3>Hand Fable the capital. Set the clock. Walk away.</h3>
+            <p>
+              Midas Mode is the most ambitious feature in the OS. Jayson picks a dollar amount —
+              $100 to $5,000 or more — sets a mission clock from 3 hours to "until I stop it,"
+              and Fable (Claude Fable 5) takes over. It re-underwrites every position on a 45-second
+              cycle, journals every decision, scans social and news sentiment, hunts arbitrage,
+              and explores every legal side hustle it can find. Hard risk controls — kill switch
+              at drawdown %, max single position size, daily-loss pause — are enforced by the
+              engine itself. The model cannot override them. Midas Mode has returned a profit
+              every single run so far.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-2">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-5.jpg"
+                  alt="Midas Mode setup screen showing starting capital presets, mission clock options, weapons-free asset classes, and hard risk controls panel"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Mission launcher.</strong> Select starting capital, set the clock, choose which
+                asset classes Fable can trade (stocks &amp; ETFs, crypto, metals), and dial in hard risk
+                controls. The engine enforces every limit mechanically — Fable cannot override a single one.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-13.jpg"
+                  alt="Midas Mode live session showing $500 deployed, LIVE · HUMAN-APPROVED · ACTIVE badge, real-time P&L, drawdown monitor, and Fable thinking status"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Live session.</strong> Fable is thinking at max effort, re-evaluating every position
+                on its cycle. The dashboard shows cash, deployed capital, realized P&amp;L, and drawdown
+                in real time. Human-approval is enforced — no trade executes until Jayson confirms.
+                Kill switch is one button away at any moment.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Research group */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">AI Research</span>
+            <h3>Grounded in live data. Cross-examined by a second model.</h3>
+            <p>
+              Every research job is grounded in live verified quotes and fresh headlines before any
+              AI model runs. Then an independent auditor model — one not involved in the original
+              research — cross-examines the findings for conflicts and hallucinations. Jayson can
+              research any public company, private business, IPO, crypto project, or market trend
+              and receive an exhaustive, structured investigation with a verification verdict
+              attached. The result is deeper than what most paid analysts produce.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-1">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-9.jpg"
+                  alt="Research page showing Space X IPO investigation with Model Helper grounding explanation, INDEPENDENTLY AUDITED BY CLAUDE CODE badge, and partial verification verdict"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Space X IPO deep dive.</strong> The research engine grounded the job in live data,
+                dispatched a multi-model investigation, then had Claude Code independently audit the
+                findings. The verdict — Partially Verified 65/100 — arrives with a precise breakdown of
+                what was confirmed, what was truncated, and what needs more evidence. No hallucination
+                survives a second model reviewing it.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Markets group */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">Live Markets</span>
+            <h3>Every price triple-verified before any money moves.</h3>
+            <p>
+              Stocks use live Yahoo Finance consensus with per-source verification. Crypto is
+              triple-verified across CoinGecko, Coinbase, and Kraken — divergence flags appear
+              before any order is drafted. Precious metals run dual verification: Yahoo Finance
+              front-month futures against gold-api.com spot prices, with a 2.5% basis tolerance
+              before a flag fires. No single feed is trusted. Orders never submit until Jayson
+              confirms the exact price and signal.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-3">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-6.jpg"
+                  alt="Stocks page showing SCHD, AAPL, NVDA, MSFT holdings with live prices, gain/loss, AI signals (HOLD/TRIM), confidence percentages, and next best stocks panel"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Stocks — capital-first.</strong> Each holding shows a live-verified price, gain/loss,
+                and an AI signal (HOLD, TRIM, or BUY) with a confidence score. Draft order buttons stay
+                locked until Jayson approves the exact trade.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-7.jpg"
+                  alt="Crypto page showing Bitcoin, Ethereum, Solana, and Chainlink with 3-source verified badges, CoinGecko/Coinbase/Kraken price agreement, and AI confidence signals"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Crypto — triple-source verified.</strong> Every coin shows the live price
+                from three independent feeds with a divergence check. If CoinGecko, Coinbase, and
+                Kraken don't agree, the divergence is displayed before any action is allowed.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-8.jpg"
+                  alt="Gold & Metals page showing Gold spot $4,230, Silver $68.14, Platinum $1,723, Palladium $1,302 — all 2-source verified with Yahoo futures against spot price"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Metals — hedge, not speculation.</strong> Gold, silver, platinum, and palladium
+                are verified two ways simultaneously: Yahoo Finance front-month futures against
+                gold-api.com spot. A big spread gets flagged. A small one is normal.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Tools group */}
+        <div className="cs-group">
+          <div className="cs-group-label">
+            <span className="mini-label">Intelligent Tools</span>
+            <h3>Real estate. Item hunting. Full model control.</h3>
+            <p>
+              Three specialized tools round out the OS. Real Estate Super Search lets Jayson
+              set location, radius, property type, and ranking criteria, then watch listings
+              nationwide for price drops, status changes, or anything worth a notification.
+              Item Search dispatches an AI agent across every major and minor marketplace,
+              Facebook listing, and local listing to find any item at or below a target price —
+              with every match, price, description, and source link returned. Models &amp; Cost
+              gives Jayson full control over which AI model handles each role, from cheap
+              summarizers on local Ollama to Claude Opus running the Midas Mode brain.
+            </p>
+          </div>
+          <div className="cs-grid cs-grid-3">
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-10.jpg"
+                  alt="Real Estate page showing super search form with city, radius, property type, and ranking filters, plus listing watcher with URL, target price, and notification fields"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Real Estate Super Search.</strong> Set must-have criteria and Jayson's AI
+                ranks exact matches first, closest matches second, and explicitly flags when a
+                listing misses a requirement. The watcher monitors any listing URL and notifies
+                on price changes or status moves.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-11.jpg"
+                  alt="Item Search page with item description form, target price field, and condition/model/shipping/alternatives detail fields"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Item Search.</strong> Describe the item, set a max price, add condition and
+                model constraints. The AI agent sweeps every marketplace — major, minor, Facebook,
+                and local — and returns every match with price, description, and a direct link.
+                No obscure item has beaten it yet.
+              </p>
+            </div>
+            <div className="cs-card">
+              <div className="cs-frame">
+                <img
+                  src="/case-studies/jayson/screen-12.jpg"
+                  alt="Models & Cost page showing per-role model picker: research uses GPT-5, real estate uses Claude Opus, finance uses Claude Sonnet, autopilot brain uses Claude Code Opus"
+                  loading="lazy"
+                />
+              </div>
+              <p className="cs-caption">
+                <strong>Models &amp; Cost.</strong> Every AI role has an independently assignable model.
+                Research helpers can run cheap; the Midas Mode brain runs the most powerful model
+                available. Cost stays visible at all times, and Jayson can swap any model in or out
+                without touching code.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Reviews ── */}
+      <section id="reviews" className="section reviews-section reveal">
+        <div className="section-heading">
+          <p>Client Reviews</p>
+          <h2>What clients say after the harness is live.</h2>
+        </div>
+        <div className="reviews-grid">
+          <article className="review-card">
+            <div className="review-top">
+              <div className="review-avatar" aria-label="Jayson Powers photo placeholder">
+                <span>Photo</span>
+                <em>coming soon</em>
+              </div>
+              <div className="review-meta">
+                <strong>Jayson Powers</strong>
+                <span>Private Investor · Missouri</span>
+                <div className="review-stars" aria-label="5 stars out of 5">
+                  {[1,2,3,4,5].map((n) => (
+                    <svg key={n} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <blockquote className="review-quote">
+              "I've been investing for over 20 years and I've never had a tool that puts this
+              kind of firepower in one place. The Wealth &amp; Powers OS does things I genuinely
+              didn't think were possible — Midas Mode returned a profit the very first week,
+              the research engine goes deeper than anything I've paid an analyst to produce,
+              and Item Search found me something I'd been hunting for months in under ten
+              minutes. Spencer had the entire system installed and running in one session. I
+              hit a small snag during setup and he had it solved before I could even finish
+              explaining the problem. Outstanding work, outstanding speed, and the results
+              have been outstanding too. I gave them five stars and I'd give them ten if I could."
+            </blockquote>
+          </article>
+        </div>
       </section>
 
       <section className="final-cta reveal">
