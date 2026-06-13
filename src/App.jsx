@@ -966,12 +966,14 @@ function App() {
             handed a cash stake and set loose to grow it — legally, transparently,
             and with hard kill-switches enforced by the engine, not trusted to the
             model. The result is the <strong>Wealth &amp; Powers OS</strong> — a fully
-            custom investor dashboard built and installed remotely in a single session.
-            It runs live cross-verified market data across 18 symbols simultaneously,
-            surfaces deep AI research grounded in real-time prices and headlines,
-            watches real estate listings nationwide, hunts down obscure items across
-            every marketplace on the internet, and lets Midas Mode — powered by
-            Claude Fable 5 — autonomously trade and hustle its way to profit within
+            custom investor AI Harness built and installed remotely in a single session.
+            It is not a single dashboard but many AI agents working in concert across the
+            entire OS — each owning a different job and running in parallel: cross-verifying
+            live market data across 18 symbols simultaneously, surfacing deep AI research
+            grounded in real-time prices and headlines, auditing every finding with a
+            separate model, watching real estate listings nationwide, hunting down obscure
+            items across every marketplace on the internet, and letting Midas Mode — powered
+            by Claude Fable 5 — autonomously trade and hustle its way to profit within
             whatever risk envelope Jayson sets. Every trade requires Jayson's explicit
             approval before execution. Every model decision is audited by an
             independent model. Jayson called the work outstanding and said the setup
@@ -994,7 +996,9 @@ function App() {
             The command center. One screen shows Jayson his full portfolio at live-verified prices,
             the Midas Mode engage button, 18/18 quotes verified live, active research jobs,
             and every module — from stocks and crypto to real estate and item search —
-            two clicks away. The Oracle AI assistant is always one click from anywhere on the dashboard.
+            two clicks away. Behind that single screen, a fleet of AI agents works in concert —
+            verifying prices, auditing research, watching listings, and running the money engine
+            in parallel. The Oracle AI assistant is always one click from anywhere in the AI Harness.
           </p>
         </div>
 
@@ -1039,7 +1043,7 @@ function App() {
               </div>
               <p className="cs-caption">
                 <strong>Live session.</strong> Fable is thinking at max effort, re-evaluating every position
-                on its cycle. The dashboard shows cash, deployed capital, realized P&amp;L, and drawdown
+                on its cycle. The AI Harness shows cash, deployed capital, realized P&amp;L, and drawdown
                 in real time. Human-approval is enforced — no trade executes until Jayson confirms.
                 Kill switch is one button away at any moment.
               </p>
