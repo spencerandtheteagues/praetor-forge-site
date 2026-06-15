@@ -3,6 +3,7 @@ import {
   AlertTriangle,
   ArrowRight,
   Bot,
+  CalendarCheck,
   Check,
   ClipboardCheck,
   Copy,
@@ -19,8 +20,11 @@ import {
 } from 'lucide-react';
 
 const SALES_EMAIL = 'sales@theharnesslab.com';
-const TECH_EMAIL = 'tech@theharnesslab.com';
+const TECH_EMAIL = 'spencer@theharnesslab.com';
 const INTAKE_URL = 'https://harness-lab-intake.onrender.com/api/intake';
+// Cal.com booking page — create at cal.com/theharnesslab and update this URL
+const CALENDAR_URL = 'https://cal.com/harnesslab/teardown';
+const FOUNDING_REMAINING = 8;
 
 const serviceOptions = [
   {
@@ -33,6 +37,7 @@ const serviceOptions = [
   {
     name: 'Reliability Audit',
     price: '$750 fixed fee',
+    founding: '$200 for founding clients — 8 spots remaining',
     short: 'The default first paid step: a 26-point audit mapping failures, cost exposure, security gaps, and the fastest repair path.',
     outcome: 'Written failure map, prioritized fix list, recommended package, and a 30-minute handoff call.',
     fit: 'Best when an existing agent workflow is looping, stalling, dropping work, leaking context, or failing silently.',
@@ -218,6 +223,7 @@ const deliverables = [
   ['Secret isolation', 'No hardcoded keys, scoped identities, env templates, and redaction checks.'],
   ['Health and recovery', 'Health checks, backup/restore notes, canaries, dispatch probes, and incident steps where needed.'],
   ['Operating package', 'Repo, setup script, runbook, smoke tests, evidence bundle, and change-order boundary.'],
+  ['Orchestrator & browser hardening', 'Where relevant: orchestrator agent security, browser-session isolation, VPS access boundaries, and secret redaction checks across every surface.'],
 ];
 
 const problemTags = [
@@ -246,7 +252,7 @@ const defaultRequest = {
   website: '',
   role: '',
   urgency: 'This month',
-  budget: '$750 audit',
+  budget: '$200 founding audit',
   currentStack: '',
   infrastructure: '',
   approvalPath: 'Need recommendation',
@@ -394,7 +400,7 @@ function App() {
         <div className="hero-copy">
           <p className="hero-badge">
             <Sparkles aria-hidden="true" />
-            Founding pricing — 30% off the first 10 builds
+            Founding pricing — 30% off · {FOUNDING_REMAINING} of 10 spots remaining
           </p>
           <h1 id="hero-title">
             We build the <em className="aurora-text">harness</em> your AI agents run on.
@@ -407,7 +413,7 @@ function App() {
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#intake">
-              Start with the $750 audit
+              Start with the $200 founding audit
               <ArrowRight aria-hidden="true" />
             </a>
             <a className="secondary-button" href="#failures">
@@ -418,7 +424,7 @@ function App() {
           <dl className="hero-facts" aria-label="Core operating facts">
             <div>
               <dt>Best first step</dt>
-              <dd>Free teardown, then $750 audit</dd>
+              <dd>Free teardown, then $200 founding audit</dd>
             </div>
             <div>
               <dt>Delivery</dt>
@@ -669,6 +675,7 @@ function App() {
           <strong>Founding-client offer</strong> — the first 10 build clients receive 30% off the
           build fee, locked for 12 months. The discounted ranges are shown on each build card.
           Enterprise and regulated workflows are quoted only after a paid audit.
+          <strong className="founding-counter">{FOUNDING_REMAINING} of 10 founding spots remaining.</strong>
         </p>
       </section>
 
@@ -859,6 +866,7 @@ function App() {
               <Field label="Budget">
                 <select value={request.budget} onChange={(event) => update('budget', event.target.value)}>
                   <option>$0 teardown call</option>
+                  <option>$200 founding audit</option>
                   <option>$750 audit</option>
                   <option>$1,500-$3,000 setup</option>
                   <option>$1,500-$5,000 rescue</option>
@@ -918,11 +926,34 @@ function App() {
                 {status === 'sending' ? 'Sending...' : 'Send request'}
               </button>
             </div>
+            {(request.requestType === 'Free Teardown Call' || request.requestType === 'More information / fit call') && status === 'idle' ? (
+              <div className="calendar-prompt">
+                <CalendarCheck aria-hidden="true" />
+                <div>
+                  <strong>Skip the queue — book directly</strong>
+                  <p>Pick a time now instead of waiting for a reply.</p>
+                  <a className="primary-button" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">
+                    Book a time
+                    <ArrowRight aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            ) : null}
             {status === 'sent' ? (
-              <p className="submit-note">
-                Request received — it is in front of the team now. We will reply by email shortly.
-                Need a faster path? Email {SALES_EMAIL}.
-              </p>
+              <div className="submit-note">
+                <p>Request received — it is in front of Spencer now. Reply incoming by email.</p>
+                <div className="calendar-prompt">
+                  <CalendarCheck aria-hidden="true" />
+                  <div>
+                    <strong>Lock in your call now</strong>
+                    <p>Don't wait for the reply. Book a slot directly.</p>
+                    <a className="primary-button" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">
+                      Book a time
+                      <ArrowRight aria-hidden="true" />
+                    </a>
+                  </div>
+                </div>
+              </div>
             ) : null}
             {status === 'fallback' ? (
               <p className="submit-note">
@@ -1522,7 +1553,7 @@ function App() {
         <img src="/hermes-mark.png" alt="" width="96" height="96" />
         <h2>Bring the broken workflow. Leave with a setup you can operate and prove.</h2>
         <p>
-          Start with the free teardown if you are unsure. Start with the $750 audit
+          Start with the free teardown if you are unsure. Start with the $200 founding audit
           when the system already exists and the risk matters.
         </p>
         <div className="hero-actions">
@@ -1530,9 +1561,9 @@ function App() {
             Start the intake
             <ArrowRight aria-hidden="true" />
           </a>
-          <a className="secondary-button" href={`mailto:${SALES_EMAIL}?subject=The%20Harness%20Lab%20teardown%20call`}>
-            <PhoneCall aria-hidden="true" />
-            Ask for a teardown call
+          <a className="secondary-button" href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">
+            <CalendarCheck aria-hidden="true" />
+            Book a teardown call
           </a>
         </div>
       </section>
