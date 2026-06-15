@@ -1568,6 +1568,17 @@ function App() {
         </div>
       </section>
 
+      <button
+        className="cal-fab"
+        data-cal-namespace="teardown"
+        data-cal-link="harnesslab/teardown"
+        data-cal-config='{"layout":"month_view"}'
+        aria-label="Book a teardown call"
+      >
+        <CalendarCheck aria-hidden="true" />
+        <span>Book a call</span>
+      </button>
+
       <footer className="site-footer">
         <div>
           <a className="brand" href="#top">

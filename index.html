@@ -36,5 +36,10 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script type="text/javascript">
+      (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const namespace=ar[1];api.q=[];if(typeof namespace==="string"){cal.ns[namespace]=cal.ns[namespace]||api;p(cal.ns[namespace],ar);p(cal,[L,namespace,ar[2]])}else p(cal,ar);return}p(cal,ar)}})(window,"https://app.cal.com/embed/embed.js","init");
+      Cal("init","teardown",{origin:"https://cal.com"});
+      Cal.ns.teardown("ui",{"hideEventTypeDetails":false,"layout":"month_view","cssVarsPerTheme":{"dark":{"cal-brand":"#f4c87a","cal-text":"#f5f3ff","cal-border":"rgba(199,201,255,0.14)","cal-bg":"#0A0A14"}}});
+    </script>
   </body>
 </html>

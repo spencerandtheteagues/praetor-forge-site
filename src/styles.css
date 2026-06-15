@@ -1589,6 +1589,38 @@ textarea:focus {
   text-transform: uppercase;
 }
 
+.cal-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 20px;
+  border: 1px solid rgba(244, 200, 122, 0.55);
+  border-radius: 999px;
+  background: var(--grad-gold);
+  color: var(--gold-ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 8px 32px -8px rgba(244, 200, 122, 0.55);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.cal-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px -8px rgba(244, 200, 122, 0.7);
+}
+
+.cal-fab svg {
+  width: 17px;
+  height: 17px;
+}
+
 .wide-fields {
   grid-column: 1 / -1;
 }
