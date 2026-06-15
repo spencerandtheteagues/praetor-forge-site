@@ -370,6 +370,10 @@ img {
   color: var(--gold);
 }
 
+.scarcity-red {
+  color: var(--ember-bright);
+}
+
 /* one orchestrated entrance, not scattered micro-motion */
 @keyframes rise-in {
   from { opacity: 0; transform: translateY(14px); }
@@ -1094,7 +1098,7 @@ img {
 .founding-price {
   display: block;
   margin-top: 7px;
-  color: var(--gold-bright);
+  color: var(--ember-bright);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
@@ -1577,7 +1581,7 @@ textarea:focus {
 .founding-counter {
   display: block;
   margin-top: 10px;
-  color: var(--gold-bright);
+  color: var(--ember-bright);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;

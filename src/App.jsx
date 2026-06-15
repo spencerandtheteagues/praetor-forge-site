@@ -400,7 +400,7 @@ function App() {
         <div className="hero-copy">
           <p className="hero-badge">
             <Sparkles aria-hidden="true" />
-            Founding pricing — 30% off · {FOUNDING_REMAINING} of 10 spots remaining
+            Founding pricing — 30% off · <span className="scarcity-red">{FOUNDING_REMAINING} of 10 spots remaining</span>
           </p>
           <h1 id="hero-title">
             We build the <em className="aurora-text">harness</em> your AI agents run on.
