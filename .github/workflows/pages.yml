@@ -6,15 +6,22 @@
 # is now a separate Cloudflare Worker (intake-worker/) that can fail on its own.
 name: Deploy site to Pages
 
+# NOTE: this workflow is currently manual-only. GitHub Actions is locked on this
+# account for billing ("your account is locked due to a billing issue"), so a
+# push trigger would just paint every commit red. The site is published instead
+# by scripts/publish-pages.sh, which builds locally and pushes dist/ to the
+# gh-pages branch — no Actions minutes involved.
+#
+# Once billing is sorted, restore the push trigger below and set the Pages source
+# back to "GitHub Actions"; nothing else here needs to change.
 on:
-  push:
-    branches: [main]
-    # The worker deploys itself; a change there must not republish the site.
-    paths-ignore:
-      - 'intake-worker/**'
-      - 'intake-service/**'
-      - 'docs/**'
-      - '**.md'
+  # push:
+  #   branches: [main]
+  #   paths-ignore:
+  #     - 'intake-worker/**'
+  #     - 'intake-service/**'
+  #     - 'docs/**'
+  #     - '**.md'
   workflow_dispatch:
 
 permissions:
