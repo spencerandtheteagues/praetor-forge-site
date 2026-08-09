@@ -21,7 +21,9 @@ import {
 
 const SALES_EMAIL = 'sales@theharnesslab.com';
 const TECH_EMAIL = 'spencer@theharnesslab.com';
-const INTAKE_URL = 'https://harness-lab-intake.onrender.com/api/intake';
+// Cloudflare Worker (intake-worker/). The Render service this replaced ran on a
+// paid `starter` plan and was suspended, which took the whole site down with it.
+const INTAKE_URL = 'https://harness-lab-intake.theharnesslab.workers.dev/api/intake';
 // Cal.com booking page — create at cal.com/theharnesslab and update this URL
 const CALENDAR_URL = 'https://cal.com/harnesslab/teardown';
 const FOUNDING_REMAINING = 8;

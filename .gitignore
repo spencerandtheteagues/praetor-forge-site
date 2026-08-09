@@ -1,8 +1,8 @@
-node_modules/
 dist/
-qa/
-.env
-.env.*
-!.env.example
 .DS_Store
+.env
+!.env.example
+node_modules/
 npm-debug.log*
+qa/
+.wrangler

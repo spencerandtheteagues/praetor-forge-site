@@ -1,0 +1,58 @@
+# Builds the site and publishes it to GitHub Pages at theharnesslab.com.
+#
+# This replaced Render, where the static site shared a service group with the
+# paid intake service; when that lapsed, the marketing site went down with it.
+# Pages is free for a public repo and has no such coupling — the intake bridge
+# is now a separate Cloudflare Worker (intake-worker/) that can fail on its own.
+name: Deploy site to Pages
+
+on:
+  push:
+    branches: [main]
+    # The worker deploys itself; a change there must not republish the site.
+    paths-ignore:
+      - 'intake-worker/**'
+      - 'intake-service/**'
+      - 'docs/**'
+      - '**.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two publishes race; the newest push wins, but let a run in flight
+# finish so a half-uploaded artifact is never what goes live.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # public/CNAME carries the custom domain into dist/ via Vite, which is what
+      # keeps Pages from dropping the domain on each deploy.
+      - name: Verify the custom domain survived the build
+        run: test -f dist/CNAME && cat dist/CNAME
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
