@@ -5,9 +5,12 @@
   "compatibility_date": "2026-08-09",
   "observability": { "enabled": true },
   "vars": {
-    // Not a secret: a Telegram chat id is useless without the bot token, which
-    // is set with `wrangler secret put TELEGRAM_BOT_TOKEN` and never committed.
-    "LEAD_CHAT_ID": "-5036189020",
+    // Where a submitted lead lands. Change and redeploy to reroute.
+    // Gmail rather than the domain mailbox: a lead that is missed is worse than
+    // one that arrives at a less tidy address.
+    "LEAD_EMAIL_TO": "spencerandtheteagues@gmail.com",
+    // Must be on a domain verified in Resend, or the API rejects the send.
+    "LEAD_EMAIL_FROM": "intake@theharnesslab.com",
     "ALLOWED_ORIGIN": ""
   },
   "ratelimits": [

@@ -1,28 +1,46 @@
 # Intake worker
 
-The lead form on theharnesslab.com posts here; this posts it into the team's
-Telegram group. A port of `intake-service/server.mjs`, which is kept for
-reference and is no longer deployed.
+The lead form on theharnesslab.com posts here; this emails the lead to spencer
+via Resend. `intake-service/server.mjs` is the retired Node original, kept for
+reference and no longer deployed.
 
-## Why it moved
+## Why it moved twice
 
-The site and the intake API were two services in one Render group, and the
-intake service was on the paid `starter` plan. When that lapsed the whole group
-was suspended — including the static marketing site, which had no reason to be
-billable at all. Splitting them means the site cannot be taken down by the API
-again.
+**Off Render**, because the site and the intake API were two services in one
+Render group and the API was on the paid `starter` plan. When that lapsed the
+whole group was suspended — including the static marketing site, which had no
+reason to be billable. Splitting them means the site cannot be taken down by the
+API again.
 
-Behaviour is deliberately identical to the Node version: the same allowed
-origins, the same validation, the same honeypot, the same Telegram message
-format. Two things necessarily changed:
+**Off Telegram**, because the destination had quietly died. The bot token was
+valid (`getMe` returned `HermesTheMasterPlanBot`) but the group no longer
+accepted messages, so every submitted lead returned `delivery_failed`. A lead
+form whose delivery target belongs to retired infrastructure is worse than no
+form: it looks like it works.
 
-- **Rate limiting.** The Node server kept a per-IP `Map`, which enforced
-  something real only because Render ran exactly one always-on instance. Workers
-  run many isolates, so that Map would reset unpredictably. It now uses the
-  platform rate limiter — same budget, 6 requests per 60s per IP.
-- **The legacy `theharnesslab.dev` -> `.com` redirect** is gone. It belonged to
-  a host serving the site, and this worker never serves HTML. `.dev` origins are
-  still accepted for CORS.
+## Configuration
+
+| Setting | Where | Value |
+|---|---|---|
+| `RESEND_API_KEY` | secret | `wrangler secret put RESEND_API_KEY` |
+| `LEAD_EMAIL_TO` | `wrangler.jsonc` | where leads land |
+| `LEAD_EMAIL_FROM` | `wrangler.jsonc` | must be on a Resend-verified domain |
+
+`reply_to` is set to the lead's own address, so replying to the notification
+replies to the prospect rather than to the worker.
+
+## The domain slot
+
+Resend's free plan verifies **one** domain. `apex-build.dev` held it until
+2026-08-09 and was deleted to make room for `theharnesslab.com` — which also
+means any other sender still using `apex-build.dev` is now broken and needs
+re-pointing.
+
+Only three DNS records are required (DKIM TXT, SPF MX, SPF TXT), all on the
+`send` / `resend._domainkey` subdomains. **Do not add the `MX @` record Resend
+offers under "Enable Receiving."** It is optional, and on this domain it would
+take inbound mail away from Namecheap Private Email — breaking every
+@theharnesslab.com mailbox.
 
 ## Deploying
 
@@ -31,18 +49,13 @@ npm install
 npm run deploy
 ```
 
-## The one secret
-
-`LEAD_CHAT_ID` is in `wrangler.jsonc` because a chat id is useless on its own.
-The bot token is not, and is never committed:
-
-```
-npx wrangler secret put TELEGRAM_BOT_TOKEN
-```
-
-Until it is set, `/api/intake` returns `500 server_misconfigured` rather than
-accepting a lead it cannot deliver. Check it end to end with:
+## Checking it
 
 ```
 curl -sS https://harness-lab-intake.theharnesslab.workers.dev/api/health
 ```
+
+A misconfigured worker answers `500 server_misconfigured` and a failed send
+answers `502 delivery_failed` with Resend's own reason in the logs
+(`wrangler tail`). Both are deliberately loud: a silently dropped lead is the
+failure that costs real money.
