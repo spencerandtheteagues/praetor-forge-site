@@ -389,6 +389,7 @@ function App() {
           <a href="#who">Who benefits</a>
           <a href="#reviews">Reviews</a>
           <a href="#intake">Intake</a>
+          <a href="#engineering-studio">Engineering</a>
           <a href={`mailto:${SALES_EMAIL}`}>Contact</a>
         </nav>
         <a className="nav-cta" href="#intake">
@@ -1568,6 +1569,35 @@ function App() {
             Book a teardown call
           </a>
         </div>
+      </section>
+
+      <section id="engineering-studio" className="dev-band reveal" aria-labelledby="dev-band-title">
+        <p className="dev-band-eyebrow">The engineering studio</p>
+        <h2 id="dev-band-title">Meet theharnesslab.dev</h2>
+        <p className="dev-band-copy">
+          The <strong>.dev</strong> side is where all the engineering lives. We build the full
+          range — from a clean marketing site to the tools that automate an entire once-manual
+          business, and everything in between. The throughline is software that puts AI models
+          to work for a company: cutting costs, lifting profit, saving hours, and making the
+          team&rsquo;s jobs easier.
+        </p>
+        <a
+          className="primary-button"
+          href="https://theharnesslab.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore theharnesslab.dev
+          <ArrowRight aria-hidden="true" />
+        </a>
+        <img
+          className="dev-band-emblem"
+          src="/advancedhermes-hero-round.png"
+          alt="The Harness Lab winged emblem"
+          width="900"
+          height="900"
+          loading="lazy"
+        />
       </section>
 
       <button
