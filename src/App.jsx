@@ -1581,6 +1581,10 @@ function App() {
           to work for a company: cutting costs, lifting profit, saving hours, and making the
           team&rsquo;s jobs easier.
         </p>
+        <p className="dev-band-copy">
+          Latest shipped product: <a href="https://title-desk.com/" target="_blank" rel="noopener noreferrer">TitleDesk Agent</a> —
+          landman title research software for oil &amp; gas land teams, running on the landman&rsquo;s own computer.
+        </p>
         <a
           className="primary-button"
           href="https://theharnesslab.dev"
