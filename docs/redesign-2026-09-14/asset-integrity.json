@@ -1,0 +1,18 @@
+{
+  "public/hermes-mark.png": {
+    "unchanged": true,
+    "sha256": "2e92bd5e268228b6b329cb26a537ef1a68e583afbe991d122c45b635a7a292d9"
+  },
+  "public/advancedhermes-hero-round.png": {
+    "unchanged": true,
+    "sha256": "58bb7f338fd9b113251de5896e752ef32a16cd86a863c5a63e28222d3936fbb3"
+  },
+  "public/social-card.png": {
+    "unchanged": true,
+    "sha256": "caad4b21644eba7334b54a799595b26dd035bf093edb4073fcc29ffba692720b"
+  },
+  "public/spencer-teague.jpg": {
+    "matches_supplied_original": true,
+    "sha256": "6b677e26d722229edc5c6c37f50d9885dfcb875237650d537d7fd15b1bc3b9e2"
+  }
+}

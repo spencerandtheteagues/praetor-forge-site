@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-09-14T09:30:59.960Z",
+  "base": "http://127.0.0.1:4174",
+  "results": [
+    "Required copy, contact links, price removal, single H1, and navigation targets pass.",
+    "All three workflow examples complete; switching examples cancels previous timers; pause/resume works.",
+    "All five screenshot previews open, close on Escape, and restore keyboard focus.",
+    "Mocked contact success and server failure pass; native validation blocks empty submission; failure preserves input and offers email fallback. No email sent.",
+    "No horizontal overflow at 320, 390, 768, 1024, or 1440 pixels. Mobile navigation opens and closes after selection.",
+    "Reduced-motion mode disables ambient animation and completes the example without motion.",
+    "All rendered images decode; no JavaScript exceptions or failed local assets. Desktop and mobile screenshots saved."
+  ],
+  "errors": [],
+  "failedAssets": [],
+  "realEmailSent": false
+}

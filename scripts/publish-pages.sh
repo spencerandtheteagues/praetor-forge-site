@@ -14,12 +14,14 @@ REPO_ROOT="$PWD"
 BRANCH="gh-pages"
 
 echo "==> building"
-npm ci
+npm ci --ignore-scripts
+npm run lint
 npm run build
 
 # Pages drops the custom domain the moment this file goes missing, and the
 # resulting failure looks exactly like a DNS problem. Fail here instead.
 test -f dist/CNAME || { echo "FATAL: dist/CNAME missing — public/CNAME did not survive the build"; exit 1; }
+test "$(cat dist/CNAME)" = "theharnesslab.com" || { echo "FATAL: unexpected custom domain"; exit 1; }
 echo "==> custom domain: $(cat dist/CNAME)"
 
 # Jekyll would otherwise ignore any path starting with an underscore, which is
@@ -32,13 +34,10 @@ WORKTREE="$(mktemp -d -p "$(git rev-parse --git-common-dir)/..")"
 # which silently leaves a registered worktree behind on every publish.
 trap 'cd "$REPO_ROOT"; git worktree remove --force "$WORKTREE" 2>/dev/null || true; rm -rf "$WORKTREE"; git worktree prune' EXIT
 
-if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
-  git worktree add --quiet "$WORKTREE" "$BRANCH"
-else
-  git worktree add --quiet --detach "$WORKTREE"
-  git -C "$WORKTREE" checkout --orphan "$BRANCH"
-  git -C "$WORKTREE" rm -rq --cached . 2>/dev/null || true
-fi
+# Start at the current published commit, including in a fresh clone with no
+# local gh-pages branch. A normal push below rejects a concurrent deployment.
+git fetch --quiet origin "$BRANCH"
+git worktree add --quiet --detach "$WORKTREE" FETCH_HEAD
 
 # Replace the published tree wholesale, so a file deleted in src disappears from
 # the live site instead of lingering.
@@ -52,6 +51,6 @@ if git diff --cached --quiet; then
   exit 0
 fi
 
-git commit -q -m "Publish site from $(git -C "$REPO_ROOT" rev-parse --short HEAD)"
-git push -q origin "$BRANCH"
+git -c user.name="Spencer Teague" -c user.email="220981384+spencerandtheteagues@users.noreply.github.com" commit -q -m "Publish site from $(git -C "$REPO_ROOT" rev-parse --short HEAD)"
+git push -q origin "HEAD:$BRANCH"
 echo "==> published to $BRANCH"
