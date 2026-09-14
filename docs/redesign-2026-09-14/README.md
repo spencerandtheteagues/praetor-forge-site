@@ -4,10 +4,11 @@ The homepage now presents The Harness Lab as a founder-led software and AI autom
 
 ## Review
 
-- Production preview: `http://127.0.0.1:4174/` while the local preview server is running.
+- Live site: https://theharnesslab.com/
+- https://theharnesslab.dev/ and its www variant redirect to the main site.
 - `desktop-full.png` and `mobile-full.png`: complete page previews.
 - `desktop-hero.png`, `desktop-workflow.png`, `desktop-work.png`, `desktop-about.png`, and `desktop-contact.png`: design details.
-- Spencer authorized continuing with publication after reviewing the prepared redesign. Source is saved on `codex/workflow-studio-redesign`; the live verification record accompanies the completed deployment.
+- Published after Spencer asked to continue. Source is saved on `codex/workflow-studio-redesign` and pushed to `main`; see `live-verification.json`.
 
 ## Design
 
@@ -39,10 +40,12 @@ Browser verification uses an already-installed Playwright runtime; no browser te
 
 On 2026-09-14, `brandstream.my` returned 200. `title-desk.com` and `apex-build.dev` returned 503; APEX's response included `x-render-routing: suspend`. The TitleDesk domain remains the requested product link. APEX's portfolio card links to its GitHub project. These separate sites have not been changed.
 
-## Publishing after approval
+## Publication and rollback record
 
 The `.com` site is served from `spencerandtheteagues/praetor-forge-site`, branch `gh-pages`, with `public/CNAME` preserved as `theharnesslab.com`. Source baseline: `1e12bc518c2008d712426a396ffe24b170bdfb27`; publication baseline: `f9494361ea886b4ed34048c67bfc033f1701a4dc`.
 
-Re-fetch before publishing and reconcile any intervening changes. Save source to `main`, then run the reviewed `scripts/publish-pages.sh` after approval. The script performs an ordinary push, never a force push. Confirm live HTML, asset hashes, form UI, links, and responsive rendering after Pages updates.
+The `.com` build source is `6a9fe46fc966cc46c49190e7e8af5caa54bd7b11`; its published commit is `92a43ac09f845591eb2d2a9b101d55522949409e`. GitHub Pages reported built. Live HTML, JS, CSS, both brand images, the portrait, and the TitleDesk screenshot match the tested SHA-256 hashes. Live browser checks passed for desktop and mobile, workflow interaction, screenshot preview, the founder section, and contact UI. No actual lead email was sent.
 
-The `.dev` site is a separate GitHub Pages repository: `THE-HARNESS-LAB/theharnesslab-dev`. Its prepared redirect lives in `/Users/spencerteague/theharnesslab-site-2026-09-14` on branch `codex/unify-harnesslab-domains`. It keeps the `.dev` CNAME and existing assets, points visitors to `.com`, and preserves query strings and section anchors. The redirect was tested with intercepted browser navigation and has not been published. Publish the `.com` experience first, then the `.dev` redirect. Its source baseline is `a1022a6`.
+The publish script performs an ordinary push, never a force push. For any future rollback, restore the prior publication tree in a new commit and push normally; preserve the publication history and CNAME.
+
+The `.dev` site is a separate GitHub Pages repository: `THE-HARNESS-LAB/theharnesslab-dev`. Its prepared redirect lives in `/Users/spencerteague/theharnesslab-site-2026-09-14` on branch `codex/unify-harnesslab-domains`. It keeps the `.dev` CNAME and existing assets, points visitors to `.com`, and preserves query strings and section anchors. The redirect was published as `be835ac179fc6b5372b4548f01a3024cdfc1327c` after `.com` was verified. GitHub Pages reported built. Both apex and www `.dev` were then verified in a browser to reach the new `.com` page while retaining the query string and section anchor. Its prior source baseline is `a1022a6`.

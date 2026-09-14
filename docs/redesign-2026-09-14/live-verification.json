@@ -1,0 +1,69 @@
+{
+  "checkedAt": "2026-09-14T14:36:04.966Z",
+  "url": "https://theharnesslab.com",
+  "publicationCommit": "92a43ac09f845591eb2d2a9b101d55522949409e",
+  "sourceCommit": "6a9fe46fc966cc46c49190e7e8af5caa54bd7b11",
+  "hashes": [
+    {
+      "path": "dist/index.html",
+      "sha256": "64b4651c1f3d6e1afe5d3efb20ea879886bf096ab15365b96b397d23af06b989",
+      "match": true
+    },
+    {
+      "path": "dist/assets/index-CoZJ9UQs.css",
+      "sha256": "5ecabc6396b87408e07904001996cc494930db589db96d7ecaaa04bea6fbe293",
+      "match": true
+    },
+    {
+      "path": "dist/assets/index-vx4KZ6y-.js",
+      "sha256": "227e1e181334decb2b1c5b4560acf6abc0e00925eaf1c01dbdc849287943bcb4",
+      "match": true
+    },
+    {
+      "path": "dist/hermes-mark.png",
+      "sha256": "2e92bd5e268228b6b329cb26a537ef1a68e583afbe991d122c45b635a7a292d9",
+      "match": true
+    },
+    {
+      "path": "dist/advancedhermes-hero-round.png",
+      "sha256": "58bb7f338fd9b113251de5896e752ef32a16cd86a863c5a63e28222d3936fbb3",
+      "match": true
+    },
+    {
+      "path": "dist/spencer-teague.jpg",
+      "sha256": "6b677e26d722229edc5c6c37f50d9885dfcb875237650d537d7fd15b1bc3b9e2",
+      "match": true
+    },
+    {
+      "path": "dist/projects/titledesk-runsheet.webp",
+      "sha256": "eb6acdf26dc12d74fc3cb8534ac9cdd92ec4e5ed6c59428c6920d4575aef5fe8",
+      "match": true
+    }
+  ],
+  "title": "The Harness Lab | Custom Software & AI Workflow Automation",
+  "errors": [],
+  "mobileOverflow": false,
+  "checks": [
+    "Live headline",
+    "Workflow example",
+    "Investor image modal",
+    "Founder portrait",
+    "Mobile navigation",
+    "Contact UI"
+  ],
+  "realEmailSent": false,
+  "devPublicationCommit": "be835ac179fc6b5372b4548f01a3024cdfc1327c",
+  "devRedirects": [
+    {
+      "from": "https://theharnesslab.dev/?source=dev#work",
+      "to": "https://theharnesslab.com/?source=dev#work",
+      "passed": true
+    },
+    {
+      "from": "https://www.theharnesslab.dev/?source=dev#work",
+      "to": "https://theharnesslab.com/?source=dev#work",
+      "passed": true
+    }
+  ],
+  "completedAt": "2026-09-14T14:37:10.921Z"
+}
