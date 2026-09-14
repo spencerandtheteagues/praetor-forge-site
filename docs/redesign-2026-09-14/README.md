@@ -7,7 +7,7 @@ The homepage now presents The Harness Lab as a founder-led software and AI autom
 - Production preview: `http://127.0.0.1:4174/` while the local preview server is running.
 - `desktop-full.png` and `mobile-full.png`: complete page previews.
 - `desktop-hero.png`, `desktop-workflow.png`, `desktop-work.png`, `desktop-about.png`, and `desktop-contact.png`: design details.
-- No changes have been published. Source is saved on `codex/workflow-studio-redesign`.
+- Spencer authorized continuing with publication after reviewing the prepared redesign. Source is saved on `codex/workflow-studio-redesign`; the live verification record accompanies the completed deployment.
 
 ## Design
 

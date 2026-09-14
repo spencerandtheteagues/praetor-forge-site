@@ -28,7 +28,7 @@ echo "==> custom domain: $(cat dist/CNAME)"
 # most of a Vite build's asset names on some configs. Cheap insurance.
 touch dist/.nojekyll
 
-WORKTREE="$(mktemp -d -p "$(git rev-parse --git-common-dir)/..")"
+WORKTREE="$(mktemp -d "${TMPDIR:-/tmp}/harnesslab-pages.XXXXXX")"
 # cd out of the worktree before removing it — the script ends up inside it, and
 # `git worktree remove` refuses to delete the directory it is being run from,
 # which silently leaves a registered worktree behind on every publish.
