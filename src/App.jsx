@@ -245,6 +245,10 @@ function WorkflowDemo() {
 }
 
 function ContactForm() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setReady(true);
+  }, []);
   const [status, setStatus] = useState("idle");
   const [request, setRequest] = useState({
     name: "",
@@ -259,7 +263,7 @@ function ContactForm() {
   const mailto = `mailto:sales@theharnesslab.com?subject=${encodeURIComponent(`Project enquiry: ${request.requestType}`)}&body=${encodeURIComponent(`Name: ${request.name}\nEmail: ${request.email}\nCompany: ${request.company}\n\n${request.desiredWorkflow}`)}`;
   const submit = async (e) => {
     e.preventDefault();
-    if (status === "sending") return;
+    if (!ready || status === "sending") return;
     setStatus("sending");
     try {
       const res = await fetch(INTAKE_URL, {
@@ -298,106 +302,109 @@ function ContactForm() {
       </div>
     );
   return (
-    <form className="contact-form" onSubmit={submit}>
+    <form className="contact-form" method="post" onSubmit={submit}>
       <h3>What would you like to build?</h3>
-      <div className="form-pair">
-        <label>
-          Your name
-          <input
-            name="name"
-            autoComplete="name"
-            required
-            maxLength={120}
-            value={request.name}
-            onChange={update}
-            placeholder="Your name"
-          />
-        </label>
-        <label>
-          Work email
-          <input
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            maxLength={160}
-            value={request.email}
-            onChange={update}
-            placeholder="you@company.com"
-          />
-        </label>
-      </div>
-      <div className="form-pair">
-        <label>
-          Company <span className="optional">(optional)</span>
-          <input
-            name="company"
-            autoComplete="organization"
-            maxLength={160}
-            value={request.company}
-            onChange={update}
-            placeholder="Company name"
-          />
-        </label>
-        <label>
-          I’m interested in
-          <select
-            name="requestType"
-            value={request.requestType}
-            onChange={update}
-          >
-            <option>Workflow automation</option>
-            <option>A website or full-stack app</option>
-            <option>An AI harness</option>
-            <option>Let’s explore an idea</option>
-          </select>
-        </label>
-      </div>
-      <label>
-        The idea, the bottleneck, or the big ambition
-        <textarea
-          name="desiredWorkflow"
-          required
-          rows={4}
-          maxLength={700}
-          value={request.desiredWorkflow}
-          onChange={update}
-          placeholder="What does your team do manually today? What would you love your software to do?"
-        />
-      </label>
-      <div className="honeypot" aria-hidden="true">
-        <label>
-          Leave this empty
-          <input
-            name="hp"
-            tabIndex={-1}
-            autoComplete="off"
-            value={request.hp}
-            onChange={update}
-          />
-        </label>
-      </div>
-      <button
-        className="button button-gold"
-        type="submit"
-        disabled={status === "sending"}
-      >
-        {status === "sending"
-          ? "Sending your enquiry…"
-          : "Let’s talk about your project"}
-        <ArrowUpRight size={18} />
-      </button>
-      <p className="form-note">
-        This sends your details to The Harness Lab so we can reply. Please leave
-        out passwords and confidential records.
-      </p>
-      {status === "error" && (
-        <div className="form-error" role="alert">
-          We couldn’t confirm delivery. Your details are still here.{" "}
-          <a href={mailto}>Open this enquiry in your email app</a>, or call{" "}
-          <a href="tel:+16073647772">607-364-7772</a>.
+      <fieldset disabled={!ready}>
+        <div className="form-pair">
+          <label>
+            Your name
+            <input
+              name="name"
+              autoComplete="name"
+              required
+              maxLength={120}
+              value={request.name}
+              onChange={update}
+              placeholder="Your name"
+            />
+          </label>
+          <label>
+            Work email
+            <input
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              maxLength={160}
+              value={request.email}
+              onChange={update}
+              placeholder="you@company.com"
+            />
+          </label>
         </div>
-      )}
+        <div className="form-pair">
+          <label>
+            Company <span className="optional">(optional)</span>
+            <input
+              name="company"
+              autoComplete="organization"
+              maxLength={160}
+              value={request.company}
+              onChange={update}
+              placeholder="Company name"
+            />
+          </label>
+          <label>
+            I’m interested in
+            <select
+              name="requestType"
+              value={request.requestType}
+              onChange={update}
+            >
+              <option>Workflow automation</option>
+              <option>A website or full-stack app</option>
+              <option>An AI harness</option>
+              <option>Let’s explore an idea</option>
+            </select>
+          </label>
+        </div>
+        <label>
+          The idea, the bottleneck, or the big ambition
+          <textarea
+            name="desiredWorkflow"
+            required
+            rows={4}
+            maxLength={700}
+            value={request.desiredWorkflow}
+            onChange={update}
+            placeholder="What does your team do manually today? What would you love your software to do?"
+          />
+        </label>
+        <div className="honeypot" aria-hidden="true">
+          <label>
+            Leave this empty
+            <input
+              name="hp"
+              tabIndex={-1}
+              autoComplete="off"
+              value={request.hp}
+              onChange={update}
+            />
+          </label>
+        </div>
+        <button
+          className="button button-gold"
+          type="submit"
+          disabled={status === "sending"}
+        >
+          {status === "sending"
+            ? "Sending your enquiry…"
+            : "Let’s talk about your project"}
+          <ArrowUpRight size={18} />
+        </button>
+        <p className="form-note">
+          This sends your details to The Harness Lab so we can reply. Please leave
+          out passwords and confidential records.
+        </p>
+        {status === "error" && (
+          <div className="form-error" role="alert">
+            We couldn’t confirm delivery. Your details are still here.{" "}
+            <a href={mailto}>Open this enquiry in your email app</a>, or call{" "}
+            <a href="tel:+16073647772">607-364-7772</a>.
+          </div>
+        )}
+      </fieldset>
+      <p className="form-note">Prefer email? <a href="mailto:sales@theharnesslab.com">Write to sales@theharnesslab.com</a>.</p>
     </form>
   );
 }
@@ -522,8 +529,8 @@ function App() {
               </p>
               <p className="hero-detail">
                 AI workflow automation, ambitious websites, full-stack
-                applications, and intelligent systems. Built around your
-                business. Built to do real work.
+                applications, and intelligent systems. Including landman title
+                research workflows through TitleDesk Agent. Built around your business.
               </p>
               <div className="hero-actions">
                 <a className="button button-gold" href="#contact">
@@ -640,8 +647,8 @@ function App() {
                 <span>Documents & data</span>
                 <span>Business operations</span>
               </div>
-              <a className="text-link" href="#workflow">
-                Explore a workflow <ArrowRight size={16} />
+              <a className="text-link" href="/ai-workflow-automation/">
+                AI workflow automation <ArrowRight size={16} />
               </a>
             </article>
             <article className="capability reveal">
@@ -676,8 +683,8 @@ function App() {
                 <span>Custom platforms</span>
                 <span>End-to-end builds</span>
               </div>
-              <a className="text-link" href="#contact">
-                Tell us your idea <ArrowRight size={16} />
+              <a className="text-link" href="/custom-software-development/">
+                Custom software development <ArrowRight size={16} />
               </a>
             </article>
             <article className="capability reveal">
@@ -770,9 +777,9 @@ function App() {
                 loading="lazy"
               />
               <h3>
-                From stacks of records
+                Landman title research,
                 <br />
-                to structured research.
+                organized around the record.
               </h3>
               <p>
                 TitleDesk Agent brings document reading, title research, and
@@ -783,6 +790,11 @@ function App() {
                 It is the kind of tool we build: focused on a demanding
                 real-world process, helping professionals spend less time
                 handling files and more time on the decisions that need them.
+              </p>
+              <p>
+                <a className="text-link" href="/landman-title-workflow-automation/">
+                  Landman title workflow automation <ArrowRight size={16} />
+                </a>
               </p>
               <ul className="project-features">
                 <li>
@@ -1178,7 +1190,7 @@ function App() {
           </a>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} The Harness Lab</span>
+          <span>© 2026 The Harness Lab</span>
           <span>Custom software · AI automation · Intelligent systems</span>
           <a href="https://theharnesslab.dev/">
             theharnesslab.dev <ArrowUpRight size={12} />

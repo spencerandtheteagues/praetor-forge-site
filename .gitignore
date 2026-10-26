@@ -2,7 +2,8 @@ dist/
 .DS_Store
 .env
 !.env.example
-node_modules/
+node_modules
 npm-debug.log*
 qa/
 .wrangler
+.prerender-*/

@@ -1406,6 +1406,12 @@ blockquote footer small {
   border-radius: 8px;
   background: #151a1c;
 }
+.contact-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
 .contact-form h3 {
   font-size: 23px;
   margin-bottom: 27px;
@@ -1460,7 +1466,7 @@ select {
   height: 44px;
   padding-right: 5px;
 }
-.contact-form > .button {
+.contact-form .button {
   width: 100%;
   margin-top: 1px;
   font-size: 12px;
