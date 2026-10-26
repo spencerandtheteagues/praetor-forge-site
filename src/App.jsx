@@ -686,6 +686,9 @@ function App() {
               <a className="text-link" href="/custom-software-development/">
                 Custom software development <ArrowRight size={16} />
               </a>
+              <a className="text-link" href="/website-design-development/">Business website development <ArrowRight size={16} /></a>
+              <a className="text-link" href="/internal-tools-development/">Custom internal tools <ArrowRight size={16} /></a>
+              <a className="text-link" href="/api-integrations/">API integration services <ArrowRight size={16} /></a>
             </article>
             <article className="capability reveal">
               <div className="capability-art art-harness" aria-hidden="true">
