@@ -1,7 +1,7 @@
-const Ae=`#version 300 es
+const _e=`#version 300 es
 in vec2 aPos;
 void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
-`,Le=`#version 300 es
+`,Pe=`#version 300 es
 precision highp float;
 precision highp int;
 precision highp sampler2D;
@@ -23,6 +23,7 @@ uniform sampler2D uObvEmi;
 uniform sampler2D uRevAlb;
 uniform sampler2D uRevHgt;
 uniform sampler2D uRevEmi;
+uniform sampler2D uEdgeTex; // R: V-groove depth, G: crisp glyph mask, B: bevel highlight
 
 // R = 1.602 projects to 91.0% of canvas height at CAM.z = 4.9, matching UV_RIM = 0.455
 // in harness-lab-hero-aligned.webp to within 0.03% for a zero-jump static -> WebGL handoff.
@@ -48,6 +49,15 @@ float gauss(float x) { return exp(-(x * x)); }
 float smin(float a, float b, float k) {
   float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
   return mix(b, a, h) - k * h * (1.0 - h);
+}
+
+// Sample cylindrical rim engraving (4 quadrants around circumference: -90, 0, +90, 180 deg).
+vec3 sampleEdgeEngraving(vec3 p, float lod) {
+  float ang = atan(p.y, p.x);
+  float u = fract((ang / 1.57079632679) + 0.5);
+  float v = clamp((p.z / 0.104) * 0.5 + 0.5, 0.0, 1.0);
+  float band = 1.0 - smoothstep(0.097, 0.105, abs(p.z));
+  return textureLod(uEdgeTex, vec2(u, v), lod).rgb * band;
 }
 
 float sdCappedCyl(vec3 p, float rad, float halfH) {
@@ -80,14 +90,17 @@ float mapCoin(vec3 p) {
     disp = (p.z >= 0.0 ? dispF : dispB) * taper;
   }
 
-  // Edge knurling (144 reeds), equatorial trench, and wire rings.
+  // Numismatic rim: outer 144-reed collars, twin gold guard fillets, and 3D V-cut edge inscription.
   float ang = atan(p.y, p.x);
-  float reedBand = smoothstep(0.032, 0.046, az) * (1.0 - smoothstep(HALF_T - 0.018, HALF_T, az));
-  float reeds = sin(ang * 144.0) * 0.0085 * reedBand;
-  float trench = -gauss(p.z / 0.026) * 0.018;
-  float wireRings = gauss((az - 0.034) / 0.007) * 0.009;
+  float reedBand = smoothstep(0.107, 0.115, az) * (1.0 - smoothstep(HALF_T - 0.015, HALF_T - 0.004, az));
+  float reeds = sin(ang * 144.0) * 0.0065 * reedBand;
+  float wireRings = gauss((az - 0.104) / 0.0042) * 0.0065;
+  float engraveCut = 0.0;
+  if (r > R - 0.045 && az < 0.104) {
+    engraveCut = -sampleEdgeEngraving(p, 0.5).r * 0.0105;
+  }
 
-  float effR = R + reeds + trench + wireRings;
+  float effR = R + reeds + wireRings + engraveCut;
   vec2 qCoin = vec2(r - effR, az - (HALF_T + disp));
   float d = min(max(qCoin.x, qCoin.y), 0.0) + length(max(qCoin, 0.0)) - 0.013;
 
@@ -183,39 +196,49 @@ vec3 shadeCoin(vec3 p, vec3 nLocal, mat3 coinToWorld, vec3 rdWorld, float t) {
 
   // Determine whether this hit sits on the sculpted obverse/reverse face (including
   // the protruding 3D wing feather blade!) vs the machined 144-reed cylinder rim.
-  float inWingTip = smoothstep(0.42, 0.52, hData.g) * smoothstep(R - 0.015, R + 0.006, r) * smoothstep(HALF_T - 0.035, HALF_T - 0.010, az);
-  float inCoinFace = (1.0 - smoothstep(R - 0.020, R - 0.004, r)) * smoothstep(HALF_T - 0.028, HALF_T - 0.008, az);
+  float inWingTip = smoothstep(0.42, 0.52, hData.g) * smoothstep(R - 0.015, R + 0.006, r) * smoothstep(HALF_T - 0.032, HALF_T - 0.010, az);
+  float inCoinFace = (1.0 - smoothstep(R - 0.026, R - 0.011, r)) * smoothstep(HALF_T - 0.016, HALF_T - 0.004, az);
   float faceMask = clamp(max(inCoinFace, inWingTip), 0.0, 1.0);
 
-  // Machined 144-reed bronze/gold edge + sapphire/copper equatorial trench (HDR -> ACES).
+  // Numismatic bronze rim + 24k gold V-cut edge inscription Easter egg (HDR -> ACES).
   vec3 edgeLinear = vec3(0.0);
   if (faceMask < 0.999) {
     float ang = atan(p.y, p.x);
-    vec3 eAlb = vec3(0.74, 0.44, 0.19);
-    float eMetal = 0.96;
-    float eRough = 0.15;
-    vec3 eEmiss = vec3(0.0);
-    if (az < 0.028 && r <= R + 0.03) {
-      eAlb = vec3(0.03, 0.03, 0.035);
-      eMetal = 0.42;
-      eRough = 0.34;
-      float seg = pow(max(0.0, cos(ang * 18.0)), 8.0);
-      float pulse = 0.55 + 0.65 * (0.5 + 0.5 * sin(ang * 2.0 - uTime * 3.2));
-      bool sapphireNode = mod(floor((ang + 3.14159265) / (6.2831853 / 36.0) + 0.5), 9.0) < 0.5;
-      vec3 glowCol = sapphireNode ? vec3(0.32, 0.78, 1.15) : vec3(1.35, 0.55, 0.09);
-      eEmiss = glowCol * seg * pulse * uEdge * 1.35;
-    }
+    vec3 eng = az < 0.105 ? sampleEdgeEngraving(p, 0.0) : vec3(0.0);
+    float inBand = 1.0 - smoothstep(0.100, 0.107, az);
+    float guardRail = gauss((az - 0.104) / 0.0045);
+
+    // Rich patinated bronze inscription band framed by bright 24k gold guard rails & outer reeds
+    vec3 bandAlb = vec3(0.30, 0.17, 0.075);
+    vec3 collarAlb = vec3(0.78, 0.49, 0.21);
+    vec3 eAlb = mix(collarAlb, bandAlb, inBand);
+    eAlb = mix(eAlb, vec3(0.96, 0.74, 0.32), clamp(guardRail * 0.85, 0.0, 1.0));
+
+    float eMetal = mix(0.96, 0.88, inBand);
+    float eRough = mix(0.14, 0.27, inBand);
+
+    // Chiseled 24k gold leaf V-cut lettering + dark bevel shadow shoulder
+    float strokeMask = smoothstep(0.22, 0.72, eng.g);
+    float bevelRim = clamp(eng.b * 1.15, 0.0, 1.0);
+    eAlb = mix(eAlb, vec3(0.06, 0.035, 0.015), clamp(bevelRim * 0.65, 0.0, 1.0));
+    eAlb = mix(eAlb, vec3(1.0, 0.80, 0.36), strokeMask);
+    eMetal = mix(eMetal, 0.99, strokeMask);
+    eRough = mix(eRough, 0.11, strokeMask);
+
+    float sweep = 0.32 + 0.30 * (0.5 + 0.5 * sin(ang * 2.0 - uTime * 1.7));
+    vec3 eEmiss = vec3(1.05, 0.74, 0.26) * strokeMask * sweep * uEdge;
+
     vec3 F0 = mix(vec3(0.04), eAlb, eMetal);
     vec3 F = F0 + (1.0 - F0) * pow(1.0 - NoV, 5.0);
     float specPow = mix(180.0, 14.0, eRough * eRough);
-    vec3 envS = studioEnv(Rdir) * mix(1.25, 0.45, eRough) * F;
+    vec3 envS = studioEnv(Rdir) * mix(1.30, 0.52, eRough) * F;
     vec3 H1 = normalize(L1 + V);
     vec3 H2 = normalize(L2 + V);
     vec3 H3 = normalize(L3 + V);
     vec3 d1 = F * pow(max(dot(N, H1), 0.0), specPow) * 1.85 * vec3(2.4, 2.05, 1.65) * max(dot(N, L1), 0.0);
     vec3 d2 = F * pow(max(dot(N, H2), 0.0), specPow * 0.7) * 1.35 * vec3(0.95, 1.20, 1.45) * max(dot(N, L2), 0.0);
     vec3 d3 = F * pow(max(dot(N, H3), 0.0), specPow * 1.1) * vec3(1.65, 1.10, 0.55) * max(dot(N, L3), 0.0);
-    vec3 amb = vec3(0.09, 0.075, 0.06) * eAlb * (1.0 - eMetal);
+    vec3 amb = vec3(0.14, 0.10, 0.06) * eAlb;
     edgeLinear = acesTonemap(amb + envS + d1 + d2 + d3 + eEmiss);
   }
 
@@ -376,4 +399,4 @@ void main() {
 
   fragColor = coin + disc * (1.0 - coin.a);
 }
-`,de=[["uObvAlb","/medallion/obvAlb.webp"],["uObvHgt","/medallion/obvHgt.png"],["uObvEmi","/medallion/obvEmi.webp"],["uRevAlb","/medallion/revAlb.webp"],["uRevHgt","/medallion/revHgt.png"],["uRevEmi","/medallion/revEmi.webp"]],B=[{steps:128,shadow:18,scale:1},{steps:96,shadow:12,scale:.85},{steps:72,shadow:8,scale:.7}],Ee=2,D=Math.PI*2,Te=72*Math.PI/180,ye=1e3,Z=800,Pe=Math.PI/12,_e=280,ue={yaw:-.62,pitch:.2},Se=2,K=5.5,me=.45,Me=n=>1-(1-n)**3,Fe=n=>n<.5?4*n*n*n:1-(-2*n+2)**3/2,V=(n,E,T)=>Math.min(T,Math.max(E,n));function pe(n,E,T){const c=n.createShader(E);return n.shaderSource(c,T),n.compileShader(c),c}function ze(n,{onReady:E,onFail:T}={}){let c=!1,p=!1,h=!1,k=!1,j=!0,$=document.hidden,v=0,w=0,M=0,f=0,u=0,F=0,z=0,b=0,R=0;const a={yaw:ue.yaw,pitch:ue.pitch,yawVel:0,pitchVel:0};let r=null,I=!1,A=-1,s=null;const i={ema:0,base:1/0,slow:0,fast:0,warm:30,changedAt:0,drops:[0,0,0]};let e=null,d=null,y=null,C=null;const O=[];let m={};const J=new AbortController;let U=null,W=null;function L(t){p||c||(p=!0,G(),queueMicrotask(()=>{c||T?.(t)}))}const Q=()=>{L("context-lost")},ee=()=>{$=document.hidden,N()};if(e=n.getContext("webgl2",{alpha:!0,premultipliedAlpha:!0,antialias:!1,depth:!1,stencil:!1,preserveDrawingBuffer:!1,powerPreference:"high-performance",failIfMajorPerformanceCaveat:!0}),!e||typeof createImageBitmap!="function")return L("unsupported"),ce();n.addEventListener("webglcontextlost",Q);const te=pe(e,e.VERTEX_SHADER,Ae),oe=pe(e,e.FRAGMENT_SHADER,Le);d=e.createProgram(),e.attachShader(d,te),e.attachShader(d,oe),e.linkProgram(d);const ae=e.getExtension("KHR_parallel_shader_compile");y=e.createVertexArray(),e.bindVertexArray(y),C=e.createBuffer(),e.bindBuffer(e.ARRAY_BUFFER,C),e.bufferData(e.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),e.STATIC_DRAW),ie(),U=new ResizeObserver(([t])=>{const o=t.contentBoxSize?.[0];F=o?o.inlineSize:t.contentRect.width,z=o?o.blockSize:t.contentRect.height,q()&&S()}),U.observe(n),W=new IntersectionObserver(([t])=>{j=t.isIntersecting,N()}),W.observe(n),document.addEventListener("visibilitychange",ee),ge();async function he(){if(ae){for(;!e.getProgramParameter(d,ae.COMPLETION_STATUS_KHR);)if(await new Promise(t=>requestAnimationFrame(t)),c||p)return!1}return!!e.getProgramParameter(d,e.LINK_STATUS)}async function ve(){return Promise.all(de.map(async([,t])=>{const o=await fetch(t,{signal:J.signal,credentials:"same-origin"});if(!o.ok)throw new Error(`${t}: ${o.status}`);const l=await o.blob();return createImageBitmap(l,{imageOrientation:"flipY",premultiplyAlpha:"none",colorSpaceConversion:"none"})}))}async function ge(){let t=null;try{const[o,l]=await Promise.all([he(),ve()]);if(t=l,c||p)return;if(!o)return L("compile");e.deleteShader(te),e.deleteShader(oe),e.useProgram(d);const g=e.getAttribLocation(d,"aPos");e.bindVertexArray(y),e.enableVertexAttribArray(g),e.vertexAttribPointer(g,2,e.FLOAT,!1,0,0),m={};for(const x of["uRes","uTime","uPose","uBob","uPop","uEdge","uSteps","uShadowSteps"])m[x]=e.getUniformLocation(d,x);if(e.pixelStorei(e.UNPACK_FLIP_Y_WEBGL,!1),e.pixelStorei(e.UNPACK_PREMULTIPLY_ALPHA_WEBGL,!1),e.pixelStorei(e.UNPACK_COLORSPACE_CONVERSION_WEBGL,e.NONE),de.forEach(([x],X)=>{const fe=e.createTexture();O.push(fe),e.activeTexture(e.TEXTURE0+X),e.bindTexture(e.TEXTURE_2D,fe),e.texImage2D(e.TEXTURE_2D,0,e.RGBA8,e.RGBA,e.UNSIGNED_BYTE,t[X]),e.generateMipmap(e.TEXTURE_2D),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR_MIPMAP_LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.CLAMP_TO_EDGE),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.CLAMP_TO_EDGE),e.uniform1i(e.getUniformLocation(d,x),X)}),e.getError()!==e.NO_ERROR)return L("texture");e.uniform1f(m.uPop,1),e.uniform1f(m.uEdge,1),re(),await xe()}catch{c||L("texture")}finally{t?.forEach(o=>o.close())}}async function xe(){for(;!q()&&(b===0||R===0);){if(await new Promise(o=>requestAnimationFrame(o)),c||p)return;ie()}_()||we(),Y();const t=new Uint8Array(4);if(e.readPixels(b>>1,R>>1,1,1,e.RGBA,e.UNSIGNED_BYTE,t),e.getError()!==e.NO_ERROR||e.isContextLost()||t[3]<200)return L("invalid-frame");h=!0,E?.(),N()}function ie(){const t=n.getBoundingClientRect();F=t.width,z=t.height}function q(){if(!e||p||c)return!1;const t=Math.min(window.devicePixelRatio||1,Ee)*B[u].scale,o=Math.max(1,Math.round(F*t)),l=Math.max(1,Math.round(z*t));return F===0||z===0||o===b&&l===R?!1:(b=n.width=o,R=n.height=l,!0)}function re(){e.uniform1i(m.uSteps,B[u].steps),e.uniform1i(m.uShadowSteps,B[u].shadow)}function ne(t){u=t,re(),q(),i.slow=0,i.fast=0,i.warm=20,i.ema=0,i.changedAt=f}function be(t){if(i.warm>0){i.warm-=1;return}i.base=Math.max(4,Math.min(i.base,t)),i.ema=i.ema?i.ema+(t-i.ema)*.08:t;const o=Math.max(i.base*1.35,20);i.ema>o?(i.slow+=1,i.fast=0):i.ema<i.base*1.12?(i.fast+=1,i.slow=0):(i.slow=Math.max(0,i.slow-1),i.fast=0),i.slow>45&&u<B.length-1?(i.drops[u]+=1,ne(u+1)):i.fast>300&&u>0&&i.drops[u-1]<2&&f-i.changedAt>10&&ne(u-1)}function H(t,o,l,g=Fe){if(a.yawVel=0,a.pitchVel=0,A=-1,!_()){r=null,a.yaw=t,a.pitch=o,P(),S();return}r={fromYaw:a.yaw,toYaw:t,fromPitch:a.pitch,toPitch:o,start:f,dur:l/1e3,ease:g}}function we(){I=!0,r?.settle&&(r=null),a.yaw=0,a.pitch=0}function P(){const t=Math.round(a.yaw/D);a.yaw-=t*D}function Re(t){if(I||(I=!0,r={fromYaw:a.yaw,toYaw:0,fromPitch:a.pitch,toPitch:0,start:f,dur:ye/1e3,ease:Me,settle:!0}),!s){if(r){const o=V((f-r.start)/r.dur,0,1),l=r.ease(o);a.yaw=r.fromYaw+(r.toYaw-r.fromYaw)*l,a.pitch=r.fromPitch+(r.toPitch-r.fromPitch)*l,o>=1&&(r=null,P());return}if(A>=0){a.yaw+=a.yawVel*t,a.yawVel*=Math.exp(-3.4*t);const o=-K*K*a.pitch-2*K*a.pitchVel;a.pitchVel+=o*t,a.pitch+=a.pitchVel*t,f-A>=Se&&(a.yawVel=0,a.pitchVel=0,a.pitch=0,A=-1,P())}}}function Y(){if(!e||p||c||b===0)return;const t=V((f-.6)/1.6,0,1),o=t*t*(3-2*t),l=a.pitch+Math.sin(f*.63)*.07*o,g=Math.sin(f*.47)*.035*o,x=Math.sin(f*1.05)*.03*o;e.viewport(0,0,b,R),e.disable(e.BLEND),e.uniform2f(m.uRes,b,R),e.uniform1f(m.uTime,f),e.uniform3f(m.uPose,a.yaw,l,g),e.uniform1f(m.uBob,x),e.drawArrays(e.TRIANGLES,0,3)}function le(t){if(v=0,!_())return;const o=M?t-M:16.7;M=t;const l=Math.min(o,50)/1e3;f+=l,Re(l),Y(),be(o),v=requestAnimationFrame(le)}function _(){return!c&&!p&&j&&!$&&!k}function N(){h&&_()?v||(M=0,i.warm=Math.max(i.warm,10),v=requestAnimationFrame(le)):G()}function G(){v&&cancelAnimationFrame(v),v=0}function S(){!h||v||w||p||c||(w=requestAnimationFrame(()=>{w=0,Y()}))}function se(){return Math.round(a.yaw/Math.PI)*Math.PI}function ce(){return{setHold(t){k=!!t,k&&r&&(a.yaw=r.toYaw,a.pitch=r.toPitch,r=null,P(),S()),N()},flip(){h&&H(se()+Math.PI,0,Z)},inspectEdge(){h&&H(se()+Te,0,Z)},reset(){h&&H(Math.round(a.yaw/D)*D,0,Z)},nudge(t){if(!h)return;const o=r?r.toYaw:a.yaw;H(o+t*Pe,0,_e)},pointerDown(t){if(!h||s||t.pointerType==="mouse"&&t.button!==0)return;const o=t.currentTarget;o.setPointerCapture?.(t.pointerId),r=null,A=-1,a.yawVel=0,a.pitchVel=0,s={id:t.pointerId,x:t.clientX,y:t.clientY,ts:t.timeStamp,width:Math.max(1,o.clientWidth),vel:0}},pointerMove(t){if(!s||t.pointerId!==s.id)return;const o=Math.PI/s.width,l=t.clientX-s.x,g=t.clientY-s.y,x=Math.max(1,t.timeStamp-s.ts)/1e3;a.yaw+=l*o,a.pitch=V(a.pitch-g*o*.6,-me,me),s.vel=s.vel*.6+l*o/x*.4,s.x=t.clientX,s.y=t.clientY,s.ts=t.timeStamp,S()},pointerUp(t){if(!s||t.pointerId!==s.id)return;const l=t.timeStamp-s.ts>80?0:V(s.vel,-8,8);t.currentTarget.releasePointerCapture?.(t.pointerId),s=null,_()?(a.yawVel=l,a.pitchVel=0,A=f):(a.pitch=0,P(),S())},dispose(){c||(c=!0,G(),w&&cancelAnimationFrame(w),w=0,J.abort(),U?.disconnect(),W?.disconnect(),document.removeEventListener("visibilitychange",ee),n.removeEventListener("webglcontextlost",Q),e&&!e.isContextLost()&&(O.forEach(t=>e.deleteTexture(t)),C&&e.deleteBuffer(C),y&&e.deleteVertexArray(y),d&&e.deleteProgram(d),e.getExtension("WEBGL_lose_context")?.loseContext()),O.length=0,e=null)}}}return ce()}export{ze as createMedallionRenderer};
+`,$=[["uObvAlb","/medallion/obvAlb.webp"],["uObvHgt","/medallion/obvHgt.png"],["uObvEmi","/medallion/obvEmi.webp"],["uRevAlb","/medallion/revAlb.webp"],["uRevHgt","/medallion/revHgt.png"],["uRevEmi","/medallion/revEmi.webp"]],V=[{steps:128,shadow:18,scale:1},{steps:96,shadow:12,scale:.85},{steps:72,shadow:8,scale:.7}],Me=2,O=Math.PI*2,ve=75*Math.PI/180,Se=1e3,J=820,ze=Math.PI/12,Ce=280,ge={yaw:-.62,pitch:.2},Fe=2,Q=5.5,xe=1.38;async function Ne(){try{document.fonts?.ready&&await Promise.race([document.fonts.ready,new Promise(l=>setTimeout(l,900))])}catch{}const n=2048,v=256,p=3020,f=256,h=l=>{const m=document.createElement("canvas");m.width=n,m.height=v;const i=m.getContext("2d",{willReadFrequently:!0});return i.fillStyle="#000",i.fillRect(0,0,n,v),i.save(),i.scale(n/p,1),l>0&&(i.filter=`blur(${l}px)`),i.fillStyle="#fff",i.strokeStyle="#fff",i.textAlign="center",i.textBaseline="middle",i.lineWidth=2.4,i.globalAlpha=.55,i.beginPath(),i.moveTo(0,22),i.lineTo(p,22),i.moveTo(0,f-22),i.lineTo(p,f-22),i.stroke(),i.globalAlpha=.9,i.font='700 42px "Cinzel", Georgia, serif',i.fillText("✦",0,f*.5),i.fillText("✦",p,f*.5),i.globalAlpha=1,"letterSpacing"in i&&(i.letterSpacing="4.8px"),i.font='800 58px "Cinzel", Georgia, serif',i.fillText("SPENCER ALLEN TEAGUE · STARTED THE JOURNEY IN 2020",p*.5,94),"letterSpacing"in i&&(i.letterSpacing="5.8px"),i.font='700 52px "Cinzel", Georgia, serif',i.fillText("AND FOUNDED THE HARNESS LAB IN 2025",p*.5,170),i.restore(),i.getImageData(0,0,n,v)},x=h(0),P=h(3.2),M=new ImageData(n,v),S=x.data,b=P.data,g=M.data;for(let l=0;l<S.length;l+=4){const m=S[l],i=b[l];g[l]=Math.min(255,Math.round(i*.62+m*.48)),g[l+1]=m,g[l+2]=Math.min(255,Math.max(0,Math.round(Math.abs(i-m)*2.1))),g[l+3]=255}const R=document.createElement("canvas");return R.width=n,R.height=v,R.getContext("2d").putImageData(M,0,0),createImageBitmap(R,{imageOrientation:"flipY",premultiplyAlpha:"none",colorSpaceConversion:"none"})}const De=n=>1-(1-n)**3,Be=n=>n<.5?4*n*n*n:1-(-2*n+2)**3/2,W=(n,v,p)=>Math.min(p,Math.max(v,n));function be(n,v,p){const f=n.createShader(v);return n.shaderSource(f,p),n.compileShader(f),f}function He(n,{onReady:v,onFail:p}={}){let f=!1,h=!1,x=!1,P=!1,M=!0,S=document.hidden,b=0,g=0,R=0,l=0,m=0,i=0,D=0,T=0,L=0;const a={yaw:ge.yaw,pitch:ge.pitch,yawVel:0,pitchVel:0};let c=null,X=!1,A=-1,d=null;const r={ema:0,base:1/0,slow:0,fast:0,warm:30,changedAt:0,drops:[0,0,0]};let e=null,u=null,z=null,B=null;const H=[];let E={};const ee=new AbortController;let G=null,Y=null;function y(t){h||f||(h=!0,K(),queueMicrotask(()=>{f||p?.(t)}))}const te=()=>{y("context-lost")},oe=()=>{S=document.hidden,I()};if(e=n.getContext("webgl2",{alpha:!0,premultipliedAlpha:!0,antialias:!1,depth:!1,stencil:!1,preserveDrawingBuffer:!1,powerPreference:"high-performance",failIfMajorPerformanceCaveat:!0}),!e||typeof createImageBitmap!="function")return y("unsupported"),de();n.addEventListener("webglcontextlost",te);const ae=be(e,e.VERTEX_SHADER,_e),ie=be(e,e.FRAGMENT_SHADER,Pe);u=e.createProgram(),e.attachShader(u,ae),e.attachShader(u,ie),e.linkProgram(u);const re=e.getExtension("KHR_parallel_shader_compile");z=e.createVertexArray(),e.bindVertexArray(z),B=e.createBuffer(),e.bindBuffer(e.ARRAY_BUFFER,B),e.bufferData(e.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),e.STATIC_DRAW),ne(),G=new ResizeObserver(([t])=>{const o=t.contentBoxSize?.[0];i=o?o.inlineSize:t.contentRect.width,D=o?o.blockSize:t.contentRect.height,q()&&_()}),G.observe(n),Y=new IntersectionObserver(([t])=>{M=t.isIntersecting,I()}),Y.observe(n),document.addEventListener("visibilitychange",oe),Te();async function Ee(){if(re){for(;!e.getProgramParameter(u,re.COMPLETION_STATUS_KHR);)if(await new Promise(t=>requestAnimationFrame(t)),f||h)return!1}return!!e.getProgramParameter(u,e.LINK_STATUS)}async function Re(){return Promise.all($.map(async([,t])=>{const o=await fetch(t,{signal:ee.signal,credentials:"same-origin"});if(!o.ok)throw new Error(`${t}: ${o.status}`);const s=await o.blob();return createImageBitmap(s,{imageOrientation:"flipY",premultiplyAlpha:"none",colorSpaceConversion:"none"})}))}async function Te(){let t=null,o=null;try{const[s,w,N]=await Promise.all([Ee(),Re(),Ne()]);if(t=w,o=N,f||h)return;if(!s)return y("compile");e.deleteShader(ae),e.deleteShader(ie),e.useProgram(u);const me=e.getAttribLocation(u,"aPos");e.bindVertexArray(z),e.enableVertexAttribArray(me),e.vertexAttribPointer(me,2,e.FLOAT,!1,0,0),E={};for(const U of["uRes","uTime","uPose","uBob","uPop","uEdge","uSteps","uShadowSteps"])E[U]=e.getUniformLocation(u,U);e.pixelStorei(e.UNPACK_FLIP_Y_WEBGL,!1),e.pixelStorei(e.UNPACK_PREMULTIPLY_ALPHA_WEBGL,!1),e.pixelStorei(e.UNPACK_COLORSPACE_CONVERSION_WEBGL,e.NONE),$.forEach(([U],j)=>{const he=e.createTexture();H.push(he),e.activeTexture(e.TEXTURE0+j),e.bindTexture(e.TEXTURE_2D,he),e.texImage2D(e.TEXTURE_2D,0,e.RGBA8,e.RGBA,e.UNSIGNED_BYTE,t[j]),e.generateMipmap(e.TEXTURE_2D),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR_MIPMAP_LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.CLAMP_TO_EDGE),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.CLAMP_TO_EDGE),e.uniform1i(e.getUniformLocation(u,U),j)});const ue=$.length,pe=e.createTexture();if(H.push(pe),e.activeTexture(e.TEXTURE0+ue),e.bindTexture(e.TEXTURE_2D,pe),e.texImage2D(e.TEXTURE_2D,0,e.RGBA8,e.RGBA,e.UNSIGNED_BYTE,o),e.generateMipmap(e.TEXTURE_2D),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR_MIPMAP_LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.REPEAT),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.CLAMP_TO_EDGE),e.uniform1i(e.getUniformLocation(u,"uEdgeTex"),ue),e.getError()!==e.NO_ERROR)return y("texture");e.uniform1f(E.uPop,1),e.uniform1f(E.uEdge,1),le(),await Ae()}catch{f||y("texture")}finally{t?.forEach(s=>s.close()),o?.close()}}async function Ae(){for(;!q()&&(T===0||L===0);){if(await new Promise(o=>requestAnimationFrame(o)),f||h)return;ne()}F()||Le(),Z();const t=new Uint8Array(4);if(e.readPixels(T>>1,L>>1,1,1,e.RGBA,e.UNSIGNED_BYTE,t),e.getError()!==e.NO_ERROR||e.isContextLost()||t[3]<200)return y("invalid-frame");x=!0,v?.(),I()}function ne(){const t=n.getBoundingClientRect();i=t.width,D=t.height}function q(){if(!e||h||f)return!1;const t=Math.min(window.devicePixelRatio||1,Me)*V[m].scale,o=Math.max(1,Math.round(i*t)),s=Math.max(1,Math.round(D*t));return i===0||D===0||o===T&&s===L?!1:(T=n.width=o,L=n.height=s,!0)}function le(){e.uniform1i(E.uSteps,V[m].steps),e.uniform1i(E.uShadowSteps,V[m].shadow)}function se(t){m=t,le(),q(),r.slow=0,r.fast=0,r.warm=20,r.ema=0,r.changedAt=l}function we(t){if(r.warm>0){r.warm-=1;return}r.base=Math.max(4,Math.min(r.base,t)),r.ema=r.ema?r.ema+(t-r.ema)*.08:t;const o=Math.max(r.base*1.35,20);r.ema>o?(r.slow+=1,r.fast=0):r.ema<r.base*1.12?(r.fast+=1,r.slow=0):(r.slow=Math.max(0,r.slow-1),r.fast=0),r.slow>45&&m<V.length-1?(r.drops[m]+=1,se(m+1)):r.fast>300&&m>0&&r.drops[m-1]<2&&l-r.changedAt>10&&se(m-1)}function k(t,o,s,w=Be){if(a.yawVel=0,a.pitchVel=0,A=-1,!F()){c=null,a.yaw=t,a.pitch=o,C(),_();return}c={fromYaw:a.yaw,toYaw:t,fromPitch:a.pitch,toPitch:o,start:l,dur:s/1e3,ease:w}}function Le(){X=!0,c?.settle&&(c=null),a.yaw=0,a.pitch=0}function C(){const t=Math.round(a.yaw/O);a.yaw-=t*O}function ye(t){if(X||(X=!0,c={fromYaw:a.yaw,toYaw:0,fromPitch:a.pitch,toPitch:0,start:l,dur:Se/1e3,ease:De,settle:!0}),!d){if(c){const o=W((l-c.start)/c.dur,0,1),s=c.ease(o);a.yaw=c.fromYaw+(c.toYaw-c.fromYaw)*s,a.pitch=c.fromPitch+(c.toPitch-c.fromPitch)*s,o>=1&&(c=null,C());return}if(A>=0){a.yaw+=a.yawVel*t,a.yawVel*=Math.exp(-3.4*t);const o=-Q*Q*a.pitch-2*Q*a.pitchVel;a.pitchVel+=o*t,a.pitch+=a.pitchVel*t,l-A>=Fe&&(a.yawVel=0,a.pitchVel=0,a.pitch=0,A=-1,C())}}}function Z(){if(!e||h||f||T===0)return;const t=W((l-.6)/1.6,0,1),o=t*t*(3-2*t),s=a.pitch+Math.sin(l*.63)*.07*o,w=Math.sin(l*.47)*.035*o,N=Math.sin(l*1.05)*.03*o;e.viewport(0,0,T,L),e.disable(e.BLEND),e.uniform2f(E.uRes,T,L),e.uniform1f(E.uTime,l),e.uniform3f(E.uPose,a.yaw,s,w),e.uniform1f(E.uBob,N),e.drawArrays(e.TRIANGLES,0,3)}function ce(t){if(b=0,!F())return;const o=R?t-R:16.7;R=t;const s=Math.min(o,50)/1e3;l+=s,ye(s),Z(),we(o),b=requestAnimationFrame(ce)}function F(){return!f&&!h&&M&&!S&&!P}function I(){x&&F()?b||(R=0,r.warm=Math.max(r.warm,10),b=requestAnimationFrame(ce)):K()}function K(){b&&cancelAnimationFrame(b),b=0}function _(){!x||b||g||h||f||(g=requestAnimationFrame(()=>{g=0,Z()}))}function fe(){return Math.round(a.yaw/Math.PI)*Math.PI}function de(){return{setHold(t){P=!!t,P&&c&&(a.yaw=c.toYaw,a.pitch=c.toPitch,c=null,C(),_()),I()},flip(){x&&k(fe()+Math.PI,0,J)},inspectEdge(){if(!x)return;const t=fe(),o=Math.cos(t)<0;k(t,o?-ve:ve,J)},reset(){x&&k(Math.round(a.yaw/O)*O,0,J)},nudge(t){if(!x)return;const o=c?c.toYaw:a.yaw;k(o+t*ze,0,Ce)},pointerDown(t){if(!x||d||t.pointerType==="mouse"&&t.button!==0)return;const o=t.currentTarget;o.setPointerCapture?.(t.pointerId),c=null,A=-1,a.yawVel=0,a.pitchVel=0,d={id:t.pointerId,x:t.clientX,y:t.clientY,ts:t.timeStamp,width:Math.max(1,o.clientWidth),vel:0}},pointerMove(t){if(!d||t.pointerId!==d.id)return;const o=Math.PI/d.width,s=t.clientX-d.x,w=t.clientY-d.y,N=Math.max(1,t.timeStamp-d.ts)/1e3;a.yaw+=s*o,a.pitch=W(a.pitch-w*o*.6,-xe,xe),d.vel=d.vel*.6+s*o/N*.4,d.x=t.clientX,d.y=t.clientY,d.ts=t.timeStamp,_()},pointerUp(t){if(!d||t.pointerId!==d.id)return;const s=t.timeStamp-d.ts>80?0:W(d.vel,-8,8);t.currentTarget.releasePointerCapture?.(t.pointerId),d=null,Math.abs(a.pitch)>.52&&Math.abs(s)<.65?(a.yawVel=0,a.pitchVel=0,A=-1,_()):F()?(a.yawVel=s,a.pitchVel=0,A=l):(a.pitch=0,C(),_())},dispose(){f||(f=!0,K(),g&&cancelAnimationFrame(g),g=0,ee.abort(),G?.disconnect(),Y?.disconnect(),document.removeEventListener("visibilitychange",oe),n.removeEventListener("webglcontextlost",te),e&&!e.isContextLost()&&(H.forEach(t=>e.deleteTexture(t)),B&&e.deleteBuffer(B),z&&e.deleteVertexArray(z),u&&e.deleteProgram(u),e.getExtension("WEBGL_lose_context")?.loseContext()),H.length=0,e=null)}}}return de()}export{He as createMedallionRenderer};
