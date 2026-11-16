@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 /**
  * <Picture> — WebP source (+ optional responsive srcSet) with a PNG/JPG fallback.
@@ -42,13 +42,19 @@ export function Picture({
 }
 
 /**
- * <ImageViewer> — modal <dialog> for full-size inspection. Mount it only while
- * open (verify-redesign.mjs expects zero <dialog> elements after Escape) and
- * focus returns to whatever opened it.
- *   image: { src, alt, caption?, width?, height? }
+ * <ImageViewer> — modal <dialog> for full-size inspection + optional multi-shot
+ * gallery carousel. Mount it only while open (verify-redesign.mjs expects zero
+ * <dialog> elements after Escape) and focus returns to whatever opened it.
+ *   image: { src, alt, caption?, width?, height?, gallery?: [...], index?: number }
  */
 export function ImageViewer({ image, onClose }) {
   const ref = useRef(null);
+  const gallery = Array.isArray(image.gallery) && image.gallery.length > 1 ? image.gallery : null;
+  const [idx, setIdx] = useState(() =>
+    gallery ? Math.min(Math.max(0, image.index ?? 0), gallery.length - 1) : 0,
+  );
+  const current = gallery ? gallery[idx] : image;
+
   useEffect(() => {
     const dialog = ref.current;
     const previous = document.activeElement;
@@ -60,11 +66,29 @@ export function ImageViewer({ image, onClose }) {
       if (previous && typeof previous.focus === "function") previous.focus();
     };
   }, []);
+
+  useEffect(() => {
+    if (!gallery) return undefined;
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setIdx((i) => (i + 1) % gallery.length);
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setIdx((i) => (i - 1 + gallery.length) % gallery.length);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [gallery]);
+
+  const isTallPage = (current.height || 900) > (current.width || 1440) * 1.8;
+
   return (
     <dialog
       ref={ref}
-      className={`image-dialog ${image.height > image.width * 1.8 ? "image-dialog--page" : ""}`}
-      aria-label={image.alt}
+      className={`image-dialog ${isTallPage ? "image-dialog--page" : ""}`}
+      aria-label={current.alt || "Screenshot preview"}
       onCancel={(e) => {
         e.preventDefault();
         onClose();
@@ -74,20 +98,50 @@ export function ImageViewer({ image, onClose }) {
       }}
     >
       <div className="dialog-toolbar">
-        <span className="mono">The Harness Lab · Image archive</span>
-        <button type="button" className="dialog-close" onClick={onClose} aria-label="Close image">
-          <X aria-hidden="true" />
-        </button>
+        <div className="dialog-toolbar-meta">
+          <span className="mono">The Harness Lab · Evidence archive</span>
+          {gallery ? (
+            <span className="mono dialog-counter">
+              {String(idx + 1).padStart(2, "0")} / {String(gallery.length).padStart(2, "0")}
+              {current.kindLabel ? ` · ${current.kindLabel}` : ""}
+            </span>
+          ) : null}
+        </div>
+        <div className="dialog-toolbar-actions">
+          {gallery ? (
+            <>
+              <button
+                type="button"
+                className="dialog-nav-btn"
+                onClick={() => setIdx((i) => (i - 1 + gallery.length) % gallery.length)}
+                aria-label="Previous screenshot"
+              >
+                <ChevronLeft aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="dialog-nav-btn"
+                onClick={() => setIdx((i) => (i + 1) % gallery.length)}
+                aria-label="Next screenshot"
+              >
+                <ChevronRight aria-hidden="true" />
+              </button>
+            </>
+          ) : null}
+          <button type="button" className="dialog-close" onClick={onClose} aria-label="Close image">
+            <X aria-hidden="true" />
+          </button>
+        </div>
       </div>
       <div className="dialog-image-well">
         <img
-          src={image.src}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
+          src={current.src}
+          alt={current.alt}
+          width={current.width}
+          height={current.height}
         />
       </div>
-      {image.caption ? <p className="dialog-caption">{image.caption}</p> : null}
+      {current.caption ? <p className="dialog-caption">{current.caption}</p> : null}
     </dialog>
   );
 }

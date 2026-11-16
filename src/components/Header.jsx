@@ -3,11 +3,12 @@ import { ArrowUpRight, CalendarCheck, Menu, X } from "lucide-react";
 import { CALENDAR_URL, CAL_LINK, CAL_NAMESPACE } from "../data/site.js";
 
 const NAV = [
-  { href: "#trenches", numeral: "II", label: "The grind", ids: ["trenches"] },
-  { href: "#cinema", numeral: "III", label: "Cinema", ids: ["cinema"] },
-  { href: "#work", numeral: "IV", label: "Our work", ids: ["work"] },
-  { href: "#method", numeral: "V", label: "Method", ids: ["method"] },
-  { href: "#our-os", numeral: "VI", label: "Cockpits", ids: ["our-os", "case-study"] },
+  { href: "#timeline", numeral: "II", label: "Timeline", ids: ["timeline"] },
+  { href: "#trenches", numeral: "III", label: "The grind", ids: ["trenches"] },
+  { href: "#cinema", numeral: "IV", label: "Cinema", ids: ["cinema"] },
+  { href: "#work", numeral: "V", label: "Our work", ids: ["work"] },
+  { href: "#method", numeral: "VI", label: "Method", ids: ["method"] },
+  { href: "#our-os", numeral: "VII", label: "Cockpits", ids: ["our-os", "case-study"] },
   { href: "#capabilities", numeral: "IX", label: "Capabilities", ids: ["ownership", "how", "capabilities"] },
   { href: "#about", numeral: "X", label: "The founder", ids: ["about"] },
 ];

@@ -273,7 +273,7 @@ export default function Forge() {
 
       <div className="container forge-inner">
         <ChapterHead
-          numeral="IV"
+          numeral="V"
           eyebrow="The forge · Every build on 3D plinths"
           id="forge-title"
           title={

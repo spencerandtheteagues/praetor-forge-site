@@ -22,7 +22,7 @@ export default function MythosExplorer() {
             height={640}
           />
           <ChapterHead
-            numeral="VI"
+            numeral="VII"
             eyebrow="Mythos OS · 17 live operator surfaces"
             title={
               <>

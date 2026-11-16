@@ -266,7 +266,7 @@ export function Founder() {
             <span>Completely self-taught · 3,850+ commits · Zero quit</span>
           </p>
           <h2 id="about-title">
-            Hi, I’m Spencer. <span className="gold-3d">I figure hard shit out.</span>
+            Hi, I’m Spencer. <span className="gold-3d">I ground the hard builds out.</span>
           </h2>
           <p className="founder-lead">
             I’m a completely self-taught builder who learned the only way that sticks:
@@ -351,7 +351,7 @@ export function Footer() {
         <div className="footer-brand">
           <Brand footer />
           <p>
-            We figure shit out. <span className="gold-3d">And we never quit.</span>
+            We push the edge of possible. <span className="gold-3d">And we never quit.</span>
           </p>
           <ul className="footer-signature" aria-label="The Harness Lab online">
             <li><a href="https://theharnesslab.com/">theharnesslab.com <ArrowUpRight aria-hidden="true" /></a></li>

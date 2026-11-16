@@ -244,7 +244,7 @@ export default function Method() {
       <span id="diagram" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="V"
+          numeral="VI"
           eyebrow="The harness method · Why we never trust raw model output"
           id="method-title"
           title={

@@ -20,7 +20,7 @@ export default function Trenches() {
       <div className="trenches-grid-floor" aria-hidden="true" />
       <div className="container trenches-inner">
         <ChapterHead
-          numeral="II"
+          numeral="III"
           eyebrow="Proof in the git log · Zero quit"
           id="trenches-title"
           title={

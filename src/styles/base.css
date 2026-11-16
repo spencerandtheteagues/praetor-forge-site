@@ -691,6 +691,25 @@ section[id],
 .image-dialog:not(.image-dialog--page) .dialog-caption {
   margin-block: 0;
 }
+.dialog-toolbar-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+.dialog-counter {
+  padding: 4px 10px;
+  border: 1px solid rgba(143, 211, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(143, 211, 255, 0.08);
+  color: var(--sapphire);
+}
+.dialog-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dialog-nav-btn,
 .dialog-close {
   display: grid;
   place-items: center;
@@ -701,7 +720,9 @@ section[id],
   border-radius: 50%;
   background: #000;
   color: var(--gold-hi);
+  transition: border-color 180ms ease, background-color 180ms ease;
 }
+.dialog-nav-btn:hover,
 .dialog-close:hover {
   border-color: var(--gold-hi);
   background: #21190d;

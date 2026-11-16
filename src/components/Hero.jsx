@@ -6,7 +6,7 @@ import { useMotion } from "../lib/motion.js";
 const SPECS = [
   ["5.5 Mos · 1,662 Commits", "305+ git branches taking TitleDesk Agent & Artificial Landman live online"],
   ["9 Gens · 14+ Months", "932+ V8+ commits rebuilding MyAIMediaMgr into BrandStreams without quitting"],
-  ["3,850+ Commits · 0 Quit", "Built directly by Spencer Teague — full source code & keys handed to you"],
+  ["Full Estate Archive", "Every app charted from Commit #1 LOC to HEAD with real AI-era context"],
 ];
 
 export default function Hero() {
@@ -20,31 +20,47 @@ export default function Hero() {
             <span>Spencer Teague · Self-Taught Founder &amp; Lead Engineer</span>
           </p>
           <h1 id="hero-title">
-            <span className="hero-line">We figure shit out.</span>{" "}
+            <span className="hero-line">We push the edge.</span>{" "}
             <span className="hero-line gold-3d">And we never quit.</span>
           </h1>
-          <p className="hero-lede">
-            Custom software, autonomous AI harnesses, and full-stack platforms —
-            forged through hundreds of branches and thousands of commits until
-            real work runs end to end.
-          </p>
-          <p className="hero-detail">
-            Anyone can wire up a weekend AI demo that dies on the first crooked
-            courthouse scan, OAuth wall, or hallucinated decimal. From Landman
-            title research workflows in TitleDesk Agent and Artificial Landman
-            (5.5 months of non-stop work across 305+ branches) to rebuilding
-            MyAIMediaMgr across nine generations into BrandStreams: we stay in
-            the trenches until it works — and you own every line.
-          </p>
+
+          <div className="hero-manifesto">
+            <p className="hero-what-kicker inscription">
+              What we do at The Harness Lab
+            </p>
+            <p className="hero-lede">
+              We are constantly pushing the absolute edge of what is possible and
+              trying to expand that even further, turning ideas into working code
+              in ways people didn’t think could be done — especially not with the
+              AI models available at the time (though that’s getting harder to say
+              as models get very good).
+            </p>
+            <blockquote className="hero-credo">
+              <p>
+                “At The Harness Lab, we dream big, start small, get in over our
+                heads, jump the gun wildly, and get stuck in the shit — because
+                you will never know what is possible until you have found all the
+                things that seemed impossible at the time and conquered every
+                single one of them. We ground it out and never quit, because when
+                you emerge on the other side, you emerge an expert with a deep
+                understanding of how to build the best, most complex software
+                there is.”
+              </p>
+              <footer className="hero-credo-cite mono">
+                — Spencer Teague · Founder &amp; Lead Engineer · Landman title, SaaS &amp; autonomous AI harnesses
+              </footer>
+            </blockquote>
+          </div>
+
           <div className="hero-actions">
-            <a className="button button-gold" href="#contact">
-              Bring us the hard problem <ArrowUpRight aria-hidden="true" />
+            <a className="button button-gold" href="#timeline">
+              Explore the progression timeline <ArrowDown aria-hidden="true" />
             </a>
             <CalTrigger className="button button-outline">
               <CalendarCheck aria-hidden="true" /> Book a 20-min teardown
             </CalTrigger>
-            <a className="button button-ghost" href="#trenches">
-              See the git proof <ArrowDown aria-hidden="true" />
+            <a className="button button-ghost" href="#contact">
+              Bring us the hard problem <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
           <dl className="hero-specs">
@@ -74,7 +90,7 @@ export default function Hero() {
           {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
           {paused ? "Resume motion" : "Pause motion"}
         </button>
-        <a className="hero-scroll" href="#trenches" aria-label="Continue to the git war-ledger">
+        <a className="hero-scroll" href="#timeline" aria-label="Continue to the chronological progression timeline">
           <ArrowDown aria-hidden="true" />
         </a>
       </div>

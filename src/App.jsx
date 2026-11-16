@@ -1,5 +1,6 @@
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
+import ProgressionTimeline from "./components/ProgressionTimeline.jsx";
 import Trenches from "./components/Trenches.jsx";
 import CinemaStage from "./components/CinemaStage.jsx";
 import Forge from "./components/Forge.jsx";
@@ -20,6 +21,7 @@ export default function App() {
         <Header />
         <main id="main">
           <Hero />
+          <ProgressionTimeline />
           <Trenches />
           <CinemaStage />
           <Forge />

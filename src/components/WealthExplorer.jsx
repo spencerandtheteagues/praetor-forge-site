@@ -93,7 +93,7 @@ export default function WealthExplorer() {
       <span id="reviews" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="VII"
+          numeral="VII·B"
           eyebrow="Client build · Wealth & Powers OS"
           title={
             <>

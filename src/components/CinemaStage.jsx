@@ -215,7 +215,7 @@ export default function CinemaStage() {
       <span id="reel" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="III"
+          numeral="IV"
           eyebrow="Studio cinema · Real systems in motion"
           id="cinema-title"
           title={
