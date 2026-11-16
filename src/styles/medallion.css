@@ -1,0 +1,174 @@
+/* --------------------------------------------------------------------------
+   Medallion stage (Chapter I hero instrument) — owned by the medallion lane.
+   -------------------------------------------------------------------------- */
+.medallion {
+  display: grid;
+  justify-items: center;
+  gap: clamp(10px, 1.6vw, 18px);
+  width: 100%;
+  min-width: 0;
+}
+
+.medallion-stage {
+  position: relative;
+  width: min(100%, 900px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  isolation: isolate;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 999px;
+}
+.medallion-stage[data-state="live"] {
+  cursor: grab;
+}
+.medallion-stage[data-state="live"]:active {
+  cursor: grabbing;
+}
+.medallion-stage:focus-visible {
+  outline: 2px solid var(--sapphire);
+  outline-offset: 6px;
+}
+
+/* Warm copper pool of light beneath the coin. closest-side keeps every stop
+   inside the element, so the gradient reaches zero before any edge: no box,
+   no seam. */
+.medallion-pool {
+  position: absolute;
+  z-index: 0;
+  left: 6%;
+  right: 6%;
+  bottom: -7%;
+  height: 26%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 138, 61, 0.26) 0%,
+    rgba(200, 102, 46, 0.16) 38%,
+    rgba(107, 47, 18, 0.07) 68%,
+    rgba(107, 47, 18, 0) 100%
+  );
+  pointer-events: none;
+}
+.medallion-pool::after {
+  /* a tighter, hotter core right under the rim */
+  content: "";
+  position: absolute;
+  left: 24%;
+  right: 24%;
+  top: 22%;
+  height: 40%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 138, 61, 0.22) 0%,
+    rgba(200, 102, 46, 0.08) 60%,
+    rgba(200, 102, 46, 0) 100%
+  );
+}
+
+/* 144-tick bezel. The animation lives directly on .orbit-one; base.css pauses
+   it under .motion-paused and removes it under prefers-reduced-motion. */
+.medallion-bezel {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  animation: medallion-orbit 360s linear infinite;
+}
+@keyframes medallion-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.medallion-bezel-hair {
+  fill: none;
+  stroke: rgba(217, 168, 78, 0.34);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+.medallion-bezel-hair.is-soft {
+  stroke: rgba(237, 230, 216, 0.1);
+}
+.medallion-tick {
+  fill: none;
+  stroke-linecap: butt;
+}
+.medallion-tick.is-minor {
+  stroke: rgba(140, 106, 44, 0.72);
+  stroke-width: 1.6;
+}
+.medallion-tick.is-mid {
+  stroke: rgba(217, 168, 78, 0.78);
+  stroke-width: 2.4;
+}
+.medallion-tick.is-major {
+  stroke: var(--gold);
+  stroke-width: 4;
+}
+.medallion-tick.is-marker {
+  stroke: var(--sapphire);
+  stroke-width: 4;
+}
+.medallion-numerals text {
+  fill: var(--limestone);
+  font-family: var(--font-inscription);
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+/* Coin face: the static picture and the WebGL canvas share one box. */
+.medallion-face {
+  position: absolute;
+  z-index: 2;
+  inset: 8%;
+}
+.medallion-picture,
+.medallion-picture img,
+.medallion-canvas-holder,
+.medallion-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.medallion-picture img {
+  object-fit: contain;
+  transition: opacity 700ms var(--ease-out) 260ms;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+.medallion-canvas-holder {
+  pointer-events: none;
+}
+.medallion-canvas {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+}
+.medallion-stage[data-state="live"] .medallion-canvas {
+  opacity: 1;
+}
+.medallion-stage[data-state="live"] .medallion-picture img {
+  opacity: 0;
+}
+
+/* Controls: always reserve one row so their arrival never shifts layout. */
+.medallion-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+}
+.medallion-controls .button {
+  min-height: 44px;
+  min-width: 44px;
+  padding-inline: 14px;
+}

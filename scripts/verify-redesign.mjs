@@ -6,7 +6,7 @@ const { chromium } = await import(
   process.env.PLAYWRIGHT_MODULE || "playwright"
 );
 const base = process.env.PREVIEW_URL || "http://127.0.0.1:4174";
-const output = "docs/redesign-2026-09-14";
+const output = process.env.VERIFY_OUTPUT || "docs/redesign-2026-09-14";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
@@ -45,6 +45,7 @@ try {
   assert.equal(await page.locator("h1").count(), 1);
   const text = await page.locator("body").innerText();
   for (const phrase of [
+    "Landman title",
     "TitleDesk Agent",
     "Jayson Powers",
     "BrandStreams",
@@ -57,6 +58,9 @@ try {
     assert.ok(text.includes(phrase), phrase);
   assert.doesNotMatch(text, /\$\d|fixed fee|founding clients|spots remaining/i);
   assert.equal(await page.locator('a[href="tel:+16073647772"]').count(), 1);
+  assert.equal(await page.locator(".cal-fab").count(), 0);
+  assert.equal(await page.getByRole("link", { name: "Book a 20-minute teardown call", exact: true }).count(), 1);
+  assert.equal(await page.locator(".footer-signature a").count(), 3);
   const brokenAnchors = await page
     .locator('a[href^="#"]')
     .evaluateAll((links) =>
@@ -124,7 +128,7 @@ try {
     );
   }
   results.push(
-    "All five screenshot previews open, close on Escape, and restore keyboard focus.",
+    "Every rendered screenshot preview opens, closes on Escape, and restores keyboard focus.",
   );
 
   await page
@@ -173,7 +177,7 @@ try {
   );
 
   await page.reload({ waitUntil: "networkidle" });
-  for (const width of [320, 390, 768, 1024, 1440]) {
+  for (const width of [320, 390, 768, 1024, 1440, 2560, 3840]) {
     await page.setViewportSize({ width, height: 900 });
     await page.evaluate(() => window.scrollTo(0, 0));
     assert.ok(
@@ -194,7 +198,7 @@ try {
     }
   }
   results.push(
-    "No horizontal overflow at 320, 390, 768, 1024, or 1440 pixels. Mobile navigation opens and closes after selection.",
+    "No horizontal overflow at 320, 390, 768, 1024, 1440, 2560, or 3840 pixels. Mobile navigation opens and closes after selection.",
   );
 
   await page.emulateMedia({ reducedMotion: "reduce" });

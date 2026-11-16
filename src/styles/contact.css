@@ -1,0 +1,769 @@
+/* ==========================================================================
+   Chapter X · Intake cockpit (owner: intake lane)
+   Form + progressive drawer + Secret Guard + live Work Order + contact rail.
+   ========================================================================== */
+
+.contact {
+  overflow-x: clip;
+  padding-top: clamp(148px, 11.5vw, 184px);
+  padding-bottom: clamp(24px, 2.5vw, 48px);
+}
+.contact .chapter-head {
+  margin-bottom: clamp(18px, 2vw, 32px);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(24px, 3.4vw, 56px);
+  margin-top: clamp(18px, 2.2vw, 32px);
+  align-items: start;
+}
+.contact-grid > * {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  }
+  .work-order-col {
+    position: sticky;
+    top: 96px;
+  }
+}
+
+/* --- Form ----------------------------------------------------------------- */
+.contact-form fieldset {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.contact-required {
+  margin: 0;
+  color: var(--ash);
+  font-size: var(--step-meta);
+}
+
+.contact-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+}
+@media (min-width: 640px) {
+  .contact-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.contact-field {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contact-field label,
+.contact-chips-label {
+  margin: 0;
+  color: var(--limestone);
+  font-family: var(--font-inscription);
+  font-size: var(--step-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.contact-optional {
+  color: var(--ash);
+  font-family: var(--font-body);
+  font-size: var(--step-meta);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--hair-soft);
+  border-bottom-color: var(--hair);
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--carbon), var(--obsidian));
+  color: var(--ivory);
+  font: inherit;
+  font-size: var(--step-small);
+  transition:
+    border-color var(--dur-ui) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out);
+}
+.contact-field textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+.contact-field select {
+  appearance: none;
+  padding-right: 40px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+    linear-gradient(135deg, var(--gold) 50%, transparent 50%),
+    linear-gradient(180deg, var(--carbon), var(--obsidian));
+  background-position:
+    calc(100% - 20px) 50%,
+    calc(100% - 15px) 50%,
+    0 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    100% 100%;
+  background-repeat: no-repeat;
+}
+.contact-field select option {
+  background: var(--carbon);
+  color: var(--ivory);
+}
+.contact-field ::placeholder {
+  color: var(--ash);
+  opacity: 0.8;
+}
+.contact-field input:hover,
+.contact-field select:hover,
+.contact-field textarea:hover {
+  border-color: var(--hair);
+}
+.contact-field input:focus-visible,
+.contact-field select:focus-visible,
+.contact-field textarea:focus-visible {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 10px 30px -18px rgba(255, 138, 61, 0.6);
+}
+.contact-field .has-secret {
+  border-color: var(--ember);
+}
+
+.contact-count {
+  justify-self: end;
+  margin: 0;
+  color: var(--ash);
+}
+
+.contact-form fieldset:disabled {
+  opacity: 0.85;
+}
+
+/* --- Progressive drawer ----------------------------------------------------- */
+.contact-drawer {
+  border-top: 1px solid var(--hair-soft);
+  border-bottom: 1px solid var(--hair-soft);
+}
+.contact-drawer-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  color: var(--gold-hi);
+  font: inherit;
+  font-size: var(--step-small);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.contact-drawer-toggle > span:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.contact-drawer-count {
+  margin: 0;
+  color: var(--copper-hot);
+  white-space: nowrap;
+}
+.contact-drawer-chevron {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+.contact-drawer-toggle[aria-expanded="true"] .contact-drawer-chevron {
+  transform: rotate(180deg);
+}
+.contact-details {
+  display: grid;
+  gap: 22px;
+  padding: 6px 0 28px;
+}
+.contact-details[hidden] {
+  display: none;
+}
+
+/* Problem chips */
+.contact-chips {
+  display: grid;
+  gap: 12px;
+}
+.contact-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  max-width: 100%;
+  padding: 6px 14px;
+  border: 1px solid var(--hair-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--limestone);
+  font: inherit;
+  font-size: var(--step-meta);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-ui) var(--ease-out),
+    color var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) var(--ease-out);
+}
+.contact-chip svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+.contact-chip:hover {
+  border-color: var(--hair);
+  color: var(--ivory);
+}
+.contact-chip[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: rgba(217, 168, 78, 0.12);
+  color: var(--gold-hi);
+}
+
+/* Honeypot: off-screen, not display:none (some bots skip hidden fields). */
+.contact-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* --- Secret Guard ---------------------------------------------------------- */
+.contact-form fieldset {
+  position: relative;
+}
+/* Keep the empty live region in the accessibility tree without taking a row. */
+.secret-guard:not(.is-active) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+.secret-guard.is-active {
+  display: grid;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid rgba(226, 87, 58, 0.55);
+  border-left-width: 3px;
+  border-radius: 2px;
+  background: rgba(226, 87, 58, 0.06);
+}
+.secret-guard.is-nudged {
+  border-color: var(--ember);
+  box-shadow: 0 0 0 1px var(--ember);
+}
+.secret-guard p {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  color: var(--ivory);
+  font-size: var(--step-small);
+  line-height: 1.5;
+}
+.secret-guard p svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--ember);
+}
+.secret-guard p span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.secret-guard-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--limestone);
+  font-size: var(--step-small);
+  cursor: pointer;
+}
+.secret-guard-confirm input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--gold);
+}
+
+/* --- Submit, note, error ------------------------------------------------------ */
+.contact-submit {
+  justify-self: start;
+  max-width: 100%;
+  min-height: 56px;
+  white-space: normal;
+  text-align: left;
+}
+@media (max-width: 480px) {
+  .contact-submit {
+    justify-self: stretch;
+    justify-content: space-between;
+  }
+}
+
+.contact-note {
+  margin: -8px 0 0;
+  color: var(--ash);
+  font-size: var(--step-meta);
+  line-height: 1.5;
+}
+
+.contact-error {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+  border: 1px solid rgba(226, 87, 58, 0.6);
+  border-left-width: 3px;
+  border-radius: 2px;
+  background: rgba(226, 87, 58, 0.07);
+  color: var(--ivory);
+  font-size: var(--step-small);
+  line-height: 1.55;
+}
+.contact-error p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.contact-error strong {
+  color: #ffd2c6;
+  font-weight: 600;
+}
+.contact-error a {
+  color: var(--gold-hi);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+/* --- Success -------------------------------------------------------------- */
+.contact-success {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  padding: clamp(24px, 4vw, 48px) 0;
+  border-top: 1px solid var(--hair);
+}
+.contact-success-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold-hi);
+  box-shadow: 0 0 40px -10px rgba(255, 138, 61, 0.6);
+}
+.contact-success h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-h3);
+  font-weight: 600;
+  color: var(--ivory);
+}
+.contact-success h3:focus {
+  outline: none;
+}
+.contact-success p {
+  max-width: var(--read);
+  margin: 0;
+  color: var(--limestone);
+  overflow-wrap: anywhere;
+}
+.contact-success strong {
+  color: var(--gold-hi);
+  font-weight: 600;
+}
+
+/* --- Work Order preview ------------------------------------------------------ */
+.work-order-col {
+  display: grid;
+  gap: 12px;
+}
+
+.work-order-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 18px;
+  border: 1px solid var(--hair);
+  border-radius: 2px;
+  background: var(--carbon);
+  color: var(--gold-hi);
+  font-family: var(--font-inscription);
+  font-size: var(--step-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+.work-order-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+.work-order-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.work-order {
+  position: relative;
+  display: none;
+  padding: clamp(18px, 2.4vw, 30px);
+  border: 1px solid var(--hair);
+  border-radius: 2px;
+  background:
+    radial-gradient(
+      120% 70% at 85% -10%,
+      rgba(200, 102, 46, 0.16),
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--marquina), var(--obsidian));
+  box-shadow: 0 30px 80px -40px rgba(255, 138, 61, 0.35);
+}
+.work-order::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--hair-soft);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.work-order[data-open="true"] {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .work-order-toggle {
+    display: none;
+  }
+  .work-order {
+    display: block;
+  }
+}
+
+.work-order-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--hair-soft);
+}
+.work-order-head .inscription {
+  color: var(--gold-hi);
+}
+.work-order-status {
+  margin: 0;
+  color: var(--ash);
+  text-transform: uppercase;
+}
+.work-order-status.is-sending {
+  color: var(--gold-hi);
+}
+.work-order-status.is-sent {
+  color: var(--sapphire);
+}
+.work-order-status.is-error {
+  color: var(--ember);
+}
+
+.work-order-body {
+  max-height: min(60vh, 560px);
+  margin: 16px 0;
+  overflow: auto;
+  color: var(--limestone);
+  font-size: var(--step-meta);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+  scrollbar-color: var(--gold-lo) transparent;
+}
+
+.work-order-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hair-soft);
+}
+.work-order-copy-note {
+  margin: 0;
+  color: var(--gold-hi);
+}
+
+/* Gold pulse when another section prefills the brief. Base state is invisible,
+   so reduced motion (animation: none) simply shows nothing. */
+.work-order-flash {
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--gold-hi);
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1px rgba(246, 222, 156, 0.6),
+    0 0 60px -6px rgba(217, 168, 78, 0.7),
+    inset 0 0 40px -10px rgba(217, 168, 78, 0.45);
+  animation: work-order-pulse 1.4s var(--ease-out) both;
+}
+@keyframes work-order-pulse {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.motion-paused .work-order-flash {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-order-flash {
+    display: none;
+  }
+}
+
+/* --- Contact rail ------------------------------------------------------------- */
+.contact-rail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin-top: clamp(24px, 3vw, 44px);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+@media (min-width: 768px) {
+  .contact-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.contact-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 22px 4px;
+  color: var(--ivory);
+  font-size: var(--step-small);
+  text-decoration: none;
+  transition: color var(--dur-ui) var(--ease-out);
+}
+.contact-rail-item + .contact-rail-item {
+  border-top: 1px solid var(--hair-soft);
+}
+@media (min-width: 768px) {
+  .contact-rail-item {
+    padding-inline: 20px;
+  }
+  .contact-rail-item + .contact-rail-item {
+    border-top: 0;
+    border-left: 1px solid var(--hair-soft);
+  }
+}
+.contact-rail-item > svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--gold);
+}
+.contact-rail-item > span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.contact-rail-label {
+  color: var(--ash);
+  font-size: var(--step-meta);
+}
+.contact-rail-item:hover {
+  color: var(--gold-hi);
+}
+
+/* An engineering dossier: ruled register, clear draft state, separate booking. */
+.work-order {
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      rgba(200, 102, 46, 0.12),
+      transparent 55%
+    ),
+    linear-gradient(145deg, #161513, #09090b 60%);
+  box-shadow:
+    inset 0 1px rgba(246, 222, 156, 0.22),
+    0 24px 80px -48px rgba(200, 102, 46, 0.4);
+}
+.work-order-heading {
+  display: grid;
+  gap: 8px;
+}
+.work-order-heading > .mono {
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--ash);
+}
+.work-order-head .inscription {
+  font-size: clamp(1.1rem, 1rem + 0.3vw, 1.5rem);
+}
+.work-order-register {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hair-soft);
+  color: var(--ash);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.work-order-register strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--gold-hi);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.work-order-body {
+  color: #ded6c8;
+  padding: 8px 0;
+  line-height: 1.9;
+  background: repeating-linear-gradient(
+    transparent 0 calc(1.9em - 1px),
+    rgba(237, 230, 216, 0.035) calc(1.9em - 1px) 1.9em
+  );
+}
+.contact-booking {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(18px, 2vw, 28px);
+  border: 1px solid rgba(217, 168, 78, 0.5);
+  background:
+    radial-gradient(
+      ellipse at 0% 20%,
+      rgba(217, 168, 78, 0.15),
+      transparent 80%
+    ),
+    #080808;
+  text-decoration: none;
+  color: var(--gold-hi);
+  box-shadow: inset 0 1px rgba(246, 222, 156, 0.12);
+  transition:
+    border-color var(--dur-ui),
+    background-color var(--dur-ui),
+    transform var(--dur-micro);
+}
+.contact-booking-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--hair);
+  border-radius: 50%;
+}
+.contact-booking-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.contact-booking-copy {
+  display: grid;
+  gap: 7px;
+}
+.contact-booking-copy .mono {
+  font-size: 0.61rem;
+  color: var(--gold);
+  letter-spacing: 0.09em;
+}
+.contact-booking-copy strong {
+  font-family: var(--font-display);
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 8;
+  font-size: clamp(1.2rem, 1.1rem + 0.3vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.contact-booking-copy > span:last-child {
+  font-size: 0.78rem;
+  color: var(--limestone);
+}
+.contact-booking-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--dur-ui);
+}
+.contact-booking:hover {
+  border-color: var(--gold-hi);
+  background-color: #141009;
+}
+.contact-booking:hover .contact-booking-arrow {
+  transform: translate(2px, -2px);
+}
+.contact-booking:active {
+  transform: translateY(1px);
+}
+.contact-field input:focus-visible,
+.contact-field textarea:focus-visible,
+.contact-field select:focus-visible {
+  border-color: var(--gold-hi);
+  box-shadow:
+    inset 0 -1px var(--gold),
+    0 6px 24px -16px var(--copper);
+}
+@media (max-width: 420px) {
+  .contact-booking {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+  .contact-booking-icon {
+    display: none;
+  }
+}
+@media (min-width: 1024px) and (max-height: 800px) {
+  .work-order-col {
+    position: static;
+  }
+}

@@ -1,0 +1,409 @@
+/* ==========================================================================
+   Chapter II · Studio Cinema (owner: cinema lane)
+   One <video> in a double-hairline bezel; three cuts; custom controls.
+   ========================================================================== */
+
+.cinema {
+  overflow-x: clip;
+}
+
+.cinema::before {
+  /* Faint copper key-light behind the stage; elevation from light, not boxes. */
+  content: "";
+  position: absolute;
+  inset: 30% 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    60% 50% at 50% 45%,
+    rgba(200, 102, 46, 0.14),
+    rgba(107, 47, 18, 0.06) 45%,
+    transparent 75%
+  );
+}
+
+/* ---- Cut switcher ------------------------------------------------------- */
+.cinema-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(8px, 2vw, 36px);
+  margin-bottom: clamp(20px, 2.4vw, 36px);
+  border-bottom: 1px solid var(--hair-soft);
+}
+
+.cinema-tab {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  min-height: 48px;
+  min-width: 0;
+  padding: 10px 2px 14px;
+  border: 0;
+  background: none;
+  color: var(--ash);
+  text-align: left;
+  transition: color var(--dur-ui) var(--ease-out);
+}
+.cinema-tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+.cinema-tab:hover {
+  color: var(--limestone);
+}
+.cinema-tab.is-active {
+  color: var(--ivory);
+}
+.cinema-tab.is-active::after {
+  transform: scaleX(1);
+}
+.cinema-tab-name {
+  font-family: var(--font-inscription);
+  font-size: var(--step-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.cinema-tab-meta {
+  color: var(--gold-lo);
+}
+.cinema-tab.is-active .cinema-tab-meta {
+  color: var(--gold);
+}
+
+/* ---- Stage ---------------------------------------------------------------- */
+.cinema-stage {
+  --max-h: 84vh;
+  --ratio: 1.7778;
+  width: min(var(--media), 1880px, calc(var(--max-h) * var(--ratio) + 14px));
+  margin-inline: auto;
+}
+.cinema-stage--compact {
+  /* 1280×720 source shown no larger than ~720 CSS px so it stays sharp. */
+  width: min(var(--media), 734px);
+}
+.cinema-stage--tall {
+  --max-h: min(80vh, 1040px);
+  width: min(
+    var(--media),
+    max(300px, calc(var(--max-h) * var(--ratio) + 14px))
+  );
+}
+
+.cinema-frame {
+  display: grid;
+  gap: 6px;
+}
+
+.cinema-screen {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #000;
+}
+
+.cinema-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.cinema-archival {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 3;
+  padding: 6px 12px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.78);
+  color: var(--gold-hi);
+  font-size: var(--step-meta);
+  letter-spacing: 0.16em;
+  pointer-events: none;
+}
+
+.cinema-bigplay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 0, 0, 0.35),
+    transparent 60%
+  );
+  color: var(--gold-hi);
+}
+.cinema-bigplay svg {
+  box-sizing: content-box;
+  width: clamp(26px, 3vw, 40px);
+  height: clamp(26px, 3vw, 40px);
+  padding: clamp(18px, 2vw, 28px);
+  border: 1px solid rgba(246, 222, 156, 0.6);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  box-shadow:
+    0 0 0 6px rgba(0, 0, 0, 0.35),
+    0 18px 60px -12px rgba(255, 138, 61, 0.55);
+  transition:
+    transform var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) var(--ease-out);
+}
+.cinema-bigplay:hover svg,
+.cinema-bigplay:focus-visible svg {
+  transform: scale(1.06);
+  border-color: var(--gold-hi);
+}
+.cinema-bigplay:focus-visible {
+  outline-offset: -6px;
+}
+.cinema-bigplay.is-blocked svg {
+  border-color: var(--gold-hi);
+}
+
+/* ---- Controls ------------------------------------------------------------- */
+.cinema-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 4px 6px 2px;
+}
+
+.cinema-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: none;
+  color: var(--limestone);
+  font-size: var(--step-small);
+  font-weight: 600;
+  transition:
+    color var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) var(--ease-out);
+}
+.cinema-control svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.cinema-control:hover {
+  color: var(--gold-hi);
+  border-color: var(--hair);
+}
+.cinema-control[aria-pressed="true"] {
+  color: var(--gold-hi);
+}
+
+.cinema-scrubber {
+  --progress: 0%;
+  flex: 1 1 140px;
+  min-width: 100px;
+  height: 44px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.cinema-scrubber::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--gold) 0 var(--progress),
+    rgba(237, 230, 216, 0.16) var(--progress) 100%
+  );
+}
+.cinema-scrubber::-moz-range-track {
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(237, 230, 216, 0.16);
+}
+.cinema-scrubber::-moz-range-progress {
+  height: 2px;
+  border-radius: 999px;
+  background: var(--gold);
+}
+.cinema-scrubber::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6px;
+  border: 1px solid var(--gold-hi);
+  border-radius: 999px;
+  background: #000;
+  box-shadow: 0 0 0 3px rgba(217, 168, 78, 0.18);
+}
+.cinema-scrubber::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--gold-hi);
+  border-radius: 999px;
+  background: #000;
+}
+.cinema-scrubber:focus-visible {
+  outline-offset: 0;
+}
+
+.cinema-timecode {
+  min-width: 11ch;
+  color: var(--ash);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Chapters & caption --------------------------------------------------- */
+.cinema-meta {
+  display: grid;
+  gap: 14px;
+  margin-top: clamp(16px, 1.6vw, 26px);
+}
+
+.cinema-chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px clamp(6px, 1vw, 18px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cinema-chapters li {
+  min-width: 0;
+}
+
+.cinema-chapter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 4px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  color: var(--ash);
+  font-size: var(--step-small);
+  text-align: left;
+  transition:
+    color var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) var(--ease-out);
+}
+.cinema-chapter .mono {
+  color: var(--gold-lo);
+}
+.cinema-chapter:hover {
+  color: var(--limestone);
+}
+.cinema-chapter.is-active {
+  color: var(--ivory);
+  border-bottom-color: var(--gold);
+}
+.cinema-chapter.is-active .mono {
+  color: var(--gold);
+}
+
+.cinema-caption {
+  max-width: var(--read);
+  color: var(--ash);
+  font-size: var(--step-small);
+}
+
+/* ---- Theater (native fullscreen of the stage) ----------------------------- */
+.cinema-stage:fullscreen,
+.cinema-stage.is-theater {
+  --max-h: calc(100vh - 170px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 2vh 2vw;
+  background: #000;
+}
+.cinema-stage.is-theater .cinema-frame {
+  width: min(100%, calc(var(--max-h) * var(--ratio) + 14px));
+}
+.cinema-stage.is-theater.cinema-stage--compact .cinema-frame {
+  width: min(100%, 1294px, calc(var(--max-h) * var(--ratio) + 14px));
+}
+.cinema-stage.is-theater .cinema-meta {
+  width: min(100%, calc(var(--max-h) * var(--ratio) + 14px), 1400px);
+}
+.cinema-stage.is-theater .cinema-caption {
+  display: none;
+}
+.cinema:has(.is-theater-fallback) {
+  z-index: 100;
+}
+.cinema-stage.is-theater-fallback {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Narrow frames (portrait cut, phones): scrubber gets its own full row. */
+.cinema-stage--tall .cinema-scrubber {
+  order: -1;
+  flex-basis: 100%;
+}
+.cinema-stage--tall .cinema-timecode {
+  margin-right: auto;
+  text-align: left;
+}
+
+@media (max-width: 560px) {
+  .cinema-scrubber {
+    order: -1;
+    flex-basis: 100%;
+  }
+  .cinema-timecode {
+    margin-right: auto;
+    text-align: left;
+  }
+  .cinema-control-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .cinema-timecode {
+    min-width: 0;
+  }
+  .cinema-archival {
+    top: 10px;
+    left: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinema-tab::after {
+    transition: none;
+  }
+}
