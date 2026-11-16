@@ -35,6 +35,7 @@ uniform sampler2D uObvEmi;
 uniform sampler2D uRevAlb;
 uniform sampler2D uRevHgt;
 uniform sampler2D uRevEmi;
+uniform sampler2D uEdgeTex; // R: V-groove depth, G: crisp glyph mask, B: bevel highlight
 
 // R = 1.602 projects to 91.0% of canvas height at CAM.z = 4.9, matching UV_RIM = 0.455
 // in harness-lab-hero-aligned.webp to within 0.03% for a zero-jump static -> WebGL handoff.
@@ -60,6 +61,15 @@ float gauss(float x) { return exp(-(x * x)); }
 float smin(float a, float b, float k) {
   float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
   return mix(b, a, h) - k * h * (1.0 - h);
+}
+
+// Sample cylindrical rim engraving (4 quadrants around circumference: -90, 0, +90, 180 deg).
+vec3 sampleEdgeEngraving(vec3 p, float lod) {
+  float ang = atan(p.y, p.x);
+  float u = fract((ang / 1.57079632679) + 0.5);
+  float v = clamp((p.z / 0.104) * 0.5 + 0.5, 0.0, 1.0);
+  float band = 1.0 - smoothstep(0.097, 0.105, abs(p.z));
+  return textureLod(uEdgeTex, vec2(u, v), lod).rgb * band;
 }
 
 float sdCappedCyl(vec3 p, float rad, float halfH) {
@@ -92,14 +102,17 @@ float mapCoin(vec3 p) {
     disp = (p.z >= 0.0 ? dispF : dispB) * taper;
   }
 
-  // Edge knurling (144 reeds), equatorial trench, and wire rings.
+  // Numismatic rim: outer 144-reed collars, twin gold guard fillets, and 3D V-cut edge inscription.
   float ang = atan(p.y, p.x);
-  float reedBand = smoothstep(0.032, 0.046, az) * (1.0 - smoothstep(HALF_T - 0.018, HALF_T, az));
-  float reeds = sin(ang * 144.0) * 0.0085 * reedBand;
-  float trench = -gauss(p.z / 0.026) * 0.018;
-  float wireRings = gauss((az - 0.034) / 0.007) * 0.009;
+  float reedBand = smoothstep(0.107, 0.115, az) * (1.0 - smoothstep(HALF_T - 0.015, HALF_T - 0.004, az));
+  float reeds = sin(ang * 144.0) * 0.0065 * reedBand;
+  float wireRings = gauss((az - 0.104) / 0.0042) * 0.0065;
+  float engraveCut = 0.0;
+  if (r > R - 0.045 && az < 0.104) {
+    engraveCut = -sampleEdgeEngraving(p, 0.5).r * 0.0105;
+  }
 
-  float effR = R + reeds + trench + wireRings;
+  float effR = R + reeds + wireRings + engraveCut;
   vec2 qCoin = vec2(r - effR, az - (HALF_T + disp));
   float d = min(max(qCoin.x, qCoin.y), 0.0) + length(max(qCoin, 0.0)) - 0.013;
 
@@ -195,39 +208,49 @@ vec3 shadeCoin(vec3 p, vec3 nLocal, mat3 coinToWorld, vec3 rdWorld, float t) {
 
   // Determine whether this hit sits on the sculpted obverse/reverse face (including
   // the protruding 3D wing feather blade!) vs the machined 144-reed cylinder rim.
-  float inWingTip = smoothstep(0.42, 0.52, hData.g) * smoothstep(R - 0.015, R + 0.006, r) * smoothstep(HALF_T - 0.035, HALF_T - 0.010, az);
-  float inCoinFace = (1.0 - smoothstep(R - 0.020, R - 0.004, r)) * smoothstep(HALF_T - 0.028, HALF_T - 0.008, az);
+  float inWingTip = smoothstep(0.42, 0.52, hData.g) * smoothstep(R - 0.015, R + 0.006, r) * smoothstep(HALF_T - 0.032, HALF_T - 0.010, az);
+  float inCoinFace = (1.0 - smoothstep(R - 0.026, R - 0.011, r)) * smoothstep(HALF_T - 0.016, HALF_T - 0.004, az);
   float faceMask = clamp(max(inCoinFace, inWingTip), 0.0, 1.0);
 
-  // Machined 144-reed bronze/gold edge + sapphire/copper equatorial trench (HDR -> ACES).
+  // Numismatic bronze rim + 24k gold V-cut edge inscription Easter egg (HDR -> ACES).
   vec3 edgeLinear = vec3(0.0);
   if (faceMask < 0.999) {
     float ang = atan(p.y, p.x);
-    vec3 eAlb = vec3(0.74, 0.44, 0.19);
-    float eMetal = 0.96;
-    float eRough = 0.15;
-    vec3 eEmiss = vec3(0.0);
-    if (az < 0.028 && r <= R + 0.03) {
-      eAlb = vec3(0.03, 0.03, 0.035);
-      eMetal = 0.42;
-      eRough = 0.34;
-      float seg = pow(max(0.0, cos(ang * 18.0)), 8.0);
-      float pulse = 0.55 + 0.65 * (0.5 + 0.5 * sin(ang * 2.0 - uTime * 3.2));
-      bool sapphireNode = mod(floor((ang + 3.14159265) / (6.2831853 / 36.0) + 0.5), 9.0) < 0.5;
-      vec3 glowCol = sapphireNode ? vec3(0.32, 0.78, 1.15) : vec3(1.35, 0.55, 0.09);
-      eEmiss = glowCol * seg * pulse * uEdge * 1.35;
-    }
+    vec3 eng = az < 0.105 ? sampleEdgeEngraving(p, 0.0) : vec3(0.0);
+    float inBand = 1.0 - smoothstep(0.100, 0.107, az);
+    float guardRail = gauss((az - 0.104) / 0.0045);
+
+    // Rich patinated bronze inscription band framed by bright 24k gold guard rails & outer reeds
+    vec3 bandAlb = vec3(0.30, 0.17, 0.075);
+    vec3 collarAlb = vec3(0.78, 0.49, 0.21);
+    vec3 eAlb = mix(collarAlb, bandAlb, inBand);
+    eAlb = mix(eAlb, vec3(0.96, 0.74, 0.32), clamp(guardRail * 0.85, 0.0, 1.0));
+
+    float eMetal = mix(0.96, 0.88, inBand);
+    float eRough = mix(0.14, 0.27, inBand);
+
+    // Chiseled 24k gold leaf V-cut lettering + dark bevel shadow shoulder
+    float strokeMask = smoothstep(0.22, 0.72, eng.g);
+    float bevelRim = clamp(eng.b * 1.15, 0.0, 1.0);
+    eAlb = mix(eAlb, vec3(0.06, 0.035, 0.015), clamp(bevelRim * 0.65, 0.0, 1.0));
+    eAlb = mix(eAlb, vec3(1.0, 0.80, 0.36), strokeMask);
+    eMetal = mix(eMetal, 0.99, strokeMask);
+    eRough = mix(eRough, 0.11, strokeMask);
+
+    float sweep = 0.32 + 0.30 * (0.5 + 0.5 * sin(ang * 2.0 - uTime * 1.7));
+    vec3 eEmiss = vec3(1.05, 0.74, 0.26) * strokeMask * sweep * uEdge;
+
     vec3 F0 = mix(vec3(0.04), eAlb, eMetal);
     vec3 F = F0 + (1.0 - F0) * pow(1.0 - NoV, 5.0);
     float specPow = mix(180.0, 14.0, eRough * eRough);
-    vec3 envS = studioEnv(Rdir) * mix(1.25, 0.45, eRough) * F;
+    vec3 envS = studioEnv(Rdir) * mix(1.30, 0.52, eRough) * F;
     vec3 H1 = normalize(L1 + V);
     vec3 H2 = normalize(L2 + V);
     vec3 H3 = normalize(L3 + V);
     vec3 d1 = F * pow(max(dot(N, H1), 0.0), specPow) * 1.85 * vec3(2.4, 2.05, 1.65) * max(dot(N, L1), 0.0);
     vec3 d2 = F * pow(max(dot(N, H2), 0.0), specPow * 0.7) * 1.35 * vec3(0.95, 1.20, 1.45) * max(dot(N, L2), 0.0);
     vec3 d3 = F * pow(max(dot(N, H3), 0.0), specPow * 1.1) * vec3(1.65, 1.10, 0.55) * max(dot(N, L3), 0.0);
-    vec3 amb = vec3(0.09, 0.075, 0.06) * eAlb * (1.0 - eMetal);
+    vec3 amb = vec3(0.14, 0.10, 0.06) * eAlb;
     edgeLinear = acesTonemap(amb + envS + d1 + d2 + d3 + eEmiss);
   }
 

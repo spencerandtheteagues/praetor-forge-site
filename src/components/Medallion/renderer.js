@@ -20,16 +20,116 @@ const TIERS = [
 const DPR_CAP = 2;
 
 const TAU = Math.PI * 2;
-const EDGE_YAW = (72 * Math.PI) / 180;
+const EDGE_PITCH = (75 * Math.PI) / 180;
 const SETTLE_MS = 1000;
-const FLIP_MS = 800;
+const FLIP_MS = 820;
 const NUDGE = Math.PI / 12;
 const NUDGE_MS = 280;
 const SETTLE_FROM = { yaw: -0.62, pitch: 0.2 };
 const FRICTION = 3.4; // 1/s; release inertia is below 0.2% after 2s
 const RELEASE_MAX = 2; // seconds; inertia is cut off after this
 const PITCH_OMEGA = 5.5; // critically damped return of the drag pitch
-const PITCH_LIMIT = 0.45;
+const PITCH_LIMIT = 1.38;
+
+// Hidden numismatic edge-lettering Easter egg: rendered once at high DPI into a
+// seamless 4x-repeating cylindrical height + inlay mask (R = V-groove depth for
+// raymarched 3D normals, G = crisp glyph mask for 24k gold inlay).
+async function buildEdgeEngravingBitmap() {
+  try {
+    if (document.fonts?.ready) {
+      await Promise.race([
+        document.fonts.ready,
+        new Promise((r) => setTimeout(r, 900)),
+      ]);
+    }
+  } catch {
+    // Proceed with fallback serif if font readiness rejects.
+  }
+
+  const W = 2048;
+  const H = 256;
+  // Physical 1:1 aspect space for one 90-degree quadrant of the R=1.602, z∈[-0.104,+0.104] rim
+  const VW = 3020;
+  const VH = 256;
+
+  const drawGlyphs = (blurPx) => {
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, W, H);
+    ctx.save();
+    ctx.scale(W / VW, 1);
+    if (blurPx > 0) ctx.filter = `blur(${blurPx}px)`;
+    ctx.fillStyle = "#fff";
+    ctx.strokeStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    // Subtle numismatic border hairlines & seam stars
+    ctx.lineWidth = 2.4;
+    ctx.globalAlpha = 0.55;
+    ctx.beginPath();
+    ctx.moveTo(0, 22);
+    ctx.lineTo(VW, 22);
+    ctx.moveTo(0, VH - 22);
+    ctx.lineTo(VW, VH - 22);
+    ctx.stroke();
+
+    ctx.globalAlpha = 0.9;
+    ctx.font = '700 42px "Cinzel", Georgia, serif';
+    ctx.fillText("✦", 0, VH * 0.5);
+    ctx.fillText("✦", VW, VH * 0.5);
+
+    ctx.globalAlpha = 1;
+    if ("letterSpacing" in ctx) ctx.letterSpacing = "4.8px";
+    ctx.font = '800 58px "Cinzel", Georgia, serif';
+    ctx.fillText(
+      "SPENCER ALLEN TEAGUE · STARTED THE JOURNEY IN 2020",
+      VW * 0.5,
+      94,
+    );
+
+    if ("letterSpacing" in ctx) ctx.letterSpacing = "5.8px";
+    ctx.font = '700 52px "Cinzel", Georgia, serif';
+    ctx.fillText(
+      "AND FOUNDED THE HARNESS LAB IN 2025",
+      VW * 0.5,
+      170,
+    );
+    ctx.restore();
+    return ctx.getImageData(0, 0, W, H);
+  };
+
+  const sharp = drawGlyphs(0);
+  const soft = drawGlyphs(3.2);
+  const out = new ImageData(W, H);
+  const sd = sharp.data;
+  const bd = soft.data;
+  const od = out.data;
+  for (let i = 0; i < sd.length; i += 4) {
+    const s = sd[i];
+    const b = bd[i];
+    // R: smooth V-trench bevel profile for 3D SDF normal carving
+    od[i] = Math.min(255, Math.round(b * 0.62 + s * 0.48));
+    // G: crisp letter stroke mask
+    od[i + 1] = s;
+    // B: inner bevel rim highlight mask (strongest right along carved stroke walls)
+    od[i + 2] = Math.min(255, Math.max(0, Math.round(Math.abs(b - s) * 2.1)));
+    od[i + 3] = 255;
+  }
+
+  const merged = document.createElement("canvas");
+  merged.width = W;
+  merged.height = H;
+  merged.getContext("2d").putImageData(out, 0, 0);
+  return createImageBitmap(merged, {
+    imageOrientation: "flipY",
+    premultiplyAlpha: "none",
+    colorSpaceConversion: "none",
+  });
+}
 
 const easeOutCubic = (x) => 1 - (1 - x) ** 3;
 const easeInOutCubic = (x) =>
@@ -191,9 +291,15 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
 
   async function init() {
     let bitmaps = null;
+    let edgeBitmap = null;
     try {
-      const [linked, decoded] = await Promise.all([waitForProgram(), decodeAll()]);
+      const [linked, decoded, edgeBmp] = await Promise.all([
+        waitForProgram(),
+        decodeAll(),
+        buildEdgeEngravingBitmap(),
+      ]);
       bitmaps = decoded;
+      edgeBitmap = edgeBmp;
       if (disposed || failed) return;
       if (!linked) return fail("compile");
 
@@ -228,6 +334,20 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         gl.uniform1i(gl.getUniformLocation(program, name), i);
       });
+
+      const edgeUnit = TEXTURES.length;
+      const edgeTex = gl.createTexture();
+      textures.push(edgeTex);
+      gl.activeTexture(gl.TEXTURE0 + edgeUnit);
+      gl.bindTexture(gl.TEXTURE_2D, edgeTex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, edgeBitmap);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.uniform1i(gl.getUniformLocation(program, "uEdgeTex"), edgeUnit);
+
       if (gl.getError() !== gl.NO_ERROR) return fail("texture");
 
       gl.uniform1f(uniforms.uPop, 1);
@@ -239,6 +359,7 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
       if (!disposed) fail("texture");
     } finally {
       bitmaps?.forEach((b) => b.close());
+      edgeBitmap?.close();
     }
   }
 
@@ -482,7 +603,9 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
       },
       inspectEdge() {
         if (!ready) return;
-        startTween(nearestFace() + EDGE_YAW, 0, FLIP_MS);
+        const faceYaw = nearestFace();
+        const isReverse = Math.cos(faceYaw) < 0;
+        startTween(faceYaw, isReverse ? -EDGE_PITCH : EDGE_PITCH, FLIP_MS);
       },
       reset() {
         if (!ready) return;
@@ -531,7 +654,13 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
         const vel = idle ? 0 : clamp(drag.vel, -8, 8);
         event.currentTarget.releasePointerCapture?.(event.pointerId);
         drag = null;
-        if (canRun()) {
+        if (Math.abs(pose.pitch) > 0.52 && Math.abs(vel) < 0.65) {
+          // User deliberately tilted the medallion to inspect the rim; hold the pose.
+          pose.yawVel = 0;
+          pose.pitchVel = 0;
+          releaseAt = -1;
+          requestRender();
+        } else if (canRun()) {
           pose.yawVel = vel;
           pose.pitchVel = 0;
           releaseAt = clock;
