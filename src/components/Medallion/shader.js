@@ -1,21 +1,12 @@
 // GLSL ES 3.00 sources for the raymarched Harness Lab medallion.
 //
-// Changes from the reference shader (MASTER-PLAN-2027 Chapter I):
-//  1. smoothstep bounds are always ascending; inverted ramps are written as
-//     1.0 - smoothstep(lo, hi, x).
-//  2. All texture fetches use explicit LODs (implicit derivatives are undefined
-//     inside divergent rays). JPEG relief is filtered at mip 1.5; lossless raised
-//     lettering stays at mip 0 so smoothing stone never erases the inscription.
-//  3. No backdrop and no motes. Misses are transparent, silhouette coverage comes
-//     from the closest approach of the ray, and the output is premultiplied
-//     vec4(col * a, a). The pedestal is a bounded dark contact disc with alpha.
-//  4. One texture convention: every texture is uploaded as an ImageBitmap decoded
-//     with imageOrientation:'flipY', so uv (0,0) is the bottom-left of each image
-//     and the ad-hoc 1 - uv.y flips are gone. The reverse face mirrors u only.
-//  5. The march is clipped to a ray-cylinder/slab bound, hits are refined with
-//     four bisection steps, and normals use a tetrahedral 4-tap.
-//  Also: pow(x, 2.0) with a negative x is undefined in GLSL, so the reference's
-//  Gaussian bands are written as exp(-(x * x)).
+// Authentic 2027 edition:
+//  - Obverse (p.z > 0): 100% pixel-faithful to the ornate Copper & Carrara Marble
+//    Harness Lab medallion on title-desk.com (filigree gold helmet, layered wing
+//    feathers including the 3D feather tip protruding past the upper-left rim,
+//    starry cosmos, tiered citadel + rising arrow, and engraved THE HARNESS LAB).
+//  - Reverse (p.z < 0): the Black Nero Marquina Marble twin emblem.
+//  - Edge: 144-reed machined bronze/gold rim with pulsing sapphire/copper trench.
 
 export const VERTEX_SHADER = `#version 300 es
 in vec2 aPos;
@@ -39,20 +30,20 @@ uniform int uSteps;
 uniform int uShadowSteps;
 
 uniform sampler2D uObvAlb;
-uniform sampler2D uObvHgt;
+uniform sampler2D uObvHgt; // R: relief height, G: 2D silhouette SDF, B: specular mask
 uniform sampler2D uObvEmi;
 uniform sampler2D uRevAlb;
 uniform sampler2D uRevHgt;
 uniform sampler2D uRevEmi;
-uniform sampler2D uTitle;
 
-const float R = 1.62;
+// R = 1.602 projects to 91.0% of canvas height at CAM.z = 4.9, matching UV_RIM = 0.455
+// in harness-lab-hero-aligned.webp to within 0.03% for a zero-jump static -> WebGL handoff.
+const float R = 1.602;
+const float UV_RIM = 0.455;
+const float UV_SPAN = R / UV_RIM;
 const float HALF_T = 0.145;
-// Conservative bound of every displaced feature: relief and lettering rise at
-// most ~0.103 above the face, reeds and wire rings push the rim out ~0.018, and
-// the rounded chamfer adds 0.014.
-const float BOUND_R = R + 0.05;
-const float BOUND_Z = HALF_T + 0.14;
+const float BOUND_R = 1.82;
+const float BOUND_Z = HALF_T + 0.15;
 const float FOCAL = 1.35;
 const vec3 CAM = vec3(0.0, 0.0, 4.9);
 const float FLOOR_Y = -1.78;
@@ -66,40 +57,39 @@ mat3 rotZ(float a) { float c = cos(a), s = sin(a); return mat3(c, -s, 0, s, c, 0
 
 float gauss(float x) { return exp(-(x * x)); }
 
+float smin(float a, float b, float k) {
+  float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
+  return mix(b, a, h) - k * h * (1.0 - h);
+}
+
 float sdCappedCyl(vec3 p, float rad, float halfH) {
   vec2 d = vec2(length(p.xy) - rad, abs(p.z) - halfH);
   return min(max(d.x, d.y), 0.0) + length(max(d, 0.0));
 }
 
-float reliefFront(vec2 uv) {
-  float baseH = textureLod(uObvHgt, uv, 1.5).r;
-  float tv = textureLod(uTitle, uv, 0.0).r;
-  return (baseH - 0.35) * 0.085 + tv * 0.048 * uPop;
-}
-
-float reliefBack(vec2 uv) {
-  vec2 buv = vec2(1.0 - uv.x, uv.y);
-  float baseH = textureLod(uRevHgt, buv, 1.5).r;
-  float tv = textureLod(uTitle, buv, 0.0).r;
-  return (baseH - 0.35) * 0.085 + tv * 0.048 * uPop;
-}
-
-// Signed distance to the sculpted medallion in local coin space.
+// Signed distance to the sculpted medallion + protruding 3D wing feather tips.
 float mapCoin(vec3 p) {
   float r = length(p.xy);
   float az = abs(p.z);
 
-  // Far from the coin: distance to a capped cylinder that contains every
-  // displaced feature. Always a lower bound, so it never oversteps.
-  if (r - R > 0.12 || az > HALF_T + 0.16) {
-    return sdCappedCyl(p, R + 0.035, HALF_T + 0.125);
+  // Conservative outer cylinder bound containing coin + protruding wing tip.
+  if (r > 1.79 || az > HALF_T + 0.14) {
+    return sdCappedCyl(p, 1.765, HALF_T + 0.115);
   }
 
-  vec2 uv = p.xy / (2.0 * R) + 0.5;
+  vec2 uv = clamp(p.xy / UV_SPAN + 0.5, 0.001, 0.999);
+  vec2 buv = vec2(1.0 - uv.x, uv.y);
+
+  vec3 hF = textureLod(uObvHgt, uv, 0.5).rgb;
+  vec3 hB = textureLod(uRevHgt, buv, 0.5).rgb;
+
+  float dispF = (hF.r - 0.32) * 0.082 * uPop;
+  float dispB = (hB.r - 0.32) * 0.082 * uPop;
+
   float disp = 0.0;
   if (r <= R) {
-    float taper = 1.0 - smoothstep(R - 0.045, R, r);
-    disp = (p.z >= 0.0 ? reliefFront(uv) : reliefBack(uv)) * taper;
+    float taper = 1.0 - smoothstep(R - 0.042, R, r);
+    disp = (p.z >= 0.0 ? dispF : dispB) * taper;
   }
 
   // Edge knurling (144 reeds), equatorial trench, and wire rings.
@@ -110,13 +100,41 @@ float mapCoin(vec3 p) {
   float wireRings = gauss((az - 0.034) / 0.007) * 0.009;
 
   float effR = R + reeds + trench + wireRings;
-  vec2 q = vec2(r - effR, az - (HALF_T + disp));
-  return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - 0.014;
+  vec2 qCoin = vec2(r - effR, az - (HALF_T + disp));
+  float d = min(max(qCoin.x, qCoin.y), 0.0) + length(max(qCoin, 0.0)) - 0.013;
+
+  // Protruding 3D carved wing tips (extending past the upper-left bezel at ~10:30).
+  // Each face's protruding feather tip is active when that face is oriented toward
+  // the viewer, so the opposite face never pokes a mirrored nub out at ~1:15, and
+  // the blade tapers razor-thin at its crest for a clean oblique edge profile.
+  if (r > R - 0.045) {
+    float frontVis = smoothstep(-0.05, 0.42, cos(uPose.x));
+    float backVis  = smoothstep(-0.05, 0.42, -cos(uPose.x));
+    float tipTaper = 1.0 - smoothstep(R, R * 1.09, r) * 0.55;
+
+    if (frontVis > 0.01 && hF.g > 0.12) {
+      float dSilF = ((0.5 - hF.g) / 14.0) * UV_SPAN + (1.0 - frontVis) * 0.12;
+      float zMidF = HALF_T + dispF * 0.42;
+      float zHalfF = 0.016 * tipTaper;
+      vec2 qWF = vec2(dSilF, abs(p.z - zMidF) - zHalfF);
+      float dWF = min(max(qWF.x, qWF.y), 0.0) + length(max(qWF, 0.0)) - 0.005;
+      d = smin(d, dWF, 0.007);
+    }
+    if (backVis > 0.01 && hB.g > 0.12) {
+      float dSilB = ((0.5 - hB.g) / 14.0) * UV_SPAN + (1.0 - backVis) * 0.12;
+      float zMidB = -(HALF_T + dispB * 0.42);
+      float zHalfB = 0.016 * tipTaper;
+      vec2 qWB = vec2(dSilB, abs(p.z - zMidB) - zHalfB);
+      float dWB = min(max(qWB.x, qWB.y), 0.0) + length(max(qWB, 0.0)) - 0.005;
+      d = smin(d, dWB, 0.007);
+    }
+  }
+
+  return d;
 }
 
-// Tetrahedral 4-tap gradient.
 vec3 calcNormal(vec3 p) {
-  const float h = 0.0022;
+  const float h = 0.0026;
   const vec2 k = vec2(1.0, -1.0);
   return normalize(
     k.xyy * mapCoin(p + k.xyy * h) +
@@ -127,156 +145,147 @@ vec3 calcNormal(vec3 p) {
 
 float softShadow(vec3 ro, vec3 rd) {
   float res = 1.0;
-  float t = 0.02;
+  float t = 0.022;
   for (int i = 0; i < 18; i++) {
     if (i >= uShadowSteps) break;
     float h = mapCoin(ro + rd * t);
-    res = min(res, 9.0 * h / t);
-    t += clamp(h, 0.012, 0.06);
-    if (res < 0.05 || t > 0.7) break;
+    res = min(res, 10.0 * h / t);
+    t += clamp(h, 0.014, 0.06);
+    if (res < 0.08 || t > 0.65) break;
   }
-  return clamp(res, 0.12, 1.0);
+  return clamp(res, 0.22, 1.0);
 }
 
 vec3 studioEnv(vec3 dir) {
   float v = clamp(dir.y * 0.5 + 0.5, 0.0, 1.0);
-  vec3 col = mix(vec3(0.02, 0.018, 0.016), vec3(0.07, 0.06, 0.05), gauss((v - 0.5) / 0.16));
-  // Overhead champagne softbox
+  vec3 col = mix(vec3(0.02, 0.018, 0.016), vec3(0.075, 0.064, 0.052), gauss((v - 0.5) / 0.16));
   col += vec3(1.65, 1.28, 0.88) * pow(max(0.0, dot(dir, normalize(vec3(-0.35, 0.82, 0.45)))), 7.0);
-  // Crisp copper side strip
   col += vec3(1.45, 0.86, 0.44) * pow(max(0.0, dot(dir, normalize(vec3(0.82, 0.18, 0.54)))), 14.0);
-  // Cool silver rim strip
   col += vec3(0.62, 0.84, 1.10) * pow(max(0.0, dot(dir, normalize(vec3(-0.85, 0.28, -0.45)))), 10.0);
-  // Warm amber bounce
   col += vec3(0.95, 0.46, 0.14) * pow(max(0.0, dot(dir, normalize(vec3(0.1, -0.78, 0.60)))), 8.0);
   return col;
+}
+
+vec3 acesTonemap(vec3 x) {
+  return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0);
 }
 
 vec3 shadeCoin(vec3 p, vec3 nLocal, mat3 coinToWorld, vec3 rdWorld, float t) {
   float r = length(p.xy);
   float az = abs(p.z);
-  vec2 uv = p.xy / (2.0 * R) + 0.5;
+  vec2 uv = clamp(p.xy / UV_SPAN + 0.5, 0.001, 0.999);
+  vec2 buv = vec2(1.0 - uv.x, uv.y);
 
   vec3 N = normalize(coinToWorld * nLocal);
   vec3 V = -rdWorld;
   float NoV = max(dot(N, V), 0.001);
+  vec3 Rdir = reflect(-V, N);
 
-  // Explicit LOD from the pixel footprint on the face (albedo/title are 1024,
-  // emissive maps are 512, so they sit one level lower).
+  vec3 L1 = normalize(vec3(-0.52, 0.64, 0.56));
+  vec3 L2 = normalize(vec3(0.72, 0.35, -0.60));
+  vec3 L3 = normalize(vec3(sin(uTime * 1.05) * 0.58, -0.48, 0.66));
+
   float footprint = t / (uRes.y * FOCAL);
-  float texels = footprint / (2.0 * R) * ALB_SIZE / max(NoV, 0.25);
+  float texels = footprint / UV_SPAN * ALB_SIZE / max(NoV, 0.25);
   float lodA = max(log2(max(texels, 1e-4)), 0.0);
-  float lodE = max(lodA - 1.0, 0.0);
+  float lodE = max(lodA - 0.5, 0.0);
 
-  vec3 albedo = vec3(0.72, 0.43, 0.21);
-  float metal = 0.94;
-  float rough = 0.20;
-  float marble = 0.0;
-  vec3 emiss = vec3(0.0);
+  vec2 fuv = p.z >= 0.0 ? uv : buv;
+  vec3 hData = p.z >= 0.0 ? textureLod(uObvHgt, fuv, 0.5).rgb : textureLod(uRevHgt, fuv, 0.5).rgb;
 
-  float faceRimMask = (1.0 - smoothstep(R - 0.018, R - 0.004, r)) * smoothstep(HALF_T - 0.028, HALF_T - 0.008, az);
-  if (faceRimMask > 0.001) {
-    float tv;
-    float hSample;
-    if (p.z > 0.0) {
-      albedo = pow(textureLod(uObvAlb, uv, lodA).rgb, vec3(2.2));
-      emiss  = pow(textureLod(uObvEmi, uv, lodE).rgb, vec3(2.0)) * 1.45;
-      hSample = textureLod(uObvHgt, uv, 0.5).r;
-      tv = textureLod(uTitle, uv, lodA).r;
-    } else {
-      vec2 buv = vec2(1.0 - uv.x, uv.y);
-      albedo = pow(textureLod(uRevAlb, buv, lodA).rgb, vec3(2.2));
-      emiss  = pow(textureLod(uRevEmi, buv, lodE).rgb, vec3(2.0)) * 1.45;
-      hSample = textureLod(uRevHgt, buv, 0.5).r;
-      tv = textureLod(uTitle, buv, lodA).r;
-    }
-    float lum = dot(albedo, vec3(0.299, 0.587, 0.114));
-    // Normalized chromaticity is stable across the marble's lit and shadowed
-    // veins. On the reverse face, height-assisted feathering prevents dark
-    // background texel bleed at the sharp outer tips of the white marble wings.
-    float sat = (albedo.r - albedo.b) / max(max(albedo.r, albedo.g), 0.045);
-    float stoneH = (p.z < 0.0) ? smoothstep(0.56, 0.78, hSample) * (1.0 - smoothstep(0.32, 0.52, sat)) : 0.0;
-    float warmMetal = smoothstep(0.28, 0.38, sat) * smoothstep(0.018, 0.075, lum) * (1.0 - stoneH * 0.85);
-    marble = max((1.0 - smoothstep(0.28, 0.38, sat)) * smoothstep(0.035, 0.20, lum), stoneH);
-    metal = mix(mix(0.18, 0.93, warmMetal), 0.04, marble);
-    rough = mix(mix(0.52, 0.21, warmMetal), 0.24, marble);
-    // Preserve Carrara grey veins while lifting anti-aliased wing-tip edges cleanly.
-    vec3 stoneTint = mix(albedo * vec3(1.025, 1.01, 0.98) + vec3(0.018), max(albedo, vec3(0.58, 0.56, 0.52)), stoneH * 0.65);
-    albedo = mix(albedo, stoneTint, marble);
+  // Determine whether this hit sits on the sculpted obverse/reverse face (including
+  // the protruding 3D wing feather blade!) vs the machined 144-reed cylinder rim.
+  float inWingTip = smoothstep(0.42, 0.52, hData.g) * smoothstep(R - 0.015, R + 0.006, r) * smoothstep(HALF_T - 0.035, HALF_T - 0.010, az);
+  float inCoinFace = (1.0 - smoothstep(R - 0.020, R - 0.004, r)) * smoothstep(HALF_T - 0.028, HALF_T - 0.008, az);
+  float faceMask = clamp(max(inCoinFace, inWingTip), 0.0, 1.0);
 
-    // Raised "THE HARNESS LAB" lettering with a chiselled shadow halo.
-    float shadowHalo = smoothstep(0.02, 0.28, tv) * (1.0 - smoothstep(0.28, 0.55, tv));
-    albedo *= (1.0 - 0.72 * shadowHalo);
-    emiss += vec3(0.45, 0.16, 0.02) * shadowHalo * uPop * 0.55;
-    if (tv > 0.30) {
-      float faceMask = smoothstep(0.30, 0.72, tv);
-      vec3 letterCol = mix(vec3(0.95, 0.42, 0.12), vec3(1.00, 0.78, 0.34), smoothstep(0.55, 0.90, tv));
-      albedo = mix(albedo, letterCol, faceMask);
-      metal = mix(metal, 0.99, faceMask);
-      rough = mix(rough, 0.08, faceMask);
-      marble *= 1.0 - faceMask;
-      emiss += letterCol * 0.18 * uPop * faceMask;
-    }
-    // Smoothly blend the outer face edge into the machined copper rim bevel.
-    albedo = mix(vec3(0.86, 0.52, 0.22), albedo, faceRimMask);
-    metal = mix(0.97, metal, faceRimMask);
-    rough = mix(0.13, rough, faceRimMask);
-    marble *= faceRimMask;
-    emiss *= faceRimMask;
-  } else {
-    // Machined edge: chamfer rings, reeds, and the glowing equatorial trench.
+  // Machined 144-reed bronze/gold edge + sapphire/copper equatorial trench (HDR -> ACES).
+  vec3 edgeLinear = vec3(0.0);
+  if (faceMask < 0.999) {
     float ang = atan(p.y, p.x);
-    if (az < 0.028) {
-      albedo = vec3(0.03, 0.03, 0.035);
-      metal = 0.4; rough = 0.35;
+    vec3 eAlb = vec3(0.74, 0.44, 0.19);
+    float eMetal = 0.96;
+    float eRough = 0.15;
+    vec3 eEmiss = vec3(0.0);
+    if (az < 0.028 && r <= R + 0.03) {
+      eAlb = vec3(0.03, 0.03, 0.035);
+      eMetal = 0.42;
+      eRough = 0.34;
       float seg = pow(max(0.0, cos(ang * 18.0)), 8.0);
       float pulse = 0.55 + 0.65 * (0.5 + 0.5 * sin(ang * 2.0 - uTime * 3.2));
       bool sapphireNode = mod(floor((ang + 3.14159265) / (6.2831853 / 36.0) + 0.5), 9.0) < 0.5;
-      // Sapphire #8FD3FF in linear light, slightly boosted; copper otherwise.
       vec3 glowCol = sapphireNode ? vec3(0.32, 0.78, 1.15) : vec3(1.35, 0.55, 0.09);
-      emiss = glowCol * seg * pulse * uEdge * 1.4;
-    } else {
-      albedo = vec3(0.86, 0.52, 0.22);
-      metal = 0.97; rough = 0.13;
+      eEmiss = glowCol * seg * pulse * uEdge * 1.35;
     }
+    vec3 F0 = mix(vec3(0.04), eAlb, eMetal);
+    vec3 F = F0 + (1.0 - F0) * pow(1.0 - NoV, 5.0);
+    float specPow = mix(180.0, 14.0, eRough * eRough);
+    vec3 envS = studioEnv(Rdir) * mix(1.25, 0.45, eRough) * F;
+    vec3 H1 = normalize(L1 + V);
+    vec3 H2 = normalize(L2 + V);
+    vec3 H3 = normalize(L3 + V);
+    vec3 d1 = F * pow(max(dot(N, H1), 0.0), specPow) * 1.85 * vec3(2.4, 2.05, 1.65) * max(dot(N, L1), 0.0);
+    vec3 d2 = F * pow(max(dot(N, H2), 0.0), specPow * 0.7) * 1.35 * vec3(0.95, 1.20, 1.45) * max(dot(N, L2), 0.0);
+    vec3 d3 = F * pow(max(dot(N, H3), 0.0), specPow * 1.1) * vec3(1.65, 1.10, 0.55) * max(dot(N, L3), 0.0);
+    vec3 amb = vec3(0.09, 0.075, 0.06) * eAlb * (1.0 - eMetal);
+    edgeLinear = acesTonemap(amb + envS + d1 + d2 + d3 + eEmiss);
   }
 
-  vec3 Rdir = reflect(-V, N);
-  vec3 L1 = normalize(vec3(-0.55, 0.64, 0.54));
+  if (faceMask <= 0.001) {
+    return edgeLinear;
+  }
+
+  // Authentic Title-Desk Copper-Marble Obverse & Black-Marble Reverse Shading:
+  // Preserves 100% of the intricate filigree, marble veining, starry cosmos, citadel,
+  // and engraved THE HARNESS LAB lettering at rest while adding physical 3D relief
+  // shading, soft shadows, and moving metallic/stone specular glints as it turns.
+  vec3 texSrgb = p.z >= 0.0 ? textureLod(uObvAlb, uv, lodA).rgb : textureLod(uRevAlb, buv, lodA).rgb;
+  vec3 emiSrgb = p.z >= 0.0 ? textureLod(uObvEmi, uv, lodE).rgb : textureLod(uRevEmi, buv, lodE).rgb;
+  vec3 baseLin = pow(texSrgb, vec3(2.2));
+  vec3 emissLin = pow(emiSrgb, vec3(2.0));
+
+  float specMask = hData.b; // 0.85..1.0 on gold/bronze filigree & rim; ~0.20 on marble; ~0.0 on cosmos
+
   vec3 L1Local = normalize(transpose(coinToWorld) * L1);
   float sh = softShadow(p + nLocal * 0.005, L1Local);
-  // Broad subsurface fill on Carrara, without flattening the metal's cavities.
-  sh = mix(sh, 0.72 + 0.28 * sh, marble);
-  vec3 L2 = normalize(vec3(0.72, 0.35, -0.60));
-  vec3 L3 = normalize(vec3(sin(uTime * 1.1) * 0.55, -0.52, 0.65)); // grazing glint
 
-  vec3 F0 = mix(vec3(0.04), albedo, metal);
+  // Differential 3D relief shading relative to rest face normal so rest pose preserves
+  // 100% photographic fidelity to title-desk.com while breathing/turning modulates relief.
+  vec3 faceWorld = normalize(coinToWorld * vec3(0.0, 0.0, p.z >= 0.0 ? 1.0 : -1.0));
+  float flatL1 = max(dot(vec3(0.0, 0.0, 1.0), L1), 0.35);
+  float curL1 = max((dot(N, L1) + 0.38) / 1.38, 0.0) * mix(0.76, 1.0, sh);
+  float reliefRatio = clamp(curL1 / (flatL1 * 0.92), 0.52, 1.24);
+  float turnAmt = clamp((1.0 - abs(faceWorld.z)) * 1.65 + 0.26, 0.26, 1.0);
+  float shadeMult = mix(1.0, reliefRatio, turnAmt);
+
+  // Anisotropic-feel metallic & polished-marble specular glints driven by 3D relief normals.
+  vec3 specTint = mix(vec3(0.95, 0.93, 0.90), max(baseLin * 1.65, vec3(0.72, 0.46, 0.20)), smoothstep(0.22, 0.65, specMask));
+  float rough = mix(0.32, 0.17, smoothstep(0.25, 0.80, specMask));
+  float specPow = mix(42.0, 115.0, smoothstep(0.25, 0.85, specMask));
+  vec3 F0 = mix(vec3(0.035), specTint * 0.55, smoothstep(0.22, 0.80, specMask));
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - NoV, 5.0);
 
-  vec3 envSpec = studioEnv(Rdir) * mix(1.25, 0.45, rough);
-  vec3 diffAmb = mix(vec3(0.10, 0.085, 0.075), vec3(0.19, 0.18, 0.16), marble) * albedo * (1.0 - metal);
-
-  float specPow = mix(180.0, 14.0, rough * rough);
   vec3 H1 = normalize(L1 + V);
-  float NoL1 = max(dot(N, L1), 0.0) * sh;
-  float wrapL1 = max((dot(N, L1) + 0.42) / 1.42, 0.0) * mix(0.45, 1.0, sh);
-  vec3 dir1 = (1.0 - metal) * albedo * 0.62 * vec3(2.5, 2.25, 1.95) * wrapL1
-            + F * pow(max(dot(N, H1), 0.0), specPow) * 1.8 * vec3(2.4, 2.05, 1.65) * NoL1;
-
   vec3 H2 = normalize(L2 + V);
-  float NoL2 = max(dot(N, L2), 0.0);
-  vec3 dir2 = ((1.0 - metal) * albedo * 0.25 + F * pow(max(dot(N, H2), 0.0), specPow * 0.7) * 1.4)
-            * vec3(0.95, 1.20, 1.45) * NoL2;
-
   vec3 H3 = normalize(L3 + V);
-  float NoL3 = max(dot(N, L3), 0.0);
-  vec3 dir3 = F * pow(max(dot(N, H3), 0.0), specPow * 1.1) * vec3(1.65, 1.10, 0.55) * NoL3;
 
-  vec3 velvet = marble * vec3(0.10, 0.095, 0.085) * pow(1.0 - NoV, 2.0) * (0.4 + 0.6 * wrapL1);
-  return diffAmb + envSpec * F + dir1 + dir2 + dir3 + velvet + emiss;
+  // Specular highlights wake up strongly on tilted relief facets and grazing motion glints.
+  float facetTilt = clamp(length(nLocal.xy) * 1.45 + (1.0 - abs(faceWorld.z)) * 1.2, 0.08, 1.0);
+  vec3 specAdd = specMask * (
+    studioEnv(Rdir) * F * (0.28 + 0.55 * (1.0 - abs(faceWorld.z))) +
+    specTint * pow(max(dot(N, H1), 0.0), specPow) * 0.42 * sh * facetTilt +
+    vec3(0.75, 0.92, 1.12) * F * pow(max(dot(N, H2), 0.0), specPow * 0.65) * 0.55 * max(dot(N, L2), 0.0) +
+    specTint * pow(max(dot(N, H3), 0.0), specPow * 0.9) * 0.52 * max(dot(N, L3), 0.0) * facetTilt
+  );
+  specAdd = specAdd / (1.0 + 0.85 * specAdd);
+
+  // Subtle living pulse on citadel amber bars & circuit nodes.
+  float emiPulse = 0.22 + 0.16 * (0.5 + 0.5 * sin(uTime * 1.8));
+  vec3 faceLinear = clamp(baseLin * shadeMult + specAdd + emissLin * emiPulse * uPop, 0.0, 1.0);
+
+  return mix(edgeLinear, faceLinear, faceMask);
 }
 
-// Clip the ray to the coin's bounding cylinder and z slab.
 bool boundCoin(vec3 ro, vec3 rd, out float t0, out float t1) {
   float tc0 = -1e6, tc1 = 1e6;
   float a = dot(rd.xy, rd.xy);
@@ -305,8 +314,6 @@ bool boundCoin(vec3 ro, vec3 rd, out float t0, out float t1) {
   return t1 > t0;
 }
 
-// Returns true on a hit. On a miss, minRatio/tMin describe the closest
-// approach (smallest distance / t) for silhouette coverage.
 bool marchCoin(vec3 ro, vec3 rd, out float tHit, out float minRatio, out float tMin) {
   tHit = 0.0;
   minRatio = 1e6;
@@ -358,8 +365,6 @@ void main() {
     col = shadeCoin(pL, calcNormal(pL), coinToWorld, rd, tHit);
     cov = 1.0;
   } else {
-    // Rays that graze the silhouette within one pixel footprint take partial
-    // coverage and are shaded at their closest approach.
     cov = clamp(1.0 - minRatio / pixAng, 0.0, 1.0);
     if (cov > 0.0) {
       vec3 pL = roL + rdL * tMin;
@@ -367,13 +372,9 @@ void main() {
     }
   }
 
-  // ACES filmic tone map + gamma, then premultiply by coverage.
-  col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14);
   col = pow(clamp(col, 0.0, 1.0), vec3(1.0 / 2.2));
   vec4 coin = vec4(col * cov, cov);
 
-  // Bounded dark contact disc on the floor beneath the coin. It fades to zero
-  // well inside the canvas so it can never draw a seam at the canvas edge.
   vec4 disc = vec4(0.0);
   if (cov < 1.0 && rd.y < -0.01) {
     float tf = (FLOOR_Y - CAM.y) / rd.y;

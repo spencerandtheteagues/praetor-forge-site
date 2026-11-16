@@ -3,13 +3,12 @@
 import { FRAGMENT_SHADER, VERTEX_SHADER } from "./shader.js";
 
 const TEXTURES = [
-  ["uObvAlb", "/medallion/obvAlb.jpg"],
-  ["uObvHgt", "/medallion/obvHgt.jpg"],
-  ["uObvEmi", "/medallion/obvEmi.jpg"],
-  ["uRevAlb", "/medallion/revAlb.jpg"],
-  ["uRevHgt", "/medallion/revHgt.jpg"],
-  ["uRevEmi", "/medallion/revEmi.jpg"],
-  ["uTitle", "/medallion/title.png"],
+  ["uObvAlb", "/medallion/obvAlb.webp"],
+  ["uObvHgt", "/medallion/obvHgt.png"],
+  ["uObvEmi", "/medallion/obvEmi.webp"],
+  ["uRevAlb", "/medallion/revAlb.webp"],
+  ["uRevHgt", "/medallion/revHgt.png"],
+  ["uRevEmi", "/medallion/revEmi.webp"],
 ];
 
 // Quality tiers: march steps, shadow steps, and a drawing-buffer scale.

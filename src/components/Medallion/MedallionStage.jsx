@@ -200,7 +200,7 @@ export default function MedallionStage() {
         <div className="medallion-face">
           <Picture
             className="medallion-picture"
-            srcSet="/brand/harness-lab-copper-marble-512.webp 512w, /brand/harness-lab-copper-marble.webp 1024w"
+            srcSet="/brand/harness-lab-hero-aligned-512.webp 512w, /brand/harness-lab-hero-aligned.webp 1024w"
             sizes="(min-width: 1024px) min(36vw, 740px), 82vw"
             fallback="/brand/harness-lab-copper-marble.png"
             alt="The Harness Lab medallion: a winged bust in copper and white marble, ringed by the inscription The Harness Lab"
