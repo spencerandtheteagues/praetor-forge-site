@@ -242,17 +242,18 @@ export default function ContactSection() {
       <span id="intake" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="X"
-          eyebrow="Intake"
+          numeral="XI"
+          eyebrow="Intake · Direct to Spencer Teague"
           title={
             <>
-              Bring the broken workflow. <em>Leave with a system you can operate and prove.</em>
+              Bring us the problem <em>nobody else could finish.</em>
             </>
           }
         >
           <p>
-            Tell us what’s manual, fragile, or stuck. The brief on the right assembles as you type, so
-            you can see exactly what we’ll read before you send it. A real person replies.
+            Tell us what’s manual, fragile, or stuck after someone else’s prototype hit a
+            wall. Your Work Order assembles live on the right as you type, and Spencer
+            replies directly.
           </p>
         </ChapterHead>
 

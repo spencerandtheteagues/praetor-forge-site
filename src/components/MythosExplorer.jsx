@@ -22,22 +22,20 @@ export default function MythosExplorer() {
             height={640}
           />
           <ChapterHead
-            numeral="V"
-            eyebrow="Mythos OS · Our own harness"
+            numeral="VI"
+            eyebrow="Mythos OS · 17 live operator surfaces"
             title={
               <>
-                We don&rsquo;t just build harnesses. <em>We run on one.</em>
+                We don&rsquo;t just sell harnesses. <em>We live inside one.</em>
               </>
             }
             id="our-os-title"
           >
             <p>
-              Mythos OS is the harness Spencer Teague built to run The Harness
-              Lab: one cockpit for our model subscriptions that coordinates
-              agents across a Mac, an Omen workstation and a Kali VPS. It&rsquo;s
-              the clearest example we can show of the engineering inside a
-              harness, and the same architecture can be shaped around the work
-              your business needs done.
+              Mythos OS is the command cockpit Spencer Teague engineered to run The
+              Harness Lab 24/7: coordinating Claude, Codex, Gemini, and Ollama across
+              a Mac, a Linux workstation, and production VPS nodes with 20,911
+              knowledge-graph nodes and zero silent failures.
             </p>
           </ChapterHead>
         </div>

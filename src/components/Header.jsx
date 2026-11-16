@@ -3,12 +3,13 @@ import { ArrowUpRight, CalendarCheck, Menu, X } from "lucide-react";
 import { CALENDAR_URL, CAL_LINK, CAL_NAMESPACE } from "../data/site.js";
 
 const NAV = [
-  { href: "#cinema", numeral: "II", label: "Cinema", ids: ["cinema"] },
-  { href: "#work", numeral: "III", label: "Our work", ids: ["work"] },
-  { href: "#method", numeral: "IV", label: "Method", ids: ["method"] },
-  { href: "#our-os", numeral: "V", label: "Cockpits", ids: ["our-os", "case-study"] },
-  { href: "#capabilities", numeral: "VIII", label: "Capabilities", ids: ["ownership", "how", "capabilities"] },
-  { href: "#about", numeral: "IX", label: "The founder", ids: ["about"] },
+  { href: "#trenches", numeral: "II", label: "The grind", ids: ["trenches"] },
+  { href: "#cinema", numeral: "III", label: "Cinema", ids: ["cinema"] },
+  { href: "#work", numeral: "IV", label: "Our work", ids: ["work"] },
+  { href: "#method", numeral: "V", label: "Method", ids: ["method"] },
+  { href: "#our-os", numeral: "VI", label: "Cockpits", ids: ["our-os", "case-study"] },
+  { href: "#capabilities", numeral: "IX", label: "Capabilities", ids: ["ownership", "how", "capabilities"] },
+  { href: "#about", numeral: "X", label: "The founder", ids: ["about"] },
 ];
 
 // Cal.com triggers: a real link to the booking page that the deferred embed

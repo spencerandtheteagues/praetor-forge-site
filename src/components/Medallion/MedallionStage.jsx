@@ -224,7 +224,7 @@ export default function MedallionStage() {
         {live && (
           <>
             <button type="button" className="button button-outline button-small" onClick={run("flip")}>
-              Flip
+              Flip (.com / .dev)
             </button>
             <button
               type="button"

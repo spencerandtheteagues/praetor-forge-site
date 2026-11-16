@@ -12,7 +12,9 @@ const browser = await chromium.launch({
   headless: true,
   ...(process.env.CHROMIUM_PATH
     ? { executablePath: process.env.CHROMIUM_PATH }
-    : {}),
+    : process.env.PLAYWRIGHT_CHANNEL
+      ? { channel: process.env.PLAYWRIGHT_CHANNEL }
+      : {}),
 });
 const results = [],
   errors = [],
@@ -59,7 +61,7 @@ try {
   assert.doesNotMatch(text, /\$\d|fixed fee|founding clients|spots remaining/i);
   assert.equal(await page.locator('a[href="tel:+16073647772"]').count(), 1);
   assert.equal(await page.locator(".cal-fab").count(), 0);
-  assert.equal(await page.getByRole("link", { name: "Book a 20-minute teardown call", exact: true }).count(), 1);
+  assert.ok((await page.locator("[data-cal-link]").count()) >= 3);
   assert.equal(await page.locator(".footer-signature a").count(), 3);
   const brokenAnchors = await page
     .locator('a[href^="#"]')

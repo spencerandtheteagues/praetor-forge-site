@@ -45,19 +45,20 @@ export function Ownership() {
         </div>
         <div className="container ownership-inner">
           <ChapterHead
-            numeral="VII"
-            eyebrow="Ownership"
+            numeral="VIII"
+            eyebrow="Customer ownership · Zero hostageware"
             id="ownership-title"
             title={
               <>
-                You own <em>all of it.</em>
+                You own <em>every damn line.</em>
               </>
             }
           >
             <p>
-              Remote delivery. Customer-owned code. No hosted secrets. When the work is done,
-              the system lives in your accounts, runs on your machines, and comes with
-              everything you need to operate it without us.
+              Remote delivery. Customer-owned Git repositories. Zero hosted secrets.
+              When the build finishes, the software lives in your accounts, runs on
+              your machines, and ships with the tests and runbook to operate it
+              without us.
             </p>
           </ChapterHead>
           <ol className="deliverables">
@@ -78,18 +79,19 @@ export function Ownership() {
         <span id="process" className="anchor-alias" aria-hidden="true" />
         <div className="container">
           <ChapterHead
-            numeral="VII·B"
-            eyebrow="The movement"
+            numeral="VIII·B"
+            eyebrow="How we actually work"
             id="how-title"
             title={
               <>
-                Four steps. <em>No works-on-my-machine roulette.</em>
+                Four stages. <em>Zero quit until it passes.</em>
               </>
             }
           >
             <p>
-              A short discovery loop, one real example, written acceptance criteria, and tests
-              you run yourself. That is how remote work stays honest.
+              We tear into your ugliest real workflow, build inside a repo you own,
+              hammer every failure mode until real data passes automated smoke tests,
+              and hand you the keys.
             </p>
           </ChapterHead>
           <ol className="movement">
@@ -152,19 +154,19 @@ export function Capabilities() {
       <span id="services" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="VIII"
-          eyebrow="What we build"
+          numeral="IX"
+          eyebrow="What we take on"
           id="capabilities-title"
           title={
             <>
-              Start small. Prove it. <em>Then build what matters.</em>
+              Tear it down. Prove it. <em>Build it to last.</em>
             </>
           }
         >
           <p>
-            Every engagement is custom-scoped on a call, around one real workflow and what
-            “done” has to mean for your business. Pick the closest fit and we’ll start your
-            brief for you.
+            Every engagement is custom-scoped directly with Spencer around one real
+            bottleneck and what “working in production” actually requires. Pick the
+            closest fit to pre-fill your Work Order below.
           </p>
         </ChapterHead>
         <ol className="engagements">
@@ -260,30 +262,35 @@ export function Founder() {
         </figure>
         <div className="founder-copy">
           <p className="chapter-eyebrow">
-            <span className="chapter-numeral">IX</span>
-            <span>Self-taught. Hands-on. Always building.</span>
+            <span className="chapter-numeral">X</span>
+            <span>Completely self-taught · 3,850+ commits · Zero quit</span>
           </p>
           <h2 id="about-title">
-            Hi, I’m Spencer. <em className="gold-text">I build what’s next.</em>
+            Hi, I’m Spencer. <span className="gold-3d">I figure hard shit out.</span>
           </h2>
           <p className="founder-lead">
-            I’m a completely self-taught builder who learned by turning ambitious ideas into
-            working software.
+            I’m a completely self-taught builder who learned the only way that sticks:
+            staying in the chair through every broken build, edge case, and 3 a.m. bug
+            until ambitious ideas turn into working production software.
           </p>
           <p>
-            I’m Spencer Teague, founder and lead engineer of The Harness Lab. My work includes
-            TitleDesk Agent for oil-and-gas title research, BrandStreams for social media
-            workflows, and APEX.BUILD, an AI development platform.
+            I’m Spencer Teague, founder and lead engineer of The Harness Lab. Taking
+            TitleDesk Agent from an offline desktop tool to live online county runs on
+            Title-Desk and Artificial Landman took 5.5 straight months of non-stop work
+            across 1,662 commits and 305+ git branches. Evolving MyAIMediaMgr into
+            BrandStreams took even longer — nine architectural generations and 932+
+            commits since V8.1 alone — alongside 1,064 commits building APEX.BUILD.
           </p>
           <p>
-            I build custom applications and AI harnesses that connect powerful models to real
-            tools and systems. What interests me most is the work businesses still do by hand:
-            the repeated steps, disconnected applications, and hours spent moving information
-            around.
+            Most software projects fail not because the idea was wrong, but because the
+            builder quit the third time reality punched the prototype in the mouth. I
+            don’t quit. When a courthouse scan is crooked, an index row is missing, or a
+            model hallucinates a mineral fraction, I build the harness, the fallback,
+            and the verification gate until it works.
           </p>
           <p>
-            The Harness Lab is where I turn that experience into software built for your
-            business. You work directly with the person building it.
+            At The Harness Lab, there is no account-manager telephone game. You work
+            directly with the engineer writing, testing, and handing over your system.
           </p>
           <div className="founder-signoff">
             <span className="signature">Spencer Teague</span>
@@ -314,14 +321,16 @@ export function Founder() {
           height="1024"
         />
         <div>
-          <p className="inscription">The engineering studio</p>
+          <p className="inscription">Black marble seal · Engineering foundry</p>
           <h3>
-            Meet <span className="gold-text">theharnesslab.dev</span>
+            Meet <span className="gold-3d">theharnesslab.dev</span>
           </h3>
           <p>
-            The .dev side is where the engineering lives: verification harnesses, release
-            gates, primary-source pipelines, and the tools that automate an entire once-manual
-            business.
+            White Carrara marble with gold circuit wires is our flagship{" "}
+            <strong>theharnesslab.com</strong> company seal; black Nero Marquina marble
+            is <strong>theharnesslab.dev</strong> — our R&amp;D foundry where Karpathy
+            Loop Harness, adversarial regression suites, and primary-source verification
+            engines are forged.
           </p>
         </div>
         <a className="button button-outline" href={DEV_URL} target="_blank" rel="noopener noreferrer">
@@ -342,7 +351,7 @@ export function Footer() {
         <div className="footer-brand">
           <Brand footer />
           <p>
-            Human ambition. <span className="gold-text">Extraordinary tools.</span>
+            We figure shit out. <span className="gold-3d">And we never quit.</span>
           </p>
           <ul className="footer-signature" aria-label="The Harness Lab online">
             <li><a href="https://theharnesslab.com/">theharnesslab.com <ArrowUpRight aria-hidden="true" /></a></li>

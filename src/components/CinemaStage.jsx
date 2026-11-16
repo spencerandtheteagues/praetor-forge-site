@@ -215,19 +215,19 @@ export default function CinemaStage() {
       <span id="reel" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="II"
-          eyebrow="Studio cinema"
+          numeral="III"
+          eyebrow="Studio cinema · Real systems in motion"
           id="cinema-title"
           title={
             <>
-              The studio, <em>in motion.</em>
+              Built in the dark. <em>Proven in production.</em>
             </>
           }
         >
           <p>
-            Three cuts from the bench: the 2027 studio showcase film, the sovereign
-            architecture anthology, and the Title-Desk orbital seal loop.
-            Sound stays off until you ask for it.
+            Three widescreen cuts from the bench: the 2027 studio showcase film, the
+            5.5-month repository grind behind Title-Desk and BrandStreams, and our
+            verification-to-handover reel. Sound stays off until you ask for it.
           </p>
         </ChapterHead>
 

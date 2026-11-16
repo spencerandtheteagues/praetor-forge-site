@@ -3,26 +3,10 @@ import { ChapterHead, Picture } from "./ui.jsx";
 import { useImageViewer } from "../lib/useImageViewer.js";
 import { goToContact, useIntake } from "../lib/intake.js";
 import { useMotion } from "../lib/motion.js";
+import { onTiltLeave, onTiltMove } from "../lib/tilt3d.js";
 import { FORGE_ROWS, SHIPPED_SITES } from "../data/products.js";
 
-// Chapter III · The Forge. Borderless museum vitrines: transparent artwork →
-// contact shadow → marble plinth lip → Cinzel placard, lit by a copper pool
-// that follows the pointer (CSS vars only, no re-render).
-
 const LOGO_SIZES = "(min-width: 1400px) 380px, (min-width: 760px) 32vw, 84vw";
-
-function setLight(e, disabled) {
-  if (disabled) return;
-  const el = e.currentTarget;
-  const r = el.getBoundingClientRect();
-  if (!r.width || !r.height) return;
-  el.style.setProperty("--mx", `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
-  el.style.setProperty("--my", `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
-}
-function resetLight(e) {
-  e.currentTarget.style.removeProperty("--mx");
-  e.currentTarget.style.removeProperty("--my");
-}
 
 function LogoArt({ logo, alt }) {
   if (logo.svg) {
@@ -128,8 +112,8 @@ function Vitrine({ item, onOpen, onPrefill, motionDisabled }) {
       id={anchor}
       className={`vitrine ${item.plaque ? "vitrine--plaque" : ""}`}
       style={{ "--scale": item.visualScale }}
-      onPointerMove={(e) => setLight(e, motionDisabled)}
-      onPointerLeave={resetLight}
+      onPointerMove={(e) => onTiltMove(e, motionDisabled)}
+      onPointerLeave={onTiltLeave}
     >
       <div className="vitrine-stage">
         <svg className="vitrine-indices" viewBox="0 0 320 240" aria-hidden="true">
@@ -289,19 +273,20 @@ export default function Forge() {
 
       <div className="container forge-inner">
         <ChapterHead
-          numeral="III"
-          eyebrow="The forge"
+          numeral="IV"
+          eyebrow="The forge · Every build on 3D plinths"
           id="forge-title"
           title={
             <>
-              Everything we build, <em>on the plinth.</em>
+              Built the hard way. <em>Owned in full.</em>
             </>
           }
         >
           <p>
-            Title systems in production, the operating systems we run the studio on,
-            venture platforms and websites shipped for real businesses. Each one was
-            designed, engineered and handed over by the same builder.
+            Autonomous county title engines forged across 5.5 straight months, the
+            black-marble .dev engineering foundry, multi-agent operating cockpits,
+            nine-generation SaaS platforms, and live Texas trade websites — all built
+            by the same relentless engineer.
           </p>
         </ChapterHead>
 

@@ -93,11 +93,11 @@ export default function WealthExplorer() {
       <span id="reviews" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="VI"
+          numeral="VII"
           eyebrow="Client build · Wealth & Powers OS"
           title={
             <>
-              Built for Jayson Powers: <em>one cockpit for a complex portfolio.</em>
+              Built for Jayson Powers: <em>dual-audited firepower.</em>
             </>
           }
           id="case-study-title"

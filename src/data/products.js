@@ -1,36 +1,31 @@
-// Chapter III · The Forge: every product, platform and shipped site.
-// Owner: cinema/forge lane. Logos are transparent artwork; `visualScale`
-// optically normalizes their height (wide wordmarks read smaller than round
-// badges at the same box, so they get more room).
-//
-// logo.webp     full-size webp (srcset top width)
-// logo.w640     optional 640w derivative
-// logo.fallback png/svg for browsers without webp
-// action        { type: "link", href, external } or
-//               { type: "prefill", requestType, product }
+// Chapter IV · The Forge: every product, platform and shipped site.
+// All flagship title and studio OS medallions are 1024×1024 sculpted white
+// Carrara marble + 24k gold circuit wires + antique filigree bronze seals,
+// matching the TheHarnessLab.com white-marble standard (and black marble for
+// theharnesslab.dev).
 
 export const FORGE_ROWS = [
   {
     id: "flagship",
     letter: "A",
-    title: "Flagship title systems",
-    kicker: "Oil & gas · in production",
+    title: "Flagship title engines · 5.5 months non-stop",
+    kicker: "1,662 commits · 305+ branches · 24 GB primary-source audit proof",
     items: [
       {
         id: "title-desk",
         status: "Live production",
         domain: "title-desk.com",
         name: "Title-Desk",
-        placard: "Web platform",
-        copy: "The title platform for oil and gas teams: county records, chains of title and ownership workbooks in one source-linked workspace.",
+        placard: "Web platform · Texas oil & gas",
+        copy: "Online county record examination, chain-of-title assembly, and source-linked mineral ownership workbooks — forged across 5.5 straight months of relentless iteration.",
         logo: {
           webp: "/products/titledesk-web-logo.webp",
           w640: "/products/titledesk-web-logo-640.webp",
           fallback: "/products/titledesk-web-logo.png",
-          width: 911,
-          height: 894,
+          width: 1024,
+          height: 1024,
         },
-        visualScale: 1.12,
+        visualScale: 1.04,
         action: { type: "link", href: "https://title-desk.com/", external: true, label: "Live site" },
       },
       {
@@ -38,16 +33,16 @@ export const FORGE_ROWS = [
         status: "Desktop macOS",
         domain: "desktop.title-desk.com",
         name: "TitleDesk Agent",
-        placard: "Desktop app",
-        copy: "Landman title research, runsheets and offline OCR on the desktop. Courthouse scans are read locally, with no per-page AI cost, and every runsheet line links back to its source instrument.",
+        placard: "Desktop app · 64 release builds",
+        copy: "Landman title research, runsheets, and zero-cost local OCR on the desktop. Reads crooked courthouse scans locally with zero per-page AI fees and links every row back to its recorded instrument.",
         logo: {
           webp: "/products/titledesk-desktop-logo.webp",
           w640: "/products/titledesk-desktop-logo-640.webp",
           fallback: "/products/titledesk-desktop-logo.png",
-          width: 1261,
-          height: 772,
+          width: 1024,
+          height: 1024,
         },
-        visualScale: 1.1,
+        visualScale: 1.04,
         action: {
           type: "link",
           href: "https://desktop.title-desk.com/",
@@ -59,7 +54,7 @@ export const FORGE_ROWS = [
           width: 1440,
           height: 900,
           alt: "TitleDesk Agent runsheet workspace with source-linked records",
-          caption: "TitleDesk Agent: the runsheet workspace, each entry linked to its source instrument.",
+          caption: "TitleDesk Agent: every runsheet row traces directly back to its recorded county instrument.",
           label: "Open the runsheet preview",
         },
         serviceLink: {
@@ -72,14 +67,14 @@ export const FORGE_ROWS = [
         status: "Live production",
         domain: "artificiallandman.io",
         name: "Artificial Landman",
-        placard: "Web platform",
-        copy: "Autonomous courthouse chain-of-title and net-mineral-acre reconciliation, run by two independent examiners. Courthouse index and image fees pass straight through at five cents an image.",
+        placard: "Autonomous dual-examiner engine",
+        copy: "End-to-end county chain-of-title and net-mineral-acre reconciliation run by two independent AI examiners plus a deterministic validator, with five-cent pass-through clerk image metering.",
         logo: {
-          // The -640 derivative is the same 592×629 artwork, just lighter.
-          webp: "/products/artificial-landman-logo-640.webp",
+          webp: "/products/artificial-landman-logo.webp",
+          w640: "/products/artificial-landman-logo-640.webp",
           fallback: "/products/artificial-landman-logo.png",
-          width: 592,
-          height: 629,
+          width: 1024,
+          height: 1024,
         },
         visualScale: 1.04,
         action: {
@@ -94,16 +89,16 @@ export const FORGE_ROWS = [
   {
     id: "foundry",
     letter: "B",
-    title: "Operating systems & foundry",
-    kicker: "What we run on, and what we build for others",
+    title: "Engineering foundry & operating cockpits",
+    kicker: "The black-marble .dev studio & the harnesses we run every day",
     items: [
       {
         id: "engineering-studio-card",
-        status: "Engineering studio",
+        status: "Black marble seal",
         domain: "theharnesslab.dev",
-        name: "The Harness Lab · Engineering Studio",
+        name: "The Harness Lab · .dev Foundry",
         placard: "theharnesslab.dev",
-        copy: "The engineering side of the studio: build notes, harness patterns and the verification methods behind every delivery.",
+        copy: "Our dedicated engineering arm — home to Karpathy Loop Harness, primary-source verification gates, adversarial regression drills, and hard systems R&D.",
         logo: {
           webp: "/brand/harness-lab-black-marble.webp",
           w640: "/brand/harness-lab-black-marble-512.webp",
@@ -112,7 +107,7 @@ export const FORGE_ROWS = [
           width: 1024,
           height: 1024,
         },
-        visualScale: 0.98,
+        visualScale: 1.04,
         action: {
           type: "link",
           href: "https://theharnesslab.dev/",
@@ -125,25 +120,25 @@ export const FORGE_ROWS = [
         status: "Internal OS",
         domain: "17 production surfaces",
         name: "Mythos OS",
-        placard: "Studio cockpit",
-        copy: "Our own multi-agent operating system: 17 production surfaces for orchestration, work ledgers, memory and human-gated execution.",
+        placard: "20,911-node studio cockpit",
+        copy: "The multi-agent operating system Spencer built to run The Harness Lab across Mac, Ubuntu workstation, and VPS nodes: work ledgers, memory graphs, mail desks, and human gates.",
         logo: {
           webp: "/products/mythos-os-emblem.webp",
           w640: "/products/mythos-os-emblem-640.webp",
           fallback: "/products/mythos-os-emblem.png",
-          width: 954,
-          height: 954,
+          width: 1024,
+          height: 1024,
         },
-        visualScale: 0.98,
+        visualScale: 1.04,
         action: { type: "link", href: "#our-os", label: "Explore the cockpit", arrow: "↓" },
       },
       {
         id: "rogue-agents",
-        status: "Agent harness",
+        status: "120 commits · 22 branches",
         domain: "Multi-worktree swarm",
         name: "Rogue Agents",
-        placard: "Private command build",
-        copy: "A private multi-agent command harness: specialist agents, shared memory and an operator who approves every consequential move.",
+        placard: "Coordinated agent harness",
+        copy: "Specialist multi-agent swarms operating in isolated git worktrees with live budget allowances, Agent Browser Hub verification, and mandatory human sign-off.",
         logo: {
           webp: "/products/rogue-agents-wordmark.webp",
           w640: "/products/rogue-agents-wordmark-640.webp",
@@ -151,7 +146,7 @@ export const FORGE_ROWS = [
           width: 1400,
           height: 608,
         },
-        visualScale: 1.08,
+        visualScale: 1.06,
         action: {
           type: "prefill",
           requestType: "An AI harness",
@@ -164,8 +159,8 @@ export const FORGE_ROWS = [
         status: "Private client build",
         domain: "10 investor surfaces",
         name: "Wealth & Powers OS",
-        placard: "Client build",
-        copy: "An investor command center for a private client: portfolios, dual-audited research and model routing, with approval at every decision point.",
+        placard: "Five-star client delivery",
+        copy: "Custom multi-asset investor cockpit built for Jayson Powers: live portfolio tracking, dual-audited AI research, mechanical drawdown kill switches, and approval gates.",
         plaque: {
           webp: "/case-studies/jayson/screen-4-480.webp",
           webpFull: "/case-studies/jayson/screen-4.webp",
@@ -182,16 +177,16 @@ export const FORGE_ROWS = [
   {
     id: "ventures",
     letter: "C",
-    title: "Venture platforms & shipped sites",
-    kicker: "Platforms in development and websites in the wild",
+    title: "Multi-generation SaaS & shipped trade sites",
+    kicker: "9+ rebuilds on BrandStreams · 1,064 commits on APEX.BUILD · Texas trade builds",
     items: [
       {
         id: "brandstreams",
-        status: "Venture platform",
-        domain: "Multi-tenant AI engine",
+        status: "9 gens · 932+ V8+ commits",
+        domain: "brandstream.my",
         name: "BrandStreams",
-        placard: "Campaign platform",
-        copy: "An AI campaign and social workflow platform for planning campaigns, creating content and managing social publishing.",
+        placard: "Evolved from MyAIMediaMgr",
+        copy: "Over 14 months of non-stop engineering evolving MyAIMediaMgr (V1–V8.1) into BrandStreams: multi-platform OAuth, AI campaign generation, and hardened tenant isolation.",
         logo: {
           webp: "/products/brandstreams-logo.webp",
           w640: "/products/brandstreams-logo-640.webp",
@@ -209,11 +204,11 @@ export const FORGE_ROWS = [
       },
       {
         id: "apex-build",
-        status: "In development",
+        status: "1,064 commits · 22 branches",
         domain: "github.com/spencerandtheteagues",
         name: "APEX.BUILD",
-        placard: "AI development platform",
-        copy: "A cloud development environment exploring coordinated AI agents, code generation and model routing.",
+        placard: "Multi-AI cloud dev platform",
+        copy: "1,064 commits and 695 reliability & runtime-hardening passes building coordinated multi-AI code generation, dead-agent heartbeats, and backpressure routing.",
         logo: {
           webp: "/products/apex-build-logo.webp",
           w640: "/products/apex-build-logo-640.webp",
@@ -235,14 +230,14 @@ export const FORGE_ROWS = [
         domain: "Property operations suite",
         name: "Happy Homes",
         placard: "Property operations",
-        copy: "Property and resident operations: maintenance requests, scheduling and resident communication in one place.",
+        copy: "Property and resident operations platform unifying maintenance triage, vendor scheduling, and tenant communication in one workspace.",
         logo: {
           svg: "/products/happy-homes-logo.svg",
           medallionWrap: true,
           width: 64,
           height: 64,
         },
-        visualScale: 0.94,
+        visualScale: 0.9,
         action: {
           type: "prefill",
           requestType: "A website or full-stack app",
@@ -254,7 +249,6 @@ export const FORGE_ROWS = [
   },
 ];
 
-// Shipped business websites (Row C, second band). Full-page captures.
 export const SHIPPED_SITES = [
   {
     id: "davis",
@@ -285,31 +279,50 @@ export const SHIPPED_SITES = [
   },
 ];
 
-// Chapter II cuts. Chapter seek points sit cleanly after each 0.8s crossfade
-// completes so clicking any chapter button lands with zero ghost-frame bleed.
+// Chapter III Cinema Cuts — all 3 rendered in pure 1920x1080 widescreen with
+// the new Carrara-marble + gold-wire medallions and studio music beds.
 export const CINEMA_CUTS = [
   {
     id: "showcase",
     tab: "Studio Showcase",
-    meta: "16:9 · 27s",
+    meta: "16:9 · 22s",
     src: "/video/harnesslab-widescreen-2027.mp4",
     poster: "/video/harnesslab-widescreen-poster.webp",
     width: 1920,
     height: 1080,
     shape: "wide",
     hasAudio: true,
-    caption: "The 2027 studio film, with its music bed: thesis, title systems, the TitleDesk seal, Mythos OS and our client builds.",
+    caption:
+      "The 2027 studio film: our zero-quit thesis, Title-Desk & Artificial Landman, Mythos OS & Rogue Agents, and BrandStreams & APEX.BUILD.",
     chapters: [
-      { t: 0, label: "Thesis" },
+      { t: 0, label: "Zero-Quit Thesis" },
       { t: 6.2, label: "Title-Desk & Artificial Landman" },
-      { t: 11.4, label: "Orbital Seal" },
-      { t: 17.1, label: "Mythos OS & Rogue Agents" },
-      { t: 22.3, label: "Client & Venture Builds" },
+      { t: 11.4, label: "Mythos OS & Rogue Agents" },
+      { t: 16.6, label: "BrandStreams & APEX.BUILD" },
+    ],
+  },
+  {
+    id: "grind",
+    tab: "5.5 Months in the Trenches",
+    meta: "16:9 · 22s",
+    src: "/video/relentless-grind-2027.mp4",
+    poster: "/video/relentless-grind-poster.webp",
+    width: 1920,
+    height: 1080,
+    shape: "wide",
+    hasAudio: true,
+    caption:
+      "Repository forensics in motion: 1,662 commits & 305+ branches on Title-Desk, 321 edge-case kills, 9 generations on BrandStreams, and 1,064 commits on APEX.BUILD.",
+    chapters: [
+      { t: 0, label: "1,662 Commits · 305 Branches" },
+      { t: 6.2, label: "321 Edge-Cases Killed" },
+      { t: 11.4, label: "9 Generations · BrandStreams" },
+      { t: 16.6, label: "theharnesslab.dev Foundry" },
     ],
   },
   {
     id: "architecture",
-    tab: "Sovereign Architecture",
+    tab: "Verification & Handover",
     meta: "16:9 · 22s",
     src: "/video/sovereign-systems-2027.mp4",
     poster: "/video/sovereign-systems-poster.webp",
@@ -317,35 +330,13 @@ export const CINEMA_CUTS = [
     height: 1080,
     shape: "wide",
     hasAudio: true,
-    caption: "Verification gates, the 17-surface Mythos OS cockpit, bespoke domain runs, and sovereign repository handover.",
+    caption:
+      "Primary-source verification gates, 20,911 knowledge-graph nodes, private operator desks, and 100% client-owned handover.",
     chapters: [
-      { t: 0, label: "Verification Gates" },
-      { t: 6.2, label: "Mythos OS Cockpit" },
-      { t: 11.4, label: "Domain Workflows" },
-      { t: 16.6, label: "Sovereign Vault" },
+      { t: 0, label: "Primary-Source Gates" },
+      { t: 6.2, label: "Operator Desks" },
+      { t: 11.4, label: "Seven Harnesses" },
+      { t: 16.6, label: "Customer-Owned Vault" },
     ],
   },
-  {
-    id: "spin",
-    tab: "TitleDesk Spin",
-    meta: "Loop",
-    src: "/video/titledesk-spin.mp4",
-    poster: null,
-    width: 1280,
-    height: 720,
-    shape: "compact",
-    hasAudio: false,
-    caption: "The Title-Desk seal, turning. A 7.5-second loop shown at its native size.",
-    chapters: [],
-  },
-  // The archival vertical reel (/video/harnesslab-reel-vertical.mp4, 1080×1920,
-  // 56s, AAC) is intentionally NOT listed: its frames burn in the retired price
-  // ladder ("$750 fixed fee" … "$20,000–$50,000"), "8 of 10 spots remaining" and
-  // "30% OFF | NEXT 8", which contradict the live no-prices/no-scarcity policy.
-  // Pending Spencer's call (re-cut vs approve). To restore it, add back:
-  // { id: "archival", tab: "Archival Vertical Reel", meta: "9:16 · 56s",
-  //   src: "/video/harnesslab-reel-vertical.mp4",
-  //   poster: "/video/harnesslab-reel-endcard-poster.webp", width: 1080,
-  //   height: 1920, shape: "tall", hasAudio: true, archival: true,
-  //   caption: "Archival studio promo reel.", chapters: [] }
 ];

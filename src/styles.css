@@ -1,7 +1,8 @@
-/* Aggregator — each partial is owned by one build lane (see board). */
+/* Aggregator — 2027 3D Monumental Edition */
 @import "./styles/base.css";
 @import "./styles/layout.css";
 @import "./styles/medallion.css";
+@import "./styles/trenches.css";
 @import "./styles/cinema.css";
 @import "./styles/forge.css";
 @import "./styles/explorers.css";

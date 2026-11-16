@@ -244,19 +244,20 @@ export default function Method() {
       <span id="diagram" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="IV"
-          eyebrow="The method"
+          numeral="V"
+          eyebrow="The harness method · Why we never trust raw model output"
           id="method-title"
           title={
             <>
-              Many models in. <em>One verified answer out.</em>
+              Models guess. <em>Harnesses verify.</em>
             </>
           }
         >
           <p>
-            Every system we build runs work through the same instrument: ground it in the
-            source, check it independently, and release it only inside limits a person
-            controls. Run an example and watch it pass the three gates.
+            After 3,850+ commits across real courthouse deeds, OAuth callbacks, and
+            live portfolios, we learned one law: raw AI models hallucinate under
+            pressure. Every system we build forces work through primary-source
+            grounding, independent cross-examination, and hard human gates.
           </p>
         </ChapterHead>
       </div>

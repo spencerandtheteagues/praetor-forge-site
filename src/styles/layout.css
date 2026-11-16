@@ -198,7 +198,27 @@
 .hero {
   position: relative;
   overflow: clip;
-  padding-block: clamp(28px, 4vw, 72px) clamp(32px, 4vw, 64px);
+  perspective: 1400px;
+  padding-block: clamp(18px, 2.4vw, 48px) clamp(20px, 2.6vw, 48px);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: -240px;
+  height: 620px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(217, 168, 78, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 168, 78, 0.16) 1px, transparent 1px);
+  background-size: 64px 64px;
+  transform: perspective(760px) rotateX(68deg);
+  transform-origin: 50% 100%;
+  mask-image: radial-gradient(ellipse 65% 70% at 50% 80%, #000 12%, transparent 76%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 70% at 50% 80%, #000 12%, transparent 76%);
+  opacity: 0.72;
+  z-index: 0;
 }
 .hero-glow {
   position: absolute;
@@ -206,28 +226,30 @@
   background:
     radial-gradient(
       ellipse at 50% 48%,
-      rgba(200, 102, 46, 0.2),
+      rgba(200, 102, 46, 0.24),
       transparent 61%
     ),
     radial-gradient(
       ellipse at 50% 72%,
-      rgba(217, 168, 78, 0.09),
+      rgba(217, 168, 78, 0.12),
       transparent 58%
     );
   pointer-events: none;
   z-index: -1;
 }
 .hero-grid {
+  position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   align-items: center;
-  gap: clamp(24px, 4vw, 96px);
-  min-height: min(calc(100svh - 160px), 1100px);
+  gap: clamp(24px, 3.6vw, 84px);
+  min-height: min(calc(100svh - 196px), 980px);
 }
 .hero-copy {
   min-width: 0;
   display: grid;
-  gap: clamp(18px, 1.8vw, 30px);
+  gap: clamp(18px, 1.7vw, 28px);
   align-content: center;
 }
 .hero-eyebrow {
@@ -236,7 +258,7 @@
   gap: 14px;
   font-family: var(--font-inscription);
   font-size: var(--step-meta);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
@@ -244,41 +266,38 @@
 .hero h1 {
   font-family: var(--font-display);
   font-size: var(--step-h1);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  font-optical-sizing: none;
-  color: var(--ivory);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #faf5eb;
+  text-shadow: var(--extrude-stone);
 }
 .hero h1 .hero-line {
   display: block;
 }
-.hero h1 em {
-  font-style: italic;
-  font-weight: 500;
-  padding-bottom: 0.06em;
+.hero h1 .hero-line + .hero-line {
+  margin-top: 0.08em;
 }
-html.motion-ok .hero h1 em {
-  animation: sheen 9s var(--ease-out) 1.2s infinite;
-}
-@keyframes sheen {
-  0%,
-  70% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
+.hero h1 em,
+.hero h1 .gold-3d {
+  font-style: normal;
+  font-weight: 800;
+  color: #f7cf7d;
+  text-shadow: var(--extrude-gold);
 }
 .hero-lede {
-  max-width: 36ch;
-  font-size: clamp(1.12rem, 1rem + 0.5vw, 1.5rem);
-  line-height: 1.5;
-  color: var(--ivory);
+  max-width: 44ch;
+  font-family: var(--font-subhead);
+  font-size: clamp(1.12rem, 1rem + 0.45vw, 1.44rem);
+  font-weight: 600;
+  line-height: 1.48;
+  color: #fff;
 }
 .hero-detail {
   max-width: var(--read);
   color: var(--limestone);
+  line-height: 1.65;
 }
 .hero-actions {
   display: flex;
@@ -289,23 +308,32 @@ html.motion-ok .hero h1 em {
 .hero-specs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  margin: clamp(8px, 1.2vw, 20px) 0 0;
-  border-top: 1px solid var(--hair);
+  gap: 12px;
+  margin: clamp(10px, 1.4vw, 22px) 0 0;
 }
 .hero-specs > div {
-  padding: 16px 16px 0 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(217, 168, 78, 0.3);
+  border-radius: 5px;
+  background: linear-gradient(165deg, rgba(24, 19, 12, 0.88) 0%, rgba(7, 7, 9, 0.94) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 220, 0.22),
+    0 5px 0 #18120a,
+    0 6px 0 rgba(217, 168, 78, 0.32),
+    0 18px 36px rgba(0, 0, 0, 0.9);
 }
 .hero-specs > div + div {
   padding-left: 16px;
-  border-left: 1px solid var(--hair-soft);
+  border-left: 1px solid rgba(217, 168, 78, 0.3);
 }
 .hero-specs dt {
-  font-family: var(--font-mono);
-  font-size: var(--step-meta);
-  letter-spacing: 0.12em;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.18rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: #f7cf7d;
+  text-shadow: var(--extrude-sub);
 }
 .hero-specs dd {
   margin: 6px 0 0;
