@@ -30,13 +30,13 @@ export const TRENCH_CAMPAIGNS = [
     tab: "Title-Desk & Artificial Landman",
     meta: "5.5 Months · 1,662 Commits · 305+ Branches",
     emblem: {
-      webp: "/products/titledesk-web-logo.webp",
-      fallback: "/products/titledesk-web-logo.png",
+      webp: "/products/titledesk-web-seal.webp",
+      fallback: "/products/titledesk-web-seal.png",
       alt: "Title-Desk sculpted white Carrara marble and bronze medallion",
     },
     secondEmblem: {
-      webp: "/products/artificial-landman-logo.webp",
-      fallback: "/products/artificial-landman-logo.png",
+      webp: "/products/artificial-landman-seal.webp",
+      fallback: "/products/artificial-landman-seal.png",
       alt: "Artificial Landman sculpted white Carrara marble and gold-wire medallion",
     },
     headline: "5.5 straight months refusing to let Texas courthouse title break us.",

@@ -15,8 +15,8 @@ export default function MythosExplorer() {
         <div className="explorer-intro">
           <Picture
             className="explorer-emblem"
-            webp="/products/mythos-os-emblem-640.webp"
-            fallback="/products/mythos-os-emblem.png"
+            webp="/products/mythos-os-seal-640.webp"
+            fallback="/products/mythos-os-seal.png"
             alt="Mythos OS emblem"
             width={640}
             height={640}
