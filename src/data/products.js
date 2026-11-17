@@ -90,7 +90,7 @@ export const FORGE_ROWS = [
     id: "foundry",
     letter: "B",
     title: "Engineering foundry & operating cockpits",
-    kicker: "The black-marble .dev studio & the harnesses we run every day",
+    kicker: "The black-marble .dev studio, Perihelion Loop & the harnesses we run every day",
     items: [
       {
         id: "engineering-studio-card",
@@ -98,7 +98,7 @@ export const FORGE_ROWS = [
         domain: "theharnesslab.dev",
         name: "The Harness Lab · .dev Foundry",
         placard: "theharnesslab.dev",
-        copy: "Our dedicated engineering arm — home to Karpathy Loop Harness, primary-source verification gates, adversarial regression drills, and hard systems R&D.",
+        copy: "Our black-marble R&D foundry — home to Perihelion Loop, Andrej Karpathy's autonomous keep-or-revert loop, our hardened Apache-2.0 cloudroom.dev sandbox fabric, and primary-source verification gates.",
         logo: {
           webp: "/brand/harness-lab-black-marble.webp",
           w640: "/brand/harness-lab-black-marble-512.webp",
@@ -113,6 +113,40 @@ export const FORGE_ROWS = [
           href: "https://theharnesslab.dev/",
           external: true,
           label: "Live site",
+        },
+        serviceLink: {
+          href: "https://theharnesslab.dev/#perihelion-loop",
+          external: true,
+          label: "Perihelion Loop on .dev",
+        },
+      },
+      {
+        id: "perihelion-loop-card",
+        status: "klh v2.2 · Zero-trust VM",
+        domain: "theharnesslab.dev",
+        name: "Perihelion Loop",
+        placard: "Karpathy Loop + cloudroom.dev",
+        copy: "Autonomous keep-or-revert loop + typed DAG graphs atop hardened open-source cloudroom.dev sandboxes — built to create, fix (7,070/0 TitleDesk, 730/0 Rogue Agents), and no-copy reverse-engineer software fast.",
+        plaque: {
+          webp: "/showcase/karpathy-loop-harness/01-perihelion-fleet-overview-640.webp",
+          webpWidth: 640,
+          webpFull: "/showcase/karpathy-loop-harness/01-perihelion-fleet-overview.webp",
+          fullWidth: 1440,
+          fallback: "/showcase/karpathy-loop-harness/01-perihelion-fleet-overview.webp",
+          width: 640,
+          height: 400,
+          alt: "Perihelion Loop multi-repo fleet telemetry and verification cockpit",
+        },
+        visualScale: 1.04,
+        action: {
+          type: "link",
+          href: "https://theharnesslab.dev/#perihelion-loop",
+          external: true,
+          label: "Live site",
+        },
+        serviceLink: {
+          href: "#perihelion-loop",
+          label: "Inspect 5-stage cockpit",
         },
       },
       {

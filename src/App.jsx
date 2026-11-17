@@ -3,6 +3,7 @@ import Hero from "./components/Hero.jsx";
 import ProgressionTimeline from "./components/ProgressionTimeline.jsx";
 import Trenches from "./components/Trenches.jsx";
 import CinemaStage from "./components/CinemaStage.jsx";
+import PerihelionSection from "./components/PerihelionSection.jsx";
 import Forge from "./components/Forge.jsx";
 import Method from "./components/Method.jsx";
 import MythosExplorer from "./components/MythosExplorer.jsx";
@@ -24,6 +25,7 @@ export default function App() {
           <ProgressionTimeline />
           <Trenches />
           <CinemaStage />
+          <PerihelionSection />
           <Forge />
           <Method />
           <MythosExplorer />

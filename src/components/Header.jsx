@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, CalendarCheck, Menu, X } from "lucide-react";
-import { CALENDAR_URL, CAL_LINK, CAL_NAMESPACE } from "../data/site.js";
+import { CALENDAR_URL, CAL_LINK, CAL_NAMESPACE, DEV_URL } from "../data/site.js";
 
 const NAV = [
   { href: "#timeline", numeral: "II", label: "Timeline", ids: ["timeline"] },
   { href: "#trenches", numeral: "III", label: "The grind", ids: ["trenches"] },
   { href: "#cinema", numeral: "IV", label: "Cinema", ids: ["cinema"] },
-  { href: "#work", numeral: "V", label: "Our work", ids: ["work"] },
-  { href: "#method", numeral: "VI", label: "Method", ids: ["method"] },
-  { href: "#our-os", numeral: "VII", label: "Cockpits", ids: ["our-os", "case-study"] },
-  { href: "#capabilities", numeral: "IX", label: "Capabilities", ids: ["ownership", "how", "capabilities"] },
-  { href: "#about", numeral: "X", label: "The founder", ids: ["about"] },
+  { href: "#perihelion-loop", numeral: "V", label: "Perihelion", ids: ["perihelion-loop"] },
+  { href: "#work", numeral: "VI", label: "Our work", ids: ["work"] },
+  { href: "#method", numeral: "VII", label: "Method", ids: ["method"] },
+  { href: "#our-os", numeral: "VIII", label: "Cockpits", ids: ["our-os", "case-study"] },
+  { href: "#capabilities", numeral: "X", label: "Capabilities", ids: ["ownership", "how", "capabilities"] },
+  { href: "#about", numeral: "XI", label: "The founder", ids: ["about"] },
 ];
 
 // Cal.com triggers: a real link to the booking page that the deferred embed
@@ -168,6 +169,15 @@ export default function Header() {
             })}
           </ol>
           <div className="nav-actions">
+            <a
+              className="nav-dev-link mono"
+              href={DEV_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={close}
+            >
+              .dev Foundry <ArrowUpRight aria-hidden="true" />
+            </a>
             <CalTrigger className="button button-outline button-small nav-cal">
               <CalendarCheck aria-hidden="true" /> Book a teardown
             </CalTrigger>

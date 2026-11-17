@@ -242,7 +242,7 @@ export default function ContactSection() {
       <span id="intake" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="XI"
+          numeral="XII"
           eyebrow="Intake · Direct to Spencer Teague"
           title={
             <>

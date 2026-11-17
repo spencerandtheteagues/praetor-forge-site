@@ -69,7 +69,7 @@ export const TRENCH_CAMPAIGNS = [
       {
         broke: "Stalled runs at 16%, provider rate-limit storms & silent worker deaths",
         solved:
-          "Wired five-account model failover across Gemini, Ollama Cloud, Claude, and Codex, persistent replay checkpoints, and built our own 65-commit Karpathy Loop Harness to seed regressions and prove autonomous repair.",
+          "Wired five-account model failover across Gemini, Ollama Cloud, Claude, and Codex, persistent replay checkpoints, and built Perihelion Loop (klh v2.2 + hardened cloudroom.dev fabric) to seed regressions and prove autonomous repair across 7,070 TitleDesk tests.",
       },
       {
         broke: "Google OAuth & CASA verification walls blocking landmen",
@@ -154,8 +154,8 @@ export const TRENCH_CAMPAIGNS = [
   },
   {
     id: "foundry",
-    tab: "APEX.BUILD · Rogue Agents · KLH",
-    meta: "1,320+ Commits · Self-Healing Harnesses",
+    tab: "APEX.BUILD · Rogue Agents · Perihelion Loop",
+    meta: "1,320+ Commits · Karpathy Loop + cloudroom.dev",
     emblem: {
       webp: "/brand/harness-lab-black-marble.webp",
       fallback: "/brand/harness-lab-black-marble.png",
@@ -166,45 +166,53 @@ export const TRENCH_CAMPAIGNS = [
       fallback: "/products/apex-build-logo.png",
       alt: "APEX.BUILD 3D emblem",
     },
-    headline: "When off-the-shelf AI loops stalled or lied, we built our own machinery.",
+    headline: "When off-the-shelf AI loops stalled or lied, we built Perihelion Loop and our own machinery.",
     summary:
-      "Standard agent wrappers claim 'done' while tests are failing or workers are dead. Across 1,064 commits on APEX.BUILD, 120 commits on Rogue Agents, 65 commits on Karpathy Loop Harness, and 17 production surfaces inside Mythos OS, we built the deterministic harnesses, evidence gates, and multi-model routers that power everything we ship.",
+      "Standard agent wrappers claim 'done' while tests are failing or workers are dead. Across 1,064 commits on APEX.BUILD, 120 commits on Rogue Agents, 65+ commits on Perihelion Loop (klh v2.2 + our hardened open-source cloudroom.dev VM fabric), and 17 production surfaces inside Mythos OS, we built the deterministic harnesses, Frontier Councils, and zero-trust sandboxes that create, fix, and no-copy reverse-engineer software at verified quality.",
     metrics: [
       ["1,064", "APEX.BUILD commits"],
-      ["695", "APEX reliability/fix commits"],
-      ["120", "Rogue Agents swarm commits"],
-      ["65", "Karpathy Loop Harness commits"],
+      ["7,070 / 0", "TitleDesk tests green via Perihelion"],
+      ["730 / 0", "Rogue Agents tests green"],
+      ["65+", "Perihelion Loop (klh v2.2) commits"],
       ["17", "Live Mythos OS surfaces"],
       ["20,911", "Knowledge-graph nodes"],
     ],
     walls: [
       {
-        broke: "Agents claiming 'tests pass' without running fresh commands",
+        broke: "Agents claiming 'tests pass' without fresh commands or untampered sandboxes",
         solved:
-          "Built strict Evidence Gates and Karpathy Loop Harness (KLH) acceptance suites that seed synthetic regressions and reject any agent sitting whose verification output or auth state was tampered with.",
+          "Built Perihelion Loop (klh v2.2) combining Andrej Karpathy's keep-or-revert loop and typed DAGs with a fail-closed Apache-2.0 cloudroom.dev sandbox fabric: pre-execution SHA-256 exact-bytes manifest checks, quarantined output pull, independent holdout verification, and null_tested_regression gates.",
+      },
+      {
+        broke: "Creating, fixing, or re-engineering complex software without IP contamination",
+        solved:
+          "Engineered forge, run, and harden recipes with OS kernel walls (sandbox-exec / bubblewrap) where only rea-agents inspects a lawfully held subject to emit a behaviour-only spec while downstream builders are kernel-blocked and verified for zero code, text, or asset overlap.",
       },
       {
         broke: "Dead background agents, rate-limit cascades & subscription exhaustion",
         solved:
-          "Engineered heartbeat dead-agent detection, backpressure queues, and automatic multi-account subscription failover across Claude, Codex, Gemini, and Ollama.",
+          "Engineered heartbeat dead-agent detection, backpressure queues, and All-Account Frontier Council routing across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok on existing studio subscriptions and free-tier cloud credits.",
       },
       {
         broke: "Coordinating parallel builders across Mac, Ubuntu workstation & VPS nodes",
         solved:
-          "Built Mythos OS and Rogue Agents with isolated git worktrees, shared 20,911-node knowledge graphs, Agent Browser Hub, and mandatory human approval gates.",
+          "Built Mythos OS and Rogue Agents with isolated git worktrees, shared 20,911-node knowledge graphs, Agent Browser Hub, and single human approval gates at irreversible boundaries.",
       },
     ],
     gitLog: [
       ["2026-11-12", "karpathy-loop-harness", "A Gemini sitting whose sign-in copy was removed is not trusted; log scrubbed of tokens"],
+      ["2026-11-12", "perihelion/kiln", "klh integrate: verified native macOS SwiftUI Kiln forge milestones inside Seatbelt & Cloudroom fabric"],
       ["2026-11-05", "Rogue-Agents", "Integrate verified local toolkit shared with Perihelion across 22 branches"],
-      ["2026-11-05", "karpathy-loop-harness", "Build Karpathy Loop + Graph harness (Phases A–D) with adversarial hardening"],
+      ["2026-11-05", "karpathy-loop-harness", "Build Perihelion Loop (Karpathy Loop + Graph harness, Phases A–D) with adversarial hardening"],
       ["2026-10-26", "Rogue-Agents", "Give all Rogue Agents and Ollama workers access to Agent Browser Hub"],
       ["2026-10-17", "Rogue-Agents", "Require main-leader dispatch approval and recover stalled planning"],
       ["2026-06-05", "apex-build-platform", "Add runtime stability smoke tests, heartbeat/dead-agent checks & backpressure policy"],
       ["2026-01-22", "apex-build-platform", "Initial commit: Multi-AI cloud development platform (1,064-commit run)"],
     ],
     liveLinks: [
+      { label: "Perihelion Loop on .dev", href: "https://theharnesslab.dev/#perihelion-loop" },
       { label: "Explore theharnesslab.dev", href: "https://theharnesslab.dev/" },
+      { label: "Open-source cloudroom.dev", href: "https://www.cloudroom.dev" },
       { label: "APEX.BUILD on GitHub", href: "https://github.com/spencerandtheteagues/apex-build-platform" },
     ],
   },

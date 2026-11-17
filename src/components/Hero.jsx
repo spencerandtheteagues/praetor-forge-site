@@ -79,7 +79,15 @@ export default function Hero() {
       </div>
       <div className="hero-bottom container">
         <span className="mono">
-          White marble seal: theharnesslab.com · Black marble seal: theharnesslab.dev
+          White marble seal: theharnesslab.com · Black marble seal:{" "}
+          <a
+            className="hero-dev-link"
+            href="https://theharnesslab.dev/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            theharnesslab.dev
+          </a>
         </span>
         <button
           type="button"

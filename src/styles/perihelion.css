@@ -1,0 +1,710 @@
+/* ==========================================================================
+   Chapter V · Perihelion Loop — Flagship R&D Monument
+   Matches the 2027 Horological / Copper-Marble & Gold aesthetic of .com
+   while honoring the black-marble .dev foundry provenance. Zero overflow
+   from 320px through 3840px.
+   ========================================================================== */
+
+.perihelion-section {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair-soft);
+  background:
+    radial-gradient(ellipse 72% 48% at 50% 0%, rgba(200, 102, 46, 0.14), transparent 68%),
+    radial-gradient(ellipse 60% 44% at 85% 45%, rgba(217, 168, 78, 0.08), transparent 65%),
+    linear-gradient(180deg, #060608 0%, #000000 50%, #050507 100%);
+}
+
+.perihelion-orbit-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 50% 18%, rgba(246, 222, 156, 0.09) 0, transparent 52%),
+    linear-gradient(rgba(217, 168, 78, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 168, 78, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 72px 72px, 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 24%, #000 15%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 24%, #000 15%, transparent 78%);
+}
+
+.perihelion-inner {
+  display: grid;
+  gap: clamp(40px, 4.6vw, 76px);
+}
+
+/* ---------- Header Row with Black-Marble Foundry Provenance Seal ---------- */
+.perihelion-head-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
+  align-items: start;
+  gap: clamp(24px, 3vw, 48px);
+}
+
+.perihelion-head-row .chapter-head {
+  margin-bottom: 0;
+}
+
+.perihelion-seal-card {
+  display: grid;
+  grid-template-columns: clamp(84px, 6.5vw, 108px) minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: clamp(18px, 1.8vw, 24px);
+}
+
+.perihelion-seal-emblem,
+.perihelion-seal-emblem img {
+  width: clamp(84px, 6.5vw, 108px);
+  height: auto;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.95));
+}
+
+.perihelion-seal-meta {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.perihelion-seal-meta .inscription {
+  font-size: 0.68rem;
+  color: var(--gold);
+}
+
+.perihelion-seal-meta strong {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 0.92rem + 0.3vw, 1.24rem);
+  color: var(--gold-hi);
+}
+
+.perihelion-seal-meta p {
+  color: var(--limestone);
+  font-size: var(--step-small);
+  line-height: 1.5;
+}
+
+.perihelion-seal-meta code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  color: var(--gold-hi);
+}
+
+/* ---------- Four Proof Plinths ---------- */
+.perihelion-monuments {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 24px);
+}
+
+.perihelion-plinth .monument-value {
+  font-size: clamp(1.5rem, 1.05rem + 1.4vw, 2.35rem);
+}
+
+/* ---------- Karpathy Keep-or-Revert Cycle Strip ---------- */
+.perihelion-cycle-strip {
+  padding: clamp(20px, 2.2vw, 30px);
+  border: 1px solid rgba(246, 222, 156, 0.28);
+  border-radius: 6px;
+  background:
+    radial-gradient(ellipse 80% 90% at 15% 0%, rgba(217, 168, 78, 0.1), transparent 65%),
+    linear-gradient(165deg, rgba(18, 15, 11, 0.94) 0%, rgba(6, 6, 8, 0.98) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 225, 0.2),
+    0 24px 48px -28px rgba(0, 0, 0, 0.95);
+}
+
+.perihelion-cycle-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 20px;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--hair-soft);
+}
+
+.perihelion-cycle-head .inscription {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--step-meta);
+  color: var(--gold-hi);
+}
+
+.perihelion-cycle-head .inscription svg {
+  width: 16px;
+  height: 16px;
+  color: var(--copper-hot);
+}
+
+.perihelion-cycle-sub {
+  color: var(--ash);
+}
+
+.perihelion-cycle-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 20px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.perihelion-cycle-node {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--hair-soft);
+  border-top: 2px solid var(--gold);
+  border-radius: 4px;
+  background: rgba(5, 5, 7, 0.85);
+}
+
+.perihelion-cycle-num {
+  color: var(--copper-hot);
+  font-weight: 600;
+}
+
+.perihelion-cycle-node strong {
+  font-family: var(--font-subhead);
+  font-size: clamp(0.95rem, 0.9rem + 0.18vw, 1.08rem);
+  color: var(--ivory);
+}
+
+.perihelion-cycle-node p {
+  color: var(--limestone);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+/* ---------- Subheads for Pillars & Modes ---------- */
+.perihelion-pillars-block,
+.perihelion-modes-block {
+  display: grid;
+  gap: clamp(22px, 2.4vw, 36px);
+}
+
+.perihelion-subhead {
+  display: grid;
+  gap: 8px;
+  max-width: 64rem;
+}
+
+.perihelion-subhead .inscription {
+  font-size: var(--step-meta);
+  color: var(--gold);
+}
+
+.perihelion-subhead h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.08rem + 1.1vw, 2.25rem);
+  line-height: 1.16;
+  color: var(--ivory);
+}
+
+/* ---------- Four Architectural Pillars ---------- */
+.perihelion-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 26px);
+}
+
+.perihelion-pillar {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(20px, 2vw, 28px);
+}
+
+.perihelion-pillar-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perihelion-pillar-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--hair);
+  border-radius: 50%;
+  background: rgba(217, 168, 78, 0.08);
+  color: var(--gold-hi);
+}
+
+.perihelion-pillar-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.perihelion-pillar-code {
+  color: var(--gold);
+  font-size: 0.68rem;
+  overflow-wrap: anywhere;
+}
+
+.perihelion-pillar h4 {
+  font-family: var(--font-display);
+  font-size: clamp(1.06rem, 0.98rem + 0.32vw, 1.32rem);
+  line-height: 1.22;
+  color: var(--ivory);
+}
+
+.perihelion-pillar p {
+  color: var(--limestone);
+  font-size: var(--step-small);
+  line-height: 1.6;
+}
+
+/* ---------- Three Production Modes ---------- */
+.perihelion-modes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2vw, 30px);
+}
+
+.perihelion-mode {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(22px, 2.2vw, 32px);
+}
+
+.perihelion-mode-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.perihelion-mode-num {
+  display: inline-grid;
+  place-items: center;
+  padding: 4px 10px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  color: var(--gold-hi);
+  background: rgba(217, 168, 78, 0.1);
+}
+
+.perihelion-mode-badge {
+  color: var(--copper-hot);
+  font-size: 0.68rem;
+  overflow-wrap: anywhere;
+}
+
+.perihelion-mode h4 {
+  font-family: var(--font-display);
+  font-size: clamp(1.18rem, 1.04rem + 0.45vw, 1.54rem);
+  line-height: 1.18;
+  color: var(--ivory);
+}
+
+.perihelion-mode-summary {
+  color: var(--limestone);
+  font-size: var(--step-small);
+  line-height: 1.64;
+}
+
+.perihelion-mode-proof {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair-soft);
+  color: var(--sapphire);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.48;
+}
+
+.perihelion-mode-proof svg {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  color: var(--sapphire);
+}
+
+.perihelion-mode-disclosure {
+  padding: 12px 14px;
+  border-left: 2px solid var(--gold);
+  background: rgba(217, 168, 78, 0.06);
+  color: var(--ash);
+  font-size: 0.82rem;
+  line-height: 1.52;
+}
+
+/* ---------- Interactive 5-Stage Perihelion Cockpit Viewer ---------- */
+.perihelion-cockpit {
+  display: grid;
+  gap: clamp(20px, 2.2vw, 30px);
+  padding: clamp(20px, 2.6vw, 38px);
+  border: 1px solid rgba(246, 222, 156, 0.32);
+  border-radius: 8px;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(217, 168, 78, 0.09), transparent 70%),
+    linear-gradient(170deg, #100e0b 0%, #060608 60%, #030304 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 225, 0.24),
+    0 32px 72px -32px rgba(0, 0, 0, 0.96);
+}
+
+.perihelion-cockpit-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+
+.perihelion-cockpit-head .inscription {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--step-meta);
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.perihelion-cockpit-head .inscription svg {
+  width: 16px;
+  height: 16px;
+}
+
+.perihelion-cockpit-head h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.28rem, 1.05rem + 0.95vw, 2.05rem);
+  line-height: 1.18;
+  color: var(--ivory);
+}
+
+.perihelion-cockpit-meta {
+  color: var(--sapphire);
+}
+
+.perihelion-stage-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.perihelion-stage-tab {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 10px 14px;
+  border: 1px solid var(--hair-soft);
+  border-radius: 4px;
+  background: rgba(7, 7, 10, 0.9);
+  color: var(--limestone);
+  text-align: left;
+  transition:
+    border-color var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) var(--ease-out),
+    color var(--dur-ui) var(--ease-out);
+}
+
+.perihelion-stage-tab:hover {
+  border-color: rgba(246, 222, 156, 0.52);
+  color: var(--ivory);
+}
+
+.perihelion-stage-tab.is-active {
+  border-color: var(--gold-hi);
+  background: linear-gradient(165deg, rgba(42, 31, 16, 0.92), rgba(14, 11, 8, 0.96));
+  color: var(--gold-hi);
+  box-shadow: inset 0 1px 0 rgba(255, 248, 220, 0.25);
+}
+
+.perihelion-tab-idx {
+  flex: none;
+  color: var(--gold);
+}
+
+.perihelion-tab-label {
+  min-width: 0;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.perihelion-stage-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.38fr) minmax(0, 0.82fr);
+  align-items: start;
+  gap: clamp(20px, 2.4vw, 34px);
+}
+
+.perihelion-stage-media {
+  min-width: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.perihelion-bezel {
+  padding: 8px;
+}
+
+.perihelion-chrome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 6px 8px 10px;
+  border-bottom: 1px solid var(--hair-soft);
+  margin-bottom: 8px;
+}
+
+.perihelion-chrome-idx {
+  color: var(--gold);
+}
+
+.perihelion-chrome-title {
+  flex: 1 1 180px;
+  min-width: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ivory);
+  overflow-wrap: anywhere;
+}
+
+.perihelion-chrome-tag {
+  padding: 3px 9px;
+  border: 1px solid rgba(143, 211, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(143, 211, 255, 0.08);
+  color: var(--sapphire);
+}
+
+.perihelion-shot-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #000;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.perihelion-shot-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-enter) var(--ease-out);
+}
+
+.perihelion-shot-btn:hover img {
+  transform: scale(1.015);
+}
+
+.perihelion-enlarge-pill {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.86);
+  color: var(--gold-hi);
+  pointer-events: none;
+}
+
+.perihelion-enlarge-pill svg {
+  width: 14px;
+  height: 14px;
+}
+
+.perihelion-filmstrip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.perihelion-thumb {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+  padding: 6px;
+  border: 1px solid var(--hair-soft);
+  border-radius: 4px;
+  background: #060608;
+  color: var(--limestone);
+  text-align: left;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.perihelion-thumb img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.perihelion-thumb:hover,
+.perihelion-thumb.is-active {
+  border-color: var(--gold-hi);
+  color: var(--gold-hi);
+}
+
+.perihelion-thumb-tag {
+  font-size: 0.62rem;
+  color: var(--gold);
+}
+
+.perihelion-thumb-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Right-Side Telemetry Dossier & CTAs ---------- */
+.perihelion-stage-dossier {
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 2vw, 28px);
+}
+
+.perihelion-dossier-count {
+  color: var(--gold);
+}
+
+.perihelion-stage-dossier h4 {
+  font-family: var(--font-display);
+  font-size: clamp(1.16rem, 1.02rem + 0.4vw, 1.48rem);
+  line-height: 1.2;
+  color: var(--ivory);
+}
+
+.perihelion-dossier-dl {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.perihelion-dossier-dl > div {
+  display: grid;
+  gap: 5px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hair-soft);
+}
+
+.perihelion-dossier-dl dt {
+  color: var(--gold-hi);
+  font-size: 0.68rem;
+}
+
+.perihelion-dossier-dl dd {
+  margin: 0;
+  color: var(--limestone);
+  font-size: var(--step-small);
+  line-height: 1.6;
+}
+
+.perihelion-ctas {
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair);
+}
+
+.perihelion-ctas .button {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 16px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ---------- Responsive Breakpoints (Zero Overflow Down to 320px) ---------- */
+@media (max-width: 1180px) {
+  .perihelion-head-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .perihelion-pillars-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .perihelion-cycle-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .perihelion-stage-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .perihelion-stage-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 960px) {
+  .perihelion-monuments {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .perihelion-modes-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .perihelion-pillars-grid,
+  .perihelion-cycle-steps,
+  .perihelion-stage-tabs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .perihelion-filmstrip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .perihelion-seal-card {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+  .perihelion-enlarge-pill {
+    position: static;
+    margin-top: 8px;
+    justify-content: center;
+    width: 100%;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 440px) {
+  .perihelion-monuments {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .perihelion-cockpit {
+    padding: 14px;
+  }
+  .perihelion-filmstrip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

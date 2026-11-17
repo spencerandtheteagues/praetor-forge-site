@@ -45,7 +45,7 @@ export function Ownership() {
         </div>
         <div className="container ownership-inner">
           <ChapterHead
-            numeral="VIII"
+            numeral="IX"
             eyebrow="Customer ownership · Zero hostageware"
             id="ownership-title"
             title={
@@ -79,7 +79,7 @@ export function Ownership() {
         <span id="process" className="anchor-alias" aria-hidden="true" />
         <div className="container">
           <ChapterHead
-            numeral="VIII·B"
+            numeral="IX·B"
             eyebrow="How we actually work"
             id="how-title"
             title={
@@ -154,7 +154,7 @@ export function Capabilities() {
       <span id="services" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="IX"
+          numeral="X"
           eyebrow="What we take on"
           id="capabilities-title"
           title={
@@ -262,7 +262,7 @@ export function Founder() {
         </figure>
         <div className="founder-copy">
           <p className="chapter-eyebrow">
-            <span className="chapter-numeral">X</span>
+            <span className="chapter-numeral">XI</span>
             <span>Completely self-taught · 3,850+ commits · Zero quit</span>
           </p>
           <h2 id="about-title">
@@ -328,14 +328,27 @@ export function Founder() {
           <p>
             White Carrara marble with gold circuit wires is our flagship{" "}
             <strong>theharnesslab.com</strong> company seal; black Nero Marquina marble
-            is <strong>theharnesslab.dev</strong> — our R&amp;D foundry where Karpathy
-            Loop Harness, adversarial regression suites, and primary-source verification
-            engines are forged.
+            is <strong>theharnesslab.dev</strong> — our R&amp;D foundry where we built{" "}
+            <strong>Perihelion Loop</strong> by fusing{" "}
+            <strong>Andrej Karpathy&rsquo;s keep-or-revert loop</strong> and typed DAGs
+            with a fail-closed sandbox fabric atop open-source{" "}
+            <strong>cloudroom.dev</strong> to create, fix, and no-copy reverse-engineer
+            software at verified quality.
           </p>
         </div>
-        <a className="button button-outline" href={DEV_URL} target="_blank" rel="noopener noreferrer">
-          Explore theharnesslab.dev <ArrowUpRight aria-hidden="true" />
-        </a>
+        <div className="studio-band-actions">
+          <a
+            className="button button-gold button-small"
+            href="https://theharnesslab.dev/#perihelion-loop"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Perihelion Loop on .dev <ArrowUpRight aria-hidden="true" />
+          </a>
+          <a className="button button-outline button-small" href={DEV_URL} target="_blank" rel="noopener noreferrer">
+            Explore theharnesslab.dev <ArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -386,6 +399,18 @@ export function Footer() {
         <div>
           <p className="inscription">Studio</p>
           <ul>
+            <li>
+              <a href="#perihelion-loop">Perihelion Loop</a>
+            </li>
+            <li>
+              <a
+                href="https://theharnesslab.dev/#perihelion-loop"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Perihelion on .dev
+              </a>
+            </li>
             <li>
               <a href={DEV_URL} target="_blank" rel="noopener noreferrer">
                 theharnesslab.dev

@@ -126,7 +126,7 @@ function Vitrine({ item, onOpen, onPrefill, motionDisabled }) {
         {item.plaque ? (
           <figure className="vitrine-plaque">
             <Picture
-              srcSet={`${item.plaque.webp} 480w, ${item.plaque.webpFull} 1600w`}
+              srcSet={`${item.plaque.webp} ${item.plaque.webpWidth || 480}w, ${item.plaque.webpFull} ${item.plaque.fullWidth || 1600}w`}
               sizes="(min-width: 1400px) 380px, (min-width: 760px) 32vw, 84vw"
               fallback={item.plaque.fallback}
               alt={item.plaque.alt}
@@ -157,8 +157,18 @@ function Vitrine({ item, onOpen, onPrefill, motionDisabled }) {
       <div className="vitrine-actions">
         <ItemAction item={item} onPrefill={onPrefill} />
         {item.serviceLink ? (
-          <a className="vitrine-service" href={item.serviceLink.href}>
-            {item.serviceLink.label} <ArrowRight aria-hidden="true" />
+          <a
+            className="vitrine-service"
+            href={item.serviceLink.href}
+            target={item.serviceLink.external ? "_blank" : undefined}
+            rel={item.serviceLink.external ? "noopener noreferrer" : undefined}
+          >
+            {item.serviceLink.label}{" "}
+            {item.serviceLink.external ? (
+              <ArrowUpRight aria-hidden="true" />
+            ) : (
+              <ArrowRight aria-hidden="true" />
+            )}
           </a>
         ) : null}
       </div>
@@ -273,7 +283,7 @@ export default function Forge() {
 
       <div className="container forge-inner">
         <ChapterHead
-          numeral="V"
+          numeral="VI"
           eyebrow="The forge · Every build on 3D plinths"
           id="forge-title"
           title={
