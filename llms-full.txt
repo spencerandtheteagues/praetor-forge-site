@@ -56,7 +56,7 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
   4. **Sealed Frontier Council:** Multi-provider architectural and adversarial review across Claude, Gemini, OpenAI Codex, and Grok inside read-sealed sandboxes with strict quota governance.
 - **Three Production Modes:**
   - *Create:* Full-stack web platforms and staged native desktop foundations (including the 29-feature behavioral specification, 15-screen macOS design, and Phase-1 SwiftUI foundation for Kiln) from product brief to executable acceptance tests.
-  - *Fix & Harden:* Enforces `null_tested_regression` gates proven across 7,070 passed / 0 failed checks in 431 TitleDesk test files and 730 / 0 checks on Rogue Agents.
+  - *Fix & Harden:* Enforces `null_tested_regression` gates proven across 7,070 passed / 0 failed checks in 431 Title-Desk test files and 730 / 0 checks on Rogue Agents.
   - *Lawful No-Copy Reverse-Engineering:* OS kernel-walled (`sandbox-exec` on macOS, `bubblewrap` on Linux) study-to-spec separation where downstream build workers are kernel-blocked from reading the studied subject and mechanically verified for zero code, text, identifier, or asset overlap.
 
 ### III·C · Mythos OS (`https://theharnesslab.com/#our-os`)
@@ -66,18 +66,18 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 
 ## 4. Shipped Production Platforms & Portfolio
 
-### TitleDesk & TitleDesk Agent
+### Title-Desk & Title-Desk Agent
 - **Hosted Web Platform:** https://title-desk.com/ (for independent landmen and abstractors)
-- **Desktop App (TitleDesk Agent):** https://desktop.title-desk.com/ (Windows, macOS, and Linux)
+- **Desktop App (Title-Desk Agent):** https://desktop.title-desk.com/ (Windows, macOS, and Linux)
 - **Related Service:** https://theharnesslab.com/landman-title-workflow-automation/
 - **Studio Walkthrough Video:** https://theharnesslab.com/#cinema (`PT2M29S` — 2m 29s workspace demonstration from passwordless sign-in and pre-run intake scope check through live 12-deed examination to a delivered 4-sheet draft workbook).
-- **Telemetry (August–November 2026):** 262,305 core engine lines of code (plus 22,638 TitleDesk hosted web layer, 23,148 Artificial Landman hosted layer sharing the core engine, and 4,288 TractPilot prototype) · 1,662 campaign commits · 7,070 engine tests · 4-month core engineering campaign.
+- **Telemetry (August–November 2026):** 262,305 core engine lines of code (plus 22,638 Title-Desk hosted web layer, 23,148 Artificial Landman hosted layer sharing the core engine, and 4,288 TractPilot prototype) · 1,662 campaign commits · 7,070 engine tests · 4-month core engineering campaign.
 - **Scope & Validation:** Texas, one county per run, current mineral-interest owners (`MI`) only. Two Gemini sessions examine the records separately, and deterministic code checks every rational fraction exactly. An independent third model from a different provider checks the final answer against page images; if it still disagrees after one repair, unresolved tracts stay proposals and blocking findings lead the curative requirements. Output is a source-linked draft four-sheet workbook for review by a qualified landman or attorney (not a title opinion or certification).
 
 ### Artificial Landman
 - **Live Platform:** https://artificiallandman.io/
 - **Telemetry (November 2026):** 23,148 hosted lines of code · 54 hosted commits · 1-month rapid sprint atop The Harness Lab's 262,305-LOC Texas mineral-interest engine.
-- **Capabilities:** Hosted Texas mineral title examination for land teams, brokerages, and operators who run many assignments. Artificial Landman runs the same Texas mineral-interest engine as TitleDesk, sold and supported on its own with a dedicated brass-and-topographic workspace.
+- **Capabilities:** Hosted Texas mineral title examination for land teams, brokerages, and operators who run many assignments. Artificial Landman runs the same Texas mineral-interest engine as Title-Desk, sold and supported on its own with a dedicated brass-and-topographic workspace.
 
 ### BrandStreams (Evolved from MyAIMediaMgr)
 - **Archive & Workspace Showcase:** https://theharnesslab.com/#product-brandstreams *(Note: live domain DNS cutover is temporarily in progress)*
@@ -140,10 +140,10 @@ A: No. Once the final invoice is paid, clients own the private Git repository, c
 **Q: How are commercial terms and timelines determined?**
 A: Every system is scoped directly with Spencer Teague around a concrete workflow, sample inputs, required integrations, and measurable acceptance criteria during a 20-minute teardown call (`https://cal.com/harnesslab/teardown`) or written Work Order (`https://theharnesslab.com/#contact`).
 
-**Q: Does TitleDesk or automated landman software replace a qualified title reviewer?**
-A: No. TitleDesk and Artificial Landman produce source-linked draft mineral-ownership workbooks, not title opinions or certifications. Automated extraction, chain-of-title assembly, and exact fractional math accelerate preparation while preserving curative findings and book-and-page source links so a qualified landman or title attorney remains in full control of title conclusions.
+**Q: Does Title-Desk or automated landman software replace a qualified title reviewer?**
+A: No. Title-Desk and Artificial Landman produce source-linked draft mineral-ownership workbooks, not title opinions or certifications. Automated extraction, chain-of-title assembly, and exact fractional math accelerate preparation while preserving curative findings and book-and-page source links so a qualified landman or title attorney remains in full control of title conclusions.
 
 ## Legal Entity
 
-- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026; venue Tom Green County, Texas). TitleDesk, TitleDesk Agent, and Artificial Landman are products of The Harness Lab LLC.
+- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026; venue Tom Green County, Texas). Title-Desk, Title-Desk Agent, and Artificial Landman are products of The Harness Lab LLC.
 - [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)
