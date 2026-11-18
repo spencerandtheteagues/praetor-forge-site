@@ -25,9 +25,24 @@ export default function Hero() {
             <span className="chapter-numeral">I</span>
             <span>The Harness Lab · Custom software studio of Spencer Teague</span>
           </p>
-          <h1 id="hero-title">
-            <span className="hero-line">Custom software, automation &amp; AI harnesses.</span>{" "}
-            <span className="hero-line gold-3d">Built until it works.</span>
+          {/* Three lines: carved stone (your idea), cast gold (our software), then a
+              person talking. The break after "need" stacks the two BIGs on one axis. */}
+          <h1 id="hero-title" className="hero-headline">
+            <span className="hl-line hl-ideas">
+              <span className="hl-seg">
+                <span className="hl-big">Big</span>, ambitious
+              </span>{" "}
+              <span className="hl-seg">ideas need</span>
+            </span>{" "}
+            <span className="hl-line hl-software">
+              <span className="hl-seg">
+                <span className="hl-big">big</span>, ambitious
+              </span>{" "}
+              <span className="hl-seg">software.</span>
+            </span>{" "}
+            <span className="hl-line hl-us">
+              That’s where we come in<span className="hl-stop">.</span>
+            </span>
           </h1>
 
           <div className="hero-manifesto">

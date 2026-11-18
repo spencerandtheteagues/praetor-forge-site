@@ -351,18 +351,79 @@
   color: #faf5eb;
   text-shadow: var(--extrude-stone);
 }
-.hero h1 .hero-line {
+/* Hero headline — three voices:
+     1. carved Carrara stone: the client's big, ambitious idea
+     2. cast bronze-gold: the big, ambitious software we build for it
+     3. a person talking: plain grotesk, sentence case, no extrusion
+   Breaking after "need" stacks the two oversized BIGs on one left axis, so the
+   parallel reads before the words do. Each line is sized from the column width
+   (cqi) so it always holds on one line, at every desktop width. */
+.hero h1.hero-headline {
+  container-type: inline-size;
+  /* Resolved on each line (a container's own units point at its ancestor). */
+  --hl-size: 5.95cqi;
+  line-height: 1.02;
+  letter-spacing: 0.012em;
+  text-shadow: none;
+}
+.hero-headline .hl-line {
   display: block;
+  font-size: var(--hl-size);
+  white-space: nowrap;
 }
-.hero h1 .hero-line + .hero-line {
-  margin-top: 0.08em;
-}
-.hero h1 em,
-.hero h1 .gold-3d {
-  font-style: normal;
+.hero-headline .hl-ideas,
+.hero-headline .hl-software {
+  font-family: var(--font-display);
   font-weight: 800;
+  text-transform: uppercase;
+}
+.hero-headline .hl-ideas {
+  color: #faf5eb;
+  text-shadow: var(--extrude-stone);
+}
+.hero-headline .hl-software {
+  margin-top: 0.1em;
+  /* a touch wider so its right edge lands flush with line one */
+  letter-spacing: 0.03em;
   color: #f7cf7d;
   text-shadow: var(--extrude-gold);
+}
+.hero-headline .hl-big {
+  font-size: 1.42em;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.9;
+}
+.hero-headline .hl-us {
+  margin-top: 0.7em;
+  font-family: var(--font-subhead);
+  font-size: calc(var(--hl-size) * 0.6);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  text-transform: none;
+  color: var(--ivory);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.6),
+    0 12px 26px rgba(0, 0, 0, 0.85);
+}
+.hero-headline .hl-stop {
+  color: var(--gold);
+}
+/* Narrow columns (phones, tablets): each line breaks once, between its two
+   phrases, so the type stays big instead of shrinking to fit 25 characters. */
+@container (max-width: 470px) {
+  .hero-headline .hl-ideas,
+  .hero-headline .hl-software,
+  .hero-headline .hl-us {
+    --hl-size: 10.2cqi;
+    white-space: normal;
+  }
+  .hero-headline .hl-software {
+    letter-spacing: 0.012em;
+  }
+  .hero-headline .hl-seg {
+    white-space: nowrap;
+  }
 }
 .hero-manifesto {
   display: grid;
