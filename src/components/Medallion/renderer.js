@@ -91,7 +91,7 @@ async function buildEdgeEngravingBitmap() {
     if ("letterSpacing" in ctx) ctx.letterSpacing = "5.8px";
     ctx.font = '700 52px "Cinzel", Georgia, serif';
     ctx.fillText(
-      "AND FOUNDED THE HARNESS LAB IN 2025",
+      "AND FOUNDED THE HARNESS LAB IN 2026",
       VW * 0.5,
       170,
     );
