@@ -30,7 +30,8 @@
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Reference">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="/services.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Service","@id":"https://theharnesslab.com/api-integrations/#service","name":"API integration services","serviceType":"API integration services","url":"https://theharnesslab.com/api-integrations/","areaServed":"US","provider":{"@id":"https://theharnesslab.com/#organization"},"description":"Connect business applications, webhooks, documents and reports with resilient custom API integrations — engineered with idempotency, retries and recovery by The Harness Lab."},{"@type":"WebPage","@id":"https://theharnesslab.com/api-integrations/#page","url":"https://theharnesslab.com/api-integrations/","name":"API Integration & Business Systems Automation | The Harness Lab","description":"Connect business applications, webhooks, documents and reports with resilient custom API integrations — engineered with idempotency, retries and recovery by The Harness Lab.","isPartOf":{"@id":"https://theharnesslab.com/#website"},"about":{"@id":"https://theharnesslab.com/api-integrations/#service"},"dateModified":"2026-11-18"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"The Harness Lab","item":"https://theharnesslab.com/"},{"@type":"ListItem","position":2,"name":"API integration services","item":"https://theharnesslab.com/api-integrations/"}]},{"@type":"FAQPage","@id":"https://theharnesslab.com/api-integrations/#faq","mainEntity":[{"@type":"Question","name":"How do you prevent duplicate records when webhooks retry or networks time out?","acceptedAnswer":{"@type":"Answer","text":"Every integration uses deterministic idempotency keys, schema validation, bounded backoff with jitter, and dead-letter queues so duplicate webhook deliveries or partial timeouts never create conflicting records silently."}},{"@type":"Question","name":"How are API keys and OAuth tokens protected in a Harness Lab integration?","acceptedAnswer":{"@type":"Answer","text":"Credentials stay strictly inside your cloud or server environment variables using least-privilege scopes, environment templates, and automated log-redaction checks — never hardcoded or hosted in third-party black boxes."}},{"@type":"Question","name":"What information should we bring to scope an API integration?","acceptedAnswer":{"@type":"Answer","text":"Bring the source and destination system names, the trigger event, redacted sample field names, approximate event volume, and what an operator needs to see when an exception occurs."}}]}]}</script>
 </head>
@@ -54,7 +55,7 @@
       <li><strong>Website &amp; intake routing:</strong> validate enquiries and create structured jobs in your CRM or project tracker with email fallback.</li>
       <li><strong>Document-to-system pipelines:</strong> preserve source files, validate extracted fields and require human sign-off before writing downstream.</li>
       <li><strong>Cross-system reconciliation:</strong> compare identifiers, surface missing records and flag discrepancies across providers.</li>
-      <li><strong>Multi-source verification feeds:</strong> cross-check live data providers and coordinate multi-model pipelines like those running behind <a href="https://title-desk.com/">Title-Desk</a> and <a href="https://artificiallandman.io/">Artificial Landman</a>.</li>
+      <li><strong>Multi-source verification feeds:</strong> cross-check live data providers and coordinate multi-model pipelines like those running behind <a href="https://title-desk.com/">TitleDesk</a>, <a href="https://desktop.title-desk.com/">TitleDesk Agent</a> and <a href="https://artificiallandman.io/">Artificial Landman</a>.</li>
     </ul>
 
     <h2>Engineered for duplicate events, rate limits and partial failure</h2>
@@ -87,7 +88,8 @@
       <a href="/ai-workflow-automation/">Workflow automation</a>
       <a href="/custom-software-development/">Custom software</a>
       <a href="/landman-title-workflow-automation/">Landman title workflows</a>
-      <a href="https://title-desk.com/" target="_blank" rel="noopener noreferrer">Title-Desk</a>
+      <a href="https://title-desk.com/" target="_blank" rel="noopener noreferrer">TitleDesk</a>
+      <a href="https://desktop.title-desk.com/" target="_blank" rel="noopener noreferrer">TitleDesk Agent</a>
       <a href="https://artificiallandman.io/" target="_blank" rel="noopener noreferrer">Artificial Landman</a>
       <a href="https://theharnesslab.dev/" target="_blank" rel="noopener noreferrer">Engineering (theharnesslab.dev)</a>
     </nav>
