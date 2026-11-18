@@ -154,12 +154,12 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
   let visible = true;
   let docHidden = document.hidden;
   let interactive = false; // false = slow graceful spin; true = stopped & movable by user
-  let breathBlend = 1; // 1 while spinning, smoothly damps to 0 when stopped for inspection
 
   let raf = 0;
   let demandRaf = 0;
   let lastTs = 0;
-  let clock = 0; // seconds of running time; frozen whenever the loop stops
+  let clock = 0; // monotonic runtime seconds for tweens, inertia, and perf hysteresis
+  let spinTime = 0; // shader & floating poise clock; advances only while spinning
 
   let tier = 0;
   let cssW = 0;
@@ -457,6 +457,7 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
     pose.yawVel = 0;
     pose.pitchVel = 0;
     onInteractiveChange?.(interactive);
+    updateLoop();
     requestRender();
   }
 
@@ -481,9 +482,6 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
   }
 
   function step(dt) {
-    const targetBreath = interactive ? 0 : 1;
-    breathBlend += (targetBreath - breathBlend) * Math.min(1, dt * 6);
-
     if (drag) return;
 
     if (tween) {
@@ -500,9 +498,10 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
 
     if (!interactive) {
       // Slow, graceful continuous 360° spin until clicked.
+      spinTime += dt;
       pose.yaw += SPIN_SPEED * dt;
       if (pose.yaw > Math.PI) pose.yaw -= TAU;
-      pose.pitch *= Math.exp(-4.5 * dt);
+      pose.pitch *= Math.exp(-3.2 * dt);
       if (Math.abs(pose.pitch) < 0.0005) pose.pitch = 0;
       return;
     }
@@ -525,24 +524,32 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
   // ---------------------------------------------------------------- render
   function draw() {
     if (!gl || failed || disposed || bufW === 0) return;
-    // Gentle floating poise while spinning; completely still when stopped by click.
-    const w = clamp(clock / 1.4, 0, 1);
-    const breath = w * w * (3 - 2 * w) * breathBlend;
-    const pitch = pose.pitch + Math.sin(clock * 0.55) * 0.045 * breath;
-    const roll = Math.sin(clock * 0.42) * 0.025 * breath;
-    const bob = Math.sin(clock * 0.92) * 0.022 * breath;
+    // Gentle floating poise while spinning; freezes seamlessly in place when stopped.
+    const w = clamp(spinTime / 1.4, 0, 1);
+    const breath = w * w * (3 - 2 * w);
+    const pitch = pose.pitch + Math.sin(spinTime * 0.55) * 0.045 * breath;
+    const roll = Math.sin(spinTime * 0.42) * 0.025 * breath;
+    const bob = Math.sin(spinTime * 0.92) * 0.022 * breath;
     gl.viewport(0, 0, bufW, bufH);
     gl.disable(gl.BLEND);
     gl.uniform2f(uniforms.uRes, bufW, bufH);
-    gl.uniform1f(uniforms.uTime, clock);
+    gl.uniform1f(uniforms.uTime, spinTime);
     gl.uniform3f(uniforms.uPose, pose.yaw, pitch, roll);
     gl.uniform1f(uniforms.uBob, bob);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
+  function needsContinuousFrames() {
+    return !interactive || Boolean(tween) || releaseAt >= 0;
+  }
+
+  function canRun() {
+    return !disposed && !failed && visible && !docHidden && !hold;
+  }
+
   function frame(ts) {
     raf = 0;
-    if (!canRun()) return;
+    if (!canRun() || !needsContinuousFrames()) return;
     const dtMs = lastTs ? ts - lastTs : 16.7;
     lastTs = ts;
     const dt = Math.min(dtMs, 50) / 1000;
@@ -550,15 +557,13 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
     step(dt);
     draw();
     trackPerf(dtMs);
-    raf = requestAnimationFrame(frame);
-  }
-
-  function canRun() {
-    return !disposed && !failed && visible && !docHidden && !hold;
+    if (needsContinuousFrames()) {
+      raf = requestAnimationFrame(frame);
+    }
   }
 
   function updateLoop() {
-    if (ready && canRun()) {
+    if (ready && canRun() && needsContinuousFrames()) {
       if (!raf) {
         lastTs = 0;
         perf.warm = Math.max(perf.warm, 10);
@@ -610,6 +615,7 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
         setInteractive(true);
         const base = tween ? tween.toYaw : pose.yaw;
         startTween(base + direction * NUDGE, pose.pitch, NUDGE_MS);
+        updateLoop();
       },
       pointerDown(event) {
         if (!ready || drag) return;
@@ -698,11 +704,13 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
             pose.yawVel = clamp(cur.velYaw, -6, 6);
             pose.pitchVel = clamp(cur.velPitch, -4, 4);
             releaseAt = clock;
+            updateLoop();
           } else {
             pose.yawVel = 0;
             pose.pitchVel = 0;
             releaseAt = -1;
             normalizeYaw();
+            updateLoop();
             requestRender();
           }
         }
