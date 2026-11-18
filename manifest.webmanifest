@@ -1,0 +1,33 @@
+{
+  "name": "The Harness Lab",
+  "short_name": "Harness Lab",
+  "description": "Bespoke workflow automation, custom web and desktop software, and verifiable multi-agent AI harnesses — engineered by Spencer Teague, owned by you.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/harness-lab-copper-marble-512.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    },
+    {
+      "src": "/brand/harness-lab-copper-marble.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
