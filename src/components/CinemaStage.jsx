@@ -225,10 +225,10 @@ export default function CinemaStage() {
           }
         >
           <p>
-            Start with the 3m 44s Title-Desk walkthrough — a live
-            twelve-instrument examination from scope check to delivered workbook — then
-            the 2027 studio showcase and our verification-to-handover reel. Sound stays
-            off until you ask for it.
+            Start with the 3m 44s Title-Desk walkthrough — a sample
+            twelve-instrument demonstration from scope check to delivered workbook, with
+            the run shortened — then the 2027 studio showcase and our
+            verification-to-handover reel. Sound stays off until you ask for it.
           </p>
         </ChapterHead>
 
