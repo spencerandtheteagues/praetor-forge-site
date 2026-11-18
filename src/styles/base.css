@@ -61,38 +61,29 @@
   --step-small: clamp(0.88rem, 0.85rem + 0.12vw, 1rem);
   --step-meta: clamp(0.7rem, 0.67rem + 0.12vw, 0.85rem);
 
-  /* Physical 3D extrusion stacks — sunlit carved Carrara marble & 24k cast bronze
-     that visibly pop off pure #000000 obsidian with multi-step diagonal side walls */
+  /* Physical 3D extrusion stacks — crisp sunlit Carrara marble & 24k cast bronze
+     with shaded dark side-walls so glyph counters stay razor-sharp on #000000 */
   --extrude-stone:
-    -1px -1px 0 rgba(255, 253, 246, 0.78),
-    1px 1px 0 #d5c29e,
-    2px 2px 0 #b89f74,
-    3px 3px 0 #997e52,
-    4px 4px 0 #7b623b,
-    5px 5px 0 #5e4928,
-    6px 6px 0 #423219,
-    7px 8px 0 #281d0d,
-    10px 13px 10px rgba(0, 0, 0, 0.9),
-    0 22px 44px rgba(0, 0, 0, 0.94);
+    0 1px 0 #705f44,
+    1px 2px 0 #564730,
+    2px 3px 0 #3c311f,
+    3px 4px 0 #231c10,
+    0 8px 18px rgba(0, 0, 0, 0.9),
+    0 18px 36px rgba(0, 0, 0, 0.78);
 
   --extrude-gold:
-    -1px -1px 0 rgba(255, 250, 224, 0.88),
-    1px 1px 0 #e3b053,
-    2px 2px 0 #c58e33,
-    3px 3px 0 #a6711f,
-    4px 4px 0 #895912,
-    5px 5px 0 #6c430a,
-    6px 6px 0 #4f2f05,
-    7px 8px 0 #311c02,
-    10px 13px 10px rgba(0, 0, 0, 0.92),
-    0 22px 46px rgba(200, 102, 46, 0.36);
+    0 1px 0 #845c1c,
+    1px 2px 0 #664511,
+    2px 3px 0 #482f09,
+    3px 4px 0 #2a1a03,
+    0 8px 18px rgba(0, 0, 0, 0.92),
+    0 18px 36px rgba(200, 102, 46, 0.28);
 
   --extrude-sub:
-    -1px -1px 0 rgba(255, 250, 236, 0.45),
-    1px 1px 0 #b89b6a,
-    2px 2px 0 #7b6036,
-    3px 3px 0 #3d2d15,
-    5px 8px 14px rgba(0, 0, 0, 0.9);
+    0 1px 0 #634f30,
+    1px 2px 0 #3d2f1a,
+    2px 3px 0 #1f170b,
+    0 6px 14px rgba(0, 0, 0, 0.88);
 
   /* Layout widths */
   --read: 64ch;

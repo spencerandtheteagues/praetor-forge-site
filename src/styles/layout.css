@@ -413,64 +413,50 @@
   display: inline-block;
 }
 .hero-headline .hl-ideas .hl-3d[data-depth]::before {
-  color: #5b4930;
+  color: #54452f;
   text-shadow:
-    1px 1px 0 #d8c6a3,
-    2px 2px 0 #baa278,
-    3px 3px 0 #9c8257,
-    4px 4px 0 #7f673f,
-    5px 5px 0 #644f2d,
-    6px 6px 0 #4b391e,
-    7px 7px 0 #342612,
-    8px 9px 0 #1f1609,
-    11px 14px 8px rgba(0, 0, 0, 0.88),
-    18px 22px 26px #000;
+    0.5px 1px 0 #726146,
+    1px 2px 0 #584932,
+    2px 3px 0 #3f3320,
+    3px 4px 0 #282012,
+    4px 5px 0 #151008,
+    0 8px 18px rgba(0, 0, 0, 0.92),
+    0 18px 34px rgba(0, 0, 0, 0.82);
 }
 .hero-headline .hl-ideas .hl-face {
   color: #fcf8ef;
   background: linear-gradient(
-    174deg,
-    #ffffff 8%,
-    #f6f0e3 36%,
-    #b7a98f 51%,
-    #fdfbf6 55%,
-    #e2d7c3 79%,
-    #a8987c 100%
+    180deg,
+    #ffffff 0%,
+    #f9f4ea 48%,
+    #dfd3be 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.5px rgba(255, 252, 244, 0.42);
 }
 .hero-headline .hl-software .hl-3d[data-depth]::before {
-  color: #6b4616;
+  color: #634210;
   text-shadow:
-    1px 1px 0 #eab85c,
-    2px 2px 0 #cb953b,
-    3px 3px 0 #ad7824,
-    4px 4px 0 #905f15,
-    5px 5px 0 #74490c,
-    6px 6px 0 #593507,
-    7px 7px 0 #3f2404,
-    8px 9px 0 #261402,
-    11px 15px 8px rgba(0, 0, 0, 0.9),
-    18px 24px 28px rgba(200, 102, 46, 0.34);
+    0.5px 1px 0 #8a611e,
+    1px 2px 0 #6c4912,
+    2px 3px 0 #4e330a,
+    3px 4px 0 #321f04,
+    4px 5px 0 #1a0f02,
+    0 8px 18px rgba(0, 0, 0, 0.94),
+    0 18px 36px rgba(200, 102, 46, 0.28);
 }
 .hero-headline .hl-software .hl-face {
   color: #ffe299;
   background: linear-gradient(
-    168deg,
-    #fff7dc 7%,
-    #f9d78c 36%,
-    #b37924 52%,
-    #ffe6a3 56%,
-    #dca246 82%,
-    #9d681a 100%
+    180deg,
+    #fff9e6 0%,
+    #f9d889 52%,
+    #cf9334 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.5px rgba(255, 238, 186, 0.46);
 }
 .hero-headline .hl-us {
   margin-top: 0.5em;
@@ -482,24 +468,21 @@
   text-transform: none;
 }
 .hero-headline .hl-us .hl-3d[data-depth]::before {
-  color: #4f3d24;
+  color: #4a3a22;
   text-shadow:
-    1px 1px 0 #c8b086,
-    2px 2px 0 #967b50,
-    3px 3px 0 #66502f,
-    4px 5px 0 #362915,
-    7px 10px 10px rgba(0, 0, 0, 0.9),
-    0 16px 28px rgba(0, 0, 0, 0.88);
+    0.5px 1px 0 #695538,
+    1px 2px 0 #493922,
+    2px 3px 0 #291f11,
+    0 6px 14px rgba(0, 0, 0, 0.9),
+    0 14px 26px rgba(0, 0, 0, 0.84);
 }
 .hero-headline .hl-us .hl-face {
   color: #faf4e6;
   background: linear-gradient(
-    172deg,
-    #ffffff 10%,
-    #f3ead8 45%,
-    #c7b799 54%,
-    #f9f3e6 60%,
-    #d7c8ab 95%
+    180deg,
+    #ffffff 0%,
+    #f5ede0 54%,
+    #d9cbb2 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
