@@ -225,7 +225,7 @@ export default function CinemaStage() {
           }
         >
           <p>
-            Start with the full 4m 37s Title-Desk walkthrough — a live
+            Start with the 3m 44s Title-Desk walkthrough — a live
             twelve-instrument examination from scope check to delivered workbook — then
             the 2027 studio showcase and our verification-to-handover reel. Sound stays
             off until you ask for it.

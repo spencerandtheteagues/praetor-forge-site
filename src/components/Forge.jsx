@@ -72,8 +72,9 @@ function ProductShowcase({ product, onOpen }) {
         <ProductSeal logo={product.logo} name={product.name} />
         <div className="product-intro">
           <div className="vitrine-meta-row">
-            <span className="vitrine-status mono is-live">{product.status}</span>
-            <span className="vitrine-domain mono">{product.domain}</span>
+            <span className={`vitrine-status mono ${product.href ? "is-live" : ""}`}>{product.status}</span>
+            {product.domain ? <span className="vitrine-domain mono">{product.domain}</span> : null}
+            {product.cutoverNote ? <span className="vitrine-domain mono">{product.cutoverNote}</span> : null}
           </div>
           <p className="vitrine-placard">{product.placard}</p>
           <h3 className="product-name" id={`${anchor}-name`}>
@@ -91,17 +92,21 @@ function ProductShowcase({ product, onOpen }) {
               ))}
             </ul>
           ) : null}
-          <div className="product-actions">
-            <a className="button button-gold button-small" href={product.href} target="_blank" rel="noopener noreferrer">
-              Visit {product.domain} <ArrowUpRight aria-hidden="true" />
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-            {product.serviceLink ? (
-              <a className="text-link" href={product.serviceLink.href}>
-                {product.serviceLink.label} <ArrowRight aria-hidden="true" />
-              </a>
-            ) : null}
-          </div>
+          {product.href || product.serviceLink ? (
+            <div className="product-actions">
+              {product.href ? (
+                <a className="button button-gold button-small" href={product.href} target="_blank" rel="noopener noreferrer">
+                  Visit {product.domain} <ArrowUpRight aria-hidden="true" />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ) : null}
+              {product.serviceLink ? (
+                <a className="text-link" href={product.serviceLink.href}>
+                  {product.serviceLink.label} <ArrowRight aria-hidden="true" />
+                </a>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </header>
       {product.comparison ? <BeforeAfter product={product} onOpen={onOpen} /> : null}

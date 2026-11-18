@@ -1,0 +1,144 @@
+# The Harness Lab — Complete Studio, Product & Engineering Reference
+
+> The Harness Lab (https://theharnesslab.com/) is the founder-led custom software and applied AI engineering studio of Spencer Teague. We build bespoke workflow automation, custom business websites, full-stack web and native desktop applications, API integrations, internal operations tools, and verifiable multi-agent AI harnesses — proven against real data and handed over 100% into client-owned repositories and infrastructure.
+
+## 1. Identity, Founder & Contact
+
+- **Organization:** The Harness Lab
+- **Commercial Site (White Carrara Marble Seal):** https://theharnesslab.com/
+- **Engineering R&D Foundry (Black Nero Marquina Marble Seal):** https://theharnesslab.dev/
+- **Founder & Lead Engineer:** Spencer Teague (completely self-taught software engineer with 3,900+ authored production commits across oil and gas title engines, multi-model SaaS platforms, and autonomous AI harnesses)
+- **Sales & New Projects:** `sales@theharnesslab.com`
+- **Direct Founder Contact:** `spencer@theharnesslab.com`
+- **Telephone:** `+1-607-364-7772` (`607-364-7772`)
+- **20-Minute Teardown Call:** https://cal.com/harnesslab/teardown
+- **Online Work Order Intake:** https://theharnesslab.com/#contact (includes client-side credential detection and redaction; never send passwords, API keys, or confidential client records in an initial enquiry)
+
+## 2. Operating Method: Three Optical Gates & Twelve Failure Controls
+
+Raw AI wrappers guess, stall, and report completion while customer work remains incomplete. Every Harness Lab system routes work through three deterministic verification gates:
+
+1. **Gate I — Ground:** Start from primary-source documents, recorded instruments, or live verified feeds rather than model memory alone.
+2. **Gate II — Verify:** Cross-examine outputs with deterministic code rules and an independent model that took no part in generating the initial answer.
+3. **Gate III — Release:** Enforce budget caps, drawdown envelopes, and rate limits mechanically in code, requiring explicit human sign-off before any action spends funds, sends external messages, publishes content, or deletes records.
+
+### Twelve Failure Modes Diagnosed & Controlled
+
+1. **Dropped messages:** Fixed via acknowledged queues, bounded retries, and monitored dead-letter lanes.
+2. **Runaway spend:** Fixed via hard budget caps, retry ceilings, and difficulty-tiered model routing.
+3. **429 rate-limit storms:** Fixed via exponential backoff with jitter, per-lane concurrency limits, and subscription fallback lanes.
+4. **Status theater:** Fixed via end-to-end canary tasks that verify real job completion rather than process liveness.
+5. **Silent workers:** Fixed via heartbeats, stall detection, and a sourced execution ledger.
+6. **Secret leaks:** Fixed via scoped identities, environment templates, and redaction guards across logs, prompts, and repositories.
+7. **Missing approval gates:** Fixed via owner checkpoints in web, CLI, email, Slack, or Telegram before consequential actions.
+8. **Browser fragility:** Fixed via isolated browser sessions, identity verification, and per-step screenshot evidence.
+9. **Duplicate work:** Fixed via idempotency keys and claim-based work queues for exact-once processing.
+10. **No recovery path:** Fixed via rehearsed backup restores and written incident recovery playbooks.
+11. **Model mismatch:** Fixed via explicit per-role model lanes matching reasoning strength to task risk.
+12. **No handoff proof:** Fixed via automated smoke tests, operator runbooks, and evidence bundles verified on the client's own hardware before sign-off.
+
+## 3. Custom In-House AI Harnesses
+
+Off-the-shelf agent frameworks stalled or misreported test state on multi-month builds, so The Harness Lab engineered three proprietary harnesses used across internal and client builds:
+
+### III·A · Rogue Agents (`https://theharnesslab.com/#rogue-agents`)
+- **Role:** Multi-agent desktop command center for macOS and Linux.
+- **Telemetry:** 22,582 authored lines of code · 103 commits · 730 / 730 tests passing · built in a 1-month rapid sprint.
+- **Capabilities:** Runs Claude, Codex, Antigravity, and Grok side by side on independent subscriptions with subordinate Ollama Cloud workers; isolates every execution job inside its own Git worktree; requires a four-agent council plan-endorsement vote and independent cross-provider verification before merge.
+
+### III·B · Perihelion Loop (`https://theharnesslab.dev/#perihelion-loop`)
+- **Role:** Autonomous create, fix/harden, and lawful no-copy reverse-engineering harness.
+- **Telemetry:** 30,079 authored lines of code · 62 commits · 5 cockpit zoom stages · built in a 1-month rapid sprint.
+- **Four Architectural Pillars:**
+  1. **Andrej Karpathy's Keep-or-Revert Loop:** Measure baseline -> single-hypothesis edit -> hard programmatic holdout check -> promote strictly improving commits or automatically git-revert regressions -> persist failed hypotheses in an institutional attempt ledger.
+  2. **Typed Loops & Graphs DAGs:** Decomposes multi-milestone builds into parallel worktree DAG nodes with unit-scoped retry and a single human gate at irreversible boundaries.
+  3. **Hardened Cloudroom Sandbox Fabric:** Built atop open-source Apache-2.0 `cloudroom.dev` Linux VM sandboxes with pre-execution SHA-256 exact-bytes manifest checks, host/token isolation, quarantined output pull, and local holdout verification.
+  4. **Sealed Frontier Council:** Multi-provider architectural and adversarial review across Claude, Gemini, Codex, and Grok inside read-sealed sandboxes.
+- **Three Production Modes:**
+  - *Create:* Full-stack web and native Apple Silicon SwiftUI desktop builds (such as Kiln) from product brief to executable acceptance tests.
+  - *Fix & Harden:* Enforces `null_tested_regression` gates proven across 7,070 passed / 0 failed checks in 431 TitleDesk test files and 730 / 0 checks on Rogue Agents.
+  - *Lawful No-Copy Reverse-Engineering:* OS kernel-walled (`sandbox-exec` on macOS, `bubblewrap` on Linux) study-to-spec separation where downstream build workers are kernel-blocked from reading the studied subject and mechanically verified for zero code, text, identifier, or asset overlap.
+
+### III·C · Mythos OS (`https://theharnesslab.com/#our-os`)
+- **Role:** Studio-wide operational cockpit unifying 17 live operator surfaces.
+- **Telemetry (as captured):** 7 connected harnesses · 60 reusable skills · 20,911 Graphify knowledge-graph nodes across 164 communities · 15/15 infrastructure connections online · Hermes orchestrator across 296 sessions and 15,299 messages.
+- **Modules:** Mission Control, Harnesses Under One Roof, Hermes Orchestrator, Unified Console, Audit Kit, Public-Source Research Platform, The Forge Brief Composer, Sourced Work Ledger, Graphify Memory Graph, Skills Library, Dream Nightly Review, Tailscale SSH & noVNC Remote Access, Metadata-Redacted Remote Files, Mail Desk, and Auto-Fallback Settings.
+
+## 4. Shipped Production Platforms & Portfolio
+
+### Title-Desk & TitleDesk Agent Desktop
+- **Live Web Platform:** https://title-desk.com/
+- **Native Desktop Edition:** https://desktop.title-desk.com/
+- **Related Service:** https://theharnesslab.com/landman-title-workflow-automation/
+- **Studio Walkthrough Video:** https://theharnesslab.com/#cinema (`PT3M44S` — 3m 44s end-to-end demonstration from Texas survey layers and pre-run intake scope check through live 12-deed dual-examiner run to a delivered 4-sheet workbook).
+- **Telemetry:** 312,379 ecosystem lines of code (262,305 desktop core engine, 22,638 hosted web platform, 23,148 Artificial Landman, 4,288 TractPilot prototype) · 1,662 campaign commits · 7,070 passing tests · 6-month campaign.
+- **Capabilities:** Reads crooked courthouse scans with local OCR, reconciles tract acreage and recited source deeds before runs begin, executes blind dual-examiner analysis with cross-family validation, computes mineral ownership with exact rational fractions (never floating-point approximations), models heirship family trees, and exports source-linked four-sheet workbooks.
+
+### Artificial Landman
+- **Live Platform:** https://artificiallandman.io/
+- **Telemetry:** 23,148 hosted lines of code · 54 hosted commits · 282 / 282 web suite tests passing · 1-month rapid sprint atop the 262,305-LOC Title-Desk engine.
+- **Capabilities:** Hosted dual-examiner mineral title examination platform with a dedicated brass-and-topographic interface serving Texas and expanding to New Mexico.
+
+### BrandStreams (Evolved from MyAIMediaMgr)
+- **Archive & Workspace Showcase:** https://theharnesslab.com/#product-brandstreams *(Note: live domain DNS cutover is temporarily in progress)*
+- **Telemetry:** 81,254 authored lines of code · 1,364 commits · 424 source files · 14 months across 9 architectural generations.
+- **Capabilities:** Multi-model AI social media agency platform featuring coordinated multi-slot campaign boards, multi-model AI brainstorm studio, draft content calendars, and default-deny tenant-isolated publishing gated behind human approval queues.
+
+### APEX.BUILD
+- **Live Platform:** https://apex-build.dev/
+- **Telemetry:** 377,197 authored lines of code · 966 main-branch commits (1,064 across all branches) · 852 source files · 5-month build window.
+- **Capabilities:** Multi-AI cloud software development environment where a nine-agent engineering team plans, implements, tests, and verifies applications inside a Monaco cloud IDE with dead-agent heartbeats, backpressure routing, spend telemetry, and encrypted bring-your-own-key routing.
+
+### Wealth & Powers OS — Client Proof (Jayson Powers, Missouri)
+- **Case Study:** https://theharnesslab.com/#case-study
+- **Telemetry:** 7,110 authored lines of code · 45 source files · 10 investor surfaces · 1-month rapid sprint, built and remotely installed.
+- **Capabilities:** Unified multi-asset investor harness spanning stocks (Yahoo Finance consensus), crypto (three-way CoinGecko, Coinbase, and Kraken divergence checks), precious metals (front-month futures vs. spot basis checks), Real Estate Super Search & URL watcher, marketplace Item Search, dual-audited live research, per-role model routing, and Midas Mode (45-second position re-evaluation inside code-enforced daily-loss pause and drawdown kill-switch envelopes where zero trades execute without Jayson's explicit approval).
+- **Client Review (5 / 5 Stars — Jayson Powers, Private Investor, Missouri):**
+  > "I’ve been investing for over 20 years and I’ve never had a single tool that puts this much firepower in one place. The Wealth & Powers OS does things I genuinely didn’t think were possible. … [W]hat sold me is that I could see exactly why every trade was proposed and approve it before a dollar moved. The research engine goes deeper than analysts I’ve paid for, and Item Search tracked down something I’d been hunting for months in under ten minutes. Spencer built and installed the whole system in a single session; when I hit a snag during setup, he had it fixed before I finished explaining it. Fast, sharp, and it works exactly the way he said it would. Five stars — and I’d give ten if the scale went that high."
+
+### Additional Shipped Entry Surfaces & Commercial Websites (`https://theharnesslab.com/#landing-gallery`)
+- **Spectre:** High-density dark-mode threat-intelligence monitoring console.
+- **Kiln:** Native macOS disk and build-artifact cleaner forged through Perihelion Loop with proportional hazard gates.
+- **SilverGuard:** Cross-platform family caregiving and senior wellness application.
+- **Samara:** Source-grounded research studio with live web-page ingestion and citation links.
+- **VoxScript:** Local-first audio transcription and structured document studio.
+- **Commercial Trade Websites (Texas):** Davis Moore Electric (Lubbock, TX), Dooley A/C & Heating (San Angelo, TX), and Fred's Radiator & Auto (Waco, TX).
+
+## 5. Six Dedicated Service Specifications & Engagement Model
+
+1. **AI Workflow Automation (`https://theharnesslab.com/ai-workflow-automation/`):** Document reading, structured extraction, deterministic validation, API handoffs, and human review queues.
+2. **Custom Software Development (`https://theharnesslab.com/custom-software-development/`):** End-to-end web platforms, customer portals, document workspaces, and native desktop applications.
+3. **Business Website Design & Development (`https://theharnesslab.com/website-design-development/`):** Responsive custom websites, redesigns, technical SEO foundations, structured data, and connected intake flows.
+4. **Custom Internal Tools (`https://theharnesslab.com/internal-tools-development/`):** Operations dashboards, staff portals, source-linked review tools, and automated client-format workbooks.
+5. **API Integration Services (`https://theharnesslab.com/api-integrations/`):** Permitted third-party API connectors, webhook deduplication, schema validation, reconciliation, and failure recovery.
+6. **Landman Title Workflow Automation (`https://theharnesslab.com/landman-title-workflow-automation/`):** County record intake, OCR, source-linked runsheets, chain-of-title organization, exact fractional mineral math, and custom landman deliverables.
+
+### Engagement Options (Custom-Scoped on Call)
+- **I · Free Teardown & Fit Call:** 20 focused minutes diagnosing one workflow, naming likely failure modes, and agreeing on the clearest next step (`https://cal.com/harnesslab/teardown`).
+- **II · Reliability & Security Audit:** Written failure map, cost-exposure and secret-handling review, prioritized remediation list, and walkthrough call.
+- **III · Workflow Automation:** One repeated document, operations, or client workflow turned into a tested, client-owned system.
+- **IV · Custom Websites & Full-Stack Apps:** Business websites, internal tools, and full software products engineered end to end.
+- **V · Foundation & Multi-Agent AI Harnesses:** Custom agent routing, verification gates, circuit breakers, approvals, and recovery playbooks.
+- **VI · Ongoing Care:** Scheduled health checks, model/provider migration reviews, and dedicated reliability support.
+
+### Nine Client-Ownership Deliverables Included at Handover
+1. Private customer-owned Git repository from day one.
+2. Reproducible single-script setup on your hardware or cloud.
+3. Customer-owned secrets with environment templates and redaction checks.
+4. Plain-language operator runbook.
+5. Automated end-to-end smoke tests.
+6. Verification evidence bundle documenting what was tested, fixed, and proven.
+7. Mandatory human approval gates on external or financial actions.
+8. Cost and rate-limit circuit breakers.
+9. Rehearsed backup and incident recovery playbook.
+
+## 6. Buyer & Technical FAQ
+
+**Q: Does The Harness Lab lock clients into proprietary hosting or retain intellectual property?**
+A: No. Clients own the private Git repository, configuration, and deployed accounts outright. Handover completes when you run the setup script and automated smoke tests on your own infrastructure without needing us in the loop.
+
+**Q: How are commercial terms and timelines determined?**
+A: Every system is scoped directly with Spencer Teague around a concrete workflow, sample inputs, required integrations, and measurable acceptance criteria during a 20-minute teardown call (`https://cal.com/harnesslab/teardown`) or written Work Order (`https://theharnesslab.com/#contact`).
+
+**Q: Does Title-Desk or automated landman software replace a qualified title reviewer?**
+A: No. Automated extraction, chain-of-title assembly, and exact fractional math accelerate preparation while preserving uncertainty flags and book-and-page source links so a qualified landman or title attorney remains in full control of title conclusions.

@@ -162,9 +162,10 @@ export const PRODUCT_SHOWCASES = [
   {
     id: "brandstreams",
     name: "BrandStreams",
-    domain: "brandstream.my",
-    href: "https://brandstream.my/",
-    status: "Past flagship · Live",
+    domain: null,
+    href: null,
+    cutoverNote: "DNS cutover in progress",
+    status: "Past flagship",
     placard: "AI social media agency SaaS · Evolved from MyAIMediaMgr",
     lede:
       "Nine architectural generations took MyAIMediaMgr from an early AI social tool to BrandStreams: coordinated multi-slot campaigns, multi-model brainstorming, a content calendar, an approval queue, and default-deny tenant-isolated publishing.",
@@ -329,7 +330,7 @@ export const CINEMA_CUTS = [
   {
     id: "titledesk-walkthrough",
     tab: "Title-Desk Walkthrough",
-    meta: "16:9 · 4m 37s",
+    meta: "16:9 · 3m 44s",
     src: "/video/titledesk-sales-demo-2027.mp4",
     poster: "/video/titledesk-sales-demo-poster.webp",
     width: 1920,
@@ -337,13 +338,12 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "End-to-end Title-Desk tour: interactive Texas land layers, pre-run scope check, live twelve-instrument examination, emailed deliverable, pause-verifiable four-sheet workbook, and landman & brokerage unit economics.",
+      "End-to-end Title-Desk tour: interactive Texas land layers, pre-run scope check, live twelve-instrument examination, emailed deliverable, and pause-verifiable four-sheet workbook. Demonstration with a sample assignment; run time shortened.",
     chapters: [
       { t: 0, label: "Site & Scope Check" },
       { t: 78.3, label: "Live 12-Deed Run" },
       { t: 126.1, label: "Email & Curatives" },
       { t: 165.2, label: "4-Sheet Workbook" },
-      { t: 224.1, label: "Unit Economics" },
     ],
   },
   {

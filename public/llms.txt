@@ -1,0 +1,39 @@
+# The Harness Lab
+
+> The Harness Lab (https://theharnesslab.com/) is a founder-led custom software and applied AI engineering studio led by Spencer Teague. We design, build, verify, and hand over bespoke workflow automation, custom web and native desktop applications, API integrations, internal tools, and verifiable multi-agent AI harnesses — engineered against real operating data and delivered into repositories and accounts owned 100% by the client.
+
+Every engagement is led directly by founder and lead engineer Spencer Teague with zero account-manager intermediaries. Instead of shipping raw AI wrappers, The Harness Lab builds deterministic verification harnesses around models: primary-source grounding, independent cross-model examination, code-enforced math and risk boundaries, circuit breakers, and explicit human approval gates before any consequential action executes.
+
+White Carrara marble with gold circuit wires marks our flagship commercial studio (`theharnesslab.com`); black Nero Marquina marble marks our R&D engineering foundry (`theharnesslab.dev`), where state machines, verification benches, and commit-level provenance are published openly.
+
+## Services & Practice Areas
+
+- [Homepage & Studio Overview](https://theharnesslab.com/): Full overview of our operating method, three in-house AI harnesses, Studio Cinema walkthroughs, shipped production software, client proof, and live Work Order intake.
+- [AI Workflow Automation](https://theharnesslab.com/ai-workflow-automation/): End-to-end document intake, extraction, validation, system handoffs, and human-reviewed business process automation.
+- [Custom Software Development](https://theharnesslab.com/custom-software-development/): Full-stack web platforms, customer portals, specialized business applications, and native desktop workstations built around real operating bottlenecks.
+- [Business Website Design & Development](https://theharnesslab.com/website-design-development/): Custom responsive websites, redesigns, search foundations, and connected enquiry or booking workflows.
+- [Custom Internal Tools Development](https://theharnesslab.com/internal-tools-development/): Operations dashboards, source-linked document workspaces, staff portals, and client-format workbook generators replacing manual spreadsheet and inbox work.
+- [API Integration Services](https://theharnesslab.com/api-integrations/): Permitted API connectors, webhook idempotency, schema validation, system reconciliation, and failure-resilient data movement.
+- [Landman Title Workflow Automation](https://theharnesslab.com/landman-title-workflow-automation/): Oil and gas mineral title research software, local OCR, source-linked runsheets, chain-of-title organization, exact fractional ownership calculations, and custom brokerage workbooks.
+
+## Shipped Production Platforms & Client Systems
+
+- [Title-Desk](https://title-desk.com/): Live web platform for Texas oil and gas county record examination — pre-run deterministic scope check, dual-examiner instrument analysis, exact mineral fraction math, and delivered four-sheet workbooks (part of a 312,379-LOC, 1,662-commit, 7,070-test, six-month title engineering campaign).
+- [TitleDesk Agent Desktop](https://desktop.title-desk.com/): Native macOS desktop workstation for landmen featuring zero-cost local OCR on courthouse scans, chronological runsheets, chain-of-title assembly, exact fractional mineral ownership, and heirship family graphs (262,305 core engine LOC).
+- [Artificial Landman](https://artificiallandman.io/): Hosted dual-examiner mineral title platform built on the Title-Desk engine with its own brass-and-topographic identity, serving Texas and expanding to New Mexico (23,148 hosted LOC, 282/282 web suite tests passing).
+- [APEX.BUILD](https://apex-build.dev/): Multi-AI cloud software development platform with a nine-agent build team, Monaco cloud IDE, dead-agent heartbeats, backpressure routing, and bring-your-own-key provider routing (377,197 authored LOC, 966 main-branch commits across five months).
+- [BrandStreams Case Archive](https://theharnesslab.com/#product-brandstreams): Multi-model AI social media agency SaaS evolved from MyAIMediaMgr across nine architectural generations and fourteen months (81,254 authored LOC, 1,364 commits, 424 source files; domain DNS cutover currently in progress).
+- [Wealth & Powers OS Client Case Study](https://theharnesslab.com/#case-study): Private multi-agent investor operating system built and installed remotely for Missouri investor Jayson Powers (7,110 LOC across 10 surfaces: stocks, crypto, precious metals, real estate, item search, dual-audited research, and mechanical Midas Mode risk envelopes; five-star client review).
+
+## Custom In-House Harnesses & R&D Foundry
+
+- [The Harness Lab Engineering Foundry](https://theharnesslab.dev/): Deep technical architecture notes, state machines, execution labs, and 28-build commit-level provenance.
+- [Perihelion Loop](https://theharnesslab.dev/#perihelion-loop): Autonomous software engineering harness (30,079 LOC, 62 commits) fusing Andrej Karpathy's keep-or-revert transactional loop, typed Loops & Graphs DAGs with a single human gate, hardened Apache-2.0 cloudroom.dev fail-closed Linux VM sandboxes with SHA-256 exact-bytes verification, and kernel-walled lawful no-copy reverse-engineering.
+- [Rogue Agents](https://theharnesslab.com/#rogue-agents): Multi-agent desktop command center (22,582 LOC, 103 commits, 730/730 tests green) coordinating Claude, Codex, Antigravity, and Grok in isolated Git worktrees with four-agent council plan votes.
+- [Mythos OS](https://theharnesslab.com/#our-os): Internal studio operating cockpit spanning 7 harnesses, 60 reusable skills, 20,911 Graphify knowledge-graph nodes across 164 communities, and 15/15 connected infrastructure sources.
+
+## Optional & Full Reference
+
+- [Full LLM Technical & Commercial Reference](https://theharnesslab.com/llms-full.txt): Complete studio specification, product telemetry, failure-mode controls, customer-ownership deliverables, Jayson Powers review, and buyer FAQ.
+- [Book a 20-Minute Teardown Call](https://cal.com/harnesslab/teardown): Direct 20-minute workflow diagnostic and fit call with founder Spencer Teague.
+- [Project Intake & Contact](https://theharnesslab.com/#contact): Assemble a live Work Order online, email `sales@theharnesslab.com` or `spencer@theharnesslab.com`, or call `+1-607-364-7772`.
