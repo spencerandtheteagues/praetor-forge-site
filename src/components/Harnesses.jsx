@@ -31,9 +31,9 @@ export function RogueAgentsSection() {
         >
           <p>
             Off-the-shelf agent tools stalled, lied about passing tests, or lost work
-            between runs — so we built our own. Three in-house harnesses now do the
-            heavy lifting on every product we ship: Rogue Agents coordinates the team,
-            Perihelion Loop proves every change, and Mythos OS runs the studio.
+            between runs — so we built our own. Three in-house harnesses now carry
+            the heavy lifting on our current builds: Rogue Agents coordinates the team,
+            Perihelion Loop proves or reverts every change, and Mythos OS runs the studio.
           </p>
         </ChapterHead>
 
@@ -117,9 +117,11 @@ export function HarnessBridge() {
             </h2>
             <p>
               We point the same three harnesses straight at customer problems — and at our
-              own flagship platforms. Title-Desk, Artificial Landman, BrandStreams and
-              APEX.BUILD were all engineered and verified this way, which is why the next
-              chapter shows running software instead of mockups.
+              own flagship platforms. Perihelion Loop repaired and verified all 7,070
+              TitleDesk engine tests and the 730-test Rogue Agents suite, and forged the
+              native macOS Kiln app. BrandStreams and APEX.BUILD are the long campaigns that
+              taught us why these harnesses had to exist — and the next chapter shows all
+              of it running, not mocked up.
             </p>
           </div>
           <ol className="bridge-steps">

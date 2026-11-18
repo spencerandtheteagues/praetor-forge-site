@@ -51,15 +51,17 @@ export default function Hero() {
             </ul>
             <blockquote className="hero-credo">
               <p>
-                “At The Harness Lab, we dream big, start small, and get deep into
-                the hardest edge cases — because you never know what is possible
-                until you have found every problem that seemed impossible at the
-                time and solved each one. We grind it out and never quit, and we
-                come out the other side with a deep understanding of how to build
-                complex software that holds up in production.”
+                “At The Harness Lab, we dream big, start small, get in over our
+                heads, jump the gun wildly, and get deep into the hardest edge
+                cases — because you will never know what is possible until you
+                have found all the things that seemed impossible at the time and
+                conquered every single one of them. We ground it out and never
+                quit, because when you emerge on the other side, you emerge an
+                expert with a deep understanding of how to build the best, most
+                complex software there is.”
               </p>
               <footer className="hero-credo-cite mono">
-                — Spencer Teague · Founder &amp; Lead Engineer
+                — Spencer Teague · Founder &amp; Lead Engineer · Landman title, SaaS &amp; autonomous AI harnesses
               </footer>
             </blockquote>
           </div>
