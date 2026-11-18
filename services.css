@@ -91,15 +91,12 @@ h1 {
   color: #fcf8ef;
   overflow-wrap: anywhere;
   text-shadow:
-    -1px -1px 0 rgba(255, 253, 246, 0.78),
-    1px 1px 0 #d5c29e,
-    2px 2px 0 #b89f74,
-    3px 3px 0 #997e52,
-    4px 4px 0 #7b623b,
-    5px 5px 0 #5e4928,
-    6px 6px 0 #3f2f17,
-    8px 11px 10px rgba(0, 0, 0, 0.9),
-    0 20px 40px rgba(0, 0, 0, 0.94);
+    0 1px 0 #705f44,
+    1px 2px 0 #564730,
+    2px 3px 0 #3c311f,
+    3px 4px 0 #231c10,
+    0 8px 18px rgba(0, 0, 0, 0.9),
+    0 18px 36px rgba(0, 0, 0, 0.8);
 }
 h2 {
   font-family: "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
@@ -113,13 +110,11 @@ h2 {
   color: #ffe094;
   overflow-wrap: anywhere;
   text-shadow:
-    -1px -1px 0 rgba(255, 250, 224, 0.72),
-    1px 1px 0 #dcab4f,
-    2px 2px 0 #b3812b,
-    3px 3px 0 #845814,
-    4px 4px 0 #553508,
-    5px 6px 0 #2b1903,
-    7px 10px 14px rgba(0, 0, 0, 0.9);
+    0 1px 0 #845c1c,
+    1px 2px 0 #664511,
+    2px 3px 0 #482f09,
+    3px 4px 0 #2a1a03,
+    0 8px 18px rgba(0, 0, 0, 0.9);
 }
 h3 {
   font-family: "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
@@ -131,9 +126,9 @@ h3 {
   color: #faf5eb;
   overflow-wrap: anywhere;
   text-shadow:
-    1px 1px 0 #9d8254,
-    2px 2px 0 #524022,
-    4px 6px 12px rgba(0, 0, 0, 0.88);
+    0 1px 0 #634f30,
+    1px 2px 0 #3d2f1a,
+    0 6px 12px rgba(0, 0, 0, 0.88);
 }
 p, li {
   color: #c9cdcf;
