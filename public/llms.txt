@@ -36,7 +36,7 @@ White Carrara marble with gold circuit wires marks our flagship commercial studi
 
 - [Full LLM Technical & Commercial Reference](https://theharnesslab.com/llms-full.txt): Complete studio specification, product telemetry, failure-mode controls, customer-ownership deliverables, Jayson Powers review, and buyer FAQ.
 - [Book a 20-Minute Teardown Call](https://cal.com/harnesslab/teardown): Direct 20-minute workflow diagnostic and fit call with founder Spencer Teague.
-- [Project Intake & Contact](https://theharnesslab.com/#contact): Assemble a live Work Order online, email `sales@theharnesslab.com` or `spencer@theharnesslab.com`, or call `+1-607-364-7772`.
+- [Project Intake & Contact](https://theharnesslab.com/#contact): Assemble a live Work Order online, email `sales@theharnesslab.com`, or call `+1-607-364-7772`.
 
 ## Legal Entity
 

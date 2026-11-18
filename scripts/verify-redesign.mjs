@@ -88,7 +88,6 @@ try {
     "completely self-taught",
     "607-364-7772",
     "sales@theharnesslab.com",
-    "spencer@theharnesslab.com",
   ])
     assert.ok(text.includes(phrase), phrase);
   assert.doesNotMatch(text, /\$\d|fixed fee|founding clients|spots remaining/i);

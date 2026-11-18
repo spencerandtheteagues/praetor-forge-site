@@ -89,22 +89,28 @@ function json(body: unknown, status: number, extra: Record<string, string>): Res
   });
 }
 
+const ZERO_WIDTH_RE = /[\u00ad\u200b-\u200f\u2028\u2029\u2060\ufeff]/g;
+
 const clipLine = (v: unknown, n: number): string =>
   v == null
     ? ''
-    : redactSecrets(String(v))
-        .replace(/[\r\n\t\x00-\x1f\x7f]+/g, ' ')
-        .trim()
-        .slice(0, n);
+    : redactSecrets(
+        String(v)
+          .replace(ZERO_WIDTH_RE, '')
+          .replace(/[\r\n\t\x00-\x1f\x7f]+/g, '')
+          .trim(),
+      ).slice(0, n);
 
 const clipBlock = (v: unknown, n: number): string =>
   v == null
     ? ''
-    : redactSecrets(String(v))
-        .replace(/\r\n?/g, '\n')
-        .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '')
-        .trim()
-        .slice(0, n);
+    : redactSecrets(
+        String(v)
+          .replace(ZERO_WIDTH_RE, '')
+          .replace(/\r\n?/g, '\n')
+          .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '')
+          .trim(),
+      ).slice(0, n);
 
 const escapeHtml = (s: string): string =>
   s.replace(/[&<>"']/g, (c) =>

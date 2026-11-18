@@ -157,3 +157,35 @@ test("intake-worker: redacts leaked secrets, caps problems at 20, strips control
     globalThis.fetch = origFetch;
   }
 });
+
+test("intake-worker: strips embedded control and zero-width chars BEFORE secret redaction so split tokens cannot bypass redaction", async () => {
+  let capturedBody = null;
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async (_url, init) => {
+    capturedBody = JSON.parse(init.body);
+    return new Response(JSON.stringify({ id: "email_124" }), { status: 200 });
+  };
+  try {
+    const rawGhp = "ghp_" + "A".repeat(36);
+    const splitGhp = "ghp_" + "A".repeat(10) + "\u0001" + "A".repeat(26);
+    const rawSk = "sk-proj-" + "A1b2C3d4E5f6G7h8I9j0K1l2";
+    const zwSk = "sk-proj-" + "A1b2C3\u200bd4E5f6G7h8I9j0K1l2";
+    const req = new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/intake", {
+      method: "POST",
+      headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: `Test ${zwSk}`,
+        email: "jane@example.com",
+        desiredWorkflow: `Token test ${splitGhp}`,
+      }),
+    });
+    const res = await worker.fetch(req, makeEnv());
+    assert.equal(res.status, 200);
+    assert.ok(!capturedBody.text.includes(rawGhp), "Control-char-split GitHub token must not bypass redaction");
+    assert.ok(!capturedBody.text.includes(rawSk), "Zero-width-split API key must not bypass redaction");
+    assert.ok(capturedBody.text.includes("[REDACTED GitHub token]"));
+    assert.ok(capturedBody.text.includes("[REDACTED API key]"));
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});

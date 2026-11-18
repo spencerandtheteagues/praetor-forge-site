@@ -22,7 +22,6 @@ import {
   PHONE_HREF,
   REQUEST_TYPES,
   SALES_EMAIL,
-  SPENCER_EMAIL,
 } from "../data/site.js";
 import { FAILURES } from "../data/narrative.js";
 
@@ -588,15 +587,8 @@ export default function ContactSection() {
           <a className="contact-rail-item" href={`mailto:${SALES_EMAIL}`}>
             <Mail aria-hidden="true" />
             <span>
-              <span className="contact-rail-label inscription">New projects</span>
+              <span className="contact-rail-label inscription">Direct &amp; new projects</span>
               {SALES_EMAIL}
-            </span>
-          </a>
-          <a className="contact-rail-item" href={`mailto:${SPENCER_EMAIL}`}>
-            <Mail aria-hidden="true" />
-            <span>
-              <span className="contact-rail-label inscription">Spencer directly</span>
-              {SPENCER_EMAIL}
             </span>
           </a>
         </div>

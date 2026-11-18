@@ -367,9 +367,6 @@ export function Footer() {
               <a href={`mailto:${SALES_EMAIL}`}>{SALES_EMAIL}</a>
             </li>
             <li>
-              <a href={`mailto:${SPENCER_EMAIL}`}>{SPENCER_EMAIL}</a>
-            </li>
-            <li>
               <span>{PHONE_DISPLAY}</span>
             </li>
           </ul>

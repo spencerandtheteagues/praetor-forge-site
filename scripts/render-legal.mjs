@@ -26,7 +26,7 @@ export const ENTITY = {
   formedIso: "2026-08-25",
   base: "San Angelo, Texas",
   noticeAddress: "5900 Balcones Drive, Suite 100, Austin, Texas 78731",
-  legalEmail: "spencer@theharnesslab.com",
+  legalEmail: "sales@theharnesslab.com",
   salesEmail: "sales@theharnesslab.com",
   phone: "607-364-7772",
   venue: "Tom Green County, Texas",
@@ -148,7 +148,7 @@ const notice = page({
         <tr><th scope="row">Formed</th><td>${E.formed}</td></tr>
         <tr><th scope="row">Based in</th><td>${E.base}</td></tr>
         <tr><th scope="row">Mailing address for legal notices</th><td>${E.legalName}, ${E.noticeAddress}</td></tr>
-        <tr><th scope="row">Email</th><td>${mail(E.legalEmail)} (legal, privacy and contracts) · ${mail(E.salesEmail)} (new projects)</td></tr>
+        <tr><th scope="row">Email</th><td>${mail(E.salesEmail)} (new projects, legal, privacy, contracts and security)</td></tr>
       </table>
       <p>The company's registration can be checked in the public records of the Texas Secretary of State and the Texas Comptroller of Public Accounts under file number ${E.sosFile}.</p>`,
     },

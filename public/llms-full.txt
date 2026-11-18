@@ -9,7 +9,7 @@
 - **Engineering R&D Foundry (Black Marble Seal):** https://theharnesslab.dev/
 - **Founder & Lead Engineer:** Spencer Teague (completely self-taught software engineer with 3,900+ authored production commits through November 2026 across oil and gas title engines, multi-model SaaS platforms, and autonomous AI harnesses)
 - **Sales & New Projects:** `sales@theharnesslab.com`
-- **Direct Founder Contact:** `spencer@theharnesslab.com`
+- **Public & Founder Contact:** `sales@theharnesslab.com`
 - **Telephone:** `+1-607-364-7772` (`607-364-7772`)
 - **20-Minute Teardown Call:** https://cal.com/harnesslab/teardown
 - **Online Work Order Intake:** https://theharnesslab.com/#contact (includes client-side and server-side credential detection and redaction; never send passwords, API keys, or confidential client records in an initial enquiry)
@@ -70,7 +70,7 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 - **Hosted Web Platform:** https://title-desk.com/ (for independent landmen and abstractors)
 - **Desktop App (TitleDesk Agent):** https://desktop.title-desk.com/ (Windows, macOS, and Linux)
 - **Related Service:** https://theharnesslab.com/landman-title-workflow-automation/
-- **Studio Walkthrough Video:** https://theharnesslab.com/#cinema (`PT3M44S` — 3m 44s end-to-end demonstration from Texas survey layers and pre-run intake scope check through live 12-deed examination to a delivered 4-sheet draft workbook).
+- **Studio Walkthrough Video:** https://theharnesslab.com/#cinema (`PT2M29S` — 2m 29s workspace demonstration from passwordless sign-in and pre-run intake scope check through live 12-deed examination to a delivered 4-sheet draft workbook).
 - **Telemetry (August–November 2026):** 262,305 core engine lines of code (plus 22,638 TitleDesk hosted web layer, 23,148 Artificial Landman hosted layer sharing the core engine, and 4,288 TractPilot prototype) · 1,662 campaign commits · 7,070 engine tests · 4-month core engineering campaign.
 - **Scope & Validation:** Texas, one county per run, current mineral-interest owners (`MI`) only. Two Gemini sessions examine the records separately, and deterministic code checks every rational fraction exactly. An independent third model from a different provider checks the final answer against page images; if it still disagrees after one repair, unresolved tracts stay proposals and blocking findings lead the curative requirements. Output is a source-linked draft four-sheet workbook for review by a qualified landman or attorney (not a title opinion or certification).
 

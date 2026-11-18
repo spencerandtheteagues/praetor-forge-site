@@ -39,6 +39,7 @@ const FORBIDDEN = [
   [/signed workbook/i, "Banned 'signed workbook' phrase"],
   [/brandstream\.my/i, "Dead domain 'brandstream.my' must stay unlinked until cutover completes"],
   [/spencerandtheteagues@gmail\.com/i, "Personal Gmail address leak"],
+  [/spencer@theharnesslab\.com/i, "Unverified mailbox 'spencer@theharnesslab.com' (use 'sales@theharnesslab.com')"],
 ];
 
 async function* walk(dir) {

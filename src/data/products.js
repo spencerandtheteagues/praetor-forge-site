@@ -333,7 +333,7 @@ export const CINEMA_CUTS = [
   {
     id: "titledesk-walkthrough",
     tab: "TitleDesk Walkthrough",
-    meta: "16:9 · 3m 44s",
+    meta: "16:9 · 2m 29s",
     src: "/video/titledesk-sales-demo-2027.mp4",
     poster: "/video/titledesk-sales-demo-poster.webp",
     width: 1920,
@@ -341,12 +341,12 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "End-to-end TitleDesk tour: interactive Texas land layers, pre-run scope check, live twelve-instrument examination, emailed deliverable, and pause-verifiable four-sheet draft workbook. Demonstration with a sample assignment; run time shortened.",
+      "End-to-end TitleDesk workspace tour: passwordless sign-in, pre-run scope check, live twelve-instrument examination, emailed deliverable, and pause-verifiable four-sheet draft workbook. Demonstration with a sample assignment; run time shortened. In production, the third-model check allows one repair and keeps any still-unresolved tract as a proposal leading curative requirements.",
     chapters: [
-      { t: 0, label: "Site & Scope Check" },
-      { t: 78.3, label: "Live 12-Deed Run" },
-      { t: 126.1, label: "Email & Curatives" },
-      { t: 165.2, label: "4-Sheet Workbook" },
+      { t: 0, label: "Sign-In & Scope Check" },
+      { t: 30.3, label: "Live 12-Deed Run" },
+      { t: 51.1, label: "Email & Curatives" },
+      { t: 90.2, label: "4-Sheet Workbook" },
     ],
   },
   {
