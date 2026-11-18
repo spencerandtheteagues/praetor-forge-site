@@ -1881,6 +1881,27 @@ html.motion-ok .escapement-wheel {
   color: var(--ash);
   font-size: 0.82rem;
 }
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 14px;
+  font-size: 0.82rem;
+}
+.footer-legal a {
+  color: var(--ash);
+  text-decoration: none;
+}
+.footer-legal a:hover {
+  color: var(--gold-hi);
+}
+@media (max-width: 820px) {
+  .footer-legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
 @media (max-width: 960px) {
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

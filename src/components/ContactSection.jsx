@@ -485,8 +485,10 @@ export default function ContactSection() {
                     <ArrowUpRight aria-hidden="true" />
                   </button>
                   <p className="contact-note">
-                    This sends your details to The Harness Lab so we can reply. Please leave out passwords
-                    and confidential records.
+                    This sends your details to The Harness Lab LLC so we can reply. Please leave out passwords
+                    and confidential records. An enquiry does not start an engagement; work begins only under a
+                    signed proposal governed by our <a href="/legal/client-terms/">Client Services Terms</a>. See
+                    our <a href="/legal/terms/">Website Terms</a> and <a href="/legal/privacy/">Privacy Policy</a>.
                   </p>
 
                   {status === "error" ? (

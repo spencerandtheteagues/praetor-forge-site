@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "node scripts/render-legal.mjs && vite build && node scripts/prerender.mjs",
     "preview": "vite preview --host 0.0.0.0",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "legal": "node scripts/render-legal.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

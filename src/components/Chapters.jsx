@@ -3,13 +3,7 @@ import { ChapterHead, Picture } from "./ui.jsx";
 import { Brand, CalTrigger } from "./Header.jsx";
 import { BUILT_FOR, DELIVERABLES, ENGAGEMENTS, PROCESS } from "../data/narrative.js";
 import { JAYSON } from "../data/wealth.js";
-import {
-  DEV_URL,
-  PHONE_DISPLAY,
-  SALES_EMAIL,
-  SERVICE_PAGES,
-  SPENCER_EMAIL,
-} from "../data/site.js";
+import { DEV_URL, PHONE_DISPLAY, SALES_EMAIL, SERVICE_PAGES, SPENCER_EMAIL, LEGAL_NAME, SOS_FILE_NO } from "../data/site.js";
 import { goToContact, useIntake } from "../lib/intake.js";
 
 /* ------------------------------------------------------------------------ */
@@ -412,10 +406,18 @@ export function Footer() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>© 2026 The Harness Lab · theharnesslab.com</span>
+        <span>
+          © 2026 {LEGAL_NAME}, a Texas limited liability company · Texas SOS File No. {SOS_FILE_NO}
+        </span>
         <span>Custom software · AI automation · Intelligent systems</span>
         <span>The first call is for fit and scope — never for credentials.</span>
       </div>
+      <nav className="container footer-legal" aria-label="Legal">
+        <a href="/legal/">Legal notice</a>
+        <a href="/legal/terms/">Website terms</a>
+        <a href="/legal/privacy/">Privacy policy</a>
+        <a href="/legal/client-terms/">Client services terms</a>
+      </nav>
     </footer>
   );
 }

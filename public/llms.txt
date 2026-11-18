@@ -1,6 +1,6 @@
 # The Harness Lab
 
-> The Harness Lab (https://theharnesslab.com/) is a founder-led custom software and applied AI engineering studio led by Spencer Teague. We design, build, verify, and hand over bespoke workflow automation, custom web and native desktop applications, API integrations, internal tools, and verifiable multi-agent AI harnesses — engineered against real operating data and delivered into repositories and accounts owned 100% by the client.
+> The Harness Lab (https://theharnesslab.com/) is a founder-led custom software and applied AI engineering studio led by Spencer Teague. We design, build, verify, and hand over bespoke workflow automation, custom web and native desktop applications, API integrations, internal tools, and verifiable multi-agent AI harnesses — engineered against real operating data and delivered into repositories and accounts the client owns once the work is paid for.
 
 Every engagement is led directly by founder and lead engineer Spencer Teague with zero account-manager intermediaries. Instead of shipping raw AI wrappers, The Harness Lab builds deterministic verification harnesses around models: primary-source grounding, independent cross-model examination, code-enforced math and risk boundaries, circuit breakers, and explicit human approval gates before any consequential action executes.
 
@@ -37,3 +37,8 @@ White Carrara marble with gold circuit wires marks our flagship commercial studi
 - [Full LLM Technical & Commercial Reference](https://theharnesslab.com/llms-full.txt): Complete studio specification, product telemetry, failure-mode controls, customer-ownership deliverables, Jayson Powers review, and buyer FAQ.
 - [Book a 20-Minute Teardown Call](https://cal.com/harnesslab/teardown): Direct 20-minute workflow diagnostic and fit call with founder Spencer Teague.
 - [Project Intake & Contact](https://theharnesslab.com/#contact): Assemble a live Work Order online, email `sales@theharnesslab.com` or `spencer@theharnesslab.com`, or call `+1-607-364-7772`.
+
+## Legal Entity
+
+- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas Secretary of State File No. 0806765129, formed August 25, 2026). TitleDesk and Artificial Landman are products of The Harness Lab LLC.
+- [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)
