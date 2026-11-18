@@ -70,7 +70,7 @@ export const PRODUCT_SHOWCASES = [
   {
     id: "title-desk",
     name: "TitleDesk",
-    alsoName: "TitleDesk Desktop",
+    alsoName: "TitleDesk Agent",
     domain: "title-desk.com",
     href: "https://title-desk.com/",
     secondaryLink: {
@@ -80,7 +80,7 @@ export const PRODUCT_SHOWCASES = [
     status: "Live production",
     placard: "Texas mineral title · Hosted web platform + native desktop app",
     lede:
-      "Hosted Texas mineral title examination for independent landmen and abstractors at title-desk.com, paired with TitleDesk Desktop (installed as TitleDesk Agent) at desktop.title-desk.com: reads crooked courthouse scans, rebuilds the chain of title, computes exact mineral-interest fractions, checks the final answer with an independent third model against page images, and produces a source-linked draft four-sheet workbook for review by a qualified landman or attorney.",
+      "Hosted Texas mineral title examination for independent landmen and abstractors at title-desk.com, paired with TitleDesk Agent (the TitleDesk desktop app) at desktop.title-desk.com: reads crooked courthouse scans, rebuilds the chain of title, computes exact mineral-interest fractions, checks the final answer with an independent third model against page images, and produces a source-linked draft four-sheet workbook for review by a qualified landman or attorney.",
     logo: {
       webp: "/products/titledesk-web-seal.webp",
       w640: "/products/titledesk-web-seal-640.webp",
@@ -114,9 +114,9 @@ export const PRODUCT_SHOWCASES = [
         ],
       },
       {
-        label: "TitleDesk Desktop · desktop.title-desk.com",
+        label: "TitleDesk Agent · desktop.title-desk.com",
         shots: [
-          shot("titledesk/01b-desktop-agent-landing", ...WIDE, "TitleDesk Desktop landing", "TitleDesk Desktop (installed as TitleDesk Agent): local OCR, local projects, and a built-in title assistant on the landman's own computer.", "TitleDesk Desktop landing page"),
+          shot("titledesk/01b-desktop-agent-landing", ...WIDE, "TitleDesk Agent landing", "TitleDesk Agent, the TitleDesk desktop app across Windows, macOS, and Linux: local OCR, local projects, and a built-in title assistant on the landman's own computer.", "TitleDesk Agent landing page"),
           shot("titledesk/04-workspace-runsheet", ...WIDE, "Source-linked runsheet", "Accepted instruments in chronological order; rows that break the chain are flagged and every entry links to its recorded book and page.", "TitleDesk Agent runsheet workspace with chronological instruments"),
           shot("titledesk/05b-workspace-mineral-ownership", ...WIDE, "Exact mineral ownership", "Mineral ownership is computed with exact rational fractions, never decimals; a tract that does not total unity shows the exact fractional shortfall.", "TitleDesk Agent ownership table with exact fractions and net mineral acres per owner"),
           shot("titledesk/06-workspace-heirship-tree", ...WIDE, "Heirship tree", "Family graph, determinations and curative issues for estates that pass mineral interest without a recorded deed.", "TitleDesk Agent heirship family graph workspace"),

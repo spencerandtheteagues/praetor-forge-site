@@ -23,7 +23,7 @@ const FORBIDDEN = [
   [/Title-Desk/, "Banned hyphenated product name 'Title-Desk'"],
   [/TITLE-DESK/, "Banned uppercase hyphenated name 'TITLE-DESK'"],
   [/Title Desk/, "Banned spaced product name 'Title Desk'"],
-  [/TitleDesk Desktop Agent/, "Banned product name 'TitleDesk Desktop Agent'"],
+  [/TitleDesk Desktop/, "Banned product name 'TitleDesk Desktop' (use 'TitleDesk Agent')"],
   [/TitleDesk Agent Desktop/, "Banned product name 'TitleDesk Agent Desktop'"],
   [/Title-Desk Web/, "Banned product name 'Title-Desk Web'"],
   [/TitleDesk Web/, "Banned product name 'TitleDesk Web'"],

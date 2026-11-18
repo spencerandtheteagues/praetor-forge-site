@@ -66,9 +66,9 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 
 ## 4. Shipped Production Platforms & Portfolio
 
-### TitleDesk & TitleDesk Desktop
+### TitleDesk & TitleDesk Agent
 - **Hosted Web Platform:** https://title-desk.com/ (for independent landmen and abstractors)
-- **Desktop Edition:** https://desktop.title-desk.com/ (Windows, macOS, and Linux; installed binary named TitleDesk Agent)
+- **Desktop App (TitleDesk Agent):** https://desktop.title-desk.com/ (Windows, macOS, and Linux)
 - **Related Service:** https://theharnesslab.com/landman-title-workflow-automation/
 - **Studio Walkthrough Video:** https://theharnesslab.com/#cinema (`PT3M44S` — 3m 44s end-to-end demonstration from Texas survey layers and pre-run intake scope check through live 12-deed examination to a delivered 4-sheet draft workbook).
 - **Telemetry (August–November 2026):** 262,305 core engine lines of code (plus 22,638 TitleDesk hosted web layer, 23,148 Artificial Landman hosted layer sharing the core engine, and 4,288 TractPilot prototype) · 1,662 campaign commits · 7,070 engine tests · 4-month core engineering campaign.
@@ -145,5 +145,5 @@ A: No. TitleDesk and Artificial Landman produce source-linked draft mineral-owne
 
 ## Legal Entity
 
-- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026; venue Tom Green County, Texas). TitleDesk, TitleDesk Desktop, and Artificial Landman are products of The Harness Lab LLC.
+- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026; venue Tom Green County, Texas). TitleDesk, TitleDesk Agent, and Artificial Landman are products of The Harness Lab LLC.
 - [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)

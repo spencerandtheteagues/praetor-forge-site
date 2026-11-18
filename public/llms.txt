@@ -19,7 +19,7 @@ White Carrara marble with gold circuit wires marks our flagship commercial studi
 ## Shipped Production Platforms & Client Systems
 
 - [TitleDesk](https://title-desk.com/): Hosted Texas mineral title examination for independent landmen and abstractors — upload the records for an assignment and get a source-linked draft four-sheet ownership workbook with exact fractions, ready for review by a qualified landman or attorney (built on a 262,305-LOC core engine across 1,662 campaign commits and 7,070 engine tests, August–November 2026).
-- [TitleDesk Desktop](https://desktop.title-desk.com/): Cross-platform desktop workstation (Windows, macOS, and Linux; installed as TitleDesk Agent) for landmen who want examination on their own computer, featuring local OCR on courthouse scans, chronological runsheets, chain-of-title assembly, exact fractional mineral ownership, and heirship family graphs (262,305 core engine LOC).
+- [TitleDesk Agent](https://desktop.title-desk.com/): The TitleDesk desktop app across Windows, macOS, and Linux for landmen who want examination on their own computer, featuring local OCR on courthouse scans, chronological runsheets, chain-of-title assembly, exact fractional mineral ownership, and heirship family graphs (262,305 core engine LOC).
 - [Artificial Landman](https://artificiallandman.io/): Hosted Texas mineral title examination for land teams, brokerages, and operators who run many assignments — running the same Texas mineral-interest engine as TitleDesk, packaged, sold, and supported on its own (23,148 hosted LOC, 54 hosted commits, November 2026).
 - [APEX.BUILD](https://apex-build.dev/): Multi-AI cloud software development platform with a nine-agent build team, Monaco cloud IDE, dead-agent heartbeats, backpressure routing, and bring-your-own-key provider routing (377,197 authored LOC, 966 main-branch commits across five months).
 - [BrandStreams Case Archive](https://theharnesslab.com/#product-brandstreams): Multi-model AI social media agency SaaS evolved from MyAIMediaMgr across nine architectural generations and fourteen months (81,254 authored LOC, 1,364 commits, 424 source files; domain DNS cutover currently in progress).
@@ -40,5 +40,5 @@ White Carrara marble with gold circuit wires marks our flagship commercial studi
 
 ## Legal Entity
 
-- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026). TitleDesk, TitleDesk Desktop, and Artificial Landman are products of The Harness Lab LLC.
+- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026). TitleDesk, TitleDesk Agent, and Artificial Landman are products of The Harness Lab LLC.
 - [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)
