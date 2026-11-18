@@ -278,7 +278,7 @@
   position: relative;
   overflow: clip;
   perspective: 1400px;
-  padding-block: clamp(18px, 2.4vw, 48px) clamp(20px, 2.6vw, 48px);
+  padding-block: clamp(12px, 1.8vw, 30px) clamp(20px, 2.6vw, 48px);
 }
 .hero::before {
   content: "";
@@ -321,9 +321,8 @@
   z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  align-items: center;
+  align-items: start;
   gap: clamp(24px, 3.6vw, 84px);
-  min-height: min(calc(100svh - 196px), 980px);
 }
 .hero-copy {
   min-width: 0;
@@ -462,6 +461,8 @@
   position: relative;
   isolation: isolate;
   min-width: 0;
+  align-self: start;
+  padding-top: clamp(0px, 0.8vh, 10px);
   display: grid;
   place-items: center;
 }

@@ -82,6 +82,18 @@ try {
   assert.doesNotMatch(text, /\$\d|fixed fee|founding clients|spots remaining/i);
   assert.equal(await page.locator('a[href="tel:+16073647772"]').count(), 1);
   assert.equal(await page.locator(".cal-fab").count(), 0);
+  assert.equal(await page.locator(".medallion-controls").count(), 0, "No controls below medallion");
+  assert.equal(await page.locator(".hero-art button").count(), 0, "No buttons inside hero-art");
+  for (const [vw, vh] of [[1440, 1000], [1440, 900], [1280, 800], [1920, 1080]]) {
+    await page.setViewportSize({ width: vw, height: vh });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const box = await page.locator(".medallion-stage").boundingBox();
+    assert.ok(box && box.width >= 380, `Medallion rendered at ${vw}x${vh}`);
+    assert.ok(box.y >= 60, `Medallion top (${box.y}) clears header at ${vw}x${vh}`);
+    assert.ok(box.y + box.height <= vh, `Medallion bottom (${box.y + box.height}) fully visible inside ${vh}px viewport at ${vw}x${vh}`);
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.evaluate(() => window.scrollTo(0, 0));
   assert.ok((await page.locator("[data-cal-link]").count()) >= 3);
   assert.equal(await page.locator(".footer-signature a").count(), 3);
   const brokenAnchors = await page

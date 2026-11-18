@@ -4,14 +4,13 @@
 .medallion {
   display: grid;
   justify-items: center;
-  gap: clamp(10px, 1.6vw, 18px);
   width: 100%;
   min-width: 0;
 }
 
 .medallion-stage {
   position: relative;
-  width: min(100%, 900px);
+  width: min(100%, 540px);
   aspect-ratio: 1;
   margin-inline: auto;
   isolation: isolate;
@@ -21,11 +20,23 @@
   -webkit-tap-highlight-color: transparent;
   border-radius: 999px;
 }
-.medallion-stage[data-state="live"] {
-  cursor: grab;
+@media (min-width: 1024px) {
+  .medallion-stage {
+    width: min(100%, min(45vw, calc(100svh - 156px)), 720px);
+  }
 }
-.medallion-stage[data-state="live"]:active {
+.medallion-stage[data-state="live"] {
+  cursor: pointer;
+}
+.medallion-stage[data-state="live"][data-interactive="true"] {
+  cursor: grab;
+  touch-action: none;
+}
+.medallion-stage[data-state="live"][data-interactive="true"]:active {
   cursor: grabbing;
+}
+.medallion-stage[data-interactive="true"] .medallion-bezel {
+  animation-play-state: paused;
 }
 .medallion-stage:focus-visible {
   outline: 2px solid var(--sapphire);
@@ -156,19 +167,4 @@
 }
 .medallion-stage[data-state="live"] .medallion-picture img {
   opacity: 0;
-}
-
-/* Controls: always reserve one row so their arrival never shifts layout. */
-.medallion-controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  max-width: 100%;
-}
-.medallion-controls .button {
-  min-height: 44px;
-  min-width: 44px;
-  padding-inline: 14px;
 }

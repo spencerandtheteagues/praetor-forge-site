@@ -20,16 +20,13 @@ const TIERS = [
 const DPR_CAP = 2;
 
 const TAU = Math.PI * 2;
-const EDGE_PITCH = (75 * Math.PI) / 180;
-const SETTLE_MS = 1000;
-const FLIP_MS = 820;
+const SPIN_SPEED = TAU / 28; // rad/s — one slow, graceful 360° turn every 28s
 const NUDGE = Math.PI / 12;
 const NUDGE_MS = 280;
-const SETTLE_FROM = { yaw: -0.62, pitch: 0.2 };
-const FRICTION = 3.4; // 1/s; release inertia is below 0.2% after 2s
-const RELEASE_MAX = 2; // seconds; inertia is cut off after this
-const PITCH_OMEGA = 5.5; // critically damped return of the drag pitch
+const FRICTION = 3.6; // 1/s; smooth drag release damping
+const RELEASE_MAX = 1.8; // seconds; inertia settles cleanly after drag release
 const PITCH_LIMIT = 1.38;
+const CLICK_SLOP_PX = 6;
 
 // Hidden numismatic edge-lettering Easter egg: rendered once at high DPI into a
 // seamless 4x-repeating cylindrical height + inlay mask (R = V-groove depth for
@@ -131,7 +128,6 @@ async function buildEdgeEngravingBitmap() {
   });
 }
 
-const easeOutCubic = (x) => 1 - (1 - x) ** 3;
 const easeInOutCubic = (x) =>
   x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2;
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
@@ -150,13 +146,15 @@ function compileShader(gl, type, source) {
  * is "unsupported", "compile", "texture", "invalid-frame", or "context-lost".
  * After onFail the caller should dispose() and show the static picture.
  */
-export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
+export function createMedallionRenderer(canvas, { onReady, onFail, onInteractiveChange } = {}) {
   let disposed = false;
   let failed = false;
   let ready = false;
   let hold = false; // global pause or cinema playing
   let visible = true;
   let docHidden = document.hidden;
+  let interactive = false; // false = slow graceful spin; true = stopped & movable by user
+  let breathBlend = 1; // 1 while spinning, smoothly damps to 0 when stopped for inspection
 
   let raf = 0;
   let demandRaf = 0;
@@ -169,11 +167,10 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
   let bufW = 0;
   let bufH = 0;
 
-  const pose = { yaw: SETTLE_FROM.yaw, pitch: SETTLE_FROM.pitch, yawVel: 0, pitchVel: 0 };
-  let tween = null; // { fromYaw, toYaw, fromPitch, toPitch, start, dur, ease, done }
-  let settled = false;
+  const pose = { yaw: 0, pitch: 0, yawVel: 0, pitchVel: 0 };
+  let tween = null; // { fromYaw, toYaw, fromPitch, toPitch, start, dur, ease }
   let releaseAt = -1;
-  let drag = null; // { id, x, y, ts, width, vel }
+  let drag = null; // { id, pointerType, startX, startY, x, y, maxDist, ts, width, velYaw, velPitch, wasInteractive }
 
   const perf = { ema: 0, base: Infinity, slow: 0, fast: 0, warm: 30, changedAt: 0, drops: [0, 0, 0] };
 
@@ -370,8 +367,6 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
       if (disposed || failed) return;
       measure();
     }
-    // If the loop can't run yet, show the resting pose instead of the settle.
-    if (!canRun()) finishSettle();
     draw();
     const px = new Uint8Array(4);
     gl.readPixels(bufW >> 1, bufH >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
@@ -453,12 +448,23 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
   }
 
   // ---------------------------------------------------------------- motion
+  function setInteractive(next) {
+    const val = Boolean(next);
+    if (interactive === val) return;
+    interactive = val;
+    tween = null;
+    releaseAt = -1;
+    pose.yawVel = 0;
+    pose.pitchVel = 0;
+    onInteractiveChange?.(interactive);
+    requestRender();
+  }
+
   function startTween(toYaw, toPitch, dur, ease = easeInOutCubic) {
     pose.yawVel = 0;
     pose.pitchVel = 0;
     releaseAt = -1;
     if (!canRun()) {
-      // Motion is paused: apply user actions instantly.
       tween = null;
       pose.yaw = toYaw;
       pose.pitch = toPitch;
@@ -469,27 +475,17 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
     tween = { fromYaw: pose.yaw, toYaw, fromPitch: pose.pitch, toPitch, start: clock, dur: dur / 1000, ease };
   }
 
-  function finishSettle() {
-    settled = true;
-    if (tween?.settle) tween = null;
-    pose.yaw = 0;
-    pose.pitch = 0;
-  }
-
   function normalizeYaw() {
     const k = Math.round(pose.yaw / TAU);
     pose.yaw -= k * TAU;
   }
 
   function step(dt) {
-    if (!settled) {
-      settled = true;
-      tween = {
-        fromYaw: pose.yaw, toYaw: 0, fromPitch: pose.pitch, toPitch: 0,
-        start: clock, dur: SETTLE_MS / 1000, ease: easeOutCubic, settle: true,
-      };
-    }
+    const targetBreath = interactive ? 0 : 1;
+    breathBlend += (targetBreath - breathBlend) * Math.min(1, dt * 6);
+
     if (drag) return;
+
     if (tween) {
       const x = clamp((clock - tween.start) / tween.dur, 0, 1);
       const e = tween.ease(x);
@@ -501,16 +497,25 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
       }
       return;
     }
+
+    if (!interactive) {
+      // Slow, graceful continuous 360° spin until clicked.
+      pose.yaw += SPIN_SPEED * dt;
+      if (pose.yaw > Math.PI) pose.yaw -= TAU;
+      pose.pitch *= Math.exp(-4.5 * dt);
+      if (Math.abs(pose.pitch) < 0.0005) pose.pitch = 0;
+      return;
+    }
+
     if (releaseAt >= 0) {
       pose.yaw += pose.yawVel * dt;
-      pose.yawVel *= Math.exp(-FRICTION * dt);
-      const a = -PITCH_OMEGA * PITCH_OMEGA * pose.pitch - 2 * PITCH_OMEGA * pose.pitchVel;
-      pose.pitchVel += a * dt;
-      pose.pitch += pose.pitchVel * dt;
-      if (clock - releaseAt >= RELEASE_MAX) {
+      pose.pitch = clamp(pose.pitch + pose.pitchVel * dt, -PITCH_LIMIT, PITCH_LIMIT);
+      const decay = Math.exp(-FRICTION * dt);
+      pose.yawVel *= decay;
+      pose.pitchVel *= decay;
+      if (clock - releaseAt >= RELEASE_MAX || (Math.abs(pose.yawVel) < 0.002 && Math.abs(pose.pitchVel) < 0.002)) {
         pose.yawVel = 0;
         pose.pitchVel = 0;
-        pose.pitch = 0;
         releaseAt = -1;
         normalizeYaw();
       }
@@ -520,12 +525,12 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
   // ---------------------------------------------------------------- render
   function draw() {
     if (!gl || failed || disposed || bufW === 0) return;
-    // Gentle breathing tilt at rest; weight eases in after the settle.
-    const w = clamp((clock - 0.6) / 1.6, 0, 1);
-    const breath = w * w * (3 - 2 * w);
-    const pitch = pose.pitch + Math.sin(clock * 0.63) * 0.07 * breath;
-    const roll = Math.sin(clock * 0.47) * 0.035 * breath;
-    const bob = Math.sin(clock * 1.05) * 0.03 * breath;
+    // Gentle floating poise while spinning; completely still when stopped by click.
+    const w = clamp(clock / 1.4, 0, 1);
+    const breath = w * w * (3 - 2 * w) * breathBlend;
+    const pitch = pose.pitch + Math.sin(clock * 0.55) * 0.045 * breath;
+    const roll = Math.sin(clock * 0.42) * 0.025 * breath;
+    const bob = Math.sin(clock * 0.92) * 0.022 * breath;
     gl.viewport(0, 0, bufW, bufH);
     gl.disable(gl.BLEND);
     gl.uniform2f(uniforms.uRes, bufW, bufH);
@@ -579,16 +584,11 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
   }
 
   // ---------------------------------------------------------------- API
-  function nearestFace() {
-    return Math.round(pose.yaw / Math.PI) * Math.PI;
-  }
-
   function makeApi() {
     return {
       setHold(value) {
         hold = Boolean(value);
         if (hold && tween) {
-          // Freeze mid-action at its destination rather than mid-air.
           pose.yaw = tween.toYaw;
           pose.pitch = tween.toPitch;
           tween = null;
@@ -597,52 +597,71 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
         }
         updateLoop();
       },
-      flip() {
+      toggleInteractive() {
         if (!ready) return;
-        startTween(nearestFace() + Math.PI, 0, FLIP_MS);
+        setInteractive(!interactive);
       },
-      inspectEdge() {
+      resumeSpin() {
         if (!ready) return;
-        const faceYaw = nearestFace();
-        const isReverse = Math.cos(faceYaw) < 0;
-        startTween(faceYaw, isReverse ? -EDGE_PITCH : EDGE_PITCH, FLIP_MS);
-      },
-      reset() {
-        if (!ready) return;
-        startTween(Math.round(pose.yaw / TAU) * TAU, 0, FLIP_MS);
+        setInteractive(false);
       },
       nudge(direction) {
         if (!ready) return;
+        setInteractive(true);
         const base = tween ? tween.toYaw : pose.yaw;
-        startTween(base + direction * NUDGE, 0, NUDGE_MS);
+        startTween(base + direction * NUDGE, pose.pitch, NUDGE_MS);
       },
       pointerDown(event) {
         if (!ready || drag) return;
         if (event.pointerType === "mouse" && event.button !== 0) return;
         const el = event.currentTarget;
-        el.setPointerCapture?.(event.pointerId);
+        const wasInteractive = interactive;
+
+        // On mouse click, stop the spin immediately so the medallion is halted
+        // and ready to move; on touch while spinning, wait for tap confirmation
+        // so vertical page scrolling is never hijacked.
+        if (event.pointerType === "mouse" && !interactive) {
+          setInteractive(true);
+        }
+        if (interactive || event.pointerType === "mouse") {
+          el.setPointerCapture?.(event.pointerId);
+        }
+
         tween = null;
         releaseAt = -1;
         pose.yawVel = 0;
         pose.pitchVel = 0;
         drag = {
           id: event.pointerId,
+          pointerType: event.pointerType,
+          startX: event.clientX,
+          startY: event.clientY,
           x: event.clientX,
           y: event.clientY,
+          maxDist: 0,
           ts: event.timeStamp,
           width: Math.max(1, el.clientWidth),
-          vel: 0,
+          velYaw: 0,
+          velPitch: 0,
+          wasInteractive,
         };
       },
       pointerMove(event) {
         if (!drag || event.pointerId !== drag.id) return;
+        const totalHyp = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+        if (totalHyp > drag.maxDist) drag.maxDist = totalHyp;
+
+        // Ignore movement until the medallion has been clicked/tapped into interactive mode.
+        if (!interactive) return;
+
         const k = Math.PI / drag.width; // half a turn per stage width
         const dx = event.clientX - drag.x;
         const dy = event.clientY - drag.y;
         const dt = Math.max(1, event.timeStamp - drag.ts) / 1000;
         pose.yaw += dx * k;
-        pose.pitch = clamp(pose.pitch - dy * k * 0.6, -PITCH_LIMIT, PITCH_LIMIT);
-        drag.vel = drag.vel * 0.6 + ((dx * k) / dt) * 0.4;
+        pose.pitch = clamp(pose.pitch - dy * k * 0.72, -PITCH_LIMIT, PITCH_LIMIT);
+        drag.velYaw = drag.velYaw * 0.6 + ((dx * k) / dt) * 0.4;
+        drag.velPitch = drag.velPitch * 0.6 + ((-dy * k * 0.72) / dt) * 0.4;
         drag.x = event.clientX;
         drag.y = event.clientY;
         drag.ts = event.timeStamp;
@@ -650,24 +669,42 @@ export function createMedallionRenderer(canvas, { onReady, onFail } = {}) {
       },
       pointerUp(event) {
         if (!drag || event.pointerId !== drag.id) return;
-        const idle = event.timeStamp - drag.ts > 80;
-        const vel = idle ? 0 : clamp(drag.vel, -8, 8);
-        event.currentTarget.releasePointerCapture?.(event.pointerId);
+        const cur = drag;
         drag = null;
-        if (Math.abs(pose.pitch) > 0.52 && Math.abs(vel) < 0.65) {
-          // User deliberately tilted the medallion to inspect the rim; hold the pose.
-          pose.yawVel = 0;
-          pose.pitchVel = 0;
-          releaseAt = -1;
-          requestRender();
-        } else if (canRun()) {
-          pose.yawVel = vel;
-          pose.pitchVel = 0;
-          releaseAt = clock;
-        } else {
-          pose.pitch = 0;
-          normalizeYaw();
-          requestRender();
+        if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+          event.currentTarget.releasePointerCapture?.(event.pointerId);
+        }
+
+        if (event.type === "pointercancel") return;
+
+        const isCleanClick = cur.maxDist < (cur.pointerType === "mouse" ? CLICK_SLOP_PX : 12);
+
+        // Touch tap while spinning -> stop spin and unlock movement.
+        if (!cur.wasInteractive && !interactive && isCleanClick) {
+          setInteractive(true);
+          return;
+        }
+
+        // Clean click while ALREADY stopped -> resume slow graceful spin.
+        if (cur.wasInteractive && isCleanClick) {
+          setInteractive(false);
+          return;
+        }
+
+        // Finished a drag while interactive -> smooth damping & hold pose.
+        if (interactive) {
+          const idle = event.timeStamp - cur.ts > 80;
+          if (!idle && canRun() && cur.maxDist >= CLICK_SLOP_PX) {
+            pose.yawVel = clamp(cur.velYaw, -6, 6);
+            pose.pitchVel = clamp(cur.velPitch, -4, 4);
+            releaseAt = clock;
+          } else {
+            pose.yawVel = 0;
+            pose.pitchVel = 0;
+            releaseAt = -1;
+            normalizeYaw();
+            requestRender();
+          }
         }
       },
       dispose() {

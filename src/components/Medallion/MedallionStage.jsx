@@ -88,6 +88,7 @@ export default function MedallionStage() {
   const ctrlRef = useRef(null);
   const holdRef = useRef(false);
   const [state, setState] = useState("static");
+  const [interactive, setInteractive] = useState(false);
   const hintId = useId();
   const live = state === "live";
 
@@ -100,6 +101,7 @@ export default function MedallionStage() {
   useEffect(() => {
     if (reduced) {
       setState("reduced");
+      setInteractive(false);
       return undefined;
     }
     const holder = holderRef.current;
@@ -135,9 +137,13 @@ export default function MedallionStage() {
             onReady: () => {
               if (!cancelled) setState("live");
             },
+            onInteractiveChange: (next) => {
+              if (!cancelled) setInteractive(next);
+            },
             onFail: (reason) => {
               if (cancelled) return;
               teardown();
+              setInteractive(false);
               setState(reason === "unsupported" ? "unsupported" : "fallback");
             },
           });
@@ -147,6 +153,7 @@ export default function MedallionStage() {
         .catch(() => {
           if (!cancelled) {
             teardown();
+            setInteractive(false);
             setState("fallback");
           }
         });
@@ -166,11 +173,15 @@ export default function MedallionStage() {
     };
   }, [reduced]);
 
-  const run = (action) => () => ctrlRef.current?.[action]();
-
   const onKeyDown = (event) => {
     if (!live) return;
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      ctrlRef.current?.toggleInteractive();
+    } else if (event.key === "Escape" && interactive) {
+      event.preventDefault();
+      ctrlRef.current?.resumeSpin();
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
       ctrlRef.current?.nudge(event.key === "ArrowLeft" ? -1 : 1);
     }
@@ -185,8 +196,10 @@ export default function MedallionStage() {
       <div
         className="medallion-stage"
         data-state={state}
-        role="group"
-        aria-label="The Harness Lab medallion"
+        data-interactive={interactive ? "true" : "false"}
+        role="button"
+        aria-pressed={live ? interactive : undefined}
+        aria-label="The Harness Lab medallion — spins continuously; click to stop and turn in 3D"
         aria-describedby={live ? hintId : undefined}
         tabIndex={live ? 0 : undefined}
         onKeyDown={onKeyDown}
@@ -201,7 +214,7 @@ export default function MedallionStage() {
           <Picture
             className="medallion-picture"
             srcSet="/brand/harness-lab-hero-aligned-512.webp 512w, /brand/harness-lab-hero-aligned.webp 1024w"
-            sizes="(min-width: 1024px) min(36vw, 740px), 82vw"
+            sizes="(min-width: 1024px) min(36vw, 720px), 82vw"
             fallback="/brand/harness-lab-copper-marble.png"
             alt="The Harness Lab medallion: a winged bust in copper and white marble, ringed by the inscription The Harness Lab"
             width={1024}
@@ -212,31 +225,10 @@ export default function MedallionStage() {
         </div>
         {live && (
           <span id={hintId} className="sr-only">
-            Drag, or use the left and right arrow keys, to turn the medallion.
+            {interactive
+              ? "Stopped for inspection. Drag to turn and tilt the medallion, or click cleanly to resume spinning."
+              : "Spinning slowly. Click on the medallion to stop it and drag to inspect in 3D."}
           </span>
-        )}
-      </div>
-      <div
-        className="medallion-controls"
-        role={live ? "group" : undefined}
-        aria-label={live ? "Medallion controls" : undefined}
-      >
-        {live && (
-          <>
-            <button type="button" className="button button-outline button-small" onClick={run("flip")}>
-              Flip (.com / .dev)
-            </button>
-            <button
-              type="button"
-              className="button button-outline button-small"
-              onClick={run("inspectEdge")}
-            >
-              Inspect edge
-            </button>
-            <button type="button" className="button button-ghost button-small" onClick={run("reset")}>
-              Reset
-            </button>
-          </>
         )}
       </div>
     </div>
