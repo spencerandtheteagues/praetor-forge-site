@@ -16,7 +16,7 @@ export const PERIHELION_TELEMETRY = [
 export const PERIHELION_MONUMENTS = [
   {
     value: "7,070 / 0",
-    subValue: "431 TITLEDESK TEST FILES",
+    subValue: "431 TITLE-DESK TEST FILES",
     label: "Live production regressions repaired and verified with zero failures",
   },
   {
@@ -106,7 +106,7 @@ export const PERIHELION_MODES = [
     title: "Fix & Harden Production Systems",
     summary:
       "Bisects production faults and enforces null_tested_regression gates: every claimed bug fix must include a regression test proven to fail on the base commit and pass on the candidate bytes before merge.",
-    proof: "Proven live: 7,070 passed / 0 failed across 431 TitleDesk test files · 730 passed / 0 failed on Rogue Agents",
+    proof: "Proven live: 7,070 passed / 0 failed across 431 Title-Desk test files · 730 passed / 0 failed on Rogue Agents",
   },
   {
     numeral: "03",

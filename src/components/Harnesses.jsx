@@ -118,7 +118,7 @@ export function HarnessBridge() {
             <p>
               We point the same three harnesses straight at customer problems — and at our
               own flagship platforms. Perihelion Loop repaired and verified all 7,070
-              TitleDesk engine tests and the 730-test Rogue Agents suite, and produced the
+              Title-Desk engine tests and the 730-test Rogue Agents suite, and produced the
               29-feature specification, 15-screen macOS design, and Phase-1 SwiftUI
               foundation for Kiln. BrandStreams and APEX.BUILD are the long campaigns that
               taught us why these harnesses had to exist — and the next chapter shows all

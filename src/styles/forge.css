@@ -144,7 +144,7 @@
   gap: clamp(40px, 4vw, 72px) clamp(20px, 2.4vw, 44px);
   perspective: 1400px;
 }
-/* Row A: TitleDesk Agent carries a runsheet preview, so columns don't
+/* Row A: Title-Desk Agent carries a runsheet preview, so columns don't
    stretch (actions stay with their copy instead of sinking to the floor). */
 .forge-row--flagship .vitrines {
   align-items: start;

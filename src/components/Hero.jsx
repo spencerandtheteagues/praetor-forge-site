@@ -4,7 +4,7 @@ import { CalTrigger } from "./Header.jsx";
 import { useMotion } from "../lib/motion.js";
 
 const SPECS = [
-  ["4 Months · 1,662 Commits", "Taking TitleDesk from a desktop workstation to live online Texas county runs (Aug–Nov 2026)"],
+  ["4 Months · 1,662 Commits", "Taking Title-Desk from a desktop workstation to live online Texas county runs (Aug–Nov 2026)"],
   ["14 Months · 9 Generations", "Rebuilding MyAIMediaMgr into BrandStreams across 1,364 commits until every edge case held"],
   ["5-Star Client OS", "Wealth & Powers OS, built and installed in a single session for investor Jayson Powers"],
 ];
@@ -30,18 +30,40 @@ export default function Hero() {
           <h1 id="hero-title" className="hero-headline">
             <span className="hl-line hl-ideas">
               <span className="hl-seg">
-                <span className="hl-big">Big</span>, ambitious
+                <span className="hl-big hl-3d" data-depth="Big,">
+                  <span className="hl-face">Big,</span>
+                </span>{" "}
+                <span className="hl-word hl-3d" data-depth="ambitious">
+                  <span className="hl-face">ambitious</span>
+                </span>
               </span>{" "}
-              <span className="hl-seg">ideas need</span>
+              <span className="hl-seg">
+                <span className="hl-word hl-3d" data-depth="ideas need">
+                  <span className="hl-face">ideas need</span>
+                </span>
+              </span>
             </span>{" "}
             <span className="hl-line hl-software">
               <span className="hl-seg">
-                <span className="hl-big">big</span>, ambitious
+                <span className="hl-big hl-3d" data-depth="big,">
+                  <span className="hl-face">big,</span>
+                </span>{" "}
+                <span className="hl-word hl-3d" data-depth="ambitious">
+                  <span className="hl-face">ambitious</span>
+                </span>
               </span>{" "}
-              <span className="hl-seg">software.</span>
+              <span className="hl-seg">
+                <span className="hl-word hl-3d" data-depth="software.">
+                  <span className="hl-face">software.</span>
+                </span>
+              </span>
             </span>{" "}
             <span className="hl-line hl-us">
-              That’s where we come in<span className="hl-stop">.</span>
+              <span className="hl-word hl-3d" data-depth="That’s where we come in.">
+                <span className="hl-face">
+                  That’s where we come in<span className="hl-stop">.</span>
+                </span>
+              </span>
             </span>
           </h1>
 

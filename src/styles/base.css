@@ -43,8 +43,9 @@
     transparent
   );
 
-  /* Type — Monumental 3D Chiseled Display + Muscular Engineering Grotesk */
-  --font-display: "Cinzel", "Cinzel Fallback", "Trajan Pro", Georgia, serif;
+  /* Type — Monumental 3D Extruded Architectural Display + Roman Inscription Eyebrows */
+  --font-display:
+    "Outfit", "Outfit Fallback", "Space Grotesk", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-subhead:
     "Space Grotesk", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-inscription: "Cinzel", "Cinzel Fallback", "Trajan Pro", Georgia, serif;
@@ -54,40 +55,44 @@
     "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --step-h1: clamp(2.05rem, 0.88rem + 2.42vw, 5.2rem);
-  --step-h2: clamp(1.85rem, 1.15rem + 2.35vw, 4.1rem);
-  --step-h3: clamp(1.22rem, 1.02rem + 0.8vw, 1.85rem);
+  --step-h2: clamp(1.9rem, 1.2rem + 2.4vw, 4.15rem);
+  --step-h3: clamp(1.24rem, 1.04rem + 0.82vw, 1.88rem);
   --step-body: clamp(1rem, 0.95rem + 0.22vw, 1.22rem);
   --step-small: clamp(0.88rem, 0.85rem + 0.12vw, 1rem);
   --step-meta: clamp(0.7rem, 0.67rem + 0.12vw, 0.85rem);
 
-  /* Physical 3D extrusion stacks (carved Carrara stone + cast 24k bronze) */
+  /* Physical 3D extrusion stacks — sunlit carved Carrara marble & 24k cast bronze
+     that visibly pop off pure #000000 obsidian with multi-step diagonal side walls */
   --extrude-stone:
-    0 -1px 0 rgba(255, 252, 244, 0.48),
-    0 1px 0 #b8ad99,
-    1px 2px 0 #8d826f,
-    2px 3px 0 #665d4e,
-    3px 4px 0 #463f34,
-    4px 5px 0 #2b261f,
-    5px 6px 0 #171410,
-    0 14px 28px rgba(0, 0, 0, 0.92),
-    0 26px 52px rgba(0, 0, 0, 0.82);
+    -1px -1px 0 rgba(255, 253, 246, 0.78),
+    1px 1px 0 #d5c29e,
+    2px 2px 0 #b89f74,
+    3px 3px 0 #997e52,
+    4px 4px 0 #7b623b,
+    5px 5px 0 #5e4928,
+    6px 6px 0 #423219,
+    7px 8px 0 #281d0d,
+    10px 13px 10px rgba(0, 0, 0, 0.9),
+    0 22px 44px rgba(0, 0, 0, 0.94);
 
   --extrude-gold:
-    0 -1px 0 rgba(255, 248, 220, 0.65),
-    0 1px 0 #b88430,
-    1px 2px 0 #95671f,
-    2px 3px 0 #744d13,
-    3px 4px 0 #55360a,
-    4px 5px 0 #392205,
-    5px 6px 0 #1f1102,
-    0 14px 30px rgba(0, 0, 0, 0.95),
-    0 22px 48px rgba(200, 102, 46, 0.3);
+    -1px -1px 0 rgba(255, 250, 224, 0.88),
+    1px 1px 0 #e3b053,
+    2px 2px 0 #c58e33,
+    3px 3px 0 #a6711f,
+    4px 4px 0 #895912,
+    5px 5px 0 #6c430a,
+    6px 6px 0 #4f2f05,
+    7px 8px 0 #311c02,
+    10px 13px 10px rgba(0, 0, 0, 0.92),
+    0 22px 46px rgba(200, 102, 46, 0.36);
 
   --extrude-sub:
-    0 -1px 0 rgba(255, 248, 232, 0.24),
-    0 1px 0 #594b35,
-    1px 2px 0 #2e2519,
-    0 8px 18px rgba(0, 0, 0, 0.88);
+    -1px -1px 0 rgba(255, 250, 236, 0.45),
+    1px 1px 0 #b89b6a,
+    2px 2px 0 #7b6036,
+    3px 3px 0 #3d2d15,
+    5px 8px 14px rgba(0, 0, 0, 0.9);
 
   /* Layout widths */
   --read: 64ch;
@@ -109,6 +114,14 @@
 }
 
 /* Metric-matched fallbacks keep layout stable while web fonts swap in. */
+@font-face {
+  font-family: "Outfit Fallback";
+  src: local("Arial Black"), local("Arial");
+  size-adjust: 100%;
+  ascent-override: 96%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
 @font-face {
   font-family: "Cinzel Fallback";
   src: local("Georgia");
@@ -198,31 +211,35 @@ h4 {
   text-wrap: balance;
 }
 
-/* Monumental 3D Chiseled Display & Muscular Grotesk Subheads */
+/* Monumental 3D Extruded Display & Sculpted Subheads */
 h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.012em;
+  word-spacing: 0.06em;
   text-transform: uppercase;
-  color: #faf5eb;
+  color: #fcf8ef;
   text-shadow: var(--extrude-stone);
 }
 h2 {
   font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: 0.015em;
-  color: #faf5eb;
+  letter-spacing: 0.01em;
+  word-spacing: 0.05em;
+  color: #fcf8ef;
   text-shadow: var(--extrude-stone);
 }
 h3,
 h4 {
-  font-family: var(--font-subhead);
+  font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.005em;
+  color: #faf5eb;
+  text-shadow: var(--extrude-sub);
 }
 .gold-3d {
   font-style: normal;
-  color: #f7cf7d;
+  color: #ffe094;
   text-shadow: var(--extrude-gold);
 }
 /* Shared 3D perspective beveled slab */
@@ -424,16 +441,17 @@ section[id],
   font-family: var(--font-display);
   font-size: var(--step-h2);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: 0.015em;
+  line-height: 1.1;
+  letter-spacing: 0.012em;
+  word-spacing: 0.06em;
   text-transform: uppercase;
-  color: #faf5eb;
+  color: #fcf8ef;
   text-shadow: var(--extrude-stone);
 }
 .chapter-head h2 em,
 .chapter-head h2 .gold-3d {
   font-style: normal;
-  color: #f7cf7d;
+  color: #ffe094;
   text-shadow: var(--extrude-gold);
 }
 .chapter-lede {

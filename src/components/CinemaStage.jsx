@@ -225,7 +225,7 @@ export default function CinemaStage() {
           }
         >
           <p>
-            Start with the 3m 44s TitleDesk walkthrough — a sample
+            Start with the 2m 29s Title-Desk walkthrough — a sample
             twelve-instrument demonstration from scope check to delivered draft workbook, with
             the run shortened — then the studio showcase and our
             verification-to-handover reel. Sound stays off until you ask for it.

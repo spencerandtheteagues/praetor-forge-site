@@ -69,8 +69,8 @@ export const ROGUE_AGENTS = {
 export const PRODUCT_SHOWCASES = [
   {
     id: "title-desk",
-    name: "TitleDesk",
-    alsoName: "TitleDesk Agent",
+    name: "Title-Desk",
+    alsoName: "Title-Desk Agent",
     domain: "title-desk.com",
     href: "https://title-desk.com/",
     secondaryLink: {
@@ -80,7 +80,7 @@ export const PRODUCT_SHOWCASES = [
     status: "Live production",
     placard: "Texas mineral title · Hosted web platform + native desktop app",
     lede:
-      "Hosted Texas mineral title examination for independent landmen and abstractors at title-desk.com, paired with TitleDesk Agent (the TitleDesk desktop app) at desktop.title-desk.com: reads crooked courthouse scans, rebuilds the chain of title, computes exact mineral-interest fractions, checks the final answer with an independent third model against page images, and produces a source-linked draft four-sheet workbook for review by a qualified landman or attorney.",
+      "Hosted Texas mineral title examination for independent landmen and abstractors at title-desk.com, paired with Title-Desk Agent (the Title-Desk desktop app) at desktop.title-desk.com: reads crooked courthouse scans, rebuilds the chain of title, computes exact mineral-interest fractions, checks the final answer with an independent third model against page images, and produces a source-linked draft four-sheet workbook for review by a qualified landman or attorney.",
     logo: {
       webp: "/products/titledesk-web-seal.webp",
       w640: "/products/titledesk-web-seal-640.webp",
@@ -95,7 +95,7 @@ export const PRODUCT_SHOWCASES = [
       ["4 Months", "Aug–Nov 2026"],
     ],
     breakdown: [
-      ["22,638", "TitleDesk hosted web layer"],
+      ["22,638", "Title-Desk hosted web layer"],
       ["23,148", "Artificial Landman hosted layer (shared engine)"],
       ["4,288", "TractPilot prototype"],
     ],
@@ -105,21 +105,21 @@ export const PRODUCT_SHOWCASES = [
     },
     groups: [
       {
-        label: "TitleDesk · title-desk.com",
+        label: "Title-Desk · title-desk.com",
         shots: [
-          shot("titledesk-hosted/01-landing", ...WIDE, "Survey landing page", "The title-desk.com landing page: a surveyed Texas land layer introducing the upload-and-examine mineral workflow for independent landmen and abstractors.", "TitleDesk landing page with a topographic Texas survey hero"),
-          shot("titledesk-hosted/03-workspace-intake-verifier", ...WIDE, "Pre-run intake verifier", "Before an examination run starts, a deterministic scope check reconciles tract acreage, abstracts and attached instruments, and lists what to review.", "TitleDesk intake workspace with assignment tracts, instruments, and a scope-check guide"),
-          shot("titledesk-hosted/04-workspace-live-examination", ...WIDE, "Live dual-examiner run", "Two Gemini sessions examine the records separately while an independent third model checks the final answer against page images; unresolved tracts stay proposals leading the curative requirements.", "TitleDesk live examination screen with a run timer and cross-family examiner status"),
-          shot("titledesk-hosted/05-workspace-workbook", ...WIDE, "Four-sheet draft workbook", "The delivered draft record: source-linked mineral ownership with exact fractions, net mineral acres, and curative requirements ready for review by a qualified landman or attorney.", "TitleDesk source-linked draft mineral ownership workbook"),
+          shot("titledesk-hosted/01-landing", ...WIDE, "Survey landing page", "The title-desk.com landing page: a surveyed Texas land layer introducing the upload-and-examine mineral workflow for independent landmen and abstractors.", "Title-Desk landing page with a topographic Texas survey hero"),
+          shot("titledesk-hosted/03-workspace-intake-verifier", ...WIDE, "Pre-run intake verifier", "Before an examination run starts, a deterministic scope check reconciles tract acreage, abstracts and attached instruments, and lists what to review.", "Title-Desk intake workspace with assignment tracts, instruments, and a scope-check guide"),
+          shot("titledesk-hosted/04-workspace-live-examination", ...WIDE, "Live dual-examiner run", "Two Gemini sessions examine the records separately while an independent third model checks the final answer against page images; unresolved tracts stay proposals leading the curative requirements.", "Title-Desk live examination screen with a run timer and cross-family examiner status"),
+          shot("titledesk-hosted/05-workspace-workbook", ...WIDE, "Four-sheet draft workbook", "The delivered draft record: source-linked mineral ownership with exact fractions, net mineral acres, and curative requirements ready for review by a qualified landman or attorney.", "Title-Desk source-linked draft mineral ownership workbook"),
         ],
       },
       {
-        label: "TitleDesk Agent · desktop.title-desk.com",
+        label: "Title-Desk Agent · desktop.title-desk.com",
         shots: [
-          shot("titledesk/01b-desktop-agent-landing", ...WIDE, "TitleDesk Agent landing", "TitleDesk Agent, the TitleDesk desktop app across Windows, macOS, and Linux: local OCR, local projects, and a built-in title assistant on the landman's own computer.", "TitleDesk Agent landing page"),
-          shot("titledesk/04-workspace-runsheet", ...WIDE, "Source-linked runsheet", "Accepted instruments in chronological order; rows that break the chain are flagged and every entry links to its recorded book and page.", "TitleDesk Agent runsheet workspace with chronological instruments"),
-          shot("titledesk/05b-workspace-mineral-ownership", ...WIDE, "Exact mineral ownership", "Mineral ownership is computed with exact rational fractions, never decimals; a tract that does not total unity shows the exact fractional shortfall.", "TitleDesk Agent ownership table with exact fractions and net mineral acres per owner"),
-          shot("titledesk/06-workspace-heirship-tree", ...WIDE, "Heirship tree", "Family graph, determinations and curative issues for estates that pass mineral interest without a recorded deed.", "TitleDesk Agent heirship family graph workspace"),
+          shot("titledesk/01b-desktop-agent-landing", ...WIDE, "Title-Desk Agent landing", "Title-Desk Agent, the Title-Desk desktop app across Windows, macOS, and Linux: local OCR, local projects, and a built-in title assistant on the landman's own computer.", "Title-Desk Agent landing page"),
+          shot("titledesk/04-workspace-runsheet", ...WIDE, "Source-linked runsheet", "Accepted instruments in chronological order; rows that break the chain are flagged and every entry links to its recorded book and page.", "Title-Desk Agent runsheet workspace with chronological instruments"),
+          shot("titledesk/05b-workspace-mineral-ownership", ...WIDE, "Exact mineral ownership", "Mineral ownership is computed with exact rational fractions, never decimals; a tract that does not total unity shows the exact fractional shortfall.", "Title-Desk Agent ownership table with exact fractions and net mineral acres per owner"),
+          shot("titledesk/06-workspace-heirship-tree", ...WIDE, "Heirship tree", "Family graph, determinations and curative issues for estates that pass mineral interest without a recorded deed.", "Title-Desk Agent heirship family graph workspace"),
         ],
       },
     ],
@@ -132,7 +132,7 @@ export const PRODUCT_SHOWCASES = [
     status: "Live production",
     placard: "Texas mineral title · Built for land teams, brokerages & operators",
     lede:
-      "Hosted Texas mineral title examination for land teams, brokerages and operators who run many assignments. Artificial Landman runs the same Texas mineral-interest engine as TitleDesk, packaged, sold and supported on its own with a dedicated brass-and-topographic workspace.",
+      "Hosted Texas mineral title examination for land teams, brokerages and operators who run many assignments. Artificial Landman runs the same Texas mineral-interest engine as Title-Desk, packaged, sold and supported on its own with a dedicated brass-and-topographic workspace.",
     logo: {
       webp: "/products/artificial-landman-seal.webp",
       w640: "/products/artificial-landman-seal-640.webp",
@@ -332,7 +332,7 @@ export const LANDING_GALLERY = [
 export const CINEMA_CUTS = [
   {
     id: "titledesk-walkthrough",
-    tab: "TitleDesk Walkthrough",
+    tab: "Title-Desk Walkthrough",
     meta: "16:9 · 2m 29s",
     src: "/video/titledesk-sales-demo-2027.mp4",
     poster: "/video/titledesk-sales-demo-poster.webp",
@@ -341,7 +341,7 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "End-to-end TitleDesk workspace tour: passwordless sign-in, pre-run scope check, live twelve-instrument examination, emailed deliverable, and pause-verifiable four-sheet draft workbook. Demonstration with a sample assignment; run time shortened. In production, the third-model check allows one repair and keeps any still-unresolved tract as a proposal leading curative requirements.",
+      "End-to-end Title-Desk workspace tour: passwordless sign-in, pre-run scope check, live twelve-instrument examination, emailed deliverable, and pause-verifiable four-sheet draft workbook. Demonstration with a sample assignment; run time shortened. In production, the third-model check allows one repair and keeps any still-unresolved tract as a proposal leading curative requirements.",
     chapters: [
       { t: 0, label: "Sign-In & Scope Check" },
       { t: 30.3, label: "Live 12-Deed Run" },
@@ -360,10 +360,10 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "The studio film: our zero-quit thesis, TitleDesk & Artificial Landman, Mythos OS & Rogue Agents, and BrandStreams & APEX.BUILD.",
+      "The studio film: our zero-quit thesis, Title-Desk & Artificial Landman, Mythos OS & Rogue Agents, and BrandStreams & APEX.BUILD.",
     chapters: [
       { t: 0, label: "Zero-Quit Thesis" },
-      { t: 6.2, label: "TitleDesk & Artificial Landman" },
+      { t: 6.2, label: "Title-Desk & Artificial Landman" },
       { t: 11.4, label: "Mythos OS & Rogue Agents" },
       { t: 16.6, label: "BrandStreams & APEX.BUILD" },
     ],

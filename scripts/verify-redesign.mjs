@@ -6,7 +6,7 @@ import { extname, join, relative, resolve } from "node:path";
 const { chromium } = await import(
   process.env.PLAYWRIGHT_MODULE || "playwright"
 );
-const base = process.env.PREVIEW_URL || "http://127.0.0.1:4174";
+const base = process.env.PREVIEW_URL || process.env.VERIFY_BASE_URL || "http://127.0.0.1:4174";
 const distDir = resolve(import.meta.dirname, "..", "dist");
 // theharnesslab.com may only link out to these exact hostnames.
 const LINK_ALLOWLIST = [
@@ -81,7 +81,8 @@ try {
   const text = await page.locator("body").innerText();
   for (const phrase of [
     "Landman title",
-    "TitleDesk Agent",
+    "Title-Desk",
+    "Title-Desk Agent",
     "Jayson Powers",
     "BrandStreams",
     "APEX.BUILD",
@@ -98,6 +99,8 @@ try {
   await page.evaluate(async () => {
     await document.fonts?.load('800 32px "Cinzel"');
     await document.fonts?.load('900 44px "Cinzel"');
+    await document.fonts?.load('800 32px "Outfit"');
+    await document.fonts?.load('900 44px "Outfit"');
     await document.fonts?.ready;
   });
   for (const [vw, vh] of [[1440, 1000], [1440, 900], [1280, 800], [1920, 1080]]) {

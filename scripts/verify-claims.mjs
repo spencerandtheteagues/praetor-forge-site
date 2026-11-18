@@ -19,14 +19,19 @@ const TEXT_EXT = new Set([
   ".webmanifest",
 ]);
 
+// Permitted non-prose asset paths, filenames, and element/tab identifiers that
+// intentionally retain lowercase 'titledesk' so zero URLs, imports, or anchors break.
+const ALLOWED_TITLEDESK_IDENTIFIERS =
+  /(?:\/showcase\/|")titledesk(?:-hosted)?\/|\/products\/titledesk-(?:web|agent)-seal|\/video\/titledesk-sales-demo|#(?!-)video-titledesk-walkthrough|#(?!-)software-titledesk-agent|#(?!-)titledesk\b|titledesk-name|cinema-tab-titledesk-walkthrough|"titledesk(?:-walkthrough)?"/g;
+
 const FORBIDDEN = [
-  [/Title-Desk/, "Banned hyphenated product name 'Title-Desk'"],
-  [/TITLE-DESK/, "Banned uppercase hyphenated name 'TITLE-DESK'"],
-  [/Title Desk/, "Banned spaced product name 'Title Desk'"],
-  [/TitleDesk Desktop/, "Banned product name 'TitleDesk Desktop' (use 'TitleDesk Agent')"],
-  [/TitleDesk Agent Desktop/, "Banned product name 'TitleDesk Agent Desktop'"],
-  [/Title-Desk Web/, "Banned product name 'Title-Desk Web'"],
-  [/TitleDesk Web/, "Banned product name 'TitleDesk Web'"],
+  [/TitleDesk/, "Banned unhyphenated product name 'TitleDesk' (use 'Title-Desk' or 'Title-Desk Agent')"],
+  [/TITLEDESK/, "Banned uppercase unhyphenated name 'TITLEDESK' (use 'TITLE-DESK')"],
+  [/titledesk/i, "Banned unhyphenated 'titledesk' outside allowlisted asset paths/IDs (use 'Title-Desk')"],
+  [/Title\s+Desk/i, "Banned spaced product name 'Title Desk' (use 'Title-Desk')"],
+  [/Title-Desk Desktop\b/, "Banned product name 'Title-Desk Desktop' / 'Title-Desk Desktop Agent' (use 'Title-Desk Agent')"],
+  [/Title-Desk Agent Desktop/i, "Banned product name 'Title-Desk Agent Desktop' (use 'Title-Desk Agent')"],
+  [/Title-Desk Web/i, "Banned product name 'Title-Desk Web'"],
   [/New Mexico/i, "Banned 'New Mexico' capability/roadmap claim"],
   [/\b28-build\b/i, "Stale '28-build' count (canonical .dev ledger is 27-build)"],
   [/\b282\s*\/\s*282\b/, "Volatile hosted test count '282/282'"],
@@ -62,11 +67,35 @@ try {
 for await (const file of walk(distDir)) {
   const rel = relative(distDir, file);
   if (!TEXT_EXT.has(extname(file))) continue;
-  const content = await readFile(file, "utf8");
+  const rawContent = await readFile(file, "utf8");
+  const content = rawContent.replace(ALLOWED_TITLEDESK_IDENTIFIERS, "__ALLOWED_ASSET_ID__");
   for (const [pattern, reason] of FORBIDDEN) {
     const match = content.match(pattern);
     if (match) {
       failures.push(`${rel}: ${reason} (matched "${match[0]}")`);
+    }
+  }
+}
+
+// Require canonical hyphenated product names ('Title-Desk' & 'Title-Desk Agent') across public text surfaces
+for (const [rel, requiredNames] of [
+  ["index.html", ["Title-Desk", "Title-Desk Agent"]],
+  ["llms.txt", ["Title-Desk", "Title-Desk Agent"]],
+  ["llms-full.txt", ["Title-Desk", "Title-Desk Agent"]],
+  ["legal/index.html", ["Title-Desk", "Title-Desk Agent"]],
+  ["legal/terms/index.html", ["Title-Desk"]],
+  ["legal/privacy/index.html", ["Title-Desk"]],
+  ["ai-workflow-automation/index.html", ["Title-Desk", "Title-Desk Agent"]],
+  ["custom-software-development/index.html", ["Title-Desk", "Title-Desk Agent"]],
+  ["website-design-development/index.html", ["Title-Desk", "Title-Desk Agent"]],
+  ["internal-tools-development/index.html", ["Title-Desk", "Title-Desk Agent"]],
+  ["api-integrations/index.html", ["Title-Desk", "Title-Desk Agent"]],
+  ["landman-title-workflow-automation/index.html", ["Title-Desk", "Title-Desk Agent"]],
+]) {
+  const txt = await readFile(join(distDir, rel), "utf8");
+  for (const name of requiredNames) {
+    if (!txt.includes(name)) {
+      failures.push(`${rel}: missing required hyphenated brand '${name}'`);
     }
   }
 }

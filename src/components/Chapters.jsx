@@ -238,8 +238,8 @@ export function Founder() {
           </p>
           <p>
             I’m Spencer Teague, founder and lead engineer of The Harness Lab. Taking
-            TitleDesk Agent from an offline desktop workstation to live online Texas
-            county runs on TitleDesk and Artificial Landman took four straight months
+            Title-Desk Agent from an offline desktop workstation to live online Texas
+            county runs on Title-Desk and Artificial Landman took four straight months
             from August through November 2026 across 1,662 commits and 305+ git
             branches. Evolving MyAIMediaMgr into BrandStreams took fourteen months,
             nine architectural generations and 1,364 commits — alongside five months
