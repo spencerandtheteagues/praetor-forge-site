@@ -1,12 +1,13 @@
 {
-  "checkedAt": "2026-09-14T09:30:59.960Z",
+  "checkedAt": "2026-11-18T04:18:14.074Z",
   "base": "http://127.0.0.1:4174",
   "results": [
     "Required copy, contact links, price removal, single H1, and navigation targets pass.",
+    "Outbound links stay on the allowlist; no GitHub links, dollar signs, 5.5 strings, profanity or retired project names; landing gallery is link-free; dist is clean.",
     "All three workflow examples complete; switching examples cancels previous timers; pause/resume works.",
-    "All five screenshot previews open, close on Escape, and restore keyboard focus.",
+    "Every rendered screenshot preview opens, closes on Escape, and restores keyboard focus.",
     "Mocked contact success and server failure pass; native validation blocks empty submission; failure preserves input and offers email fallback. No email sent.",
-    "No horizontal overflow at 320, 390, 768, 1024, or 1440 pixels. Mobile navigation opens and closes after selection.",
+    "No horizontal overflow at 320, 390, 768, 1024, 1440, 2560, or 3840 pixels. Mobile navigation opens and closes after selection.",
     "Reduced-motion mode disables ambient animation and completes the example without motion.",
     "All rendered images decode; no JavaScript exceptions or failed local assets. Desktop and mobile screenshots saved."
   ],

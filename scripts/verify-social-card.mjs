@@ -54,25 +54,29 @@ function expectLink(rel, expected) {
   }
 }
 
-const description =
-  'We build custom AI agent harnesses: Hermes/OpenClaw setup, customer-owned builds, rescue work, and audits — smoke tests, runbooks, and handoff with no hosted secrets.';
+const ogTitle = 'Websites, Custom Software &amp; AI Automation | The Harness Lab';
+const ogDescription =
+  'Six months and 1,662 commits on Title-Desk. Fourteen months and nine generations on BrandStreams. Custom software and AI harnesses built until real work runs end to end — owned by you.';
+const twitterDescription =
+  'Bespoke workflow automation, full-stack software and verifiable AI harnesses. See Rogue Agents, Perihelion Loop, Title-Desk, Artificial Landman, BrandStreams and APEX.BUILD running for real.';
+const cardAlt = 'The Harness Lab copper and marble winged medallion on black';
 
 expectLink('canonical', 'https://theharnesslab.com/');
 expectMeta('property', 'og:url', 'https://theharnesslab.com/');
 expectMeta('property', 'og:type', 'website');
-expectMeta('property', 'og:title', 'The Harness Lab');
-expectMeta('property', 'og:description', description);
+expectMeta('property', 'og:title', ogTitle);
+expectMeta('property', 'og:description', ogDescription);
 expectMeta('property', 'og:image', 'https://theharnesslab.com/social-card.png');
 expectMeta('property', 'og:image:secure_url', 'https://theharnesslab.com/social-card.png');
 expectMeta('property', 'og:image:type', 'image/png');
 expectMeta('property', 'og:image:width', '1200');
 expectMeta('property', 'og:image:height', '630');
-expectMeta('property', 'og:image:alt', 'The Harness Lab logo');
+expectMeta('property', 'og:image:alt', cardAlt);
 expectMeta('name', 'twitter:card', 'summary_large_image');
-expectMeta('name', 'twitter:title', 'The Harness Lab');
-expectMeta('name', 'twitter:description', description);
+expectMeta('name', 'twitter:title', ogTitle);
+expectMeta('name', 'twitter:description', twitterDescription);
 expectMeta('name', 'twitter:image', 'https://theharnesslab.com/social-card.png');
-expectMeta('name', 'twitter:image:alt', 'The Harness Lab logo');
+expectMeta('name', 'twitter:image:alt', cardAlt);
 
 let cardStats;
 let card;
