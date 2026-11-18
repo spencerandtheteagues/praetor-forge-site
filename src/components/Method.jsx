@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, CheckCheck, ChevronRight, FileText, Play, Plus } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronRight, FileText, Play, Plus } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
 import { FAILURES, GATES, WORKFLOWS } from "../data/narrative.js";
 import { useIntake } from "../lib/intake.js";
+import { DEV_URL } from "../data/site.js";
 import { useMotion } from "../lib/motion.js";
 
 // Workflow explorer: three steps light the three optical gates on the plate.
@@ -244,22 +245,55 @@ export default function Method() {
       <span id="diagram" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="VII"
-          eyebrow="The harness method · Why we never trust raw model output"
+          numeral="II"
+          eyebrow="How we operate · Why we never ship raw model output"
           id="method-title"
           title={
             <>
-              Models guess. <em>Harnesses verify.</em>
+              Wrappers guess and stall. <em>Harnesses verify.</em>
             </>
           }
         >
           <p>
-            After 3,850+ commits across real courthouse deeds, OAuth callbacks, and
-            live portfolios, we learned one law: raw AI models hallucinate under
-            pressure. Every system we build forces work through primary-source
-            grounding, independent cross-examination, and hard human gates.
+            Raw AI wrappers guess, stall, and report “done” while the work is still
+            broken. So we build the custom, deterministic harness first — primary-source
+            grounding, independent cross-examination, hard limits and human gates — and
+            then iterate relentlessly until every primary-source check and every holdout
+            test passes on real data. Across 3,900+ commits on courthouse deeds, OAuth
+            callbacks and live portfolios, that discipline is the difference between a
+            demo and a system you can run your business on.
           </p>
         </ChapterHead>
+        <aside className="credibility-card" aria-labelledby="credibility-title">
+          <picture className="credibility-seal">
+            <source
+              type="image/webp"
+              srcSet="/brand/harness-lab-black-marble-512.webp 512w, /brand/harness-lab-black-marble.webp 1024w"
+              sizes="132px"
+            />
+            <img
+              src="/brand/harness-lab-black-marble.png"
+              alt="The Harness Lab black-marble engineering seal"
+              width="512"
+              height="512"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <div className="credibility-copy">
+            <p className="inscription">Black-marble engineering foundry · theharnesslab.dev</p>
+            <h3 id="credibility-title">Inspect the architecture before you hire us.</h3>
+            <p>
+              Our engineering site publishes the state machines, the Perihelion Loop
+              internals, the twelve-tool verification bench, and the full 28-build
+              evolution ledger with commit-level provenance. Engineers can step the
+              execution labs in the browser and judge the work for themselves.
+            </p>
+          </div>
+          <a className="button button-gold credibility-action" href={DEV_URL} target="_blank" rel="noopener noreferrer">
+            Inspect theharnesslab.dev <ArrowUpRight aria-hidden="true" />
+          </a>
+        </aside>
       </div>
       <div className="container-media method-instrument">
         <ConduitPlate step={runner.step} />

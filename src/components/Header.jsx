@@ -3,15 +3,18 @@ import { ArrowUpRight, CalendarCheck, Menu, X } from "lucide-react";
 import { CALENDAR_URL, CAL_LINK, CAL_NAMESPACE, DEV_URL } from "../data/site.js";
 
 const NAV = [
-  { href: "#timeline", numeral: "II", label: "Timeline", ids: ["timeline"] },
-  { href: "#trenches", numeral: "III", label: "The grind", ids: ["trenches"] },
-  { href: "#cinema", numeral: "IV", label: "Cinema", ids: ["cinema"] },
-  { href: "#perihelion-loop", numeral: "V", label: "Perihelion", ids: ["perihelion-loop"] },
-  { href: "#work", numeral: "VI", label: "Our work", ids: ["work"] },
-  { href: "#method", numeral: "VII", label: "Method", ids: ["method"] },
-  { href: "#our-os", numeral: "VIII", label: "Cockpits", ids: ["our-os", "case-study"] },
-  { href: "#capabilities", numeral: "X", label: "Capabilities", ids: ["ownership", "how", "capabilities"] },
-  { href: "#about", numeral: "XI", label: "The founder", ids: ["about"] },
+  { href: "#method", numeral: "II", label: "How we work", ids: ["method"] },
+  {
+    href: "#harnesses",
+    numeral: "III",
+    label: "Our harnesses",
+    ids: ["harnesses", "perihelion-loop", "our-os", "custom-built"],
+  },
+  { href: "#work", numeral: "IV", label: "Our work", ids: ["cinema", "work"] },
+  { href: "#case-study", numeral: "V", label: "Client proof", ids: ["case-study"] },
+  { href: "#landing-gallery", numeral: "VI", label: "Landing pages", ids: ["landing-gallery"] },
+  { href: "#capabilities", numeral: "VII", label: "Engage", ids: ["ownership", "capabilities"] },
+  { href: "#about", numeral: "VII·C", label: "The founder", ids: ["about"] },
 ];
 
 // Cal.com triggers: a real link to the booking page that the deferred embed

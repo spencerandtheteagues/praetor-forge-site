@@ -1,5 +1,13 @@
 import Explorer from "./Explorer.jsx";
 import { ChapterHead, Picture } from "./ui.jsx";
+import { TelemetryBadge } from "./Showcase.jsx";
+
+const WEALTH_TELEMETRY = [
+  ["7,110", "Authored LOC"],
+  ["45", "Source files"],
+  ["10", "Investor surfaces"],
+  ["1 Month", "Rapid sprint"],
+];
 import { JAYSON, WEALTH_GROUPS, WEALTH_SCREENS } from "../data/wealth.js";
 
 // Risk-envelope dial geometry (pure math, identical on server and client).
@@ -82,7 +90,7 @@ function RiskDial() {
 
 const renderExtra = (group) => (group.id === "midas" ? <RiskDial /> : null);
 
-/** Chapter VI — Wealth & Powers OS client build + Jayson Powers testimony. No props. */
+/** Chapter V — Wealth & Powers OS client build + Jayson Powers testimony. No props. */
 export default function WealthExplorer() {
   return (
     <section
@@ -93,8 +101,8 @@ export default function WealthExplorer() {
       <span id="reviews" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="VIII·B"
-          eyebrow="Client build · Wealth & Powers OS"
+          numeral="V"
+          eyebrow="Client proof · Wealth & Powers OS · Five-star review"
           title={
             <>
               Built for Jayson Powers: <em>dual-audited firepower.</em>
@@ -110,6 +118,7 @@ export default function WealthExplorer() {
             finding is audited by a second model, and every trade waits for his
             approval.
           </p>
+          <TelemetryBadge items={WEALTH_TELEMETRY} label="Wealth & Powers OS build telemetry" />
         </ChapterHead>
 
         <p className="explorer-note">

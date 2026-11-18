@@ -1,11 +1,32 @@
 // Run against the production preview. Requests that could send email are mocked.
 // PLAYWRIGHT_MODULE and CHROMIUM_PATH select an already-installed test runtime.
 import assert from "node:assert/strict";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { extname, join, relative, resolve } from "node:path";
 const { chromium } = await import(
   process.env.PLAYWRIGHT_MODULE || "playwright"
 );
 const base = process.env.PREVIEW_URL || "http://127.0.0.1:4174";
+const distDir = resolve(import.meta.dirname, "..", "dist");
+// theharnesslab.com may only link out to these exact hostnames.
+const LINK_ALLOWLIST = [
+  "theharnesslab.com",
+  "theharnesslab.dev",
+  "title-desk.com",
+  "artificiallandman.io",
+  "brandstream.my",
+  "apex-build.dev",
+  "cal.com",
+];
+const RETIRED = /happy-homes|Happy Homes|charlie-computer|Charlie Computer|Charlie['’]s Computer/;
+const TEXT_EXT = new Set([".html", ".js", ".mjs", ".css", ".json", ".xml", ".txt", ".svg", ".webmanifest", ".map"]);
+async function* walk(dir) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) yield* walk(full);
+    else yield full;
+  }
+}
 const output = process.env.VERIFY_OUTPUT || "docs/redesign-2026-09-14";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
@@ -73,6 +94,69 @@ try {
   assert.deepEqual(brokenAnchors, []);
   results.push(
     "Required copy, contact links, price removal, single H1, and navigation targets pass.",
+  );
+
+  // Outbound-link allowlist: every external http(s) anchor must point at an
+  // allowlisted hostname (exact match, no subdomains).
+  const offList = await page.locator("a[href]").evaluateAll((links, allow) =>
+    links
+      .map((a) => a.href)
+      .filter((href) => /^https?:/i.test(href))
+      .filter((href) => {
+        const host = new URL(href).hostname;
+        return host !== location.hostname && !allow.includes(host);
+      }),
+  LINK_ALLOWLIST);
+  assert.deepEqual(offList, [], `Off-allowlist links: ${offList.join(", ")}`);
+  assert.equal(
+    await page.locator('a[href*="github.com"]').count(),
+    0,
+    "No GitHub links on theharnesslab.com",
+  );
+
+  // Copy rules on rendered text, meta, JSON-LD and image alt text.
+  const textContent = await page.evaluate(() => document.body.textContent);
+  assert.ok(textContent.includes("no-copy reverse-engineering"), "no-copy reverse-engineering");
+  assert.ok(textContent.includes("Custom-built tools") && textContent.includes("to custom-build your product"));
+  assert.ok(!textContent.includes("$"), "No dollar characters in visible copy");
+  const headAndAlts = await page.evaluate(() =>
+    [
+      ...[...document.querySelectorAll("meta[content]")].map((m) => m.content),
+      ...[...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent),
+      ...[...document.querySelectorAll("img[alt]")].map((i) => i.alt),
+      document.title,
+    ].join("\n"),
+  );
+  for (const [label, haystack] of [["visible text", text], ["text content", textContent], ["meta/JSON-LD/alt", headAndAlts]]) {
+    assert.ok(!haystack.includes("5.5"), `No "5.5" in ${label}`);
+    assert.doesNotMatch(haystack, RETIRED, `No retired project names in ${label}`);
+    assert.doesNotMatch(haystack, /\bdamn\b|\bshit\b/i, `No profanity in ${label}`);
+  }
+
+  // Chapter VI landing gallery: no outbound links and no site addresses.
+  const gallery = page.locator("#landing-gallery");
+  assert.equal(await gallery.locator("a[href]").count(), 0, "Landing gallery has no links");
+  const galleryText = await gallery.evaluate((el) =>
+    [el.textContent, ...[...el.querySelectorAll("img")].map((i) => i.alt)].join(" "),
+  );
+  assert.doesNotMatch(
+    galleryText,
+    /\b[\w-]+\.(com|io|dev|my|net|org|co|app|ai)\b|https?:|www\./i,
+    "Landing gallery carries no domain names",
+  );
+  assert.equal(await gallery.locator(".screenshot-button").count(), 8);
+
+  // Built dist/: retired projects must be gone from every file name and every
+  // text asset that ships to Pages.
+  const distHits = [];
+  for await (const file of walk(distDir)) {
+    const rel = relative(distDir, file);
+    if (RETIRED.test(rel)) distHits.push(rel);
+    else if (TEXT_EXT.has(extname(file)) && RETIRED.test(await readFile(file, "utf8"))) distHits.push(rel);
+  }
+  assert.deepEqual(distHits, [], `Retired project references in dist: ${distHits.join(", ")}`);
+  results.push(
+    "Outbound links stay on the allowlist; no GitHub links, dollar signs, 5.5 strings, profanity or retired project names; landing gallery is link-free; dist is clean.",
   );
 
   await page.getByRole("button", { name: "Pause motion" }).click();

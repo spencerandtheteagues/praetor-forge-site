@@ -1,8 +1,16 @@
 import Explorer from "./Explorer.jsx";
 import { ChapterHead, Picture } from "./ui.jsx";
+import { TelemetryBadge } from "./Showcase.jsx";
+
+const MYTHOS_TELEMETRY = [
+  ["28,734", "Authored LOC"],
+  ["17", "Live operator surfaces"],
+  ["20,911", "Knowledge-graph nodes"],
+  ["1 Month", "Rapid sprint"],
+];
 import { MYTHOS_GROUPS, MYTHOS_SCREENS, MYTHOS_STATS } from "../data/mythos.js";
 
-/** Chapter V — Mythos OS, the studio's own cockpit. No props. */
+/** Chapter III·C — Mythos OS, the studio's own cockpit. No props. */
 export default function MythosExplorer() {
   return (
     <section
@@ -22,8 +30,8 @@ export default function MythosExplorer() {
             height={640}
           />
           <ChapterHead
-            numeral="VIII"
-            eyebrow="Mythos OS · 17 live operator surfaces"
+            numeral="III·C"
+            eyebrow="Mythos OS · The studio operating system"
             title={
               <>
                 We don&rsquo;t just sell harnesses. <em>We live inside one.</em>
@@ -37,6 +45,7 @@ export default function MythosExplorer() {
               a Mac, a Linux workstation, and production VPS nodes with 20,911
               knowledge-graph nodes and zero silent failures.
             </p>
+            <TelemetryBadge items={MYTHOS_TELEMETRY} label="Mythos OS build telemetry" />
           </ChapterHead>
         </div>
 

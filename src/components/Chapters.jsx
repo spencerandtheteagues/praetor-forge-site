@@ -1,10 +1,10 @@
-import { ArrowRight, ArrowUpRight, CalendarCheck, Github, Mail } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CalendarCheck, Mail, Star } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
 import { Brand, CalTrigger } from "./Header.jsx";
 import { BUILT_FOR, DELIVERABLES, ENGAGEMENTS, PROCESS } from "../data/narrative.js";
+import { JAYSON } from "../data/wealth.js";
 import {
   DEV_URL,
-  GITHUB_URL,
   PHONE_DISPLAY,
   SALES_EMAIL,
   SERVICE_PAGES,
@@ -13,7 +13,7 @@ import {
 import { goToContact, useIntake } from "../lib/intake.js";
 
 /* ------------------------------------------------------------------------ */
-/* VII · Ownership vault + process                                           */
+/* VII · Ownership vault + streamlined engagement process                    */
 /* ------------------------------------------------------------------------ */
 export function Ownership() {
   return (
@@ -45,12 +45,12 @@ export function Ownership() {
         </div>
         <div className="container ownership-inner">
           <ChapterHead
-            numeral="IX"
-            eyebrow="Customer ownership · Zero hostageware"
+            numeral="VII"
+            eyebrow="Customer ownership · Engagement options · The close"
             id="ownership-title"
             title={
               <>
-                You own <em>every damn line.</em>
+                You own <em>every single line.</em>
               </>
             }
           >
@@ -72,56 +72,25 @@ export function Ownership() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      <section className="section process" id="how" aria-labelledby="how-title">
-        <span id="process" className="anchor-alias" aria-hidden="true" />
-        <div className="container">
-          <ChapterHead
-            numeral="IX·B"
-            eyebrow="How we actually work"
-            id="how-title"
-            title={
-              <>
-                Four stages. <em>Zero quit until it passes.</em>
-              </>
-            }
-          >
-            <p>
-              We tear into your ugliest real workflow, build inside a repo you own,
-              hammer every failure mode until real data passes automated smoke tests,
-              and hand you the keys.
-            </p>
-          </ChapterHead>
-          <ol className="movement">
-            {PROCESS.map((item) => (
-              <li key={item.step} className="escapement">
-                <div className="escapement-head">
-                  <svg className="escapement-wheel" viewBox="0 0 64 64" aria-hidden="true">
-                    <circle cx="32" cy="32" r="27" className="escapement-outer-ring" />
-                    <circle cx="32" cy="32" r="20" />
-                    {Array.from({ length: 15 }, (_, i) => (
-                      <path
-                        key={i}
-                        d="M32 6 L35 12 L29 12 Z"
-                        transform={`rotate(${i * 24} 32 32)`}
-                      />
-                    ))}
-                    <circle cx="32" cy="32" r="7" className="arbor-ring" />
-                    <circle cx="32" cy="32" r="3.5" className="arbor" />
-                  </svg>
-                  <span className="escapement-step mono">Stage {item.step}</span>
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-                <p className="escapement-artifact">
-                  <span className="mono">Verified artifact</span>
-                  <strong>{item.artifact}</strong>
-                </p>
-              </li>
-            ))}
-          </ol>
+          <div className="process-strip" id="how">
+            <span id="process" className="anchor-alias" aria-hidden="true" />
+            <header className="process-strip-head">
+              <p className="inscription">How an engagement runs</p>
+              <h3 id="how-title">
+                Four stages. <span className="gold-3d">Handover when you can run it without us.</span>
+              </h3>
+            </header>
+            <ol className="process-steps">
+              {PROCESS.map((item) => (
+                <li key={item.step}>
+                  <span className="process-step-num mono">Stage {item.step}</span>
+                  <strong>{item.title}</strong>
+                  <span className="process-step-body">{item.body}</span>
+                  <span className="process-step-artifact mono">{item.artifact}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
           <div className="built-for" id="who">
             <div className="built-for-head">
               <h3 className="inscription">Built for</h3>
@@ -145,7 +114,7 @@ export function Ownership() {
 }
 
 /* ------------------------------------------------------------------------ */
-/* VIII · Capabilities / engagements (no prices — scoped on the call)        */
+/* VII·B · Capabilities / engagements (no prices — scoped on the call)        */
 /* ------------------------------------------------------------------------ */
 export function Capabilities() {
   const { prefill } = useIntake();
@@ -154,8 +123,8 @@ export function Capabilities() {
       <span id="services" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
-          numeral="X"
-          eyebrow="What we take on"
+          numeral="VII·B"
+          eyebrow="Engagement options · What we take on"
           id="capabilities-title"
           title={
             <>
@@ -262,8 +231,8 @@ export function Founder() {
         </figure>
         <div className="founder-copy">
           <p className="chapter-eyebrow">
-            <span className="chapter-numeral">XI</span>
-            <span>Completely self-taught · 3,850+ commits · Zero quit</span>
+            <span className="chapter-numeral">VII·C</span>
+            <span>The founder · Completely self-taught · 3,900+ commits</span>
           </p>
           <h2 id="about-title">
             Hi, I’m Spencer. <span className="gold-3d">I ground the hard builds out.</span>
@@ -276,10 +245,10 @@ export function Founder() {
           <p>
             I’m Spencer Teague, founder and lead engineer of The Harness Lab. Taking
             TitleDesk Agent from an offline desktop tool to live online county runs on
-            Title-Desk and Artificial Landman took 5.5 straight months of non-stop work
-            across 1,662 commits and 305+ git branches. Evolving MyAIMediaMgr into
-            BrandStreams took even longer — nine architectural generations and 932+
-            commits since V8.1 alone — alongside 1,064 commits building APEX.BUILD.
+            Title-Desk and Artificial Landman took six straight months across 1,662
+            commits and 305+ git branches. Evolving MyAIMediaMgr into BrandStreams took
+            even longer — fourteen months, nine architectural generations and 1,364
+            commits — alongside five months and 1,064 commits building APEX.BUILD.
           </p>
           <p>
             Most software projects fail not because the idea was wrong, but because the
@@ -300,11 +269,6 @@ export function Founder() {
             <li>
               <a className="text-link" href={`mailto:${SPENCER_EMAIL}`}>
                 <Mail aria-hidden="true" /> {SPENCER_EMAIL}
-              </a>
-            </li>
-            <li>
-              <a className="text-link" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
-                <Github aria-hidden="true" /> github.com/spencerandtheteagues
               </a>
             </li>
           </ul>
@@ -332,8 +296,8 @@ export function Founder() {
             <strong>Perihelion Loop</strong> by fusing{" "}
             <strong>Andrej Karpathy&rsquo;s keep-or-revert loop</strong> and typed DAGs
             with a fail-closed sandbox fabric atop open-source{" "}
-            <strong>cloudroom.dev</strong> to create, fix, and no-copy reverse-engineer
-            software at verified quality.
+            <strong>cloudroom.dev</strong> to create, fix, and carry out no-copy
+            reverse-engineering at verified quality.
           </p>
         </div>
         <div className="studio-band-actions">
@@ -349,6 +313,31 @@ export function Founder() {
             Explore theharnesslab.dev <ArrowUpRight aria-hidden="true" />
           </a>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------------ */
+/* One-line client pull-quote echoed right before the close                  */
+/* ------------------------------------------------------------------------ */
+export function ClosingQuote() {
+  return (
+    <section className="closing-quote" aria-label="Client review">
+      <div className="container">
+        <figure className="closing-quote-figure">
+          <p className="closing-quote-stars" aria-label="Five out of five stars">
+            {Array.from({ length: 5 }, (_, i) => (
+              <Star key={i} aria-hidden="true" />
+            ))}
+          </p>
+          <blockquote>
+            <p>“Fast, sharp, and it works exactly the way he said it would.”</p>
+          </blockquote>
+          <figcaption className="mono">
+            {JAYSON.name} · {JAYSON.role} · Five-star review
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
@@ -414,11 +403,6 @@ export function Footer() {
             <li>
               <a href={DEV_URL} target="_blank" rel="noopener noreferrer">
                 theharnesslab.dev
-              </a>
-            </li>
-            <li>
-              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
-                GitHub
               </a>
             </li>
             <li>

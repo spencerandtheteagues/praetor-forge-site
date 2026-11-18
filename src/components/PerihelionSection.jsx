@@ -11,18 +11,19 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
+import { TelemetryBadge } from "./Showcase.jsx";
 import { useImageViewer } from "../lib/useImageViewer.js";
 import { goToContact, useIntake } from "../lib/intake.js";
 import { useMotion } from "../lib/motion.js";
 import { onTiltLeave, onTiltMove } from "../lib/tilt3d.js";
 import {
-  CLOUDROOM_URL,
   KARPATHY_LOOP_STEPS,
   PERIHELION_DEV_URL,
   PERIHELION_MODES,
   PERIHELION_MONUMENTS,
   PERIHELION_PILLARS,
   PERIHELION_STAGES,
+  PERIHELION_TELEMETRY,
 } from "../data/perihelion.js";
 
 const PILLAR_ICONS = [RefreshCw, GitBranch, Lock, Cpu];
@@ -88,8 +89,8 @@ export default function PerihelionSection() {
       <div className="container perihelion-inner">
         <div className="perihelion-head-row">
           <ChapterHead
-            numeral="V"
-            eyebrow="Perihelion by The Harness Lab · Karpathy Loop + cloudroom.dev"
+            numeral="III·B"
+            eyebrow="Perihelion Loop · klh v2.2 · Karpathy Loop + cloudroom.dev"
             id="perihelion-title"
             title={
               <>
@@ -114,17 +115,13 @@ export default function PerihelionSection() {
               </a>{" "}
               — fusing <strong>Andrej Karpathy&rsquo;s autonomous keep-or-revert loop</strong>{" "}
               and <strong>Loops &amp; Graphs</strong> typed DAG orchestration with a
-              fail-closed, zero-trust execution fabric built atop open-source{" "}
-              <a
-                className="text-link"
-                href={CLOUDROOM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                cloudroom.dev
-              </a>{" "}
-              and an <strong>All-Account Frontier Council</strong>.
+              fail-closed, zero-trust execution fabric built atop the open-source{" "}
+              <code>cloudroom.dev</code> sandbox and a{" "}
+              <strong>Multi-Provider Frontier Council</strong>. It runs in three modes:
+              create original software, fix production systems, and lawful
+              no-copy reverse-engineering.
             </p>
+            <TelemetryBadge items={PERIHELION_TELEMETRY} label="Perihelion Loop build telemetry" />
           </ChapterHead>
 
           <aside className="perihelion-seal-card card-3d" aria-label="Foundry provenance">
@@ -226,7 +223,7 @@ export default function PerihelionSection() {
             <p className="inscription">What it achieves in production</p>
             <h3>
               One autonomous harness to{" "}
-              <span className="gold-3d">create, fix, or no-copy reverse-engineer</span>{" "}
+              <span className="gold-3d">create, fix, or carry out no-copy reverse-engineering</span>{" "}
               at verified quality.
             </h3>
           </header>
@@ -398,15 +395,6 @@ export default function PerihelionSection() {
                   rel="noopener noreferrer"
                 >
                   Inspect the Perihelion Loop architecture on theharnesslab.dev{" "}
-                  <ArrowUpRight aria-hidden="true" />
-                </a>
-                <a
-                  className="button button-outline"
-                  href={CLOUDROOM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open-source cloudroom.dev (Apache-2.0){" "}
                   <ArrowUpRight aria-hidden="true" />
                 </a>
                 <button

@@ -4,7 +4,7 @@ import { ChapterHead } from "./ui.jsx";
 import { useInView, useMotion } from "../lib/motion.js";
 import { CINEMA_CUTS } from "../data/products.js";
 
-// Chapter II · Studio Cinema. One <video>, three cuts.
+// Chapter IV · Studio Cinema. One <video>, three cuts (the walkthrough leads).
 // Autoplay is muted and only happens while ≥50% in view, motion is not paused
 // and the visitor has not asked for reduced motion. An explicit pause sticks.
 
@@ -216,7 +216,7 @@ export default function CinemaStage() {
       <div className="container">
         <ChapterHead
           numeral="IV"
-          eyebrow="Studio cinema · Real systems in motion"
+          eyebrow="Evidence of what we built · Studio cinema"
           id="cinema-title"
           title={
             <>
@@ -225,9 +225,10 @@ export default function CinemaStage() {
           }
         >
           <p>
-            Three widescreen cuts from the bench: the 2027 studio showcase film, the
-            5.5-month repository grind behind Title-Desk and BrandStreams, and our
-            verification-to-handover reel. Sound stays off until you ask for it.
+            Start with the full 4m 37s Title-Desk walkthrough — a live
+            twelve-instrument examination from scope check to delivered workbook — then
+            the 2027 studio showcase and our verification-to-handover reel. Sound stays
+            off until you ask for it.
           </p>
         </ChapterHead>
 

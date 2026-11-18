@@ -3,7 +3,6 @@ export const SALES_EMAIL = "sales@theharnesslab.com";
 export const SPENCER_EMAIL = "spencer@theharnesslab.com";
 export const PHONE_DISPLAY = "607-364-7772";
 export const PHONE_HREF = "tel:+16073647772"; // render as a link exactly ONCE (contact section)
-export const GITHUB_URL = "https://github.com/spencerandtheteagues";
 export const DEV_URL = "https://theharnesslab.dev/";
 export const CALENDAR_URL = "https://cal.com/harnesslab/teardown";
 export const CAL_NAMESPACE = "teardown";

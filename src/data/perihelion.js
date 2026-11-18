@@ -3,7 +3,15 @@
 // and always use "no-copy reverse-engineering" / "no-copy re-engineering".
 
 export const PERIHELION_DEV_URL = "https://theharnesslab.dev/#perihelion-loop";
-export const CLOUDROOM_URL = "https://www.cloudroom.dev";
+// cloudroom.dev is credited in copy only: theharnesslab.com links strictly to
+// the live product domains + theharnesslab.dev.
+
+export const PERIHELION_TELEMETRY = [
+  ["30,079", "Authored LOC"],
+  ["62", "Commits"],
+  ["5 / 5", "Cockpit zoom stages"],
+  ["1 Month", "Rapid sprint"],
+];
 
 export const PERIHELION_MONUMENTS = [
   {
@@ -24,7 +32,7 @@ export const PERIHELION_MONUMENTS = [
   {
     value: "5 MODELS",
     subValue: "SEALED COUNCIL · ZERO EXTRA SPEND",
-    label: "Claude Fable, Gemini Carbon, GPT-6 Astra, Opus & Grok on free-tier credits",
+    label: "Claude Fable, Gemini Carbon, GPT-6 Astra, Opus & Grok on existing subscriptions",
   },
 ];
 
@@ -77,7 +85,7 @@ export const PERIHELION_PILLARS = [
   },
   {
     code: "LAYER IV · FRONTIER COUNCIL",
-    title: "All-Account Sealed Advisor Routing",
+    title: "Multi-Provider Sealed Advisor Routing",
     body:
       "Routes architecture, implementation, and adversarial review across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok inside kernel-sealed advisor sandboxes using existing subscriptions and free-tier cloud credits.",
   },
@@ -105,7 +113,7 @@ export const PERIHELION_MODES = [
     badge: "RE-ENGINEER · KERNEL-WALLED FORGE",
     title: "Lawful No-Copy Reverse-Engineering",
     summary:
-      "Enforces an OS kernel wall (sandbox-exec on macOS / bubblewrap on Linux) where only a static study unit (rea-agents Mach-O, plist, and interface analysis) inspects a lawfully held subject to emit a behaviour-only specification, while downstream design, test, and build workers are kernel-blocked from reading the subject and mechanically verified for zero code, text, name, or asset overlap under The Harness Lab brand kit.",
+      "Lawful no-copy reverse-engineering: enforces an OS kernel wall (sandbox-exec on macOS / bubblewrap on Linux) where only a static study unit (rea-agents Mach-O, plist, and interface analysis) inspects a lawfully held subject to emit a behaviour-only specification, while downstream design, test, and build workers are kernel-blocked from reading the subject and mechanically verified for zero code, text, name, or asset overlap under The Harness Lab brand kit.",
     proof: "Kernel-enforced subject isolation + automated zero-overlap originality verification",
     disclosure:
       "Engineering note: Mechanical non-copying gates prove code, text, identifier, and asset originality across isolated worktrees; they enforce technical non-copying discipline rather than replacing legal clearance or human taste.",
@@ -115,14 +123,14 @@ export const PERIHELION_MODES = [
 export const PERIHELION_STAGES = [
   {
     id: "fleet",
-    shortLabel: "Zoom 1 · Fleet Telemetry",
-    zoomTag: "Zoom 1",
-    title: "Zoom 1: Multi-Repo Fleet Telemetry",
+    shortLabel: "Fleet Telemetry",
+    zoomTag: "Fleet",
+    title: "01 · Multi-Repo Fleet Telemetry",
     webp: "/showcase/karpathy-loop-harness/01-perihelion-fleet-overview.webp",
     thumb: "/showcase/karpathy-loop-harness/01-perihelion-fleet-overview-640.webp",
     width: 1440,
     height: 900,
-    alt: "Perihelion by The Harness Lab — Zoom 1 multi-repo fleet telemetry showing verified run, harden, and forge pipelines",
+    alt: "Perihelion Loop stage 01 multi-repo fleet telemetry showing verified run, harden, and forge pipelines",
     shows:
       "Live Fleet control surface over the klh v2.2 run store tracking multi-repository create (forge), repair (run), and adversarial hardening (harden) pipelines alongside approval gate state.",
     invariant:
@@ -130,14 +138,14 @@ export const PERIHELION_STAGES = [
   },
   {
     id: "dag",
-    shortLabel: "Zoom 2 & 3 · DAG & Human Gate",
-    zoomTag: "Zoom 2 & 3",
-    title: "Zoom 2 & 3: Typed DAG & Single Human Gate",
+    shortLabel: "Typed DAG & Human Gate",
+    zoomTag: "DAG & Gate",
+    title: "02 · Typed DAG & Single Human Gate",
     webp: "/showcase/karpathy-loop-harness/02-run-dag-human-gate.webp",
     thumb: "/showcase/karpathy-loop-harness/02-run-dag-human-gate-640.webp",
     width: 1440,
     height: 900,
-    alt: "Perihelion Loop Zoom 2 and 3 showing typed Loops & Graphs DAG orchestration, Gantt timeline, and single human approval gate",
+    alt: "Perihelion Loop stage 02 showing typed Loops & Graphs DAG orchestration, Gantt timeline, and single human approval gate",
     shows:
       "Loops & Graphs dependency topology, parallel worktree Gantt execution timeline, substantive check tallies, unit-scoped retries, and the single human sign-off gate.",
     invariant:
@@ -145,14 +153,14 @@ export const PERIHELION_STAGES = [
   },
   {
     id: "sandbox",
-    shortLabel: "Zoom 4 & 5 · Loop & Cloudroom",
-    zoomTag: "Zoom 4 & 5",
-    title: "Zoom 4 & 5: Transactional Karpathy Loop & Kernel/Cloudroom Sandbox",
+    shortLabel: "Karpathy Sandbox",
+    zoomTag: "Sandbox",
+    title: "03 · Transactional Karpathy Loop & Kernel/Cloudroom Sandbox",
     webp: "/showcase/karpathy-loop-harness/03-unit-karpathy-loop-sandbox.webp",
     thumb: "/showcase/karpathy-loop-harness/03-unit-karpathy-loop-sandbox-640.webp",
     width: 1440,
     height: 900,
-    alt: "Perihelion Loop Zoom 4 and 5 showing transactional Karpathy keep-or-revert loop and OS Seatbelt / Cloudroom sandbox telemetry",
+    alt: "Perihelion Loop stage 03 showing transactional Karpathy keep-or-revert loop and OS Seatbelt / Cloudroom sandbox telemetry",
     shows:
       "Inside a single unit attempt: Karpathy keep-or-revert ledger, OS Seatbelt / hardened cloudroom.dev VM containment, HTTPS egress allowlist telemetry, and Kiln Swift Testing verification.",
     invariant:
@@ -160,24 +168,24 @@ export const PERIHELION_STAGES = [
   },
   {
     id: "council",
-    shortLabel: "Frontier Council Routing",
+    shortLabel: "Frontier Council",
     zoomTag: "Council",
-    title: "All-Account Frontier Council & Sealed Advisors",
+    title: "04 · Multi-Provider Frontier Council & Sealed Advisors",
     webp: "/showcase/karpathy-loop-harness/04-providers-frontier-council.webp",
     thumb: "/showcase/karpathy-loop-harness/04-providers-frontier-council-640.webp",
     width: 1440,
     height: 900,
-    alt: "Perihelion Loop All-Account Frontier Council routing table across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok",
+    alt: "Perihelion Loop multi-provider Frontier Council routing table across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok",
     shows:
-      "Multi-account provider discovery and Frontier Council auto-routing across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok in kernel-sealed advisor sandboxes.",
+      "Multi-provider discovery and Frontier Council auto-routing across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok in kernel-sealed advisor sandboxes.",
     invariant:
       "Advisors critique specs and diffs inside read-sealed sandboxes with zero extra vendor spend by pooling studio subscriptions and free-tier cloud credits.",
   },
   {
     id: "graphify",
-    shortLabel: "AST Knowledge Graph",
+    shortLabel: "Graphify AST Knowledge Graph",
     zoomTag: "Graphify",
-    title: "Structural AST & Semantic Knowledge Graph",
+    title: "05 · Graphify Structural AST Knowledge Graph",
     webp: "/showcase/karpathy-loop-harness/05-graphify-knowledge-graph.webp",
     thumb: "/showcase/karpathy-loop-harness/05-graphify-knowledge-graph-640.webp",
     width: 1440,
