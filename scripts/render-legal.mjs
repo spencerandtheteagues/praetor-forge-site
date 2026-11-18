@@ -7,8 +7,9 @@
 //   node scripts/render-legal.mjs
 //
 // Facts below are from the Texas Comptroller's public franchise-tax record for
-// THE HARNESS LAB LLC, read 2026-11-18 (Texas SOS file 0806765129, SOS
-// registration effective 08/25/2026, status ACTIVE). Never put a home address
+// THE HARNESS LAB LLC (read 2026-11-18) and the SOS Certificate of Filing:
+// file number 806765129 (the Comptroller zero-pads it to 0806765129), effective
+// 08/25/2026, status ACTIVE, member-managed. Never put a home address
 // in this file: the notice address is the company's mailing address of record.
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -20,7 +21,7 @@ export const ENTITY = {
   legalName: "The Harness Lab LLC",
   short: "The Harness Lab",
   kind: "Texas limited liability company",
-  sosFile: "0806765129",
+  sosFile: "806765129",
   formed: "August 25, 2026",
   formedIso: "2026-08-25",
   base: "San Angelo, Texas",
@@ -142,7 +143,7 @@ const notice = page({
         <tr><th scope="row">Legal name</th><td>${E.legalName}</td></tr>
         <tr><th scope="row">Entity type</th><td>Limited liability company, formed under the Texas Business Organizations Code</td></tr>
         <tr><th scope="row">State of formation</th><td>Texas</td></tr>
-        <tr><th scope="row">Texas Secretary of State file number</th><td>${E.sosFile}</td></tr>
+        <tr><th scope="row">Texas Secretary of State file number</th><td>${E.sosFile} (the Texas Comptroller displays it as 0${E.sosFile})</td></tr>
         <tr><th scope="row">Formed</th><td>${E.formed}</td></tr>
         <tr><th scope="row">Based in</th><td>${E.base}</td></tr>
         <tr><th scope="row">Mailing address for legal notices</th><td>${E.legalName}, ${E.noticeAddress}</td></tr>

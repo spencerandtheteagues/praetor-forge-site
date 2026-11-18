@@ -4,7 +4,7 @@
 
 ## 1. Identity, Founder & Contact
 
-- **Organization:** The Harness Lab LLC, a Texas limited liability company (Texas SOS File No. 0806765129), doing business as The Harness Lab
+- **Organization:** The Harness Lab LLC, a Texas limited liability company (Texas SOS File No. 806765129), doing business as The Harness Lab
 - **Commercial Site (White Carrara Marble Seal):** https://theharnesslab.com/
 - **Engineering R&D Foundry (Black Nero Marquina Marble Seal):** https://theharnesslab.dev/
 - **Founder & Lead Engineer:** Spencer Teague (completely self-taught software engineer with 3,900+ authored production commits across oil and gas title engines, multi-model SaaS platforms, and autonomous AI harnesses)
@@ -145,5 +145,5 @@ A: No. Automated extraction, chain-of-title assembly, and exact fractional math 
 
 ## Legal Entity
 
-- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas Secretary of State File No. 0806765129, formed August 25, 2026). TitleDesk and Artificial Landman are products of The Harness Lab LLC.
+- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas Secretary of State File No. 806765129, formed August 25, 2026). TitleDesk and Artificial Landman are products of The Harness Lab LLC.
 - [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)

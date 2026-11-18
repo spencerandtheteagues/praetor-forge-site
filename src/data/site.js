@@ -3,7 +3,7 @@
 // Legal entity, from the Texas Comptroller public record (read 2026-11-18).
 // Keep in step with ENTITY in scripts/render-legal.mjs. No street address here.
 export const LEGAL_NAME = "The Harness Lab LLC";
-export const SOS_FILE_NO = "0806765129";
+export const SOS_FILE_NO = "806765129";
 export const SALES_EMAIL = "sales@theharnesslab.com";
 export const SPENCER_EMAIL = "spencer@theharnesslab.com";
 export const PHONE_DISPLAY = "607-364-7772";

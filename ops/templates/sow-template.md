@@ -4,14 +4,14 @@ Use this for paid audits and builds. Replace bracketed fields before sending.
 
 > **Always contract as the LLC.** The provider is The Harness Lab LLC, never Spencer
 > Teague personally and never the bare name "The Harness Lab". Sign only in the
-> representative block at the bottom ("By: … Its: Member"). Signing a client
+> representative block at the bottom ("By: … Its: Managing Member"). Signing a client
 > document with just your name is the easiest way to give up the LLC's liability shield.
 
 ## Parties
 
 Client: [client/company]
 
-Provider: The Harness Lab LLC, a Texas limited liability company (Texas SOS File No. 0806765129)
+Provider: The Harness Lab LLC, a Texas limited liability company (Texas SOS File No. 806765129)
 
 Provider notice address: spencer@theharnesslab.com and 5900 Balcones Drive, Suite 100, Austin, Texas 78731
 
@@ -159,6 +159,6 @@ By: ______________________________
 
 Name: Spencer Teague
 
-Its: Member
+Its: Managing Member
 
 Date:
