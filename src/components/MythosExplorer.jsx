@@ -4,7 +4,7 @@ import { TelemetryBadge } from "./Showcase.jsx";
 
 const MYTHOS_TELEMETRY = [
   ["28,734", "Authored LOC"],
-  ["17", "Live operator surfaces"],
+  ["15", "Live operator surfaces"],
   ["20,911", "Knowledge-graph nodes"],
   ["1 Month", "Rapid sprint"],
 ];
@@ -42,15 +42,15 @@ export default function MythosExplorer() {
             <p>
               Mythos OS is the command cockpit Spencer Teague engineered to run The
               Harness Lab 24/7: coordinating Claude, Codex, Gemini, and Ollama across
-              a Mac, a Linux workstation, and production VPS nodes with 20,911
-              knowledge-graph nodes and zero silent failures.
+              studio workstations and Linux servers with 20,911 knowledge-graph nodes
+              and zero silent failures.
             </p>
             <TelemetryBadge items={MYTHOS_TELEMETRY} label="Mythos OS build telemetry" />
           </ChapterHead>
         </div>
 
         <p className="explorer-framing mono">
-          Captured studio environment — 17 production surfaces we operate daily.
+          Captured studio environment — 15 production surfaces we operate daily.
         </p>
 
         <div className="explorer-stats-wrap">

@@ -197,9 +197,13 @@ export default function MedallionStage() {
         className="medallion-stage"
         data-state={state}
         data-interactive={interactive ? "true" : "false"}
-        role="button"
+        role={live ? "button" : undefined}
         aria-pressed={live ? interactive : undefined}
-        aria-label="The Harness Lab medallion — spins continuously; click to stop and turn in 3D"
+        aria-label={
+          live
+            ? "The Harness Lab medallion — spins continuously; click to stop and turn in 3D"
+            : undefined
+        }
         aria-describedby={live ? hintId : undefined}
         tabIndex={live ? 0 : undefined}
         onKeyDown={onKeyDown}

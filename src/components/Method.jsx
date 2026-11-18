@@ -259,9 +259,9 @@ export default function Method() {
             broken. So we build the custom, deterministic harness first — primary-source
             grounding, independent cross-examination, hard limits and human gates — and
             then iterate relentlessly until every primary-source check and every holdout
-            test passes on real data. Across 3,900+ commits on courthouse deeds, OAuth
-            callbacks and live portfolios, that discipline is the difference between a
-            demo and a system you can run your business on.
+            test passes on real data. Across 3,900+ authored commits through November 2026
+            on courthouse deeds, OAuth callbacks and live portfolios, that discipline is the
+            difference between a demo and a system you can run your business on.
           </p>
         </ChapterHead>
         <aside className="credibility-card" aria-labelledby="credibility-title">
@@ -285,7 +285,7 @@ export default function Method() {
             <h3 id="credibility-title">Inspect the architecture before you hire us.</h3>
             <p>
               Our engineering site publishes the state machines, the Perihelion Loop
-              internals, the twelve-tool verification bench, and the full 28-build
+              internals, the twelve-tool verification bench, and the full 27-build
               evolution ledger with commit-level provenance. Engineers can step the
               execution labs in the browser and judge the work for themselves.
             </p>

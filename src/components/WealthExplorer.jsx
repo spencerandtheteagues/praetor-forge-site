@@ -6,7 +6,7 @@ const WEALTH_TELEMETRY = [
   ["7,110", "Authored LOC"],
   ["45", "Source files"],
   ["10", "Investor surfaces"],
-  ["1 Month", "Rapid sprint"],
+  ["Single Session", "Built & installed"],
 ];
 import { JAYSON, WEALTH_GROUPS, WEALTH_SCREENS } from "../data/wealth.js";
 
@@ -120,12 +120,6 @@ export default function WealthExplorer() {
           </p>
           <TelemetryBadge items={WEALTH_TELEMETRY} label="Wealth & Powers OS build telemetry" />
         </ChapterHead>
-
-        <p className="explorer-note">
-          <span className="mono">A note on the screens</span> The app header in
-          these captures reads &ldquo;Jake Powers.&rdquo; The client, and the
-          person quoted below, is Jayson Powers.
-        </p>
 
         <Explorer
           id="wealth"

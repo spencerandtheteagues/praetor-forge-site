@@ -4,10 +4,10 @@ import { FRAGMENT_SHADER, VERTEX_SHADER } from "./shader.js";
 
 const TEXTURES = [
   ["uObvAlb", "/medallion/obvAlb.webp?v=est2026"],
-  ["uObvHgt", "/medallion/obvHgt.png?v=est2026"],
+  ["uObvHgt", "/medallion/obvHgt.webp?v=est2026"],
   ["uObvEmi", "/medallion/obvEmi.webp?v=est2026"],
   ["uRevAlb", "/medallion/revAlb.webp?v=est2026"],
-  ["uRevHgt", "/medallion/revHgt.png?v=est2026"],
+  ["uRevHgt", "/medallion/revHgt.webp?v=est2026"],
   ["uRevEmi", "/medallion/revEmi.webp?v=est2026"],
 ];
 
@@ -117,11 +117,7 @@ async function buildEdgeEngravingBitmap() {
     od[i + 3] = 255;
   }
 
-  const merged = document.createElement("canvas");
-  merged.width = W;
-  merged.height = H;
-  merged.getContext("2d").putImageData(out, 0, 0);
-  return createImageBitmap(merged, {
+  return createImageBitmap(out, {
     imageOrientation: "flipY",
     premultiplyAlpha: "none",
     colorSpaceConversion: "none",
@@ -309,7 +305,7 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
       gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
       uniforms = {};
-      for (const name of ["uRes", "uTime", "uPose", "uBob", "uPop", "uEdge", "uSteps", "uShadowSteps"]) {
+      for (const name of ["uRes", "uTime", "uPose", "uBob", "uPop", "uEdge", "uSteps", "uShadowSteps", "uValidate"]) {
         uniforms[name] = gl.getUniformLocation(program, name);
       }
 
@@ -368,9 +364,44 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
       measure();
     }
     draw();
-    const px = new Uint8Array(4);
-    gl.readPixels(bufW >> 1, bufH >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
-    if (gl.getError() !== gl.NO_ERROR || gl.isContextLost() || px[3] < 200) {
+    if (gl.getError() !== gl.NO_ERROR || gl.isContextLost()) {
+      return fail("invalid-frame");
+    }
+    // Zero-readback GPU validation: run a 1x1 color-masked ANY_SAMPLES_PASSED
+    // occlusion query at the canvas center where shader discards alpha < 0.785,
+    // avoiding all synchronous/PBO gl.readPixels driver stalls on NVIDIA/OpenGL.
+    const query = gl.createQuery();
+    let passed = false;
+    try {
+      if (!query) return fail("invalid-frame");
+      gl.enable(gl.SCISSOR_TEST);
+      gl.scissor(bufW >> 1, bufH >> 1, 1, 1);
+      gl.colorMask(false, false, false, false);
+      gl.uniform1i(uniforms.uValidate, 1);
+      gl.beginQuery(gl.ANY_SAMPLES_PASSED, query);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      gl.endQuery(gl.ANY_SAMPLES_PASSED);
+      gl.uniform1i(uniforms.uValidate, 0);
+      gl.colorMask(true, true, true, true);
+      gl.disable(gl.SCISSOR_TEST);
+      gl.flush();
+
+      let frames = 0;
+      while (frames < 120) {
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        if (disposed || failed || gl.isContextLost()) return;
+        if (gl.getQueryParameter(query, gl.QUERY_RESULT_AVAILABLE)) {
+          passed = Boolean(gl.getQueryParameter(query, gl.QUERY_RESULT));
+          break;
+        }
+        frames += 1;
+      }
+    } finally {
+      if (gl && !gl.isContextLost() && query) {
+        gl.deleteQuery(query);
+      }
+    }
+    if (gl.getError() !== gl.NO_ERROR || gl.isContextLost() || !passed) {
       return fail("invalid-frame");
     }
     ready = true;

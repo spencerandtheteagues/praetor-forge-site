@@ -102,7 +102,8 @@ function page({ slug, title, crumb, description, intro, sections }) {
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="/services.css">${style}
   <script type="application/ld+json">${JSON.stringify(ld)}</script>
 </head>
@@ -133,7 +134,7 @@ const notice = page({
   title: "Legal notice and company information",
   crumb: "Legal",
   description: `${E.legalName} is a ${E.kind}, Texas SOS File No. ${E.sosFile}. Company details, legal documents and how to send a legal notice.`,
-  intro: `<p class="lead">${E.short} is the trade name of ${E.legalName}, a ${E.kind}. Every product and service offered on this website, on theharnesslab.dev, on title-desk.com and on artificiallandman.io is offered by ${E.legalName}.</p>`,
+  intro: `<p class="lead">${E.short} is the trade name of ${E.legalName}, a ${E.kind}. Every product and service offered on this website, on theharnesslab.dev, on title-desk.com, on desktop.title-desk.com and on artificiallandman.io is offered by ${E.legalName}.</p>`,
   sections: [
     {
       id: "company",
@@ -158,8 +159,8 @@ const notice = page({
       <p>${E.legalName} does business as <strong>The Harness Lab</strong> and offers the following products and services under its own name:</p>
       <ul>
         <li><strong>The Harness Lab</strong> — custom software, workflow automation, websites, internal tools and AI systems built for business clients (theharnesslab.com and theharnesslab.dev).</li>
-        <li><strong>TitleDesk</strong> (also written Title-Desk) — title research software and a hosted examination service for land professionals (title-desk.com).</li>
-        <li><strong>Artificial Landman</strong> — a hosted Texas mineral and subsurface title examination platform (artificiallandman.io).</li>
+        <li><strong>TitleDesk</strong> and <strong>TitleDesk Desktop</strong> (installed desktop app named TitleDesk Agent) — Texas mineral title research software and a hosted examination service for independent landmen and abstractors (title-desk.com and desktop.title-desk.com).</li>
+        <li><strong>Artificial Landman</strong> — a hosted Texas mineral title examination platform for land teams, brokerages and operators (artificiallandman.io).</li>
       </ul>
       <p>When you deal with any of these names, you are dealing with ${E.legalName}.</p>`,
     },
@@ -184,7 +185,7 @@ const notice = page({
         <li><a href="/legal/terms/">Website Terms of Use</a> — rules for using our websites and sending us an enquiry.</li>
         <li><a href="/legal/privacy/">Privacy Policy</a> — what we collect through our websites and email, and what we do with it.</li>
         <li><a href="/legal/client-terms/">Client Services Terms</a> — the standard terms for custom software, automation and website work.</li>
-        <li><a href="https://title-desk.com/legal/terms" rel="noopener">TitleDesk Terms of Service</a> and <a href="https://title-desk.com/legal/privacy" rel="noopener">TitleDesk Privacy Policy</a>.</li>
+        <li><a href="https://title-desk.com/legal/terms" rel="noopener">TitleDesk Terms of Service</a>, <a href="https://title-desk.com/legal/privacy" rel="noopener">TitleDesk Privacy Policy</a>, and <a href="https://desktop.title-desk.com/" rel="noopener">TitleDesk Desktop</a>.</li>
         <li><a href="https://artificiallandman.io/legal/terms" rel="noopener">Artificial Landman terms</a>.</li>
       </ul>`,
     },
@@ -192,7 +193,7 @@ const notice = page({
       id: "trademarks",
       h: "Trademarks and copyright",
       body: `
-      <p>The Harness Lab, TitleDesk, Title-Desk, Artificial Landman, Perihelion, the winged medallion emblem and related names and logos are trademarks of ${E.legalName}. Website text, graphics, code and media are © 2026 ${E.legalName} unless another owner is named. Other names and logos belong to their owners; their appearance on our websites does not mean they endorse us.</p>
+      <p>The Harness Lab, TitleDesk, TitleDesk Desktop, TitleDesk Agent, Artificial Landman, Perihelion, the winged medallion emblem and related names and logos are trademarks of ${E.legalName}. Website text, graphics, code and media are © 2026 ${E.legalName} unless another owner is named. Other names and logos belong to their owners; their appearance on our websites does not mean they endorse us.</p>
       <p>If you believe material on one of our websites infringes your copyright or trademark, write to ${mail(E.legalEmail)} with the material, its location, the right you hold and your contact details. We will review it promptly.</p>`,
     },
     {
@@ -311,7 +312,7 @@ const privacy = page({
       id: "collect",
       h: "What we collect",
       body: `
-      <p><strong>Information you give us.</strong> When you use the project intake form we receive what you enter: your name, email address and company, and if you choose to provide them, your role, website or repository, the kind of project, urgency, budget range, who approves the work, where your systems run, your current tools, a description of the work, what breaks, what success looks like, how access could be arranged and a good time for a call. When you email or call us, we receive your message and contact details. When you book a call, the booking tool passes us your name, email address, the time you chose and anything you write in the booking form.</p>
+      <p><strong>Information you give us.</strong> When you use the project intake form we receive what you enter: your name, email address and company, and if you choose to provide them, your role, website or repository, the kind of project, urgency, who approves the work, where your systems run, your current tools, a description of the work, what breaks, what success looks like, how access could be arranged and a good time for a call. When you email or call us, we receive your message and contact details. When you book a call, the booking tool passes us your name, email address, the time you chose and anything you write in the booking form.</p>
       <p><strong>Information collected automatically.</strong> Like any website, ours are delivered by hosting providers that receive your IP address, browser and device type, the pages requested and the time of the request, and keep short-term server logs. Our intake service uses your IP address to limit repeated submissions and block abuse. We do not use analytics, advertising cookies, tracking pixels or session-recording tools on these websites, and we do not set cookies of our own.</p>
       <p><strong>Information from third-party services the page loads.</strong> Our pages load fonts from Google Fonts and the Cal.com booking tool from Cal.com. Your browser contacts those providers directly, so they receive your IP address and browser information, and Cal.com may use its own cookies or local storage to run its booking tool. Their privacy policies govern that information.</p>
       <p>The intake form checks your text in your own browser for things that look like passwords or keys and warns you before you send it. Please do not send that kind of information anyway.</p>`,

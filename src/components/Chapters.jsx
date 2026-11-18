@@ -238,11 +238,12 @@ export function Founder() {
           </p>
           <p>
             I’m Spencer Teague, founder and lead engineer of The Harness Lab. Taking
-            TitleDesk Agent from an offline desktop tool to live online county runs on
-            Title-Desk and Artificial Landman took six straight months across 1,662
-            commits and 305+ git branches. Evolving MyAIMediaMgr into BrandStreams took
-            even longer — fourteen months, nine architectural generations and 1,364
-            commits — alongside five months and 1,064 commits building APEX.BUILD.
+            TitleDesk Agent from an offline desktop workstation to live online Texas
+            county runs on TitleDesk and Artificial Landman took four straight months
+            from August through November 2026 across 1,662 commits and 305+ git
+            branches. Evolving MyAIMediaMgr into BrandStreams took fourteen months,
+            nine architectural generations and 1,364 commits — alongside five months
+            and 1,064 commits building APEX.BUILD.
           </p>
           <p>
             Most software projects fail not because the idea was wrong, but because the
@@ -253,7 +254,11 @@ export function Founder() {
           </p>
           <p>
             At The Harness Lab, there is no account-manager telephone game. You work
-            directly with the engineer writing, testing, and handing over your system.
+            directly with the engineer writing, testing, and handing over your system —
+            and because every engagement delivers into your private Git repository with
+            reproducible setup scripts, automated smoke tests, and a plain-language
+            runbook, your team can operate, audit, or extend it without ever being
+            locked to a single vendor.
           </p>
           <div className="founder-signoff">
             <span className="signature">Spencer Teague</span>

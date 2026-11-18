@@ -74,6 +74,7 @@ function ProductShowcase({ product, onOpen }) {
           <div className="vitrine-meta-row">
             <span className={`vitrine-status mono ${product.href ? "is-live" : ""}`}>{product.status}</span>
             {product.domain ? <span className="vitrine-domain mono">{product.domain}</span> : null}
+            {product.secondaryLink ? <span className="vitrine-domain mono">{product.secondaryLink.domain}</span> : null}
             {product.cutoverNote ? <span className="vitrine-domain mono">{product.cutoverNote}</span> : null}
           </div>
           <p className="vitrine-placard">{product.placard}</p>
@@ -92,11 +93,17 @@ function ProductShowcase({ product, onOpen }) {
               ))}
             </ul>
           ) : null}
-          {product.href || product.serviceLink ? (
+          {product.href || product.secondaryLink || product.serviceLink ? (
             <div className="product-actions">
               {product.href ? (
                 <a className="button button-gold button-small" href={product.href} target="_blank" rel="noopener noreferrer">
                   Visit {product.domain} <ArrowUpRight aria-hidden="true" />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ) : null}
+              {product.secondaryLink ? (
+                <a className="button button-outline button-small" href={product.secondaryLink.href} target="_blank" rel="noopener noreferrer">
+                  Visit {product.secondaryLink.domain} <ArrowUpRight aria-hidden="true" />
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               ) : null}
@@ -136,7 +143,7 @@ export default function Forge() {
       <div className="container forge-inner">
         <ChapterHead
           numeral="IV·B"
-          eyebrow="Evidence of what we built · Four live products"
+          eyebrow="Evidence of what we built · Two live flagships & two prior platforms"
           id="forge-title"
           title={
             <>

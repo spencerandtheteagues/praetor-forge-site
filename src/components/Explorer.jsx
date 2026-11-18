@@ -268,7 +268,6 @@ export default function Explorer({
                     }}
                     type="button"
                     className="explorer-thumb"
-                    tabIndex={current ? 0 : -1}
                     aria-current={current ? "true" : undefined}
                     aria-label={thumbOpensViewer ? `Enlarge screen: ${s.title}` : undefined}
                     onClick={() => onRailClick(sid)}

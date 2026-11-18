@@ -110,19 +110,11 @@
 
 /* Metric-matched fallbacks keep layout stable while web fonts swap in. */
 @font-face {
-  font-family: "Bodoni Moda Fallback";
-  src: local("Georgia");
-  size-adjust: 104%;
-  ascent-override: 92%;
-  descent-override: 24%;
-  line-gap-override: 0%;
-}
-@font-face {
   font-family: "Cinzel Fallback";
   src: local("Georgia");
-  size-adjust: 118%;
-  ascent-override: 86%;
-  descent-override: 30%;
+  size-adjust: 136%;
+  ascent-override: 82%;
+  descent-override: 26%;
   line-gap-override: 0%;
 }
 @font-face {

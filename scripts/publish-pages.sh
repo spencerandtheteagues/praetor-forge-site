@@ -13,10 +13,16 @@ cd "$(dirname "$0")/.."
 REPO_ROOT="$PWD"
 BRANCH="gh-pages"
 
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "FATAL: working tree is dirty — commit or stash changes before publishing"
+  exit 1
+fi
+
 echo "==> building"
 npm ci --ignore-scripts
 npm run lint
 npm run build
+npm test
 
 # Pages drops the custom domain the moment this file goes missing, and the
 # resulting failure looks exactly like a DNS problem. Fail here instead.

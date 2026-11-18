@@ -28,6 +28,7 @@ uniform float uPop;
 uniform float uEdge;
 uniform int uSteps;
 uniform int uShadowSteps;
+uniform int uValidate;
 
 uniform sampler2D uObvAlb;
 uniform sampler2D uObvHgt; // R: relief height, G: 2D silhouette SDF, B: specular mask
@@ -258,7 +259,7 @@ vec3 shadeCoin(vec3 p, vec3 nLocal, mat3 coinToWorld, vec3 rdWorld, float t) {
     return edgeLinear;
   }
 
-  // Authentic Title-Desk Copper-Marble Obverse & Black-Marble Reverse Shading:
+  // Authentic Harness Lab Copper-Marble Obverse & Black-Marble Reverse Shading:
   // Preserves 100% of the intricate filigree, marble veining, starry cosmos, citadel,
   // and engraved THE HARNESS LAB lettering at rest while adding physical 3D relief
   // shading, soft shadows, and moving metallic/stone specular glints as it turns.
@@ -410,5 +411,6 @@ void main() {
   }
 
   fragColor = coin + disc * (1.0 - coin.a);
+  if (uValidate == 1 && fragColor.a < 0.785) discard;
 }
 `;

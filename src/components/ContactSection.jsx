@@ -238,12 +238,13 @@ export default function ContactSection() {
     ).length + request.problems.length;
 
   return (
-    <section id="contact" className="section contact">
+    <section id="contact" className="section contact" aria-labelledby="contact-title">
       <span id="intake" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
           numeral="VII·D"
           eyebrow="The close · Intake direct to Spencer Teague"
+          id="contact-title"
           title={
             <>
               Bring us the problem <em>nobody else could finish.</em>
@@ -541,7 +542,13 @@ export default function ContactSection() {
                 <span>Prepared for <strong>{request.company.trim() || request.name.trim() || "Your next build"}</strong></span>
                 <span>{request.problems.length} selected control{request.problems.length === 1 ? "" : "s"}</span>
               </div>
-              <pre ref={previewRef} className="work-order-body mono">
+              <pre
+                ref={previewRef}
+                className="work-order-body mono"
+                tabIndex={0}
+                role="region"
+                aria-label="Assembled work order preview"
+              >
                 {preview}
               </pre>
               <div className="work-order-foot">

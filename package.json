@@ -8,7 +8,8 @@
     "build": "node scripts/render-legal.mjs && vite build && node scripts/prerender.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "lint": "eslint .",
-    "legal": "node scripts/render-legal.mjs"
+    "legal": "node scripts/render-legal.mjs",
+    "test": "node scripts/verify-social-card.mjs && node scripts/verify-claims.mjs && node --test intake-worker/test/intake.test.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

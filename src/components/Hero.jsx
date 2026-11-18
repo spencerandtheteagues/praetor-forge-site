@@ -4,9 +4,9 @@ import { CalTrigger } from "./Header.jsx";
 import { useMotion } from "../lib/motion.js";
 
 const SPECS = [
-  ["6 Months · 1,662 Commits", "Taking the Title-Desk suite from an offline desktop tool to live online county runs"],
-  ["14 Months · 9 Generations", "Rebuilding MyAIMediaMgr into BrandStreams until every edge case held"],
-  ["5-Star Client OS", "Wealth & Powers OS, built and installed for private investor Jayson Powers"],
+  ["4 Months · 1,662 Commits", "Taking TitleDesk from a desktop workstation to live online Texas county runs (Aug–Nov 2026)"],
+  ["14 Months · 9 Generations", "Rebuilding MyAIMediaMgr into BrandStreams across 1,364 commits until every edge case held"],
+  ["5-Star Client OS", "Wealth & Powers OS, built and installed in a single session for investor Jayson Powers"],
 ];
 
 const OFFERS = [
@@ -64,16 +64,27 @@ export default function Hero() {
                 </li>
               ))}
             </ul>
+            <div className="hero-actions">
+              <a className="button button-gold" href="#work">
+                See what we have built <ArrowDown aria-hidden="true" />
+              </a>
+              <CalTrigger className="button button-outline">
+                <CalendarCheck aria-hidden="true" /> Book a 20-min teardown
+              </CalTrigger>
+              <a className="button button-ghost" href="#contact">
+                Bring us the hard problem <ArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
             <blockquote className="hero-credo">
               <p>
-                “At The Harness Lab, we dream big, start small, get in over our
-                heads, jump the gun wildly, and get deep into the hardest edge
-                cases — because you will never know what is possible until you
-                have found all the things that seemed impossible at the time and
-                conquered every single one of them. We ground it out and never
-                quit, because when you emerge on the other side, you emerge an
-                expert with a deep understanding of how to build the best, most
-                complex software there is.”
+                “At The Harness Lab, we dream big, start small, take on the
+                hardest problems early, and follow every edge case to the root —
+                because you will never know what is possible until you have
+                found the parts that seemed impossible at first and engineered
+                through every single one of them. We ground it out and never
+                quit, because when you emerge on the other side, you emerge with
+                a proven system and a deep command of how complex software
+                actually holds up.”
               </p>
               <footer className="hero-credo-cite mono">
                 — Spencer Teague · Founder &amp; Lead Engineer · Landman title, SaaS &amp; autonomous AI harnesses
@@ -81,17 +92,6 @@ export default function Hero() {
             </blockquote>
           </div>
 
-          <div className="hero-actions">
-            <a className="button button-gold" href="#work">
-              See what we have built <ArrowDown aria-hidden="true" />
-            </a>
-            <CalTrigger className="button button-outline">
-              <CalendarCheck aria-hidden="true" /> Book a 20-min teardown
-            </CalTrigger>
-            <a className="button button-ghost" href="#contact">
-              Bring us the hard problem <ArrowUpRight aria-hidden="true" />
-            </a>
-          </div>
           <dl className="hero-specs">
             {SPECS.map(([term, detail]) => (
               <div key={term}>

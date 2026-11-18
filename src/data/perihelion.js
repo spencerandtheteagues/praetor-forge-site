@@ -8,7 +8,7 @@ export const PERIHELION_DEV_URL = "https://theharnesslab.dev/#perihelion-loop";
 
 export const PERIHELION_TELEMETRY = [
   ["30,079", "Authored LOC"],
-  ["62", "Commits"],
+  ["62", "Commits (Nov 2026)"],
   ["5 / 5", "Cockpit zoom stages"],
   ["1 Month", "Rapid sprint"],
 ];
@@ -30,9 +30,9 @@ export const PERIHELION_MONUMENTS = [
     label: "Exact-bytes manifest check, quarantined pull & local holdout verification",
   },
   {
-    value: "5 MODELS",
-    subValue: "SEALED COUNCIL · ZERO EXTRA SPEND",
-    label: "Claude Fable, Gemini Carbon, GPT-6 Astra, Opus & Grok on existing subscriptions",
+    value: "4 FAMILIES",
+    subValue: "SEALED MULTI-PROVIDER COUNCIL",
+    label: "Claude, Gemini, OpenAI Codex & Grok in read-sealed advisor sandboxes",
   },
 ];
 
@@ -87,7 +87,7 @@ export const PERIHELION_PILLARS = [
     code: "LAYER IV · FRONTIER COUNCIL",
     title: "Multi-Provider Sealed Advisor Routing",
     body:
-      "Routes architecture, implementation, and adversarial review across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok inside kernel-sealed advisor sandboxes using existing subscriptions and free-tier cloud credits.",
+      "Routes architecture, implementation, and adversarial review across Claude, Gemini, OpenAI Codex, and Grok inside kernel-sealed advisor sandboxes with strict quota and retry governance.",
   },
 ];
 
@@ -97,7 +97,7 @@ export const PERIHELION_MODES = [
     badge: "CREATE · FORGE & MILESTONE GRAPHS",
     title: "Create Original Full-Stack & Native Software",
     summary:
-      "Takes a raw product brief through system architecture, executable acceptance tests, and multi-milestone implementation at rapid velocity — shipping both full-stack web platforms and native Apple Silicon SwiftUI desktop software such as Kiln.",
+      "Takes a raw product brief through system architecture, executable acceptance tests, and staged implementation — from full-stack web platforms to the 29-feature behavioral specification, 15-screen macOS design, and Phase-1 SwiftUI foundation for Kiln.",
     proof: "Spec → typed DAG → executable acceptance gates → verified multi-milestone build",
   },
   {
@@ -175,11 +175,11 @@ export const PERIHELION_STAGES = [
     thumb: "/showcase/karpathy-loop-harness/04-providers-frontier-council-640.webp",
     width: 1440,
     height: 900,
-    alt: "Perihelion Loop multi-provider Frontier Council routing table across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok",
+    alt: "Perihelion Loop multi-provider Frontier Council routing table across Claude, Gemini, OpenAI Codex, and Grok",
     shows:
-      "Multi-provider discovery and Frontier Council auto-routing across Claude Fable, Gemini Carbon, Codex GPT-6 Astra, Claude Opus, and Grok in kernel-sealed advisor sandboxes.",
+      "Multi-provider discovery and Frontier Council routing across Claude, Gemini, OpenAI Codex, and Grok in kernel-sealed advisor sandboxes.",
     invariant:
-      "Advisors critique specs and diffs inside read-sealed sandboxes with zero extra vendor spend by pooling studio subscriptions and free-tier cloud credits.",
+      "Advisors critique specifications and diffs inside read-sealed sandboxes with quota governance so reviewers never mutate candidate worktrees directly.",
   },
   {
     id: "graphify",

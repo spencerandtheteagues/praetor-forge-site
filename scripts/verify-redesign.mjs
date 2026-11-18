@@ -13,8 +13,8 @@ const LINK_ALLOWLIST = [
   "theharnesslab.com",
   "theharnesslab.dev",
   "title-desk.com",
+  "desktop.title-desk.com",
   "artificiallandman.io",
-  "brandstream.my",
   "apex-build.dev",
   "cal.com",
 ];
@@ -27,7 +27,7 @@ async function* walk(dir) {
     else yield full;
   }
 }
-const output = process.env.VERIFY_OUTPUT || "docs/redesign-2026-09-14";
+const output = process.env.VERIFY_OUTPUT || resolve(import.meta.dirname, "..", "docs/redesign-2026-09-14");
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
@@ -39,6 +39,7 @@ const browser = await chromium.launch({
 });
 const results = [],
   errors = [],
+  consoleWarnings = [],
   failedAssets = [];
 try {
   const page = await browser.newPage({
@@ -46,6 +47,17 @@ try {
     deviceScaleFactor: 1,
   });
   page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (msg) => {
+    const type = msg.type();
+    const txt = msg.text();
+    if (type === "error") {
+      // Ignore the intentional 503 returned when delivery === "failure" tests form fallback.
+      if (delivery === "failure" && /status of 503/i.test(txt)) return;
+      errors.push(`console.error: ${txt}`);
+    } else if (/GL_INVALID|CONTEXT_LOST/i.test(txt)) {
+      consoleWarnings.push(txt);
+    }
+  });
   page.on("response", (response) => {
     if (response.url().startsWith(base) && response.status() >= 400)
       failedAssets.push(response.url());
@@ -84,13 +96,32 @@ try {
   assert.equal(await page.locator(".cal-fab").count(), 0);
   assert.equal(await page.locator(".medallion-controls").count(), 0, "No controls below medallion");
   assert.equal(await page.locator(".hero-art button").count(), 0, "No buttons inside hero-art");
+  await page.evaluate(async () => {
+    await document.fonts?.load('800 32px "Cinzel"');
+    await document.fonts?.load('900 44px "Cinzel"');
+    await document.fonts?.ready;
+  });
   for (const [vw, vh] of [[1440, 1000], [1440, 900], [1280, 800], [1920, 1080]]) {
     await page.setViewportSize({ width: vw, height: vh });
     await page.evaluate(() => window.scrollTo(0, 0));
     const box = await page.locator(".medallion-stage").boundingBox();
+    const bezelBox = await page.locator(".medallion-bezel").boundingBox();
     assert.ok(box && box.width >= 380, `Medallion rendered at ${vw}x${vh}`);
     assert.ok(box.y >= 60, `Medallion top (${box.y}) clears header at ${vw}x${vh}`);
     assert.ok(box.y + box.height <= vh, `Medallion bottom (${box.y + box.height}) fully visible inside ${vh}px viewport at ${vw}x${vh}`);
+    const maxHlRight = await page.locator(".hero-headline .hl-line").evaluateAll((els) =>
+      Math.max(...els.map((el) => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        return range.getBoundingClientRect().right;
+      })),
+    );
+    const leftEdge = bezelBox ? Math.min(box.x, bezelBox.x) : box.x;
+    assert.ok(maxHlRight <= leftEdge - 12, `Headline text right (${maxHlRight}) clears medallion bezel left (${leftEdge}) at ${vw}x${vh}`);
+    if (vw >= 1440 && vh >= 900) {
+      const ctaBox = await page.locator(".hero-actions").boundingBox();
+      assert.ok(ctaBox && ctaBox.y + ctaBox.height <= vh, `Hero CTAs (${ctaBox?.y + ctaBox?.height}) visible above fold at ${vw}x${vh}`);
+    }
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.evaluate(() => window.scrollTo(0, 0));
@@ -336,7 +367,49 @@ try {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `${output}/mobile-hero.png` });
   await page.screenshot({ path: `${output}/mobile-full.png`, fullPage: true });
+
+  // Verify all 6 service pages, 4 legal pages, and security.txt
+  const subpages = [
+    "/ai-workflow-automation/",
+    "/custom-software-development/",
+    "/website-design-development/",
+    "/internal-tools-development/",
+    "/api-integrations/",
+    "/landman-title-workflow-automation/",
+    "/legal/",
+    "/legal/terms/",
+    "/legal/privacy/",
+    "/legal/client-terms/",
+  ];
+  for (const path of subpages) {
+    const res = await page.goto(`${base}${path}`, { waitUntil: "networkidle" });
+    assert.equal(res?.status(), 200, `${path} returned HTTP ${res?.status()}`);
+    assert.equal(await page.locator("h1").count(), 1, `${path} has 1 H1`);
+    const subOffList = await page.locator("a[href]").evaluateAll((links, allow) =>
+      links
+        .map((a) => a.href)
+        .filter((href) => /^https?:/i.test(href))
+        .filter((href) => {
+          const host = new URL(href).hostname;
+          return host !== location.hostname && !allow.includes(host);
+        }),
+    LINK_ALLOWLIST);
+    assert.deepEqual(subOffList, [], `Off-allowlist links on ${path}: ${subOffList.join(", ")}`);
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.ok(
+        await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+        `Overflow on ${path} at ${width}px`,
+      );
+    }
+  }
+  const secRes = await page.goto(`${base}/.well-known/security.txt`);
+  assert.equal(secRes?.status(), 200, "/.well-known/security.txt HTTP 200");
+  assert.match(await page.locator("body").innerText(), /Contact: mailto:sales@theharnesslab\.com/);
+  results.push("All 6 service pages, 4 legal pages, and /.well-known/security.txt pass HTTP 200, allowlist, and responsive checks.");
+
   assert.deepEqual(errors, []);
+  assert.deepEqual(consoleWarnings, [], `WebGL/GPU warnings: ${consoleWarnings.join("; ")}`);
   assert.deepEqual(failedAssets, []);
   results.push(
     "All rendered images decode; no JavaScript exceptions or failed local assets. Desktop and mobile screenshots saved.",

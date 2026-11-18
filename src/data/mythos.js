@@ -1,4 +1,4 @@
-// Mythos OS: the studio's own operating cockpit. 17 captured surfaces.
+// Mythos OS: the studio's own operating cockpit. 15 captured surfaces.
 // Copy rules: no dollar figures, no absolute claims. Numbers are "as captured".
 
 const W = 1600;
@@ -50,11 +50,9 @@ export const MYTHOS_GROUPS = [
     label: "Infrastructure",
     title: "Wired into the machines, files and inboxes.",
     intro:
-      "The harness isn't trapped in a browser tab. It reaches remote desktops, filesystems, mailboxes and devices across the studio's fleet from one place.",
+      "The harness isn't trapped in a browser tab. It reaches remote filesystems, mailboxes and connected services across the studio from one place.",
     screens: [
       "connections",
-      "remote-access",
-      "kali-desktop",
       "vps-files",
       "mail-desk",
       "settings",
@@ -74,11 +72,11 @@ export const MYTHOS_SCREENS = [
   }),
   shot("harnesses-one-roof", {
     title: "Every harness under one roof",
-    alt: "Mythos OS showing seven harnesses online, providers and auth, plan-limit windows, and models in use",
+    alt: "Mythos OS showing seven harnesses online, providers and auth, quota windows, and models in use",
     shows:
-      "Seven engines (Claude Code, Hermes, Codex, OpenClaw, Graphify, Ollama Cloud and the Kali VPS) reporting live status, alongside provider auth, plan-limit windows and the exact models in use.",
+      "Seven engines and runners (Claude Code, Hermes, Codex, OpenClaw, Graphify, Ollama Cloud and remote Linux workers) reporting live status, alongside provider auth, quota windows and the exact models in use.",
     matters:
-      "Access runs through OAuth and subscriptions rather than loose API keys, and limits are visible before they bite, not after a job fails.",
+      "Scoped authentication and rate-limit windows stay visible before they bite, not after a job fails.",
   }),
   shot("hermes-agent", {
     title: "Hermes, the orchestrator",
@@ -160,27 +158,11 @@ export const MYTHOS_SCREENS = [
     matters:
       "A broken integration shows up as a status card, not as a silent failure discovered three days later.",
   }),
-  shot("remote-access", {
-    title: "Remote access",
-    alt: "Remote Access page showing HP Omen and Kali VPS desktops and SSH paths over Tailscale plus a device transfer panel",
-    shows:
-      "The Omen workstation, the Kali VPS and their SSH paths reachable over Tailscale, plus device transfer between Mac, Omen, VPS and phone.",
-    matters:
-      "Every machine in the studio is one click from the cockpit, over a private network rather than open ports.",
-  }),
-  shot("kali-desktop", {
-    title: "The VPS, in the browser",
-    alt: "A full Kali Linux xfce desktop streamed into the Mythos OS dashboard over noVNC",
-    shows:
-      "A full Kali desktop streamed into the dashboard over noVNC.",
-    matters:
-      "No separate remote-desktop client and no context switch. The server is just another panel.",
-  }),
   shot("vps-files", {
     title: "Remote files",
-    alt: "Remote Files browser showing the Kali VPS filesystem over Tailscale SSH with metadata-first listings",
+    alt: "Remote Files browser showing a remote server filesystem over encrypted SSH with metadata-first listings",
     shows:
-      "The VPS filesystem browsed over Tailscale SSH, with metadata-first listings and secrets redacted in previews.",
+      "Remote server filesystems browsed over encrypted private-network SSH, with metadata-first listings and secrets redacted in previews.",
     matters:
       "Inspecting a server shouldn't mean spraying credentials across a screen or a transcript.",
   }),
@@ -194,10 +176,10 @@ export const MYTHOS_SCREENS = [
   }),
   shot("settings", {
     title: "Settings",
-    alt: "Settings onboarding showing an auto-detected stack and subscription auto-fallback across two accounts",
+    alt: "Settings onboarding showing an auto-detected stack and quota-aware fallback across isolated provider lanes",
     shows:
-      "Onboarding that detects the installed stack on launch and falls back across model subscriptions when one reaches its limit, each account isolated.",
+      "Onboarding that detects the installed stack on launch and routes across configured provider lanes when one reaches its quota limit, each workspace isolated.",
     matters:
-      "Setup is detected rather than typed in by hand, and hitting a plan limit doesn't stop the day's work.",
+      "Setup is detected rather than typed in by hand, and hitting a quota ceiling doesn't stop the day's work.",
   }),
 ];

@@ -56,9 +56,9 @@ function expectLink(rel, expected) {
 
 const ogTitle = 'Websites, Custom Software &amp; AI Automation | The Harness Lab';
 const ogDescription =
-  'Six months and 1,662 commits on Title-Desk. Fourteen months and nine generations on BrandStreams. Custom software and AI harnesses built until real work runs end to end — owned by you.';
+  'Four months and 1,662 commits on TitleDesk. Fourteen months and nine generations on BrandStreams. Custom software and AI harnesses built until real work runs end to end — owned by you.';
 const twitterDescription =
-  'Bespoke workflow automation, full-stack software and verifiable AI harnesses. See Rogue Agents, Perihelion Loop, Title-Desk, Artificial Landman, BrandStreams and APEX.BUILD running for real.';
+  'Bespoke workflow automation, full-stack software and verifiable AI harnesses. See Rogue Agents, Perihelion Loop, TitleDesk, Artificial Landman, BrandStreams and APEX.BUILD running for real.';
 const cardAlt = 'The Harness Lab copper and marble winged medallion on black';
 
 expectLink('canonical', 'https://theharnesslab.com/');

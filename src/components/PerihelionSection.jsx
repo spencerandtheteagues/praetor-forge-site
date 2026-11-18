@@ -102,9 +102,8 @@ export default function PerihelionSection() {
             }
           >
             <p>
-              To build, repair, and re-engineer complex software rapidly without
-              sacrificing deterministic proof, we forged{" "}
-              <strong>Perihelion Loop</strong> on{" "}
+              To build, repair, and re-engineer complex software without guessing, we
+              forged <strong>Perihelion Loop</strong> on{" "}
               <a
                 className="text-link"
                 href={PERIHELION_DEV_URL}
@@ -113,13 +112,13 @@ export default function PerihelionSection() {
               >
                 theharnesslab.dev
               </a>{" "}
-              — fusing <strong>Andrej Karpathy&rsquo;s autonomous keep-or-revert loop</strong>{" "}
-              and <strong>Loops &amp; Graphs</strong> typed DAG orchestration with a
-              fail-closed, zero-trust execution fabric built atop the open-source{" "}
-              <code>cloudroom.dev</code> sandbox and a{" "}
-              <strong>Multi-Provider Frontier Council</strong>. It runs in three modes:
-              create original software, fix production systems, and lawful
-              no-copy reverse-engineering.
+              — pairing <strong>Andrej Karpathy&rsquo;s autonomous keep-or-revert loop</strong>{" "}
+              and typed task graphs with isolated{" "}
+              <code>cloudroom.dev</code> Linux sandboxes and an independent{" "}
+              <strong>Multi-Provider Review Council</strong>. Every candidate edit is
+              tested in isolation and automatically reverted unless the verification suite
+              passes across three modes: creating original software, fixing production
+              systems, and lawful no-copy reverse-engineering.
             </p>
             <TelemetryBadge items={PERIHELION_TELEMETRY} label="Perihelion Loop build telemetry" />
           </ChapterHead>
@@ -139,8 +138,7 @@ export default function PerihelionSection() {
               <strong>Forged at theharnesslab.dev</strong>
               <p>
                 Powered by Apache-2.0 <code>cloudroom.dev</code> Linux VMs, OS
-                kernel sandboxes, and sealed multi-model councils on zero extra
-                vendor spend.
+                kernel sandboxes, and quota-governed multi-provider review councils.
               </p>
             </div>
           </aside>

@@ -360,15 +360,17 @@
    (cqi) so it always holds on one line, at every desktop width. */
 .hero h1.hero-headline {
   container-type: inline-size;
-  /* Resolved on each line (a container's own units point at its ancestor). */
-  --hl-size: 5.95cqi;
-  line-height: 1.02;
+  width: 100%;
+  max-width: 100%;
+  line-height: 1.06;
   letter-spacing: 0.012em;
   text-shadow: none;
 }
 .hero-headline .hl-line {
   display: block;
-  font-size: var(--hl-size);
+  /* Declare cqi directly on the child of .hero-headline (never in a custom prop
+     on the container itself, which CSS resolves against the outer viewport). */
+  font-size: 5.35cqi;
   white-space: nowrap;
 }
 .hero-headline .hl-ideas,
@@ -397,7 +399,7 @@
 .hero-headline .hl-us {
   margin-top: 0.7em;
   font-family: var(--font-subhead);
-  font-size: calc(var(--hl-size) * 0.6);
+  font-size: 3.35cqi;
   font-weight: 600;
   letter-spacing: -0.012em;
   text-transform: none;
@@ -413,9 +415,12 @@
    phrases, so the type stays big instead of shrinking to fit 25 characters. */
 @container (max-width: 470px) {
   .hero-headline .hl-ideas,
-  .hero-headline .hl-software,
+  .hero-headline .hl-software {
+    font-size: 10.2cqi;
+    white-space: normal;
+  }
   .hero-headline .hl-us {
-    --hl-size: 10.2cqi;
+    font-size: 6.12cqi;
     white-space: normal;
   }
   .hero-headline .hl-software {

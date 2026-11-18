@@ -23,7 +23,7 @@ const WIDE = [2880, 1800];
 export const ROGUE_AGENTS = {
   telemetry: [
     ["22,582", "Authored LOC"],
-    ["103", "Commits"],
+    ["103", "Commits (Nov 2026)"],
     ["730 / 730", "Tests green"],
     ["1 Month", "Rapid sprint"],
   ],
@@ -33,15 +33,15 @@ export const ROGUE_AGENTS = {
       1440,
       900,
       "Multi-agent command center",
-      "The cockpit: Claude, Codex, Antigravity and Grok co-leads side by side, a subordinate Ollama Cloud worker bar, and live subscription allowance meters so every lane shows its remaining capacity before work is dispatched.",
-      "Rogue Agents multi-agent command center with four co-lead agent cards, an Ollama worker bar, and allowance meters",
+      "The cockpit: Claude, Codex, Antigravity and Grok co-leads side by side, a subordinate Ollama Cloud worker bar, and live quota meters so every lane shows its remaining capacity before work is dispatched.",
+      "Rogue Agents multi-agent command center with four co-lead agent cards, an Ollama worker bar, and quota meters",
     ),
     shot(
       "rogue-agents/02-connections-models-setup",
       1440,
       900,
       "Model routing & worktree isolation",
-      "Multi-provider routing setup: each co-lead is bound to its own signed-in subscription and reasoning level, and every execution job gets a separate Git worktree so parallel agents never write over each other.",
+      "Multi-provider routing setup: each co-lead is bound to an isolated provider lane and reasoning level, and every execution job gets a separate Git worktree so parallel agents never write over each other.",
       "Rogue Agents setup dialog assigning a model and reasoning level to each co-lead and enabling a Git worktree per job",
     ),
     shot(
@@ -64,19 +64,23 @@ export const ROGUE_AGENTS = {
 };
 
 /* ------------------------------------------------------------------------ */
-/* Chapter IV — Evidence: four live products, landing + running workspaces   */
+/* Chapter IV — Evidence: two live flagships + two prior platforms           */
 /* ------------------------------------------------------------------------ */
 export const PRODUCT_SHOWCASES = [
   {
     id: "title-desk",
-    name: "Title-Desk",
-    alsoName: "TitleDesk Agent Desktop",
+    name: "TitleDesk",
+    alsoName: "TitleDesk Desktop",
     domain: "title-desk.com",
     href: "https://title-desk.com/",
+    secondaryLink: {
+      domain: "desktop.title-desk.com",
+      href: "https://desktop.title-desk.com/",
+    },
     status: "Live production",
-    placard: "Texas oil & gas title · Web platform + native desktop workstation",
+    placard: "Texas mineral title · Hosted web platform + native desktop app",
     lede:
-      "Online county record examination and a native desktop workstation for landmen: it reads crooked courthouse scans with zero-cost local OCR, rebuilds the chain of title, computes exact mineral fractions, and hands over a four-sheet workbook where every row links back to its recorded instrument.",
+      "Hosted Texas mineral title examination for independent landmen and abstractors at title-desk.com, paired with TitleDesk Desktop (installed as TitleDesk Agent) at desktop.title-desk.com: reads crooked courthouse scans, rebuilds the chain of title, computes exact mineral-interest fractions, checks the final answer with an independent third model against page images, and produces a source-linked draft four-sheet workbook for review by a qualified landman or attorney.",
     logo: {
       webp: "/products/titledesk-web-seal.webp",
       w640: "/products/titledesk-web-seal-640.webp",
@@ -85,15 +89,14 @@ export const PRODUCT_SHOWCASES = [
       height: 1024,
     },
     stats: [
-      ["312,379", "Ecosystem LOC"],
+      ["262,305", "Core engine LOC"],
       ["1,662", "Campaign commits"],
-      ["7,070", "Passing tests"],
-      ["6 Months", "Title campaign"],
+      ["7,070", "Engine tests"],
+      ["4 Months", "Aug–Nov 2026"],
     ],
     breakdown: [
-      ["262,305", "Desktop core engine (4 Months core repo)"],
-      ["22,638", "Hosted web platform"],
-      ["23,148", "Artificial Landman"],
+      ["22,638", "TitleDesk hosted web layer"],
+      ["23,148", "Artificial Landman hosted layer (shared engine)"],
       ["4,288", "TractPilot prototype"],
     ],
     serviceLink: {
@@ -102,21 +105,21 @@ export const PRODUCT_SHOWCASES = [
     },
     groups: [
       {
-        label: "Title-Desk Web",
+        label: "TitleDesk · title-desk.com",
         shots: [
-          shot("titledesk-hosted/01-landing", ...WIDE, "Survey landing page", "The title-desk.com landing page: a surveyed Texas land layer that introduces the upload-and-examine workflow.", "Title-Desk web landing page with a topographic Texas survey hero"),
-          shot("titledesk-hosted/03-workspace-intake-verifier", ...WIDE, "Pre-run intake verifier", "Before any paid run starts, a deterministic scope check reconciles tract acreage, abstracts and attached instruments, and lists exactly what to fix.", "Title-Desk intake workspace with assignment tracts, instruments, and a scope-check guide"),
-          shot("titledesk-hosted/04-workspace-live-examination", ...WIDE, "Live dual-examiner run", "Two blind examiners and an independent validator read every instrument while the run clock and current page stay visible.", "Title-Desk live examination screen with a run timer and three-model examiner status"),
-          shot("titledesk-hosted/05-workspace-workbook", ...WIDE, "Four-sheet workbook", "The delivered record: verified mineral ownership with exact fractions and net mineral acres, ready for the landman's review.", "Title-Desk verified mineral ownership workbook"),
+          shot("titledesk-hosted/01-landing", ...WIDE, "Survey landing page", "The title-desk.com landing page: a surveyed Texas land layer introducing the upload-and-examine mineral workflow for independent landmen and abstractors.", "TitleDesk landing page with a topographic Texas survey hero"),
+          shot("titledesk-hosted/03-workspace-intake-verifier", ...WIDE, "Pre-run intake verifier", "Before an examination run starts, a deterministic scope check reconciles tract acreage, abstracts and attached instruments, and lists what to review.", "TitleDesk intake workspace with assignment tracts, instruments, and a scope-check guide"),
+          shot("titledesk-hosted/04-workspace-live-examination", ...WIDE, "Live dual-examiner run", "Two Gemini sessions examine the records separately while an independent third model checks the final answer against page images; unresolved tracts stay proposals leading the curative requirements.", "TitleDesk live examination screen with a run timer and cross-family examiner status"),
+          shot("titledesk-hosted/05-workspace-workbook", ...WIDE, "Four-sheet draft workbook", "The delivered draft record: source-linked mineral ownership with exact fractions, net mineral acres, and curative requirements ready for review by a qualified landman or attorney.", "TitleDesk source-linked draft mineral ownership workbook"),
         ],
       },
       {
-        label: "TitleDesk Agent Desktop",
+        label: "TitleDesk Desktop · desktop.title-desk.com",
         shots: [
-          shot("titledesk/01b-desktop-agent-landing", ...WIDE, "Desktop agent landing", "The TitleDesk Agent desktop edition: local OCR, local projects, and a built-in agent working beside the landman.", "TitleDesk Agent desktop edition landing page"),
+          shot("titledesk/01b-desktop-agent-landing", ...WIDE, "TitleDesk Desktop landing", "TitleDesk Desktop (installed as TitleDesk Agent): local OCR, local projects, and a built-in title assistant on the landman's own computer.", "TitleDesk Desktop landing page"),
           shot("titledesk/04-workspace-runsheet", ...WIDE, "Source-linked runsheet", "Accepted instruments in chronological order; rows that break the chain are flagged and every entry links to its recorded book and page.", "TitleDesk Agent runsheet workspace with chronological instruments"),
-          shot("titledesk/05b-workspace-mineral-ownership", ...WIDE, "Exact mineral ownership", "Ownership is computed with exact fractions, never decimals; a tract that does not total exactly one shows the shortfall as a fraction.", "TitleDesk Agent ownership table with exact fractions and net acres per owner"),
-          shot("titledesk/06-workspace-heirship-tree", ...WIDE, "Heirship tree", "Family graph, determinations and curative issues for estates that pass interest without a recorded deed.", "TitleDesk Agent heirship family graph workspace"),
+          shot("titledesk/05b-workspace-mineral-ownership", ...WIDE, "Exact mineral ownership", "Mineral ownership is computed with exact rational fractions, never decimals; a tract that does not total unity shows the exact fractional shortfall.", "TitleDesk Agent ownership table with exact fractions and net mineral acres per owner"),
+          shot("titledesk/06-workspace-heirship-tree", ...WIDE, "Heirship tree", "Family graph, determinations and curative issues for estates that pass mineral interest without a recorded deed.", "TitleDesk Agent heirship family graph workspace"),
         ],
       },
     ],
@@ -127,9 +130,9 @@ export const PRODUCT_SHOWCASES = [
     domain: "artificiallandman.io",
     href: "https://artificiallandman.io/",
     status: "Live production",
-    placard: "Hosted dual-examiner title engine · Expanding to New Mexico",
+    placard: "Texas mineral title · Built for land teams, brokerages & operators",
     lede:
-      "The hosted dual-examiner title platform built on the Title-Desk engine, with its own brass-and-topographic identity. Artificial Landman is also expanding to become New Mexico's dedicated version of Title-Desk.",
+      "Hosted Texas mineral title examination for land teams, brokerages and operators who run many assignments. Artificial Landman runs the same Texas mineral-interest engine as TitleDesk, packaged, sold and supported on its own with a dedicated brass-and-topographic workspace.",
     logo: {
       webp: "/products/artificial-landman-seal.webp",
       w640: "/products/artificial-landman-seal-640.webp",
@@ -140,21 +143,21 @@ export const PRODUCT_SHOWCASES = [
     stats: [
       ["23,148", "Hosted LOC"],
       ["54", "Hosted commits"],
-      ["282 / 282", "Web suite tests"],
-      ["1 Month", "Rapid sprint"],
+      ["4-Sheet", "Source-linked draft"],
+      ["1 Month", "Nov 2026 sprint"],
     ],
     breakdown: [
-      ["262,305", "Title-Desk engine underneath"],
-      ["6 Months", "Inside the title campaign"],
+      ["262,305", "Shared Texas mineral-interest engine"],
+      ["Aug–Nov 2026", "Title engineering campaign"],
     ],
     groups: [
       {
         label: "Landing & running workspace",
         shots: [
-          shot("artificial-landman/01-landing", ...WIDE, "Brass & topographic landing", "The Artificial Landman landing page, built around a brass-and-topography identity of its own.", "Artificial Landman landing page"),
-          shot("artificial-landman/03-workspace-intake-verifier", ...WIDE, "Pre-run intake verifier", "The same deterministic scope check: acreage, abstracts and recited source deeds reconciled before a run is allowed to start.", "Artificial Landman intake verifier workspace"),
-          shot("artificial-landman/04-workspace-live-examination", ...WIDE, "Live dual-examiner run", "Blind first and second examiners plus a cross-family validator, with the current instrument and page always on screen.", "Artificial Landman live examination screen"),
-          shot("artificial-landman/05-workspace-workbook", ...WIDE, "Delivered workbook", "The verified mineral ownership workbook, ready for review and download.", "Artificial Landman verified mineral ownership workbook"),
+          shot("artificial-landman/01-landing", ...WIDE, "Brass & topographic landing", "The Artificial Landman landing page for land teams, brokerages and operators, built around its own brass-and-topography identity.", "Artificial Landman landing page"),
+          shot("artificial-landman/03-workspace-intake-verifier", ...WIDE, "Pre-run intake verifier", "Deterministic scope check reconciling Texas county acreage, abstracts and recited source deeds before examination runs.", "Artificial Landman intake verifier workspace"),
+          shot("artificial-landman/04-workspace-live-examination", ...WIDE, "Live dual-examiner run", "Two separate Gemini sessions plus an independent third-model check against page images; unresolved tracts stay proposals with findings listed first in curative requirements.", "Artificial Landman live examination screen"),
+          shot("artificial-landman/05-workspace-workbook", ...WIDE, "Delivered draft workbook", "The source-linked draft mineral ownership workbook with exact fractions, ready for review by a qualified landman or attorney.", "Artificial Landman draft mineral ownership workbook"),
         ],
       },
     ],
@@ -168,7 +171,7 @@ export const PRODUCT_SHOWCASES = [
     status: "Past flagship",
     placard: "AI social media agency SaaS · Evolved from MyAIMediaMgr",
     lede:
-      "Nine architectural generations took MyAIMediaMgr from an early AI social tool to BrandStreams: coordinated multi-slot campaigns, multi-model brainstorming, a content calendar, an approval queue, and default-deny tenant-isolated publishing.",
+      "Nine architectural generations took MyAIMediaMgr from an early AI social tool to BrandStreams: coordinated multi-slot campaigns, multi-model brainstorming, a content calendar, an approval queue, and default-deny human-gated publishing.",
     logo: {
       webp: "/products/brandstreams-logo.webp",
       w640: "/products/brandstreams-logo-640.webp",
@@ -178,7 +181,7 @@ export const PRODUCT_SHOWCASES = [
     },
     stats: [
       ["81,254", "Authored LOC"],
-      ["1,364", "Commits"],
+      ["1,364", "Commits (2025–2026)"],
       ["424", "Source files"],
       ["14 Months", "9 Generations"],
     ],
@@ -254,8 +257,8 @@ export const LANDING_GALLERY = [
   {
     id: "kiln",
     name: "Kiln",
-    kind: "Native macOS utility",
-    body: "Native macOS disk and build-artifact cleaner, forged through Perihelion Loop with proportional hazard gates before anything is removed.",
+    kind: "Native macOS utility · Phase-1 foundation",
+    body: "Native macOS disk and build-artifact cleaner: 29-feature behavioral specification, 15-screen interface design, and Phase-1 SwiftUI foundation forged through Perihelion Loop with proportional hazard gates.",
     src: "/showcase/kiln/01-overview-scan-summary.webp",
     thumb: "/showcase/kiln/01-overview-scan-summary-640.webp",
     width: 1440,
@@ -285,7 +288,7 @@ export const LANDING_GALLERY = [
     id: "voxscript",
     name: "VoxScript",
     kind: "Transcription studio",
-    body: "Local-first audio transcription and structured document studio — recordings stay on the machine that made them.",
+    body: "AI-powered video and audio transcription studio built on Whisper — turning recordings into searchable transcripts and structured summaries.",
     src: "/showcase/voxscript/01-landing.webp",
     thumb: "/showcase/voxscript/01-landing-640.webp",
     width: 2880,
@@ -329,7 +332,7 @@ export const LANDING_GALLERY = [
 export const CINEMA_CUTS = [
   {
     id: "titledesk-walkthrough",
-    tab: "Title-Desk Walkthrough",
+    tab: "TitleDesk Walkthrough",
     meta: "16:9 · 3m 44s",
     src: "/video/titledesk-sales-demo-2027.mp4",
     poster: "/video/titledesk-sales-demo-poster.webp",
@@ -338,7 +341,7 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "End-to-end Title-Desk tour: interactive Texas land layers, pre-run scope check, live twelve-instrument examination, emailed deliverable, and pause-verifiable four-sheet workbook. Demonstration with a sample assignment; run time shortened.",
+      "End-to-end TitleDesk tour: interactive Texas land layers, pre-run scope check, live twelve-instrument examination, emailed deliverable, and pause-verifiable four-sheet draft workbook. Demonstration with a sample assignment; run time shortened.",
     chapters: [
       { t: 0, label: "Site & Scope Check" },
       { t: 78.3, label: "Live 12-Deed Run" },
@@ -357,10 +360,10 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "The 2027 studio film: our zero-quit thesis, Title-Desk & Artificial Landman, Mythos OS & Rogue Agents, and BrandStreams & APEX.BUILD.",
+      "The studio film: our zero-quit thesis, TitleDesk & Artificial Landman, Mythos OS & Rogue Agents, and BrandStreams & APEX.BUILD.",
     chapters: [
       { t: 0, label: "Zero-Quit Thesis" },
-      { t: 6.2, label: "Title-Desk & Artificial Landman" },
+      { t: 6.2, label: "TitleDesk & Artificial Landman" },
       { t: 11.4, label: "Mythos OS & Rogue Agents" },
       { t: 16.6, label: "BrandStreams & APEX.BUILD" },
     ],

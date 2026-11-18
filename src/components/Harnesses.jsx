@@ -7,7 +7,7 @@ import { ROGUE_AGENTS } from "../data/products.js";
 import { DEV_URL } from "../data/site.js";
 
 const ROGUE_POINTS = [
-  [Network, "Multi-provider routing", "Claude, Codex, Antigravity and Grok work as co-leads on their own subscriptions, with Ollama Cloud models as subordinate workers."],
+  [Network, "Multi-provider routing", "Claude, Codex, Antigravity and Grok work as co-leads across isolated provider lanes, with Ollama Cloud models as subordinate workers."],
   [GitBranch, "Worktree isolation", "Every execution job gets its own Git worktree, so parallel agents never write over each other."],
   [Layers, "Council before commit", "Plans pass a four-agent endorsement vote and independent cross-provider verification before anything is merged."],
 ];
@@ -118,8 +118,9 @@ export function HarnessBridge() {
             <p>
               We point the same three harnesses straight at customer problems — and at our
               own flagship platforms. Perihelion Loop repaired and verified all 7,070
-              TitleDesk engine tests and the 730-test Rogue Agents suite, and forged the
-              native macOS Kiln app. BrandStreams and APEX.BUILD are the long campaigns that
+              TitleDesk engine tests and the 730-test Rogue Agents suite, and produced the
+              29-feature specification, 15-screen macOS design, and Phase-1 SwiftUI
+              foundation for Kiln. BrandStreams and APEX.BUILD are the long campaigns that
               taught us why these harnesses had to exist — and the next chapter shows all
               of it running, not mocked up.
             </p>
