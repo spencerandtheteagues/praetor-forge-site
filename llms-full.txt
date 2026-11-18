@@ -1,10 +1,10 @@
 # The Harness Lab — Complete Studio, Product & Engineering Reference
 
-> The Harness Lab (https://theharnesslab.com/) is the founder-led custom software and applied AI engineering studio of Spencer Teague. We build bespoke workflow automation, custom business websites, full-stack web and native desktop applications, API integrations, internal operations tools, and verifiable multi-agent AI harnesses — proven against real data and handed over 100% into client-owned repositories and infrastructure.
+> The Harness Lab (https://theharnesslab.com/) is the founder-led custom software and applied AI engineering studio of Spencer Teague. We build bespoke workflow automation, custom business websites, full-stack web and native desktop applications, API integrations, internal operations tools, and verifiable multi-agent AI harnesses — proven against real data and handed over into repositories and infrastructure the client owns once the work is paid for.
 
 ## 1. Identity, Founder & Contact
 
-- **Organization:** The Harness Lab
+- **Organization:** The Harness Lab LLC, a Texas limited liability company (Texas SOS File No. 806765129), doing business as The Harness Lab
 - **Commercial Site (White Carrara Marble Seal):** https://theharnesslab.com/
 - **Engineering R&D Foundry (Black Nero Marquina Marble Seal):** https://theharnesslab.dev/
 - **Founder & Lead Engineer:** Spencer Teague (completely self-taught software engineer with 3,900+ authored production commits across oil and gas title engines, multi-model SaaS platforms, and autonomous AI harnesses)
@@ -135,10 +135,15 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 ## 6. Buyer & Technical FAQ
 
 **Q: Does The Harness Lab lock clients into proprietary hosting or retain intellectual property?**
-A: No. Clients own the private Git repository, configuration, and deployed accounts outright. Handover completes when you run the setup script and automated smoke tests on your own infrastructure without needing us in the loop.
+A: No. Once the final invoice is paid, clients own the private Git repository, configuration, and deployed accounts built for them, with a permanent licence to any reusable Harness Lab components inside them. Handover completes when you run the setup script and automated smoke tests on your own infrastructure without needing us in the loop.
 
 **Q: How are commercial terms and timelines determined?**
 A: Every system is scoped directly with Spencer Teague around a concrete workflow, sample inputs, required integrations, and measurable acceptance criteria during a 20-minute teardown call (`https://cal.com/harnesslab/teardown`) or written Work Order (`https://theharnesslab.com/#contact`).
 
 **Q: Does Title-Desk or automated landman software replace a qualified title reviewer?**
 A: No. Automated extraction, chain-of-title assembly, and exact fractional math accelerate preparation while preserving uncertainty flags and book-and-page source links so a qualified landman or title attorney remains in full control of title conclusions.
+
+## Legal Entity
+
+- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas Secretary of State File No. 806765129, formed August 25, 2026). TitleDesk and Artificial Landman are products of The Harness Lab LLC.
+- [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)
