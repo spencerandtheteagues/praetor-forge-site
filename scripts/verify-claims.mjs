@@ -42,7 +42,7 @@ const FORBIDDEN = [
   [/zero extra vendor spend|ZERO EXTRA SPEND/i, "Banned subscription/spend claim"],
   [/tenant-isolated/i, "Banned 'tenant-isolated' phrase"],
   [/signed workbook/i, "Banned 'signed workbook' phrase"],
-  [/brandstream\.my/i, "Dead domain 'brandstream.my' must stay unlinked until cutover completes"],
+  [/DNS cutover in progress/i, "Stale 'DNS cutover in progress' note (brandstream.my is live)"],
   [/spencerandtheteagues@gmail\.com/i, "Personal Gmail address leak"],
   [/spencer@theharnesslab\.com/i, "Unverified mailbox 'spencer@theharnesslab.com' (use 'sales@theharnesslab.com')"],
 ];

@@ -80,7 +80,7 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 - **Capabilities:** Hosted Texas mineral title examination for land teams, brokerages, and operators who run many assignments. Artificial Landman runs the same Texas mineral-interest engine as Title-Desk, sold and supported on its own with a dedicated brass-and-topographic workspace.
 
 ### BrandStreams (Evolved from MyAIMediaMgr)
-- **Archive & Workspace Showcase:** https://theharnesslab.com/#product-brandstreams *(Note: live domain DNS cutover is temporarily in progress)*
+- **Live URL:** https://brandstream.my/ · **Showcase:** https://theharnesslab.com/#product-brandstreams
 - **Telemetry (2025–2026):** 81,254 authored lines of code · 1,364 commits · 424 source files · 14 months across 9 architectural generations.
 - **Capabilities:** Multi-model AI social media agency platform featuring coordinated multi-slot campaign boards, multi-model AI brainstorm studio, draft content calendars, and default-deny human-gated publishing queues.
 

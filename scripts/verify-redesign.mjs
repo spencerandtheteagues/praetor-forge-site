@@ -15,6 +15,7 @@ const LINK_ALLOWLIST = [
   "title-desk.com",
   "desktop.title-desk.com",
   "artificiallandman.io",
+  "brandstream.my",
   "apex-build.dev",
   "cal.com",
 ];

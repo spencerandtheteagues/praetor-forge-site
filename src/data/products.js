@@ -165,10 +165,9 @@ export const PRODUCT_SHOWCASES = [
   {
     id: "brandstreams",
     name: "BrandStreams",
-    domain: null,
-    href: null,
-    cutoverNote: "DNS cutover in progress",
-    status: "Past flagship",
+    domain: "brandstream.my",
+    href: "https://brandstream.my/",
+    status: "Past flagship · Live",
     placard: "AI social media agency SaaS · Evolved from MyAIMediaMgr",
     lede:
       "Nine architectural generations took MyAIMediaMgr from an early AI social tool to BrandStreams: coordinated multi-slot campaigns, multi-model brainstorming, a content calendar, an approval queue, and default-deny human-gated publishing.",
