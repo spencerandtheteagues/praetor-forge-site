@@ -15,7 +15,7 @@ import { ChapterHead } from "./ui.jsx";
 import { CalTrigger } from "./Header.jsx";
 import { useIntake, FIELD_LIMITS } from "../lib/intake.js";
 import { buildBrief, buildMailto, buildPayload, copyText, FIELD_LABELS } from "../lib/brief.js";
-import { scanRequest } from "../lib/secretGuard.js";
+import { redactSecrets, scanRequest } from "../lib/secretGuard.js";
 import {
   INTAKE_URL,
   PHONE_DISPLAY,
@@ -36,8 +36,13 @@ const APPROVAL = [
   "Not sure yet",
 ];
 
+const EMAIL_RE =
+  /^[^\s@<>,;:"'\\()[\].]+(?:\.[^\s@<>,;:"'\\()[\].]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+(?:[A-Za-z]{2,63}|[Xx][Nn]--[A-Za-z0-9](?:[A-Za-z0-9-]{0,57}[A-Za-z0-9])?)$/;
+
 const ERROR_COPY = {
-  invalid: "Our intake service couldn’t accept the form as sent. Check your name and email, then try again.",
+  missing_fields: "Please enter your name, work email, and project idea before sending.",
+  invalid_email: "Please enter a valid work email address (for example, you@yourfirm.com) and try again.",
+  invalid: "Our intake service couldn’t accept the form as sent. Check your name, email, and project idea, then try again.",
   rate: "Too many enquiries have come from this connection in the last minute. Wait a minute, then try again.",
   server: "Our intake service didn’t confirm delivery.",
   network: "We couldn’t reach our intake service. Check your connection, then try again.",
@@ -88,14 +93,18 @@ export default function ContactSection() {
   const [confirmedSig, setConfirmedSig] = useState("");
   const [guardNudge, setGuardNudge] = useState(false);
   const [copyState, setCopyState] = useState("idle"); // idle | copied | selected
-  const [mailCopied, setMailCopied] = useState(false);
+  const [mailCopied, setMailCopied] = useState("idle"); // idle | copied | failed
   const [flashedPulse, setFlashedPulse] = useState(0); // last pulse whose animation finished
 
   const successRef = useRef(null);
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
   const ideaRef = useRef(null);
   const guardRef = useRef(null);
   const previewRef = useRef(null);
   const returnToIdea = useRef(false);
+  const focusNameOnReopen = useRef(false);
+  const prevPulse = useRef(pulse);
 
   useEffect(() => {
     setReady(true);
@@ -121,8 +130,22 @@ export default function ContactSection() {
   }, [prefill]);
 
   useEffect(() => {
+    if (pulse === prevPulse.current) return;
+    prevPulse.current = pulse;
+    if (mailCopied !== "idle") setMailCopied("idle");
+    if (status === "sent" || status === "error") {
+      if (status === "sent") focusNameOnReopen.current = true;
+      setErrorKind(null);
+      setStatus("idle");
+    }
+  }, [pulse, status, mailCopied]);
+
+  useEffect(() => {
     if (status === "sent") {
       successRef.current?.focus();
+    } else if (status === "idle" && focusNameOnReopen.current) {
+      focusNameOnReopen.current = false;
+      nameRef.current?.focus({ preventScroll: true });
     } else if (status === "idle" && returnToIdea.current) {
       returnToIdea.current = false;
       ideaRef.current?.focus();
@@ -142,9 +165,18 @@ export default function ContactSection() {
   );
   const mailto = useMemo(() => buildMailto(request, { redact: !confirmed }), [request, confirmed]);
 
+  const preparedFor = useMemo(
+    () =>
+      redactSecrets(request.company).trim() ||
+      redactSecrets(request.name).trim() ||
+      "Your next build",
+    [request.company, request.name],
+  );
+
   const onField = (e) => {
     update(e.target.name, e.target.value);
     if (copyState !== "idle") setCopyState("idle");
+    if (mailCopied !== "idle") setMailCopied("idle");
   };
 
   const fieldProps = (name) => ({
@@ -165,15 +197,34 @@ export default function ContactSection() {
       guardRef.current?.focus();
       return;
     }
+    const payload = buildPayload(request);
+    const cleanName = redactSecrets(payload.name).trim();
+    const cleanEmail = redactSecrets(payload.email).trim();
+    const cleanWorkflow = redactSecrets(payload.desiredWorkflow).trim();
+    if (!cleanName || !cleanEmail || !cleanWorkflow) {
+      setErrorKind("missing_fields");
+      setStatus("error");
+      if (!cleanName) nameRef.current?.focus();
+      else if (!cleanEmail) emailRef.current?.focus();
+      else ideaRef.current?.focus();
+      return;
+    }
+    if (!EMAIL_RE.test(cleanEmail)) {
+      setErrorKind("invalid_email");
+      setStatus("error");
+      emailRef.current?.focus();
+      return;
+    }
     setStatus("sending");
     setErrorKind(null);
+    setMailCopied("idle");
     let res;
     let body = null;
     try {
       res = await fetch(INTAKE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildPayload(request)),
+        body: JSON.stringify(payload),
         signal:
           typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function"
             ? AbortSignal.timeout(15000)
@@ -189,8 +240,17 @@ export default function ContactSection() {
       setStatus("sent");
       return;
     }
+    const serverErr = body?.error;
     setErrorKind(
-      res.status === 400 || res.status === 413 ? "invalid" : res.status === 429 ? "rate" : "server",
+      serverErr === "missing_fields"
+        ? "missing_fields"
+        : serverErr === "invalid_email"
+          ? "invalid_email"
+          : res.status === 400 || res.status === 413
+            ? "invalid"
+            : res.status === 429
+              ? "rate"
+              : "server",
     );
     setStatus("error");
   };
@@ -217,9 +277,12 @@ export default function ContactSection() {
     }
   };
 
-  const onMailClick = () => {
+  const onMailClick = async (e) => {
     if (!mailto.overflow) return;
-    copyText(mailto.text).then(setMailCopied);
+    e.preventDefault();
+    const copied = await copyText(mailto.text);
+    setMailCopied(copied ? "copied" : "failed");
+    window.location.assign(mailto.href);
   };
 
   // Gold pulse on external prefill; removed once played so showing a hidden
@@ -269,7 +332,7 @@ export default function ContactSection() {
                 </h3>
                 <p>
                   Thanks for the detail. We’ll reply to{" "}
-                  <strong>{request.email.trim()}</strong> to talk through the next step.
+                  <strong>{redactSecrets(request.email).trim()}</strong> to talk through the next step.
                 </p>
                 <button type="button" className="button button-outline" onClick={shareAnother}>
                   Share another idea <ArrowRight aria-hidden="true" />
@@ -284,12 +347,13 @@ export default function ContactSection() {
                   <div className="contact-pair">
                     <div className="contact-field">
                       <label htmlFor="field-name">Your name</label>
-                      <input {...fieldProps("name")} autoComplete="name" required placeholder="Jane Rivera" />
+                      <input {...fieldProps("name")} ref={nameRef} autoComplete="name" required placeholder="Jane Rivera" />
                     </div>
                     <div className="contact-field">
                       <label htmlFor="field-email">Work email</label>
                       <input
                         {...fieldProps("email")}
+                        ref={emailRef}
                         type="email"
                         autoComplete="email"
                         required
@@ -502,9 +566,11 @@ export default function ContactSection() {
                           Open this enquiry in your email app
                         </a>
                         {mailto.overflow
-                          ? mailCopied
+                          ? mailCopied === "copied"
                             ? " (your full brief is on your clipboard; paste it into the email)"
-                            : " (your brief is long, so the link copies it to your clipboard first)"
+                            : mailCopied === "failed"
+                              ? " (we couldn’t copy automatically — use “Copy brief” to paste it into the email)"
+                              : " (your brief is long, so the link copies it to your clipboard first)"
                           : ""}
                         , or call {PHONE_DISPLAY}.
                       </p>
@@ -538,7 +604,7 @@ export default function ContactSection() {
                 <span className={`work-order-status mono is-${status}`}>{STATUS_LINE[status]}</span>
               </div>
               <div className="work-order-register mono">
-                <span>Prepared for <strong>{request.company.trim() || request.name.trim() || "Your next build"}</strong></span>
+                <span>Prepared for <strong>{preparedFor}</strong></span>
                 <span>{request.problems.length} selected control{request.problems.length === 1 ? "" : "s"}</span>
               </div>
               <pre

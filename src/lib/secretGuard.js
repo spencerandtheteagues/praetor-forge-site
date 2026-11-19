@@ -42,11 +42,20 @@ export const SCANNED_FIELDS = [
   "callWindow",
 ];
 
+// eslint-disable-next-line no-misleading-character-class
+const ZERO_WIDTH_RE = /[\u00ad\u034f\u180e\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/g;
+// eslint-disable-next-line no-control-regex
+const C0_CTRL_RE = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]+/g;
+
+function normalizeForScan(text) {
+  return String(text).replace(ZERO_WIDTH_RE, "").replace(C0_CTRL_RE, "");
+}
+
 /** Every likely credential in `text`, as [{ id, label, match }]. */
 export function findSecrets(text) {
   if (!text) return [];
   const hits = [];
-  let rest = String(text);
+  let rest = normalizeForScan(text);
   for (const { id, label, re } of SECRET_PATTERNS) {
     re.lastIndex = 0;
     rest = rest.replace(re, (match) => {
@@ -60,7 +69,7 @@ export function findSecrets(text) {
 /** Replace every likely credential with a visible marker. */
 export function redactSecrets(text) {
   if (!text) return text;
-  let out = String(text);
+  let out = normalizeForScan(text);
   for (const { label, re } of SECRET_PATTERNS) {
     re.lastIndex = 0;
     out = out.replace(re, `[REDACTED ${label}]`);
