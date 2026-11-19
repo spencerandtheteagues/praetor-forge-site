@@ -172,6 +172,8 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
 
   let gl = null;
   let program = null;
+  let vs = null;
+  let fs = null;
   let vao = null;
   let buffer = null;
   const textures = [];
@@ -180,10 +182,20 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
   let resizeObserver = null;
   let intersectionObserver = null;
 
+  function releaseShaders() {
+    if (gl && !gl.isContextLost()) {
+      if (vs) gl.deleteShader(vs);
+      if (fs) gl.deleteShader(fs);
+    }
+    vs = null;
+    fs = null;
+  }
+
   function fail(reason) {
     if (failed || disposed) return;
     failed = true;
     stopLoop();
+    releaseShaders();
     queueMicrotask(() => {
       if (!disposed) onFail?.(reason);
     });
@@ -215,8 +227,8 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
 
   canvas.addEventListener("webglcontextlost", onContextLost);
 
-  const vs = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
-  const fs = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
+  vs = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
+  fs = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
   program = gl.createProgram();
   gl.attachShader(program, vs);
   gl.attachShader(program, fs);
@@ -293,11 +305,13 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
       ]);
       bitmaps = decoded;
       edgeBitmap = edgeBmp;
-      if (disposed || failed) return;
+      if (disposed || failed) {
+        releaseShaders();
+        return;
+      }
       if (!linked) return fail("compile");
 
-      gl.deleteShader(vs);
-      gl.deleteShader(fs);
+      releaseShaders();
       gl.useProgram(program);
       const aPos = gl.getAttribLocation(program, "aPos");
       gl.bindVertexArray(vao);
@@ -661,7 +675,11 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
           setInteractive(true);
         }
         if (interactive || event.pointerType === "mouse") {
-          el.setPointerCapture?.(event.pointerId);
+          try {
+            el.setPointerCapture?.(event.pointerId);
+          } catch {
+            // Synthetic events without an active hardware pointerId continue cleanly.
+          }
         }
 
         tween = null;
@@ -708,11 +726,27 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
         if (!drag || event.pointerId !== drag.id) return;
         const cur = drag;
         drag = null;
-        if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
-          event.currentTarget.releasePointerCapture?.(event.pointerId);
+        try {
+          if (event.currentTarget?.hasPointerCapture?.(event.pointerId)) {
+            event.currentTarget.releasePointerCapture?.(event.pointerId);
+          }
+        } catch {
+          // Ignore synthetic pointer capture release errors.
         }
 
-        if (event.type === "pointercancel") return;
+        if (event.type === "pointercancel") {
+          if (!cur.wasInteractive) {
+            setInteractive(false);
+          } else {
+            pose.yawVel = 0;
+            pose.pitchVel = 0;
+            releaseAt = -1;
+            normalizeYaw();
+            updateLoop();
+            requestRender();
+          }
+          return;
+        }
 
         const isCleanClick = cur.maxDist < (cur.pointerType === "mouse" ? CLICK_SLOP_PX : 12);
 
@@ -758,12 +792,15 @@ export function createMedallionRenderer(canvas, { onReady, onFail, onInteractive
         document.removeEventListener("visibilitychange", onVisibility);
         canvas.removeEventListener("webglcontextlost", onContextLost);
         if (gl && !gl.isContextLost()) {
+          releaseShaders();
           textures.forEach((t) => gl.deleteTexture(t));
           if (buffer) gl.deleteBuffer(buffer);
           if (vao) gl.deleteVertexArray(vao);
           if (program) gl.deleteProgram(program);
           gl.getExtension("WEBGL_lose_context")?.loseContext();
         }
+        vs = null;
+        fs = null;
         textures.length = 0;
         gl = null;
       },
