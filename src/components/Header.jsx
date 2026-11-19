@@ -120,15 +120,38 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const headerEl = toggleRef.current?.closest("header");
+    const backdrop = [];
+    for (let node = headerEl; node?.parentElement; node = node.parentElement) {
+      for (const sibling of node.parentElement.children) {
+        if (sibling !== node && sibling instanceof HTMLElement) {
+          backdrop.push([sibling, sibling.inert]);
+          sibling.inert = true;
+        }
+      }
+    }
     const onKey = (e) => {
       if (e.key === "Escape") {
         setOpen(false);
         toggleRef.current?.focus();
       }
     };
+    const onResize = () => {
+      if (window.innerWidth > 1380) setOpen(false);
+    };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+      document.body.style.overflow = prevOverflow;
+      backdrop.forEach(([el, prevInert]) => {
+        el.inert = prevInert;
+      });
+    };
   }, [open]);
 
   const close = () => setOpen(false);
@@ -142,6 +165,7 @@ export default function Header() {
         <Brand />
         <button
           ref={toggleRef}
+          type="button"
           className="menu-toggle"
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-controls="main-nav"

@@ -118,21 +118,6 @@
   background: #000;
 }
 
-.cinema-archival {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 3;
-  padding: 6px 12px;
-  border: 1px solid var(--hair);
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.78);
-  color: var(--gold-hi);
-  font-size: var(--step-meta);
-  letter-spacing: 0.16em;
-  pointer-events: none;
-}
-
 .cinema-bigplay {
   position: absolute;
   inset: 0;
@@ -395,10 +380,6 @@
   }
   .cinema-timecode {
     min-width: 0;
-  }
-  .cinema-archival {
-    top: 10px;
-    left: 10px;
   }
 }
 

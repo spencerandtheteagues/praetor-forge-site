@@ -772,3 +772,13 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.motion-paused .perihelion-shot-btn:hover img {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .perihelion-shot-btn:hover img {
+    transform: none;
+  }
+}
