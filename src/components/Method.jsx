@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronRight, FileText, Play, Plus } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
+import Raised from "./Raised.jsx";
 import { FAILURES, GATES, WORKFLOWS } from "../data/narrative.js";
 import { useIntake } from "../lib/intake.js";
 import { DEV_URL } from "../data/site.js";
@@ -282,7 +283,9 @@ export default function Method() {
           </picture>
           <div className="credibility-copy">
             <p className="inscription">Black-marble engineering foundry · theharnesslab.dev</p>
-            <h3 id="credibility-title">Inspect the architecture before you hire us.</h3>
+            <h3 id="credibility-title" className="r3d-title r3d-sub">
+              <Raised>Inspect the architecture before you hire us.</Raised>
+            </h3>
             <p>
               Our engineering site publishes the state machines, the Perihelion Loop
               internals, the twelve-tool verification bench, and the full 27-build

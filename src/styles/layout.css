@@ -320,14 +320,14 @@
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  grid-template-columns: minmax(0, 1.24fr) minmax(0, 0.76fr);
   align-items: start;
   gap: clamp(24px, 3.6vw, 84px);
 }
 .hero-copy {
   min-width: 0;
   display: grid;
-  gap: clamp(18px, 1.7vw, 28px);
+  gap: clamp(16px, 1.3vw, 26px);
   align-content: center;
 }
 .hero-eyebrow {
@@ -342,204 +342,72 @@
   color: var(--gold);
 }
 .hero h1 {
-  font-family: var(--font-display);
   font-size: var(--step-h1);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: 0.012em;
+  line-height: 1;
   text-transform: uppercase;
-  color: #fcf8ef;
-  text-shadow: var(--extrude-stone);
 }
-/* Hero headline — three sculpted 3D voices:
-     1. carved Carrara marble & warm stone: the client's big, ambitious idea
-     2. cast 24k bronze-gold: the big, ambitious software we build for it
-     3. raised champagne-ivory: "That's where we come in."
-   Each phrase carries a dedicated ::before data-depth 3D bevel behind a
-   horizon-split specular metallic face so strokes physically rise off obsidian. */
+/* Hero headline: Cinzel 900 cast in metal. The ivory dare and the gold vow
+   each break once, between two unbreakable phrase segments, and every size is
+   in container units so the 2 + 2 lockup holds from 320px to 1920px. */
 .hero h1.hero-headline {
   container-type: inline-size;
   width: 100%;
   max-width: 100%;
-  line-height: 1.1;
-  letter-spacing: 0.012em;
-  word-spacing: 0.06em;
-  text-shadow: none;
-  isolation: isolate;
+  word-spacing: 0;
+  letter-spacing: 0;
+  --r3d-wall-ivory: var(--r3d-wall-ivory-hero);
+  --r3d-wall-gold: var(--r3d-wall-gold-hero);
 }
 .hero-headline .hl-line {
   display: block;
-  /* Declare cqi directly on the child of .hero-headline (never in a custom prop
-     on the container itself, which CSS resolves against the outer viewport). */
-  font-size: 5.05cqi;
+}
+.hero-headline .hl-seg {
+  display: inline-block;
   white-space: nowrap;
 }
-.hero-headline .hl-ideas,
-.hero-headline .hl-software {
-  font-family: var(--font-display);
-  font-weight: 800;
-  text-transform: uppercase;
+/* cqi is declared on children of the container (never on the container).
+   "CUSTOM SOFTWARE" & "& VERIFIED AI." stack as two monumental ivory lines;
+   "BUILT THE RIGHT WAY." spans the column on one cast-gold line. */
+.hero-headline .hl-dare {
+  font-size: 9.1cqi;
+  line-height: 1.03;
 }
-.hero-headline .hl-software {
-  margin-top: 0.16em;
-  letter-spacing: 0.024em;
+.hero-headline .hl-dare .hl-seg {
+  display: block;
 }
-.hero-headline .hl-big {
-  font-size: 1.34em;
-  font-weight: 900;
-  letter-spacing: 0.005em;
-  line-height: 0.94;
-}
-.hero-headline .hl-3d {
-  position: relative;
-  display: inline-block;
-  isolation: isolate;
-}
-.hero-headline .hl-3d[data-depth]::before {
-  content: attr(data-depth);
-  content: attr(data-depth) / "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  white-space: nowrap;
-}
-.hero-headline .hl-face {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-}
-.hero-headline .hl-ideas .hl-3d[data-depth]::before {
-  color: #54452f;
-  text-shadow:
-    0.5px 1px 0 #726146,
-    1px 2px 0 #584932,
-    2px 3px 0 #3f3320,
-    3px 4px 0 #282012,
-    4px 5px 0 #151008,
-    0 8px 18px rgba(0, 0, 0, 0.92),
-    0 18px 34px rgba(0, 0, 0, 0.82);
-}
-.hero-headline .hl-ideas .hl-face {
-  color: #fcf8ef;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #f9f4ea 48%,
-    #dfd3be 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.hero-headline .hl-software .hl-3d[data-depth]::before {
-  color: #634210;
-  text-shadow:
-    0.5px 1px 0 #8a611e,
-    1px 2px 0 #6c4912,
-    2px 3px 0 #4e330a,
-    3px 4px 0 #321f04,
-    4px 5px 0 #1a0f02,
-    0 8px 18px rgba(0, 0, 0, 0.94),
-    0 18px 36px rgba(200, 102, 46, 0.28);
-}
-.hero-headline .hl-software .hl-face {
-  color: #ffe299;
-  background: linear-gradient(
-    180deg,
-    #fff9e6 0%,
-    #f9d889 52%,
-    #cf9334 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.hero-headline .hl-vow {
+  margin-top: 0.14em;
+  font-size: 7.45cqi;
+  line-height: 1.05;
 }
 .hero-headline .hl-us {
-  margin-top: 0.5em;
-  font-family: var(--font-display);
-  font-size: 3.75cqi;
-  font-weight: 700;
-  letter-spacing: 0.008em;
-  word-spacing: 0.04em;
+  margin-top: 0.72em;
+  font-size: 2.95cqi;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
   text-transform: none;
+  --r3d-wall-ivory: var(--r3d-wall-ivory-kicker);
 }
-.hero-headline .hl-us .hl-3d[data-depth]::before {
-  color: #4a3a22;
-  text-shadow:
-    0.5px 1px 0 #695538,
-    1px 2px 0 #493922,
-    2px 3px 0 #291f11,
-    0 6px 14px rgba(0, 0, 0, 0.9),
-    0 14px 26px rgba(0, 0, 0, 0.84);
-}
-.hero-headline .hl-us .hl-face {
-  color: #faf4e6;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #f5ede0 54%,
-    #d9cbb2 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.hero-headline .hl-stop {
-  -webkit-text-fill-color: var(--gold-hi);
-  color: var(--gold-hi);
-}
-@media (prefers-contrast: more), (forced-colors: active) {
-  .hero-headline .hl-ideas .hl-face,
-  .hero-headline .hl-us .hl-face {
-    background: none;
-    -webkit-text-fill-color: #ffffff;
-    color: #ffffff;
+@container (max-width: 520px) {
+  .hero-headline .hl-dare {
+    font-size: 8.8cqi;
+    line-height: 1.1;
   }
-  .hero-headline .hl-software .hl-face {
-    background: none;
-    -webkit-text-fill-color: var(--gold-hi);
-    color: var(--gold-hi);
-  }
-}
-/* Narrow columns (phones, tablets): each line breaks once, between its two
-   phrases, so the type stays big instead of shrinking to fit 25 characters. */
-@container (max-width: 470px) {
-  .hero-headline .hl-ideas,
-  .hero-headline .hl-software {
-    font-size: 9.4cqi;
-    line-height: 1.18;
-    white-space: normal;
-  }
-  .hero-headline .hl-big {
-    font-size: 1.2em;
+  .hero-headline .hl-vow {
+    margin-top: 0.2em;
+    font-size: 7.25cqi;
+    line-height: 1.12;
   }
   .hero-headline .hl-us {
-    margin-top: 0.42em;
-    font-size: 6.1cqi;
-    line-height: 1.2;
-    white-space: normal;
-  }
-  .hero-headline .hl-us .hl-3d[data-depth]::before,
-  .hero-headline .hl-us .hl-face {
-    white-space: normal;
-  }
-  .hero-headline .hl-software {
-    margin-top: 0.24em;
-    letter-spacing: 0.014em;
-  }
-  .hero-headline .hl-seg {
-    display: inline-block;
-    white-space: nowrap;
+    margin-top: 0.8em;
+    font-size: 3.95cqi;
   }
 }
 .hero-manifesto {
   display: grid;
   gap: 14px;
-  max-width: 60ch;
+  max-width: 50rem;
 }
 .hero-what-kicker {
   color: var(--gold-hi);
@@ -547,11 +415,11 @@
   letter-spacing: 0.22em;
 }
 .hero-lede {
-  max-width: 58ch;
+  max-width: 64ch;
   font-family: var(--font-subhead);
-  font-size: clamp(1.04rem, 0.96rem + 0.34vw, 1.28rem);
+  font-size: clamp(1rem, 0.92rem + 0.26vw, 1.2rem);
   font-weight: 600;
-  line-height: 1.52;
+  line-height: 1.5;
   color: #fff;
 }
 .hero-credo {
@@ -1863,15 +1731,8 @@ html.motion-ok .escapement-wheel {
   min-width: 0;
 }
 .founder-copy h2 {
-  font-family: var(--font-display);
   font-size: var(--step-h2);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: 0.012em;
-  word-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #fcf8ef;
-  text-shadow: var(--extrude-stone);
+  line-height: 1.16;
 }
 .founder-copy h2 em {
   display: block;

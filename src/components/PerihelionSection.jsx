@@ -11,6 +11,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
+import Raised from "./Raised.jsx";
 import { TelemetryBadge } from "./Showcase.jsx";
 import { useImageViewer } from "../lib/useImageViewer.js";
 import { goToContact, useIntake } from "../lib/intake.js";
@@ -186,9 +187,11 @@ export default function PerihelionSection() {
         <div className="perihelion-pillars-block">
           <header className="perihelion-subhead">
             <p className="inscription">How we built it</p>
-            <h3>
-              Four hardened layers turning raw frontier models into a{" "}
-              <span className="gold-3d">deterministic software foundry.</span>
+            <h3 className="r3d-title r3d-sub">
+              <Raised>
+                Four hardened layers turning raw frontier models into a{" "}
+                <span className="gold-3d">deterministic software foundry.</span>
+              </Raised>
             </h3>
           </header>
           <div className="perihelion-pillars-grid">
@@ -219,10 +222,12 @@ export default function PerihelionSection() {
         <div className="perihelion-modes-block">
           <header className="perihelion-subhead">
             <p className="inscription">What it achieves in production</p>
-            <h3>
-              One autonomous harness to{" "}
-              <span className="gold-3d">create, fix, or carry out no-copy reverse-engineering</span>{" "}
-              at verified quality.
+            <h3 className="r3d-title r3d-sub">
+              <Raised>
+                One autonomous harness to{" "}
+                <span className="gold-3d">create, fix, or carry out no-copy reverse-engineering</span>{" "}
+                at verified quality.
+              </Raised>
             </h3>
           </header>
 
@@ -259,9 +264,11 @@ export default function PerihelionSection() {
               <p className="inscription">
                 <Layers aria-hidden="true" /> Interactive 5-Stage Perihelion Cockpit
               </p>
-              <h3>
-                Inspect every zoom level —{" "}
-                <span className="gold-3d">from fleet DAGs down to the kernel sandbox.</span>
+              <h3 className="r3d-title r3d-sub">
+                <Raised>
+                  Inspect every zoom level —{" "}
+                  <span className="gold-3d">from fleet DAGs down to the kernel sandbox.</span>
+                </Raised>
               </h3>
             </div>
             <span className="mono perihelion-cockpit-meta">

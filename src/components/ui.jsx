@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import Raised from "./Raised.jsx";
 
 /**
  * <Picture> — WebP source (+ optional responsive srcSet) with a PNG/JPG fallback.
@@ -154,7 +155,9 @@ export function ChapterHead({ numeral, eyebrow, title, children, align = "left",
         {numeral ? <span className="chapter-numeral">{numeral}</span> : null}
         <span>{eyebrow}</span>
       </p>
-      <h2 id={id}>{title}</h2>
+      <h2 id={id} className="r3d-title">
+        <Raised>{title}</Raised>
+      </h2>
       {children ? <div className="chapter-lede">{children}</div> : null}
     </header>
   );

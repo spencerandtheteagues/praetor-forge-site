@@ -1,5 +1,6 @@
 import { ArrowRight, ArrowUpRight, Cpu, GitBranch, Layers, Network } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
+import Raised from "./Raised.jsx";
 import { ShotGallery, TelemetryBadge } from "./Showcase.jsx";
 import { useImageViewer } from "../lib/useImageViewer.js";
 import { goToContact, useIntake } from "../lib/intake.js";
@@ -52,8 +53,10 @@ export function RogueAgentsSection() {
               <p className="inscription">
                 <span className="harness-index">III·A</span> Rogue Agents · Multi-agent command center
               </p>
-              <h3>
-                A coordinated AI engineering team, <span className="gold-3d">under one human.</span>
+              <h3 className="r3d-title r3d-sub">
+                <Raised>
+                  A coordinated AI engineering team, <span className="gold-3d">under one human.</span>
+                </Raised>
               </h3>
               <p>
                 Rogue Agents is the macOS and Linux command center we use to run Claude,
@@ -112,8 +115,10 @@ export function HarnessBridge() {
             <p className="inscription">
               <Cpu aria-hidden="true" /> From our bench to your business
             </p>
-            <h2 id="custom-built-title">
-              Custom-built tools <span className="gold-3d">to custom-build your product.</span>
+            <h2 id="custom-built-title" className="r3d-title">
+              <Raised>
+                Custom-built tools <span className="gold-3d">to custom-build your product.</span>
+              </Raised>
             </h2>
             <p>
               We point the same three harnesses straight at customer problems — and at our

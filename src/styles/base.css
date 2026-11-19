@@ -55,7 +55,7 @@
     "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --step-h1: clamp(2.05rem, 0.88rem + 2.42vw, 5.2rem);
-  --step-h2: clamp(1.9rem, 1.2rem + 2.4vw, 4.15rem);
+  --step-h2: clamp(1.6rem, 0.95rem + 2.7vw, 4.1rem);
   --step-h3: clamp(1.24rem, 1.04rem + 0.82vw, 1.88rem);
   --step-body: clamp(1rem, 0.95rem + 0.22vw, 1.22rem);
   --step-small: clamp(0.88rem, 0.85rem + 0.12vw, 1rem);
@@ -84,6 +84,102 @@
     1px 2px 0 #3d2f1a,
     2px 3px 0 #1f170b,
     0 6px 14px rgba(0, 0, 0, 0.88);
+
+  /* Cast-bronze raised display type (.r3d words built by <Raised>). Side walls
+     are stepped em-based text-shadow layers on a decorative ::before copy, so
+     they scale with the type and never touch the background-clip metallic face. */
+  --font-monument: "Cinzel", "Cinzel Fallback", "Trajan Pro", Georgia, serif;
+  --r3d-wall-ivory-hero:
+    0.0066em 0.0094em 0 #e2cc98,
+    0.0132em 0.0188em 0 #c4a874,
+    0.0198em 0.0282em 0 #ae9262,
+    0.0264em 0.0376em 0 #9a8054,
+    0.0330em 0.0470em 0 #887048,
+    0.0396em 0.0564em 0 #78623e,
+    0.0462em 0.0658em 0 #6a5636,
+    0.0528em 0.0752em 0 #5c4a2e,
+    0.0594em 0.0846em 0 #4f3f27,
+    0.0660em 0.0940em 0 #433520,
+    0.0726em 0.1034em 0 #382c1a,
+    0.0792em 0.1128em 0 #2e2414,
+    0.0858em 0.1222em 0 #251d10,
+    0.0924em 0.1316em 0 #1a140a;
+  --r3d-wall-gold-hero:
+    0.0066em 0.0094em 0 #f0b955,
+    0.0132em 0.0188em 0 #d1953a,
+    0.0198em 0.0282em 0 #ba7f2c,
+    0.0264em 0.0376em 0 #a56d23,
+    0.0330em 0.0470em 0 #925e1c,
+    0.0396em 0.0564em 0 #815117,
+    0.0462em 0.0658em 0 #714613,
+    0.0528em 0.0752em 0 #623c10,
+    0.0594em 0.0846em 0 #54330c,
+    0.0660em 0.0940em 0 #472a09,
+    0.0726em 0.1034em 0 #3b2207,
+    0.0792em 0.1128em 0 #301b05,
+    0.0858em 0.1222em 0 #251403,
+    0.0924em 0.1316em 0 #180c02;
+  --r3d-wall-ivory-title:
+    0.0088em 0.0124em 0 #e2cc98,
+    0.0176em 0.0248em 0 #ae9262,
+    0.0264em 0.0372em 0 #887048,
+    0.0352em 0.0496em 0 #6a5636,
+    0.0440em 0.0620em 0 #5c4a2e,
+    0.0528em 0.0744em 0 #433520,
+    0.0616em 0.0868em 0 #2e2414,
+    0.0704em 0.0992em 0 #1a140a;
+  --r3d-wall-gold-title:
+    0.0088em 0.0124em 0 #f0b955,
+    0.0176em 0.0248em 0 #ba7f2c,
+    0.0264em 0.0372em 0 #925e1c,
+    0.0352em 0.0496em 0 #714613,
+    0.0440em 0.0620em 0 #623c10,
+    0.0528em 0.0744em 0 #472a09,
+    0.0616em 0.0868em 0 #301b05,
+    0.0704em 0.0992em 0 #180c02;
+  --r3d-wall-ivory-kicker:
+    0.0120em 0.0170em 0 #e2cc98,
+    0.0240em 0.0340em 0 #9a8054,
+    0.0360em 0.0510em 0 #5c4a2e,
+    0.0480em 0.0680em 0 #382c1a,
+    0.0600em 0.0850em 0 #1a140a;
+  --r3d-wall-gold-kicker:
+    0.0120em 0.0170em 0 #f0b955,
+    0.0240em 0.0340em 0 #a56d23,
+    0.0360em 0.0510em 0 #623c10,
+    0.0480em 0.0680em 0 #3b2207,
+    0.0600em 0.0850em 0 #180c02;
+  --r3d-ambient:
+    0.05em 0.17em 0.1em rgba(0, 0, 0, 0.88),
+    0.03em 0.32em 0.42em rgba(0, 0, 0, 0.62);
+  --r3d-ambient-gold:
+    0.05em 0.17em 0.1em rgba(0, 0, 0, 0.88),
+    0.03em 0.32em 0.42em rgba(0, 0, 0, 0.6),
+    0 0.12em 0.8em rgba(200, 102, 46, 0.2);
+  /* Polished faces: bright top bevel, horizon reflection band, warm under-lip. */
+  --r3d-face-ivory: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffffff 22%,
+    #f7f1e4 40%,
+    #c9b796 49%,
+    #e9dec8 55%,
+    #fffdf8 66%,
+    #f3ead8 74%,
+    #cdb995 100%
+  );
+  --r3d-face-gold: linear-gradient(
+    180deg,
+    #fffaf0 0%,
+    #fff0bf 20%,
+    #ffd36f 36%,
+    #eaa83d 45%,
+    #ad7026 49%,
+    #d99d3e 55%,
+    #ffd889 64%,
+    #f4bd5c 72%,
+    #b47828 100%
+  );
 
   /* Layout widths */
   --read: 64ch;
@@ -202,23 +298,15 @@ h4 {
   text-wrap: balance;
 }
 
-/* Monumental 3D Extruded Display & Sculpted Subheads */
-h1 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.012em;
-  word-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #fcf8ef;
-  text-shadow: var(--extrude-stone);
-}
+/* Monumental cast-bronze display: Cinzel 900 for every h1/h2 */
+h1,
 h2 {
-  font-family: var(--font-display);
-  font-weight: 800;
+  font-family: var(--font-monument);
+  font-weight: 900;
   letter-spacing: 0.01em;
-  word-spacing: 0.05em;
+  word-spacing: 0.04em;
   color: #fcf8ef;
-  text-shadow: var(--extrude-stone);
+  text-shadow: none;
 }
 h3,
 h4 {
@@ -232,6 +320,110 @@ h4 {
   font-style: normal;
   color: #ffe094;
   text-shadow: var(--extrude-gold);
+}
+
+/* Raised word: decorative stepped side wall (::before), top-left bevel rim
+   (::after) and the metallic face. Pseudo text comes from data-text with an
+   empty alternative, so assistive tech and innerText read the word once. */
+.r3d-title {
+  --r3d-wall-ivory: var(--r3d-wall-ivory-title);
+  --r3d-wall-gold: var(--r3d-wall-gold-title);
+}
+.r3d {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  text-shadow: none;
+}
+.r3d::before,
+.r3d::after {
+  content: attr(data-text);
+  content: attr(data-text) / "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  -webkit-text-fill-color: currentColor;
+}
+.r3d::before {
+  z-index: 0;
+  color: #a08a5c;
+  text-shadow: var(--r3d-wall-ivory, var(--r3d-wall-ivory-title)), var(--r3d-ambient);
+}
+.r3d::after {
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.92);
+  transform: translate(-0.008em, -0.012em);
+}
+.r3d-face {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  margin: -0.12em -0.06em;
+  padding: 0.12em 0.06em;
+  color: #fcf8ef;
+  background: var(--r3d-face-ivory);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+/* Display sub-headings (h3) share the casting at a shallower depth. */
+.r3d-title.r3d-sub {
+  --r3d-wall-ivory: var(--r3d-wall-ivory-kicker);
+  --r3d-wall-gold: var(--r3d-wall-gold-kicker);
+  font-family: var(--font-monument);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  word-spacing: 0.04em;
+  line-height: 1.22;
+  text-transform: none;
+  text-shadow: none;
+}
+:is(.gold-3d, em, .r3d-gold) .r3d::before {
+  color: #b98330;
+  text-shadow: var(--r3d-wall-gold, var(--r3d-wall-gold-title)), var(--r3d-ambient-gold);
+}
+:is(.gold-3d, em, .r3d-gold) .r3d::after {
+  color: rgba(255, 246, 214, 0.95);
+}
+:is(.gold-3d, em, .r3d-gold) .r3d-face {
+  color: #ffe094;
+  background: var(--r3d-face-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+:is(h1, h2) :is(.gold-3d, em) {
+  font-style: normal;
+  color: #ffe094;
+  text-shadow: none;
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  .r3d-face {
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+  }
+  :is(.gold-3d, em, .r3d-gold) .r3d-face {
+    background: none;
+    -webkit-text-fill-color: #ffe094;
+    color: #ffe094;
+  }
+  .r3d::after {
+    display: none;
+  }
+}
+@media (forced-colors: active) {
+  .r3d::before {
+    display: none;
+  }
+  .r3d-face {
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
 }
 /* Shared 3D perspective beveled slab */
 .card-3d {
@@ -429,21 +621,8 @@ section[id],
   letter-spacing: 0.08em;
 }
 .chapter-head h2 {
-  font-family: var(--font-display);
   font-size: var(--step-h2);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: 0.012em;
-  word-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #fcf8ef;
-  text-shadow: var(--extrude-stone);
-}
-.chapter-head h2 em,
-.chapter-head h2 .gold-3d {
-  font-style: normal;
-  color: #ffe094;
-  text-shadow: var(--extrude-gold);
+  line-height: 1.16;
 }
 .chapter-lede {
   max-width: var(--read);

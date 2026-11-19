@@ -1,5 +1,6 @@
 import { ArrowRight, ArrowUpRight, CalendarCheck, Mail, Star } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
+import Raised from "./Raised.jsx";
 import { Brand, CalTrigger } from "./Header.jsx";
 import { BUILT_FOR, DELIVERABLES, ENGAGEMENTS, PROCESS } from "../data/narrative.js";
 import { JAYSON } from "../data/wealth.js";
@@ -70,8 +71,10 @@ export function Ownership() {
             <span id="process" className="anchor-alias" aria-hidden="true" />
             <header className="process-strip-head">
               <p className="inscription">How an engagement runs</p>
-              <h3 id="how-title">
-                Four stages. <span className="gold-3d">Handover when you can run it without us.</span>
+              <h3 id="how-title" className="r3d-title r3d-sub">
+                <Raised>
+                  Four stages. <span className="gold-3d">Handover when you can run it without us.</span>
+                </Raised>
               </h3>
             </header>
             <ol className="process-steps">
@@ -228,8 +231,10 @@ export function Founder() {
             <span className="chapter-numeral">VII·C</span>
             <span>The founder · Completely self-taught · 3,900+ commits</span>
           </p>
-          <h2 id="about-title">
-            Hi, I’m Spencer. <span className="gold-3d">I ground the hard builds out.</span>
+          <h2 id="about-title" className="r3d-title">
+            <Raised>
+              Hi, I’m Spencer. <span className="gold-3d">I ground the hard builds out.</span>
+            </Raised>
           </h2>
           <p className="founder-lead">
             I’m a completely self-taught builder who learned the only way that sticks:
@@ -285,8 +290,10 @@ export function Founder() {
         />
         <div>
           <p className="inscription">Black marble seal · Engineering foundry</p>
-          <h3>
-            Meet <span className="gold-3d">theharnesslab.dev</span>
+          <h3 className="r3d-title r3d-sub">
+            <Raised>
+              Meet <span className="gold-3d">theharnesslab.dev</span>
+            </Raised>
           </h3>
           <p>
             White Carrara marble with gold circuit wires is our flagship{" "}
