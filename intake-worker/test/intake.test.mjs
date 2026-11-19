@@ -189,3 +189,154 @@ test("intake-worker: strips embedded control and zero-width chars BEFORE secret 
     globalThis.fetch = origFetch;
   }
 });
+
+test("intake-worker: redacts tab/newline-adjacent secrets in clipLine and bidi/format-split secrets without mangling word boundaries", async () => {
+  let capturedBody = null;
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async (_url, init) => {
+    capturedBody = JSON.parse(init.body);
+    return new Response(JSON.stringify({ id: "email_125" }), { status: 200 });
+  };
+  try {
+    const stripeKey = "sk_live_" + "9876543210abcdef";
+    const ghpKey = "ghp_" + "B".repeat(36);
+    const awsKey = "AKIA" + "IOSFODNN7EXAMPLE";
+    const googleKey = "AIza" + "SyDa1234567890abcdefABCDEF123456";
+    const jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+    const bidiSplitSk = "sk-proj-" + "A1b2C3\u202ed4E5f6\u2066G7h8\u034fI9j0\u180eK1l2";
+    const rawSk = "sk-proj-A1b2C3d4E5f6G7h8I9j0K1l2";
+
+    const req = new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/intake", {
+      method: "POST",
+      headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        name: "Jane\r\nSmith\u202e",
+        email: "jane@example.com",
+        company: `Acme\t${stripeKey}`,
+        website: `https://acme.example\t${awsKey}`,
+        callWindow: `Morning\n${googleKey}`,
+        desiredWorkflow: `Rotate ${bidiSplitSk} and\t${jwtToken}`,
+        problems: [`Auth\n${ghpKey}`],
+      }),
+    });
+    const res = await worker.fetch(req, makeEnv());
+    assert.equal(res.status, 200);
+    assert.ok(capturedBody);
+    assert.ok(capturedBody.subject.includes("Jane Smith"), "clipLine should preserve space when collapsing CRLF");
+    assert.ok(!/[\u202a-\u202e\u2066-\u2069]/.test(capturedBody.subject), "Bidi controls must be stripped from subject");
+    assert.ok(!/[\u202a-\u202e\u2066-\u2069]/.test(capturedBody.html), "Bidi controls must be stripped from html");
+    for (const secret of [stripeKey, ghpKey, awsKey, googleKey, jwtToken, rawSk]) {
+      assert.ok(!capturedBody.text.includes(secret), `Leaked secret in text: ${secret.slice(0, 8)}`);
+      assert.ok(!capturedBody.html.includes(secret), `Leaked secret in html: ${secret.slice(0, 8)}`);
+    }
+    assert.ok(capturedBody.text.includes("Acme [REDACTED Stripe key]"));
+    assert.ok(capturedBody.text.includes("Auth [REDACTED GitHub token]"));
+    assert.ok(capturedBody.text.includes("[REDACTED AWS access key]"));
+    assert.ok(capturedBody.text.includes("[REDACTED Google API key]"));
+    assert.ok(capturedBody.text.includes("[REDACTED signed token (JWT)]"));
+    assert.ok(capturedBody.text.includes("[REDACTED API key]"));
+    assert.ok(capturedBody.text.includes("— via theharnesslab.com intake form"));
+    assert.ok(!capturedBody.text.includes("via the theharnesslab.com"));
+    assert.ok(capturedBody.html.includes("via theharnesslab.com intake form"));
+    assert.ok(!capturedBody.html.includes("via the theharnesslab.com"));
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+test("intake-worker: guards non-string field coercion, enforces exact application/json media type, validates domain/punycode emails, and checks fields before burning INTAKE_LIMIT", async () => {
+  let limitCalls = 0;
+  let resendCalls = 0;
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async () => {
+    resendCalls += 1;
+    return new Response(JSON.stringify({ message: "Invalid reply_to" }), { status: 422 });
+  };
+  try {
+    // 1. Non-exact application/json* media types must return 415 without touching Resend
+    for (const badType of ["application/jsonp", "application/json-patch+json", "application/jsonlines"]) {
+      const req = new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/intake", {
+        method: "POST",
+        headers: { Origin: "https://theharnesslab.com", "Content-Type": badType },
+        body: JSON.stringify({ name: "Jane", email: "jane@example.com", desiredWorkflow: "Automate" }),
+      });
+      assert.equal((await worker.fetch(req, makeEnv())).status, 415, `Expected 415 for ${badType}`);
+    }
+
+    // 2. Malformed email domains & missing fields must return 400 BEFORE calling INTAKE_LIMIT or Resend
+    const env = makeEnv({
+      INTAKE_LIMIT: {
+        async limit() {
+          limitCalls += 1;
+          return { success: true };
+        },
+      },
+    });
+
+    const missingRes = await worker.fetch(
+      new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/intake", {
+        method: "POST",
+        headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "   ", email: "jane@example.com", desiredWorkflow: "   " }),
+      }),
+      env,
+    );
+    assert.equal(missingRes.status, 400);
+
+    for (const badEmail of [
+      "jane@.example.com",
+      "jane@a..com",
+      "jane@-a.com",
+      "jane@a-.com",
+      ".jane@example.com",
+      "jane.@example.com",
+      "ja..ne@example.com",
+      "jane@example.xn--",
+    ]) {
+      const res = await worker.fetch(
+        new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/intake", {
+          method: "POST",
+          headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json" },
+          body: JSON.stringify({ name: "Jane", email: badEmail, desiredWorkflow: "Automate" }),
+        }),
+        env,
+      );
+      assert.equal(res.status, 400, `Expected 400 invalid_email for ${badEmail}, got ${res.status}`);
+      assert.equal((await res.json()).error, "invalid_email");
+    }
+
+    assert.equal(limitCalls, 0, "Invalid/incomplete payloads must not burn INTAKE_LIMIT");
+    assert.equal(resendCalls, 0, "Invalid emails must be rejected before calling Resend");
+
+    // 3. Valid punycode TLDs + non-string optional fields safely ignored without [object Object]
+    let capturedBody = null;
+    globalThis.fetch = async (_url, init) => {
+      capturedBody = JSON.parse(init.body);
+      return new Response(JSON.stringify({ id: "email_126" }), { status: 200 });
+    };
+    const okRes = await worker.fetch(
+      new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/intake", {
+        method: "POST",
+        headers: { Origin: "https://theharnesslab.com", "Content-Type": "APPLICATION/JSON ; charset=utf-8" },
+        body: JSON.stringify({
+          name: "Jane",
+          email: "jane@company.xn--p1ai",
+          company: { nested: "obj" },
+          infrastructure: ["array", "ignored"],
+          role: 12345,
+          problems: [{ bad: true }, 99, "Manual re-entry"],
+          desiredWorkflow: "Automate intake",
+        }),
+      }),
+      env,
+    );
+    assert.equal(okRes.status, 200);
+    assert.equal(limitCalls, 1, "Valid submission should consume exactly 1 rate-limit token");
+    assert.equal(capturedBody.reply_to, "jane@company.xn--p1ai");
+    assert.ok(!capturedBody.text.includes("[object Object]"), "Non-string objects must not coerce to [object Object]");
+    assert.ok(!capturedBody.text.includes("12345"), "Non-string numbers must be ignored");
+    assert.ok(capturedBody.text.includes("Problems: Manual re-entry"));
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});

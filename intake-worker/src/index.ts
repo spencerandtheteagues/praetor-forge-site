@@ -31,7 +31,8 @@ const DEFAULT_ORIGINS = [
 
 const MAX_BODY = 64 * 1024; // 64 KB byte cap
 const MAX_PROBLEMS = 20;
-const EMAIL_RE = /^[^\s@<>,;:"'\\()[\]]+@[^\s@<>,;:"'\\()[\]]+\.[A-Za-z]{2,63}$/;
+const EMAIL_RE =
+  /^[^\s@<>,;:"'\\()[\].]+(?:\.[^\s@<>,;:"'\\()[\].]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+(?:[A-Za-z]{2,63}|[Xx][Nn]--[A-Za-z0-9](?:[A-Za-z0-9-]{0,57}[A-Za-z0-9])?)$/;
 
 // Server-side mirror of src/lib/secretGuard.js so direct POSTs or overridden
 // warnings never deliver raw credentials into an email inbox.
@@ -89,28 +90,30 @@ function json(body: unknown, status: number, extra: Record<string, string>): Res
   });
 }
 
-const ZERO_WIDTH_RE = /[\u00ad\u200b-\u200f\u2028\u2029\u2060\ufeff]/g;
+const ZERO_WIDTH_RE = /[\u00ad\u034f\u180e\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/g;
+const C0_CTRL_RE = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]+/g;
 
-const clipLine = (v: unknown, n: number): string =>
-  v == null
-    ? ''
-    : redactSecrets(
-        String(v)
-          .replace(ZERO_WIDTH_RE, '')
-          .replace(/[\r\n\t\x00-\x1f\x7f]+/g, '')
-          .trim(),
-      ).slice(0, n);
+const clipLine = (v: unknown, n: number): string => {
+  if (typeof v !== 'string') return '';
+  return redactSecrets(
+    redactSecrets(v)
+      .replace(/[\r\n\t]+/g, ' ')
+      .replace(ZERO_WIDTH_RE, '')
+      .replace(C0_CTRL_RE, '')
+      .trim(),
+  ).slice(0, n);
+};
 
-const clipBlock = (v: unknown, n: number): string =>
-  v == null
-    ? ''
-    : redactSecrets(
-        String(v)
-          .replace(ZERO_WIDTH_RE, '')
-          .replace(/\r\n?/g, '\n')
-          .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '')
-          .trim(),
-      ).slice(0, n);
+const clipBlock = (v: unknown, n: number): string => {
+  if (typeof v !== 'string') return '';
+  return redactSecrets(
+    redactSecrets(v)
+      .replace(/\r\n?/g, '\n')
+      .replace(ZERO_WIDTH_RE, '')
+      .replace(C0_CTRL_RE, '')
+      .trim(),
+  ).slice(0, n);
+};
 
 const escapeHtml = (s: string): string =>
   s.replace(/[&<>"']/g, (c) =>
@@ -190,7 +193,7 @@ function buildEmail(r: Record<string, unknown>): { subject: string; text: string
   }
 
   const text =
-    rows.map(([l, v]) => `${l}: ${v}`).join('\n') + '\n\n— via the theharnesslab.com intake form\n';
+    rows.map(([l, v]) => `${l}: ${v}`).join('\n') + '\n\n— via theharnesslab.com intake form\n';
 
   const html =
     `<h2 style="margin:0 0 16px;font:600 18px system-ui,sans-serif">${escapeHtml(subject)}</h2>` +
@@ -203,7 +206,7 @@ function buildEmail(r: Record<string, unknown>): { subject: string; text: string
       )
       .join('') +
     '</table>' +
-    '<p style="color:#888;font:12px system-ui,sans-serif">via the theharnesslab.com intake form</p>';
+    '<p style="color:#888;font:12px system-ui,sans-serif">via theharnesslab.com intake form</p>';
 
   return { subject, text, html };
 }
@@ -251,8 +254,8 @@ export default {
         return json({ ok: false, error: 'forbidden_origin' }, 403, cors);
       }
 
-      const contentType = (request.headers.get('Content-Type') || '').toLowerCase();
-      if (!contentType.startsWith('application/json')) {
+      const mediaType = (request.headers.get('Content-Type') || '').split(';', 1)[0]?.trim().toLowerCase() ?? '';
+      if (mediaType !== 'application/json') {
         return json({ ok: false, error: 'unsupported_media_type' }, 415, cors);
       }
 
@@ -273,12 +276,6 @@ export default {
       // Check honeypot before consuming per-IP rate-limit quota or Resend calls.
       if (r.hp) return json({ ok: true }, 200, cors);
 
-      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-      if (env.INTAKE_LIMIT) {
-        const { success } = await env.INTAKE_LIMIT.limit({ key: ip });
-        if (!success) return json({ ok: false, error: 'rate_limited' }, 429, cors);
-      }
-
       const cleanName = clipLine(r.name, 120);
       const cleanEmail = clipLine(r.email, 160);
       const cleanWorkflow = clipBlock(r.desiredWorkflow, 700);
@@ -287,6 +284,12 @@ export default {
       }
       if (!EMAIL_RE.test(cleanEmail)) {
         return json({ ok: false, error: 'invalid_email' }, 400, cors);
+      }
+
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      if (env.INTAKE_LIMIT) {
+        const { success } = await env.INTAKE_LIMIT.limit({ key: ip });
+        if (!success) return json({ ok: false, error: 'rate_limited' }, 429, cors);
       }
 
       if (!env.RESEND_API_KEY || !env.LEAD_EMAIL_TO || !env.LEAD_EMAIL_FROM) {
