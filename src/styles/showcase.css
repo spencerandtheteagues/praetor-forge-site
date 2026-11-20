@@ -779,3 +779,16 @@
     transition: none;
   }
 }
+
+/* Phone legibility floor (2026-11-19). On a 390px phone --step-meta bottoms out at 0.7rem (11.2px) and a few mono
+   tags sit at 9-10.9px. On small and touch screens the meta step floors at 0.75rem (12px) and those tags follow it.
+   Desktop sizes are unchanged. Kept in the last imported sheet so it outranks the component rules. */
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  :root { --step-meta: clamp(0.75rem, 0.72rem + 0.12vw, 0.85rem); }
+  .engagement-tag.mono, .engagement-scope.mono, .vitrine-domain.mono, .vitrine-status.mono,
+  .perihelion-thumb-tag.mono, .perihelion-pillar-code.mono, .perihelion-mode-badge.mono,
+  .explorer-chrome-index.mono, .explorer-chrome-state.mono, .hero-credo-cite.mono,
+  .perihelion-seal-meta .inscription, dt.mono {
+    font-size: 0.75rem;
+  }
+}
