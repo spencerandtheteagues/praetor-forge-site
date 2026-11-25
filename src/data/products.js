@@ -2,7 +2,7 @@
 // landing-page gallery, and the Studio Cinema cuts.
 // Copy rules for theharnesslab.com: no dollar characters in visible copy,
 // whole rounded-up months only, and outbound links strictly limited to the
-// four live product domains + theharnesslab.dev (verify-redesign.mjs enforces).
+// live product domains + theharnesslab.dev (verify-redesign.mjs enforces).
 
 // Screenshot helper: every product capture ships a full-size WebP plus a 640px
 // rail/thumbnail rendition next to it.
@@ -64,7 +64,7 @@ export const ROGUE_AGENTS = {
 };
 
 /* ------------------------------------------------------------------------ */
-/* Chapter IV — Evidence: two live flagships + two prior platforms           */
+/* Chapter IV — Evidence: three live flagships + two prior platforms         */
 /* ------------------------------------------------------------------------ */
 export const PRODUCT_SHOWCASES = [
   {
@@ -97,6 +97,7 @@ export const PRODUCT_SHOWCASES = [
     breakdown: [
       ["22,638", "Title-Desk hosted web layer"],
       ["23,148", "Artificial Landman hosted layer (shared engine)"],
+      ["22,810", "AI Landman service layer (shared engine)"],
       ["4,288", "TractPilot prototype"],
     ],
     serviceLink: {
@@ -163,6 +164,48 @@ export const PRODUCT_SHOWCASES = [
     ],
   },
   {
+    id: "ai-landman",
+    name: "AI Landman",
+    domain: "ailandman.io",
+    href: "https://ailandman.io/",
+    status: "Live production",
+    placard: "Texas mineral title · All 254 Texas counties · Upload or full-service",
+    lede:
+      "Remote Texas oil and gas mineral title examination across all 254 Texas counties at ailandman.io. Paste a client’s assignment instructions to upload courthouse records you already hold or request full-service county clerk retrieval — two separate Gemini sessions examine the deeds, deterministic code checks every mineral fraction, an independent third model audits the final answer against page images, and the source-linked draft Excel workbook arrives by email for final review by a qualified landman or attorney.",
+    logo: {
+      webp: "/products/ai-landman-seal.webp",
+      w640: "/products/ai-landman-seal-640.webp",
+      fallback: "/products/ai-landman-seal.png",
+      width: 1024,
+      height: 1024,
+    },
+    stats: [
+      ["22,810", "Service LOC"],
+      ["121", "Commits (Nov 2026)"],
+      ["254", "Texas counties"],
+      ["1 Month", "Rapid sprint"],
+    ],
+    breakdown: [
+      ["262,305", "Shared Texas mineral-interest engine"],
+      ["6-Sheet", "Source-linked sample workbook"],
+    ],
+    serviceLink: {
+      href: "/landman-title-workflow-automation/",
+      label: "Landman title workflow automation",
+    },
+    groups: [
+      {
+        label: "Landing & sample deliverable",
+        shots: [
+          shot("ai-landman/01-landing", ...WIDE, "Statewide Texas landing", "The ailandman.io landing page introducing remote mineral title examination across all 254 Texas counties — paste an assignment, upload records or request county clerk retrieval, and receive the finished draft workbook by email.", "AI Landman landing page with a surveyor automaton reading a courthouse deed book"),
+          shot("ai-landman/03-run-options", ...WIDE, "Upload & full-service runs", "Run-scope options comparing uploaded deed packets against full-service county clerk research and record purchasing with an operator-approved copy budget.", "AI Landman run options comparing uploaded document runs and full-service county record retrieval"),
+          shot("ai-landman/04-sample-workbook", ...WIDE, "Verified sample workbook", "Inspectable Reeves County sample deliverable tracing mineral ownership across two tracts with exact rational fractions, net mineral acres, and cited source deeds.", "AI Landman verified mineral ownership sample workbook table for Reeves County, Texas"),
+          shot("ai-landman/05-verification-flow", ...WIDE, "Dual-examiner verification flow", "End-to-end delivery flow: two Gemini sessions examine the records separately, deterministic code checks every fraction, an independent third model checks the final answer against page images, and unresolved items lead the curative requirements.", "AI Landman verification workflow showing dual-examiner review and emailed Excel workbook delivery"),
+        ],
+      },
+    ],
+  },
+  {
     id: "brandstreams",
     name: "BrandStreams",
     domain: "brandstream.my",
@@ -213,8 +256,8 @@ export const PRODUCT_SHOWCASES = [
       webp: "/products/apex-build-logo.webp",
       w640: "/products/apex-build-logo-640.webp",
       fallback: "/products/apex-build-logo.png",
-      width: 1298,
-      height: 1091,
+      width: 1024,
+      height: 1024,
     },
     stats: [
       ["377,197", "Authored LOC"],

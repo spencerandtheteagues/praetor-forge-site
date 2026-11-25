@@ -4,7 +4,7 @@ import { ShotGallery, TelemetryBadge } from "./Showcase.jsx";
 import { useImageViewer } from "../lib/useImageViewer.js";
 import { PRODUCT_SHOWCASES } from "../data/products.js";
 
-// Chapter IV·B — Evidence: the four live products, each with its landing page,
+// Chapter IV·B — Evidence: the five live products, each with its landing page,
 // running-workspace gallery, authored-LOC telemetry and a single live link.
 
 const LOGO_SIZES = "(min-width: 1100px) 220px, 40vw";
@@ -143,7 +143,7 @@ export default function Forge() {
       <div className="container forge-inner">
         <ChapterHead
           numeral="IV·B"
-          eyebrow="Evidence of what we built · Two live flagships & two prior platforms"
+          eyebrow="Evidence of what we built · Three live flagships & two prior platforms"
           id="forge-title"
           title={
             <>
@@ -154,7 +154,7 @@ export default function Forge() {
           <p>
             Every screen below is a capture of the real product — its landing page and its
             running workspace — with the authored source lines, commits, tests and whole
-            months it took to get there. Two flagship title engines that are live today,
+            months it took to get there. Three flagship title engines that are live today,
             and the two past flagship platforms that taught us how to build them.
           </p>
         </ChapterHead>

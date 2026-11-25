@@ -79,6 +79,11 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 - **Telemetry (November 2026):** 23,148 hosted lines of code · 54 hosted commits · 1-month rapid sprint atop The Harness Lab's 262,305-LOC Texas mineral-interest engine.
 - **Capabilities:** Hosted Texas mineral title examination for land teams, brokerages, and operators who run many assignments. Artificial Landman runs the same Texas mineral-interest engine as Title-Desk, sold and supported on its own with a dedicated brass-and-topographic workspace.
 
+### AI Landman
+- **Live Platform:** https://ailandman.io/
+- **Telemetry (November 2026):** 22,810 service lines of code · 121 commits · 1-month rapid sprint across all 254 Texas counties atop The Harness Lab's 262,305-LOC Texas mineral-interest engine.
+- **Capabilities:** Remote Texas oil and gas mineral title examination supporting both uploaded deed packets and full-service county clerk retrieval with operator-approved copy budgets. Two Gemini sessions examine records separately, deterministic code checks every rational fraction, an independent third model audits the final answer against page images, and the source-linked draft Excel workbook arrives by email for review by a qualified landman or attorney.
+
 ### BrandStreams (Evolved from MyAIMediaMgr)
 - **Live URL:** https://brandstream.my/ · **Showcase:** https://theharnesslab.com/#product-brandstreams
 - **Telemetry (2025–2026):** 81,254 authored lines of code · 1,364 commits · 424 source files · 14 months across 9 architectural generations.
@@ -141,9 +146,9 @@ A: No. Once the final invoice is paid, clients own the private Git repository, c
 A: Every system is scoped directly with Spencer Teague around a concrete workflow, sample inputs, required integrations, and measurable acceptance criteria during a 20-minute teardown call (`https://cal.com/harnesslab/teardown`) or written Work Order (`https://theharnesslab.com/#contact`).
 
 **Q: Does Title-Desk or automated landman software replace a qualified title reviewer?**
-A: No. Title-Desk and Artificial Landman produce source-linked draft mineral-ownership workbooks, not title opinions or certifications. Automated extraction, chain-of-title assembly, and exact fractional math accelerate preparation while preserving curative findings and book-and-page source links so a qualified landman or title attorney remains in full control of title conclusions.
+A: No. Title-Desk, Artificial Landman, and AI Landman produce source-linked draft mineral-ownership workbooks, not title opinions or certifications. Automated extraction, chain-of-title assembly, and exact fractional math accelerate preparation while preserving curative findings and book-and-page source links so a qualified landman or title attorney remains in full control of title conclusions.
 
 ## Legal Entity
 
-- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026; venue Tom Green County, Texas). Title-Desk, Title-Desk Agent, and Artificial Landman are products of The Harness Lab LLC.
+- The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026; venue Tom Green County, Texas). Title-Desk, Title-Desk Agent, Artificial Landman, and AI Landman are products of The Harness Lab LLC.
 - [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)

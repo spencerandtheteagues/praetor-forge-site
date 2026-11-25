@@ -134,7 +134,7 @@ const notice = page({
   title: "Legal notice and company information",
   crumb: "Legal",
   description: `${E.legalName} is a ${E.kind}, Texas SOS File No. ${E.sosFile}. Company details, legal documents and how to send a legal notice.`,
-  intro: `<p class="lead">${E.short} is the trade name of ${E.legalName}, a ${E.kind}. Every product and service offered on this website, on theharnesslab.dev, on title-desk.com, on desktop.title-desk.com and on artificiallandman.io is offered by ${E.legalName}.</p>`,
+  intro: `<p class="lead">${E.short} is the trade name of ${E.legalName}, a ${E.kind}. Every product and service offered on this website, on theharnesslab.dev, on title-desk.com, on desktop.title-desk.com, on artificiallandman.io and on ailandman.io is offered by ${E.legalName}.</p>`,
   sections: [
     {
       id: "company",
@@ -161,6 +161,7 @@ const notice = page({
         <li><strong>The Harness Lab</strong> — custom software, workflow automation, websites, internal tools and AI systems built for business clients (theharnesslab.com and theharnesslab.dev).</li>
         <li><strong>Title-Desk</strong> and <strong>Title-Desk Agent</strong> (the Title-Desk desktop app) — Texas mineral title research software and a hosted examination service for independent landmen and abstractors (title-desk.com and desktop.title-desk.com).</li>
         <li><strong>Artificial Landman</strong> — a hosted Texas mineral title examination platform for land teams, brokerages and operators (artificiallandman.io).</li>
+        <li><strong>AI Landman</strong> — remote Texas oil and gas mineral title examination across all 254 Texas counties supporting uploaded records and full-service county clerk retrieval (ailandman.io).</li>
       </ul>
       <p>When you deal with any of these names, you are dealing with ${E.legalName}.</p>`,
     },
@@ -169,7 +170,7 @@ const notice = page({
       h: "Who you contract with",
       body: `
       <p>Every proposal, statement of work, work order, invoice, licence and subscription is made by ${E.legalName} as the contracting party. No member, manager, employee, contractor or agent of the company is a party to any of them in a personal capacity, and none of them is personally liable for the company's obligations.</p>
-      <p>Only a written agreement signed or accepted on behalf of ${E.legalName} binds the company. Nothing on our websites, in a demo, a sample, a case study, a social media post or a conversation is an offer, a guarantee or a promise of any result. Custom work is governed by our <a href="/legal/client-terms/">Client Services Terms</a>; Title-Desk and Artificial Landman are governed by the terms published on their own websites.</p>`,
+      <p>Only a written agreement signed or accepted on behalf of ${E.legalName} binds the company. Nothing on our websites, in a demo, a sample, a case study, a social media post or a conversation is an offer, a guarantee or a promise of any result. Custom work is governed by our <a href="/legal/client-terms/">Client Services Terms</a>; Title-Desk, Artificial Landman and AI Landman are governed by the terms published on their own websites.</p>`,
     },
     {
       id: "advice",
@@ -187,13 +188,14 @@ const notice = page({
         <li><a href="/legal/client-terms/">Client Services Terms</a> — the standard terms for custom software, automation and website work.</li>
         <li><a href="https://title-desk.com/legal/terms" rel="noopener">Title-Desk Terms of Service</a>, <a href="https://title-desk.com/legal/privacy" rel="noopener">Title-Desk Privacy Policy</a>, and <a href="https://desktop.title-desk.com/" rel="noopener">Title-Desk Agent</a>.</li>
         <li><a href="https://artificiallandman.io/legal/terms" rel="noopener">Artificial Landman terms</a>.</li>
+        <li><a href="https://ailandman.io/" rel="noopener">AI Landman</a>.</li>
       </ul>`,
     },
     {
       id: "trademarks",
       h: "Trademarks and copyright",
       body: `
-      <p>The Harness Lab, Title-Desk, Title-Desk Agent, Artificial Landman, Perihelion, the winged medallion emblem and related names and logos are trademarks of ${E.legalName}. Website text, graphics, code and media are © 2026 ${E.legalName} unless another owner is named. Other names and logos belong to their owners; their appearance on our websites does not mean they endorse us.</p>
+      <p>The Harness Lab, Title-Desk, Title-Desk Agent, Artificial Landman, AI Landman, Perihelion, the winged medallion emblem and related names and logos are trademarks of ${E.legalName}. Website text, graphics, code and media are © 2026 ${E.legalName} unless another owner is named. Other names and logos belong to their owners; their appearance on our websites does not mean they endorse us.</p>
       <p>If you believe material on one of our websites infringes your copyright or trademark, write to ${mail(E.legalEmail)} with the material, its location, the right you hold and your contact details. We will review it promptly.</p>`,
     },
     {
@@ -217,7 +219,7 @@ const terms = page({
       id: "scope",
       h: "What these terms cover",
       body: `
-      <p>These terms cover the websites only. Custom work we do for a client is governed by a signed proposal or statement of work and our <a href="/legal/client-terms/">Client Services Terms</a>. Title-Desk and Artificial Landman are governed by the terms on their own websites. Our <a href="/legal/privacy/">Privacy Policy</a> explains how we handle personal information.</p>
+      <p>These terms cover the websites only. Custom work we do for a client is governed by a signed proposal or statement of work and our <a href="/legal/client-terms/">Client Services Terms</a>. Title-Desk, Artificial Landman and AI Landman are governed by the terms on their own websites. Our <a href="/legal/privacy/">Privacy Policy</a> explains how we handle personal information.</p>
       <p>Our websites and services are offered for business purposes. If you use them for a company or other organisation, you confirm that you may accept these terms on its behalf.</p>`,
     },
     {
@@ -306,7 +308,7 @@ const privacy = page({
   title: "Privacy Policy",
   crumb: "Privacy policy",
   description: `How ${E.legalName} collects, uses and shares personal information through theharnesslab.com, theharnesslab.dev and email.`,
-  intro: `<p class="lead">This policy explains how ${E.legalName}, a ${E.kind} (“${E.short}”, “we”, “us”), handles personal information collected through theharnesslab.com, theharnesslab.dev and our business email. Title-Desk and Artificial Landman have their own privacy policies, published on their websites, which govern those services.</p>`,
+  intro: `<p class="lead">This policy explains how ${E.legalName}, a ${E.kind} (“${E.short}”, “we”, “us”), handles personal information collected through theharnesslab.com, theharnesslab.dev and our business email. Title-Desk, Artificial Landman and AI Landman have their own privacy policies, published on their websites, which govern those services.</p>`,
   sections: [
     {
       id: "collect",
