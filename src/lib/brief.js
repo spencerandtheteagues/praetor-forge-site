@@ -80,7 +80,11 @@ export function buildBrief(request, { redact = true, blank = "—" } = {}) {
   }
   lines.push("", "THE IDEA", v("desiredWorkflow") || blank);
   if (r.problems.length) {
-    lines.push("", "SYMPTOMS FLAGGED", ...r.problems.map((p) => `· ${p}`));
+    lines.push(
+      "",
+      "SYMPTOMS FLAGGED",
+      ...r.problems.map((p) => `· ${redact ? redactSecrets(p) : p}`),
+    );
   }
   for (const key of BODY_FIELDS) {
     if (r[key]) lines.push("", FIELD_LABELS[key].toUpperCase(), v(key));
@@ -95,7 +99,12 @@ export function buildBrief(request, { redact = true, blank = "—" } = {}) {
  */
 export function buildMailto(request, { redact = true, max = 1800 } = {}) {
   const r = buildPayload(request);
-  const subject = `Project enquiry: ${r.requestType}${r.company ? ` (${r.company})` : ""}`;
+  const safe = (value) => (redact ? redactSecrets(value) : value);
+  const name = safe(r.name);
+  const email = safe(r.email);
+  const company = safe(r.company);
+  const requestType = safe(r.requestType);
+  const subject = `Project enquiry: ${requestType}${company ? ` (${company})` : ""}`;
   const text = buildBrief(request, { redact, blank: "" });
   let body = encodeURIComponent(text);
   let overflow = false;
@@ -103,10 +112,10 @@ export function buildMailto(request, { redact = true, max = 1800 } = {}) {
     overflow = true;
     body = encodeURIComponent(
       [
-        `Name: ${r.name}`,
-        `Email: ${r.email}`,
-        ...(r.company ? [`Organization: ${r.company}`] : []),
-        `Request: ${r.requestType}`,
+        `Name: ${name}`,
+        `Email: ${email}`,
+        ...(company ? [`Organization: ${company}`] : []),
+        `Request: ${requestType}`,
         "",
         "My full brief was copied to my clipboard. Pasting it below:",
         "",

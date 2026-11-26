@@ -20,6 +20,11 @@ interface Env {
   LEAD_EMAIL_FROM: string;
   ALLOWED_ORIGIN?: string;
   INTAKE_LIMIT?: RateLimiter;
+  VOICE_LIMIT?: RateLimiter;
+  ELEVENLABS_API_KEY?: string;
+  HARNESSLAB_ELEVENLABS_AGENT_ID?: string;
+  SIMLI_API_KEY?: string;
+  SIMLI_FACE_ID?: string;
 }
 
 const DEFAULT_ORIGINS = [
@@ -31,7 +36,8 @@ const DEFAULT_ORIGINS = [
 
 const MAX_BODY = 64 * 1024; // 64 KB byte cap
 const MAX_PROBLEMS = 20;
-const EMAIL_RE = /^[^\s@<>,;:"'\\()[\]]+@[^\s@<>,;:"'\\()[\]]+\.[A-Za-z]{2,63}$/;
+const EMAIL_RE =
+  /^[^\s@<>,;:"'\\()[\].]+(?:\.[^\s@<>,;:"'\\()[\].]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+(?:[A-Za-z]{2,63}|[Xx][Nn]--[A-Za-z0-9](?:[A-Za-z0-9-]{0,57}[A-Za-z0-9])?)$/;
 
 // Server-side mirror of src/lib/secretGuard.js so direct POSTs or overridden
 // warnings never deliver raw credentials into an email inbox.
@@ -89,28 +95,30 @@ function json(body: unknown, status: number, extra: Record<string, string>): Res
   });
 }
 
-const ZERO_WIDTH_RE = /[\u00ad\u200b-\u200f\u2028\u2029\u2060\ufeff]/g;
+const ZERO_WIDTH_RE = /[\u00ad\u034f\u180e\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/g;
+const C0_CTRL_RE = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]+/g;
 
-const clipLine = (v: unknown, n: number): string =>
-  v == null
-    ? ''
-    : redactSecrets(
-        String(v)
-          .replace(ZERO_WIDTH_RE, '')
-          .replace(/[\r\n\t\x00-\x1f\x7f]+/g, '')
-          .trim(),
-      ).slice(0, n);
+const clipLine = (v: unknown, n: number): string => {
+  if (typeof v !== 'string') return '';
+  return redactSecrets(
+    redactSecrets(v)
+      .replace(/[\r\n\t]+/g, ' ')
+      .replace(ZERO_WIDTH_RE, '')
+      .replace(C0_CTRL_RE, '')
+      .trim(),
+  ).slice(0, n);
+};
 
-const clipBlock = (v: unknown, n: number): string =>
-  v == null
-    ? ''
-    : redactSecrets(
-        String(v)
-          .replace(ZERO_WIDTH_RE, '')
-          .replace(/\r\n?/g, '\n')
-          .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '')
-          .trim(),
-      ).slice(0, n);
+const clipBlock = (v: unknown, n: number): string => {
+  if (typeof v !== 'string') return '';
+  return redactSecrets(
+    redactSecrets(v)
+      .replace(/\r\n?/g, '\n')
+      .replace(ZERO_WIDTH_RE, '')
+      .replace(C0_CTRL_RE, '')
+      .trim(),
+  ).slice(0, n);
+};
 
 const escapeHtml = (s: string): string =>
   s.replace(/[&<>"']/g, (c) =>
@@ -190,7 +198,7 @@ function buildEmail(r: Record<string, unknown>): { subject: string; text: string
   }
 
   const text =
-    rows.map(([l, v]) => `${l}: ${v}`).join('\n') + '\n\n— via the theharnesslab.com intake form\n';
+    rows.map(([l, v]) => `${l}: ${v}`).join('\n') + '\n\n— via theharnesslab.com intake form\n';
 
   const html =
     `<h2 style="margin:0 0 16px;font:600 18px system-ui,sans-serif">${escapeHtml(subject)}</h2>` +
@@ -203,7 +211,7 @@ function buildEmail(r: Record<string, unknown>): { subject: string; text: string
       )
       .join('') +
     '</table>' +
-    '<p style="color:#888;font:12px system-ui,sans-serif">via the theharnesslab.com intake form</p>';
+    '<p style="color:#888;font:12px system-ui,sans-serif">via theharnesslab.com intake form</p>';
 
   return { subject, text, html };
 }
@@ -234,6 +242,136 @@ async function sendEmail(env: Env, r: Record<string, unknown>, leadEmail: string
   }
 }
 
+const VOICE_MAX_BODY = 8 * 1024;
+const VOICE_MAX_DURATION_SECONDS = 300;
+
+async function mintSimliSession(
+  env: Env,
+): Promise<{ sessionToken: string; iceServers: unknown[]; transport: 'p2p' } | null> {
+  const apiKey = (env.SIMLI_API_KEY || '').trim();
+  const faceId = (env.SIMLI_FACE_ID || '').trim();
+  if (!apiKey || !faceId) return null;
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-simli-api-key': apiKey,
+  };
+  try {
+    const [tokenRes, iceRes] = await Promise.all([
+      fetch('https://api.simli.ai/compose/token', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          faceId,
+          handleSilence: true,
+          maxSessionLength: VOICE_MAX_DURATION_SECONDS,
+          maxIdleTime: 45,
+          audioInputFormat: 'pcm16',
+          streaming_width: 512,
+          streaming_height: 512,
+        }),
+        signal: AbortSignal.timeout(6_000),
+      }),
+      fetch('https://api.simli.ai/compose/ice', {
+        method: 'GET',
+        headers,
+        signal: AbortSignal.timeout(6_000),
+      }).catch(() => null),
+    ]);
+    if (!tokenRes.ok) return null;
+    const tokenData = (await tokenRes.json().catch(() => null)) as { session_token?: string } | null;
+    if (!tokenData?.session_token) return null;
+    let iceServers: unknown[] = [{ urls: ['stun:stun.l.google.com:19302'] }];
+    if (iceRes?.ok) {
+      const parsed = await iceRes.json().catch(() => null);
+      if (Array.isArray(parsed) && parsed.length > 0) iceServers = parsed;
+    }
+    return { sessionToken: tokenData.session_token, iceServers, transport: 'p2p' };
+  } catch {
+    return null;
+  }
+}
+
+async function handleVoiceSession(
+  request: Request,
+  env: Env,
+  cors: Record<string, string>,
+): Promise<Response> {
+  const origin = request.headers.get('Origin') || '';
+  if (!origin || !allowedOrigins(env).has(origin)) {
+    return json({ ok: false, error: 'forbidden_origin' }, 403, cors);
+  }
+
+  const mediaType = (request.headers.get('Content-Type') || '').split(';', 1)[0]?.trim().toLowerCase() ?? '';
+  if (mediaType !== 'application/json') {
+    return json({ ok: false, error: 'unsupported_media_type' }, 415, cors);
+  }
+
+  const bodyRes = await readBoundedUtf8(request, VOICE_MAX_BODY);
+  if (!bodyRes.ok) return json({ ok: false, error: 'too_large' }, 413, cors);
+
+  let payload: Record<string, unknown> = {};
+  if (bodyRes.text.trim()) {
+    try {
+      const parsed = JSON.parse(bodyRes.text);
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        return json({ ok: false, error: 'bad_json' }, 400, cors);
+      }
+      payload = parsed as Record<string, unknown>;
+    } catch {
+      return json({ ok: false, error: 'bad_json' }, 400, cors);
+    }
+  }
+
+  const apiKey = (env.ELEVENLABS_API_KEY || '').trim();
+  const agentId = (env.HARNESSLAB_ELEVENLABS_AGENT_ID || '').trim();
+  if (!apiKey || !agentId) {
+    return json({ ok: false, error: 'voice_unavailable' }, 503, cors);
+  }
+
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const limiter = env.VOICE_LIMIT || env.INTAKE_LIMIT;
+  if (limiter) {
+    const { success } = await limiter.limit({ key: `voice:${ip}` });
+    if (!success) return json({ ok: false, error: 'rate_limited' }, 429, cors);
+  }
+
+  const includeVideo = payload.textOnly !== true;
+  try {
+    const [elRes, simli] = await Promise.all([
+      fetch(
+        `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(agentId)}`,
+        {
+          method: 'GET',
+          headers: { 'xi-api-key': apiKey },
+          signal: AbortSignal.timeout(8_000),
+        },
+      ),
+      includeVideo ? mintSimliSession(env) : Promise.resolve(null),
+    ]);
+
+    if (!elRes.ok) {
+      return json({ ok: false, error: 'voice_upstream_failed' }, 502, cors);
+    }
+    const elData = (await elRes.json().catch(() => null)) as { signed_url?: string; signedUrl?: string } | null;
+    const signedUrl = elData?.signed_url || elData?.signedUrl || '';
+    if (!/^wss:\/\//i.test(signedUrl)) {
+      return json({ ok: false, error: 'voice_upstream_failed' }, 502, cors);
+    }
+    return json(
+      {
+        ok: true,
+        signedUrl,
+        maxDurationSeconds: VOICE_MAX_DURATION_SECONDS,
+        ...(simli ? { simli } : {}),
+      },
+      200,
+      cors,
+    );
+  } catch {
+    return json({ ok: false, error: 'voice_upstream_failed' }, 502, cors);
+  }
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const cors = corsHeaders(request, env);
@@ -245,14 +383,18 @@ export default {
       return json({ ok: true, ts: Date.now() }, 200, cors);
     }
 
+    if (request.method === 'POST' && url.pathname === '/api/voice-session') {
+      return handleVoiceSession(request, env, cors);
+    }
+
     if (request.method === 'POST' && url.pathname === '/api/intake') {
       const origin = request.headers.get('Origin') || '';
       if (!origin || !allowedOrigins(env).has(origin)) {
         return json({ ok: false, error: 'forbidden_origin' }, 403, cors);
       }
 
-      const contentType = (request.headers.get('Content-Type') || '').toLowerCase();
-      if (!contentType.startsWith('application/json')) {
+      const mediaType = (request.headers.get('Content-Type') || '').split(';', 1)[0]?.trim().toLowerCase() ?? '';
+      if (mediaType !== 'application/json') {
         return json({ ok: false, error: 'unsupported_media_type' }, 415, cors);
       }
 
@@ -273,12 +415,6 @@ export default {
       // Check honeypot before consuming per-IP rate-limit quota or Resend calls.
       if (r.hp) return json({ ok: true }, 200, cors);
 
-      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-      if (env.INTAKE_LIMIT) {
-        const { success } = await env.INTAKE_LIMIT.limit({ key: ip });
-        if (!success) return json({ ok: false, error: 'rate_limited' }, 429, cors);
-      }
-
       const cleanName = clipLine(r.name, 120);
       const cleanEmail = clipLine(r.email, 160);
       const cleanWorkflow = clipBlock(r.desiredWorkflow, 700);
@@ -287,6 +423,12 @@ export default {
       }
       if (!EMAIL_RE.test(cleanEmail)) {
         return json({ ok: false, error: 'invalid_email' }, 400, cors);
+      }
+
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      if (env.INTAKE_LIMIT) {
+        const { success } = await env.INTAKE_LIMIT.limit({ key: ip });
+        if (!success) return json({ ok: false, error: 'rate_limited' }, 429, cors);
       }
 
       if (!env.RESEND_API_KEY || !env.LEAD_EMAIL_TO || !env.LEAD_EMAIL_FROM) {

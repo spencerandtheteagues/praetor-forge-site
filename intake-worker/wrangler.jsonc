@@ -7,12 +7,19 @@
   "vars": {
     "LEAD_EMAIL_TO": "sales@theharnesslab.com",
     "LEAD_EMAIL_FROM": "intake@theharnesslab.com",
-    "ALLOWED_ORIGIN": ""
+    "ALLOWED_ORIGIN": "",
+    "HARNESSLAB_ELEVENLABS_AGENT_ID": "agent_0901m8cxashwf5abkjd10be1v2qe",
+    "SIMLI_FACE_ID": "eb4f3cc0-4479-4d69-8a49-4ec22b726c27"
   },
   "ratelimits": [
     {
       "name": "INTAKE_LIMIT",
       "namespace_id": "1001",
+      "simple": { "limit": 6, "period": 60 }
+    },
+    {
+      "name": "VOICE_LIMIT",
+      "namespace_id": "1002",
       "simple": { "limit": 6, "period": 60 }
     }
   ]

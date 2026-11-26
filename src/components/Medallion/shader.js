@@ -66,7 +66,7 @@ float smin(float a, float b, float k) {
 
 // Sample cylindrical rim engraving (4 quadrants around circumference: -90, 0, +90, 180 deg).
 vec3 sampleEdgeEngraving(vec3 p, float lod) {
-  float ang = atan(p.y, p.x);
+  float ang = dot(p.xy, p.xy) > 1e-8 ? atan(p.y, p.x) : 0.0;
   float u = fract((ang / 1.57079632679) + 0.5);
   float v = clamp((p.z / 0.104) * 0.5 + 0.5, 0.0, 1.0);
   float band = 1.0 - smoothstep(0.097, 0.105, abs(p.z));
@@ -104,13 +104,17 @@ float mapCoin(vec3 p) {
   }
 
   // Numismatic rim: outer 144-reed collars, twin gold guard fillets, and 3D V-cut edge inscription.
-  float ang = atan(p.y, p.x);
-  float reedBand = smoothstep(0.107, 0.115, az) * (1.0 - smoothstep(HALF_T - 0.015, HALF_T - 0.004, az));
-  float reeds = sin(ang * 144.0) * 0.0065 * reedBand;
-  float wireRings = gauss((az - 0.104) / 0.0042) * 0.0065;
+  float reeds = 0.0;
+  float wireRings = 0.0;
   float engraveCut = 0.0;
-  if (r > R - 0.045 && az < 0.104) {
-    engraveCut = -sampleEdgeEngraving(p, 0.5).r * 0.0105;
+  if (r > R - 0.045) {
+    float ang = r > 1e-4 ? atan(p.y, p.x) : 0.0;
+    float reedBand = smoothstep(0.107, 0.115, az) * (1.0 - smoothstep(HALF_T - 0.015, HALF_T - 0.004, az));
+    reeds = sin(ang * 144.0) * 0.0065 * reedBand;
+    wireRings = gauss((az - 0.104) / 0.0042) * 0.0065;
+    if (az < 0.104) {
+      engraveCut = -sampleEdgeEngraving(p, 0.5).r * 0.0105;
+    }
   }
 
   float effR = R + reeds + wireRings + engraveCut;
@@ -192,7 +196,7 @@ vec3 shadeCoin(vec3 p, vec3 nLocal, mat3 coinToWorld, vec3 rdWorld, float t) {
 
   vec3 N = normalize(coinToWorld * nLocal);
   vec3 V = -rdWorld;
-  float NoV = max(dot(N, V), 0.001);
+  float NoV = clamp(dot(N, V), 0.001, 1.0);
   vec3 Rdir = reflect(-V, N);
 
   vec3 L1 = normalize(vec3(-0.52, 0.64, 0.56));
@@ -216,7 +220,7 @@ vec3 shadeCoin(vec3 p, vec3 nLocal, mat3 coinToWorld, vec3 rdWorld, float t) {
   // Numismatic bronze rim + 24k gold V-cut edge inscription Easter egg (HDR -> ACES).
   vec3 edgeLinear = vec3(0.0);
   if (faceMask < 0.999) {
-    float ang = atan(p.y, p.x);
+    float ang = r > 1e-4 ? atan(p.y, p.x) : 0.0;
     vec3 eng = az < 0.105 ? sampleEdgeEngraving(p, 0.0) : vec3(0.0);
     float inBand = 1.0 - smoothstep(0.100, 0.107, az);
     float guardRail = gauss((az - 0.104) / 0.0045);

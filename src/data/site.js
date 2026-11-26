@@ -14,6 +14,8 @@ export const CAL_NAMESPACE = "teardown";
 export const CAL_LINK = "harnesslab/teardown";
 export const INTAKE_URL =
   "https://harness-lab-intake.theharnesslab.workers.dev/api/intake";
+export const VOICE_SESSION_URL =
+  "https://harness-lab-intake.theharnesslab.workers.dev/api/voice-session";
 
 // Engagement / request types. The first entry users see in the form defaults
 // to "Workflow automation" (verify-redesign.mjs asserts that default).

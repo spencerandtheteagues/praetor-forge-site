@@ -20,7 +20,7 @@
   /* Antique gold */
   --gold-hi: #f6de9c;
   --gold: #d9a84e;
-  --gold-lo: #8c6a2c;
+  --gold-lo: #a37d37;
   --gold-ink: #1a1206;
 
   /* Molten copper */
@@ -420,7 +420,8 @@ h4 {
   .r3d::before {
     display: none;
   }
-  .r3d-face {
+  .r3d-face,
+  :is(.gold-3d, em, .r3d-gold) .r3d-face {
     -webkit-text-fill-color: CanvasText;
     color: CanvasText;
   }
