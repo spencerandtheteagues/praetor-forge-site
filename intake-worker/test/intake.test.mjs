@@ -340,3 +340,97 @@ test("intake-worker: guards non-string field coercion, enforces exact applicatio
     globalThis.fetch = origFetch;
   }
 });
+
+test("intake-worker: POST /api/voice-session enforces origin, rate limit, 503 when unconfigured, mints ElevenLabs + Simli tokens, and degrades cleanly", async () => {
+  // Forbidden origin -> 403
+  const badOrigin = await worker.fetch(
+    new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/voice-session", {
+      method: "POST",
+      headers: { Origin: "https://evil.example", "Content-Type": "application/json" },
+      body: "{}",
+    }),
+    makeEnv(),
+  );
+  assert.equal(badOrigin.status, 403);
+
+  // Unconfigured -> 503
+  const unconfigured = await worker.fetch(
+    new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/voice-session", {
+      method: "POST",
+      headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json" },
+      body: "{}",
+    }),
+    makeEnv(),
+  );
+  assert.equal(unconfigured.status, 503);
+
+  // Rate limited -> 429
+  const limited = await worker.fetch(
+    new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/voice-session", {
+      method: "POST",
+      headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json" },
+      body: "{}",
+    }),
+    makeEnv({
+      ELEVENLABS_API_KEY: "el_test",
+      HARNESSLAB_ELEVENLABS_AGENT_ID: "agent_test",
+      VOICE_LIMIT: { async limit() { return { success: false }; } },
+    }),
+  );
+  assert.equal(limited.status, 429);
+
+  const origFetch = globalThis.fetch;
+  let simliCalled = 0;
+  globalThis.fetch = async (url) => {
+    const u = String(url);
+    if (u.startsWith("https://api.elevenlabs.io/v1/convai/conversation/get-signed-url")) {
+      return new Response(JSON.stringify({ signed_url: "wss://api.elevenlabs.io/v1/convai/conversation?sig=ok" }), { status: 200 });
+    }
+    if (u === "https://api.simli.ai/compose/token") {
+      simliCalled += 1;
+      return new Response(JSON.stringify({ session_token: "simli_tok_hl" }), { status: 200 });
+    }
+    if (u === "https://api.simli.ai/compose/ice") {
+      return new Response(JSON.stringify([{ urls: ["stun:stun.l.google.com:19302"] }]), { status: 200 });
+    }
+    throw new Error(`unexpected fetch ${u}`);
+  };
+  try {
+    const voiceEnv = makeEnv({
+      ELEVENLABS_API_KEY: "el_test",
+      HARNESSLAB_ELEVENLABS_AGENT_ID: "agent_test",
+      SIMLI_API_KEY: "simli_test",
+      SIMLI_FACE_ID: "face_test",
+    });
+    const okRes = await worker.fetch(
+      new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/voice-session", {
+        method: "POST",
+        headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json" },
+        body: "{}",
+      }),
+      voiceEnv,
+    );
+    assert.equal(okRes.status, 200);
+    const okJson = await okRes.json();
+    assert.equal(okJson.ok, true);
+    assert.match(okJson.signedUrl, /^wss:\/\/api\.elevenlabs\.io\//);
+    assert.equal(okJson.simli.sessionToken, "simli_tok_hl");
+    assert.equal(simliCalled, 1);
+
+    // textOnly skips Simli
+    const textRes = await worker.fetch(
+      new Request("https://harness-lab-intake.theharnesslab.workers.dev/api/voice-session", {
+        method: "POST",
+        headers: { Origin: "https://theharnesslab.com", "Content-Type": "application/json" },
+        body: JSON.stringify({ textOnly: true }),
+      }),
+      voiceEnv,
+    );
+    assert.equal(textRes.status, 200);
+    const textJson = await textRes.json();
+    assert.equal(textJson.simli, undefined);
+    assert.equal(simliCalled, 1);
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});

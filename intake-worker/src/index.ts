@@ -20,6 +20,11 @@ interface Env {
   LEAD_EMAIL_FROM: string;
   ALLOWED_ORIGIN?: string;
   INTAKE_LIMIT?: RateLimiter;
+  VOICE_LIMIT?: RateLimiter;
+  ELEVENLABS_API_KEY?: string;
+  HARNESSLAB_ELEVENLABS_AGENT_ID?: string;
+  SIMLI_API_KEY?: string;
+  SIMLI_FACE_ID?: string;
 }
 
 const DEFAULT_ORIGINS = [
@@ -237,6 +242,136 @@ async function sendEmail(env: Env, r: Record<string, unknown>, leadEmail: string
   }
 }
 
+const VOICE_MAX_BODY = 8 * 1024;
+const VOICE_MAX_DURATION_SECONDS = 300;
+
+async function mintSimliSession(
+  env: Env,
+): Promise<{ sessionToken: string; iceServers: unknown[]; transport: 'p2p' } | null> {
+  const apiKey = (env.SIMLI_API_KEY || '').trim();
+  const faceId = (env.SIMLI_FACE_ID || '').trim();
+  if (!apiKey || !faceId) return null;
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-simli-api-key': apiKey,
+  };
+  try {
+    const [tokenRes, iceRes] = await Promise.all([
+      fetch('https://api.simli.ai/compose/token', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          faceId,
+          handleSilence: true,
+          maxSessionLength: VOICE_MAX_DURATION_SECONDS,
+          maxIdleTime: 45,
+          audioInputFormat: 'pcm16',
+          streaming_width: 512,
+          streaming_height: 512,
+        }),
+        signal: AbortSignal.timeout(6_000),
+      }),
+      fetch('https://api.simli.ai/compose/ice', {
+        method: 'GET',
+        headers,
+        signal: AbortSignal.timeout(6_000),
+      }).catch(() => null),
+    ]);
+    if (!tokenRes.ok) return null;
+    const tokenData = (await tokenRes.json().catch(() => null)) as { session_token?: string } | null;
+    if (!tokenData?.session_token) return null;
+    let iceServers: unknown[] = [{ urls: ['stun:stun.l.google.com:19302'] }];
+    if (iceRes?.ok) {
+      const parsed = await iceRes.json().catch(() => null);
+      if (Array.isArray(parsed) && parsed.length > 0) iceServers = parsed;
+    }
+    return { sessionToken: tokenData.session_token, iceServers, transport: 'p2p' };
+  } catch {
+    return null;
+  }
+}
+
+async function handleVoiceSession(
+  request: Request,
+  env: Env,
+  cors: Record<string, string>,
+): Promise<Response> {
+  const origin = request.headers.get('Origin') || '';
+  if (!origin || !allowedOrigins(env).has(origin)) {
+    return json({ ok: false, error: 'forbidden_origin' }, 403, cors);
+  }
+
+  const mediaType = (request.headers.get('Content-Type') || '').split(';', 1)[0]?.trim().toLowerCase() ?? '';
+  if (mediaType !== 'application/json') {
+    return json({ ok: false, error: 'unsupported_media_type' }, 415, cors);
+  }
+
+  const bodyRes = await readBoundedUtf8(request, VOICE_MAX_BODY);
+  if (!bodyRes.ok) return json({ ok: false, error: 'too_large' }, 413, cors);
+
+  let payload: Record<string, unknown> = {};
+  if (bodyRes.text.trim()) {
+    try {
+      const parsed = JSON.parse(bodyRes.text);
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        return json({ ok: false, error: 'bad_json' }, 400, cors);
+      }
+      payload = parsed as Record<string, unknown>;
+    } catch {
+      return json({ ok: false, error: 'bad_json' }, 400, cors);
+    }
+  }
+
+  const apiKey = (env.ELEVENLABS_API_KEY || '').trim();
+  const agentId = (env.HARNESSLAB_ELEVENLABS_AGENT_ID || '').trim();
+  if (!apiKey || !agentId) {
+    return json({ ok: false, error: 'voice_unavailable' }, 503, cors);
+  }
+
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const limiter = env.VOICE_LIMIT || env.INTAKE_LIMIT;
+  if (limiter) {
+    const { success } = await limiter.limit({ key: `voice:${ip}` });
+    if (!success) return json({ ok: false, error: 'rate_limited' }, 429, cors);
+  }
+
+  const includeVideo = payload.textOnly !== true;
+  try {
+    const [elRes, simli] = await Promise.all([
+      fetch(
+        `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(agentId)}`,
+        {
+          method: 'GET',
+          headers: { 'xi-api-key': apiKey },
+          signal: AbortSignal.timeout(8_000),
+        },
+      ),
+      includeVideo ? mintSimliSession(env) : Promise.resolve(null),
+    ]);
+
+    if (!elRes.ok) {
+      return json({ ok: false, error: 'voice_upstream_failed' }, 502, cors);
+    }
+    const elData = (await elRes.json().catch(() => null)) as { signed_url?: string; signedUrl?: string } | null;
+    const signedUrl = elData?.signed_url || elData?.signedUrl || '';
+    if (!/^wss:\/\//i.test(signedUrl)) {
+      return json({ ok: false, error: 'voice_upstream_failed' }, 502, cors);
+    }
+    return json(
+      {
+        ok: true,
+        signedUrl,
+        maxDurationSeconds: VOICE_MAX_DURATION_SECONDS,
+        ...(simli ? { simli } : {}),
+      },
+      200,
+      cors,
+    );
+  } catch {
+    return json({ ok: false, error: 'voice_upstream_failed' }, 502, cors);
+  }
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const cors = corsHeaders(request, env);
@@ -246,6 +381,10 @@ export default {
 
     if (request.method === 'GET' && url.pathname === '/api/health') {
       return json({ ok: true, ts: Date.now() }, 200, cors);
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/voice-session') {
+      return handleVoiceSession(request, env, cors);
     }
 
     if (request.method === 'POST' && url.pathname === '/api/intake') {

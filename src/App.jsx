@@ -9,6 +9,7 @@ import Forge from "./components/Forge.jsx";
 import WealthExplorer from "./components/WealthExplorer.jsx";
 import LandingGallery from "./components/LandingGallery.jsx";
 import ContactSection from "./components/ContactSection.jsx";
+import HarnessConcierge from "./components/HarnessConcierge.jsx";
 import { Capabilities, ClosingQuote, Footer, Founder, Ownership } from "./components/Chapters.jsx";
 import { IntakeProvider, MotionProvider } from "./lib/providers.jsx";
 
@@ -46,6 +47,7 @@ export default function App() {
           <ContactSection />
         </main>
         <Footer />
+        <HarnessConcierge />
       </IntakeProvider>
     </MotionProvider>
   );
