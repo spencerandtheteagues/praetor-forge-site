@@ -266,8 +266,6 @@ async function mintSimliSession(
           maxSessionLength: VOICE_MAX_DURATION_SECONDS,
           maxIdleTime: 45,
           audioInputFormat: 'pcm16',
-          streaming_width: 512,
-          streaming_height: 512,
         }),
         signal: AbortSignal.timeout(6_000),
       }),
