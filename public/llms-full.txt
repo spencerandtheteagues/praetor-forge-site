@@ -1,6 +1,6 @@
-# The Harness Lab — Complete Studio, Product & Engineering Reference
+# The Harness Lab — Products and Engineering Reference
 
-> The Harness Lab (https://theharnesslab.com/) is the founder-led custom software and applied AI engineering studio of Spencer Teague. We build bespoke workflow automation, custom business websites, full-stack web and native desktop applications, API integrations, internal operations tools, and verifiable multi-agent AI harnesses — proven against real data and handed over into repositories and infrastructure the client owns once the work is paid for.
+> The Harness Lab (https://theharnesslab.com/) builds and sells automation products for the oil and gas land and mineral title industry. Every customer uses the same software, paid per run or by subscription. Spencer Teague, in San Angelo, Texas, wrote the software. The Harness Lab LLC owns the code and IP.
 
 ## 1. Identity, Founder & Contact
 
@@ -8,11 +8,12 @@
 - **Commercial Site (White Carrara Marble Seal):** https://theharnesslab.com/
 - **Engineering R&D Foundry (Black Marble Seal):** https://theharnesslab.dev/
 - **Founder & Lead Engineer:** Spencer Teague (completely self-taught software engineer with 3,900+ authored production commits through November 2026 across oil and gas title engines, multi-model SaaS platforms, and autonomous AI harnesses)
-- **Sales & New Projects:** `sales@theharnesslab.com`
-- **Public & Founder Contact:** `sales@theharnesslab.com`
+- **Founder contact:** `spencer@theharnesslab.com`
 - **Telephone:** `+1-607-364-7772` (`607-364-7772`)
-- **20-Minute Teardown Call:** https://cal.com/harnesslab/teardown
-- **Online Work Order Intake:** https://theharnesslab.com/#contact (includes client-side and server-side credential detection and redaction; never send passwords, API keys, or confidential client records in an initial enquiry)
+- **Product question form:** https://theharnesslab.com/#contact (includes client-side and server-side credential detection and redaction; never send passwords, API keys, or confidential records in a question)
+- **Try Title-Desk:** https://title-desk.com/
+- **See AI Landman:** https://ailandman.io/
+- **See Artificial Landman:** https://artificiallandman.io/
 
 ## 2. Operating Method: Three Optical Gates & Twelve Failure Controls
 
@@ -94,7 +95,7 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 - **Telemetry (2026):** 377,197 authored lines of code · 966 main-branch commits (1,064 across all branches) · 852 source files · 5-month build window.
 - **Capabilities:** Multi-AI cloud software development environment where a nine-agent engineering team plans, implements, tests, and verifies applications inside a Monaco cloud IDE with dead-agent heartbeats, backpressure routing, spend telemetry, and encrypted bring-your-own-key routing.
 
-### Wealth & Powers OS — Client Proof (Jayson Powers, Missouri)
+### Wealth & Powers OS — earlier software (Jayson Powers, Missouri)
 - **Case Study:** https://theharnesslab.com/#case-study
 - **Telemetry:** 7,110 authored lines of code · 45 source files · 10 investor surfaces · custom-built and remotely installed in a single session.
 - **Capabilities:** Unified multi-asset investor harness spanning stocks (Yahoo Finance consensus), crypto (three-way CoinGecko, Coinbase, and Kraken divergence checks), precious metals (front-month futures vs. spot basis checks), Real Estate Super Search & URL watcher, marketplace Item Search, dual-audited live research, per-role model routing, and Midas Mode (45-second position re-evaluation inside code-enforced daily-loss pause and drawdown kill-switch envelopes where zero trades execute without Jayson's explicit approval).
@@ -105,45 +106,34 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 - **Spectre:** High-density dark-mode threat-intelligence monitoring console.
 - **Kiln:** Native macOS disk and build-artifact cleaner (29-feature behavioral specification, 15-screen interface design, and Phase-1 SwiftUI foundation forged through Perihelion Loop with proportional hazard gates).
 - **SilverGuard:** Cross-platform family caregiving and senior wellness application.
-- **Samara:** Source-grounded research studio with live web-page ingestion and citation links.
-- **VoxScript:** Whisper-powered AI video and audio transcription studio with structured summaries.
+- **Samara:** Source-grounded research workspace with live web-page ingestion and citation links.
+- **VoxScript:** Whisper-powered AI video and audio transcription workspace with structured summaries.
 - **Commercial Trade Websites (Texas):** Davis Moore Electric (Lubbock, TX), Dooley A/C & Heating (San Angelo, TX), and Fred's Radiator & Auto (Waco, TX).
 
-## 5. Six Dedicated Service Specifications & Engagement Model
+## 5. Products for sale
 
-1. **AI Workflow Automation (`https://theharnesslab.com/ai-workflow-automation/`):** Document reading, structured extraction, deterministic validation, API handoffs, and human review queues.
-2. **Custom Software Development (`https://theharnesslab.com/custom-software-development/`):** End-to-end web platforms, customer portals, document workspaces, and native desktop applications.
-3. **Business Website Design & Development (`https://theharnesslab.com/website-design-development/`):** Responsive custom websites, redesigns, technical SEO foundations, structured data, and connected intake flows.
-4. **Custom Internal Tools (`https://theharnesslab.com/internal-tools-development/`):** Operations dashboards, staff portals, source-linked review tools, and automated client-format workbooks.
-5. **API Integration Services (`https://theharnesslab.com/api-integrations/`):** Permitted third-party API connectors, webhook deduplication, schema validation, reconciliation, and failure recovery.
-6. **Landman Title Workflow Automation (`https://theharnesslab.com/landman-title-workflow-automation/`):** Texas county record intake, OCR, source-linked runsheets, chain-of-title organization, exact fractional mineral math, and custom landman deliverables.
+1. **Title-Desk (`https://title-desk.com/`):** Landman title research software. Upload or request county records. It reads the documents, builds the chain of title and runsheet, resolves mineral ownership and computes net mineral acres. The hosted web app is paid per run.
+2. **Title-Desk Agent (`https://desktop.title-desk.com/`):** The Title-Desk desktop app, sold by subscription. The same software.
+3. **AI Landman (`https://ailandman.io/`):** Hosted landman title product on the same platform.
+4. **Artificial Landman (`https://artificiallandman.io/`):** Hosted Texas mineral title examination for land teams, brokerages and operators.
 
-### Engagement Options (Custom-Scoped on Call)
-- **I · Free Teardown & Fit Call:** 20 focused minutes diagnosing one workflow, naming likely failure modes, and agreeing on the clearest next step (`https://cal.com/harnesslab/teardown`).
-- **II · Reliability & Security Audit:** Written failure map, cost-exposure and secret-handling review, prioritized remediation list, and walkthrough call.
-- **III · Workflow Automation:** One repeated document, operations, or client workflow turned into a tested, client-owned system.
-- **IV · Custom Websites & Full-Stack Apps:** Business websites, internal tools, and full software products engineered end to end.
-- **V · Foundation & Multi-Agent AI Harnesses:** Custom agent routing, verification gates, circuit breakers, approvals, and recovery playbooks.
-- **VI · Ongoing Care:** Scheduled health checks, model/provider migration reviews, and dedicated reliability support.
+Every customer uses the same software. Spencer Teague wrote it. The Harness Lab LLC owns the code and IP.
 
-### Nine Client-Ownership Deliverables Included at Handover
-1. Private customer-owned Git repository from day one.
-2. Reproducible single-script setup on your hardware or cloud.
-3. Customer-owned secrets with environment templates and redaction checks.
-4. Plain-language operator runbook.
-5. Automated end-to-end smoke tests.
-6. Verification evidence bundle documenting what was tested, fixed, and proven.
-7. Mandatory human approval gates on external or financial actions.
-8. Cost and rate-limit circuit breakers.
-9. Rehearsed backup and incident recovery playbook.
+### Pages on this site
+- [Landman title software](https://theharnesslab.com/landman-title-workflow-automation/)
+- [Mineral title products](https://theharnesslab.com/custom-software-development/)
+- [Title-Desk desktop and web](https://theharnesslab.com/internal-tools-development/)
+- [How the products read title](https://theharnesslab.com/ai-workflow-automation/)
+- [Same software, every customer](https://theharnesslab.com/api-integrations/)
+- [Earlier websites](https://theharnesslab.com/website-design-development/)
 
 ## 6. Buyer & Technical FAQ
 
-**Q: Does The Harness Lab lock clients into proprietary hosting or retain intellectual property?**
-A: No. Once the final invoice is paid, clients own the private Git repository, configuration, and deployed accounts built for them, with a permanent licence to any reusable Harness Lab components inside them. Handover completes when you run the setup script and automated smoke tests on your own infrastructure without needing us in the loop.
+**Q: Who owns the software?**
+A: Spencer Teague, in San Angelo, Texas, wrote the software. The Harness Lab LLC owns the code and IP. Every customer uses the same products, paid per run or by subscription.
 
-**Q: How are commercial terms and timelines determined?**
-A: Every system is scoped directly with Spencer Teague around a concrete workflow, sample inputs, required integrations, and measurable acceptance criteria during a 20-minute teardown call (`https://cal.com/harnesslab/teardown`) or written Work Order (`https://theharnesslab.com/#contact`).
+**Q: How do customers pay, and how do they ask a question?**
+A: The Title-Desk desktop app is sold by subscription. The hosted web app is paid per run. Questions go to spencer@theharnesslab.com or https://theharnesslab.com/#contact. Try Title-Desk at https://title-desk.com/, AI Landman at https://ailandman.io/, and Artificial Landman at https://artificiallandman.io/.
 
 **Q: Does Title-Desk or automated landman software replace a qualified title reviewer?**
 A: No. Title-Desk, Artificial Landman, and AI Landman produce source-linked draft mineral-ownership workbooks, not title opinions or certifications. Automated extraction, chain-of-title assembly, and exact fractional math accelerate preparation while preserving curative findings and book-and-page source links so a qualified landman or title attorney remains in full control of title conclusions.
@@ -151,4 +141,4 @@ A: No. Title-Desk, Artificial Landman, and AI Landman produce source-linked draf
 ## Legal Entity
 
 - The Harness Lab is the trade name of **The Harness Lab LLC**, a Texas limited liability company (Texas SOS File No. 806765129, formed August 25, 2026; venue Tom Green County, Texas). Title-Desk, Title-Desk Agent, Artificial Landman, and AI Landman are products of The Harness Lab LLC.
-- [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Client services terms](https://theharnesslab.com/legal/client-terms/)
+- [Legal notice](https://theharnesslab.com/legal/) · [Website terms](https://theharnesslab.com/legal/terms/) · [Privacy policy](https://theharnesslab.com/legal/privacy/) · [Order terms](https://theharnesslab.com/legal/client-terms/)

@@ -20,7 +20,7 @@ export default function LandingGallery() {
       <div className="container">
         <ChapterHead
           numeral="VI"
-          eyebrow="Landing pages & product entry surfaces"
+          eyebrow="Earlier sites"
           id="landing-gallery-title"
           title={
             <>
@@ -29,10 +29,8 @@ export default function LandingGallery() {
           }
         >
           <p>
-            The first screen decides whether anyone stays. A selection of the landing
-            pages and entry experiences we have designed and shipped — from native
-            utilities and research studios to full-length websites for Texas trades.
-            Select any card to inspect it full-screen.
+            Earlier landing pages and websites. The products for sale are Title-Desk,
+            Artificial Landman and AI Landman. Select any card to inspect it full-screen.
           </p>
         </ChapterHead>
         <ul className="landing-grid">

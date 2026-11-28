@@ -9,7 +9,7 @@ import { useMotion } from "../lib/motion.js";
 
 // Workflow explorer: three steps light the three optical gates on the plate.
 // Contract (verify-redesign.mjs): buttons "Documents" / "Operations" /
-// "Client work", "Run example" → "Replay example", .demo-announcement text,
+// "Records", "Run example" → "Replay example", .demo-announcement text,
 // switching cancels timers, reduced motion completes instantly.
 function useWorkflowRunner() {
   const { paused, reduced } = useMotion();
@@ -213,7 +213,7 @@ function FaultLedger() {
               {open ? (
                 <div className="fault-control">
                   <p><span className="mono">Control</span> {fault.control}</p>
-                  <a href="#contact" className="fault-brief-link">Added to Work Order <ArrowRight aria-hidden="true" /></a>
+                  <a href="#contact" className="fault-brief-link">Ask about the products <ArrowRight aria-hidden="true" /></a>
                 </div>
               ) : null}
             </li>
@@ -247,7 +247,7 @@ export default function Method() {
       <div className="container">
         <ChapterHead
           numeral="II"
-          eyebrow="How we operate · Why we never ship raw model output"
+          eyebrow="How the products work · Records in, chain of title out"
           id="method-title"
           title={
             <>
@@ -256,13 +256,11 @@ export default function Method() {
           }
         >
           <p>
-            Raw AI wrappers guess, stall, and report “done” while the work is still
-            broken. So we build the custom, deterministic harness first — primary-source
-            grounding, independent cross-examination, hard limits and human gates — and
-            then iterate relentlessly until every primary-source check and every holdout
-            test passes on real data. Across 3,900+ authored commits through November 2026
-            on courthouse deeds, OAuth callbacks and live portfolios, that discipline is the
-            difference between a demo and a system you can run your business on.
+            Raw model output is not a title product. Title-Desk reads the county
+            records, then checks the chain before a person reviews the result:
+            primary-source grounding, an independent check, hard limits and a human
+            gate. Across 3,900+ authored commits through November 2026 on courthouse
+            deeds, that is how the same software holds up for every customer.
           </p>
         </ChapterHead>
         <aside className="credibility-card" aria-labelledby="credibility-title">
@@ -284,7 +282,7 @@ export default function Method() {
           <div className="credibility-copy">
             <p className="inscription">Black-marble engineering foundry · theharnesslab.dev</p>
             <h3 id="credibility-title" className="r3d-title r3d-sub">
-              <Raised>Inspect the architecture before you hire us.</Raised>
+              <Raised>Read the engineering notes.</Raised>
             </h3>
             <p>
               Our engineering site publishes the state machines, the Perihelion Loop

@@ -5,7 +5,7 @@
   "compatibility_date": "2026-08-09",
   "observability": { "enabled": true },
   "vars": {
-    "LEAD_EMAIL_TO": "sales@theharnesslab.com",
+    "LEAD_EMAIL_TO": "spencer@theharnesslab.com",
     "LEAD_EMAIL_FROM": "intake@theharnesslab.com",
     "ALLOWED_ORIGIN": "",
     "HARNESSLAB_ELEVENLABS_AGENT_ID": "agent_0901m8cxashwf5abkjd10be1v2qe",

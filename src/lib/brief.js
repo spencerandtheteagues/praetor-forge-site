@@ -13,11 +13,11 @@ export const FIELD_LABELS = {
   company: "Organization",
   role: "Role",
   website: "Website / repo",
-  requestType: "Request",
+  requestType: "Product",
   urgency: "Urgency",
-  approvalPath: "Approval",
-  callWindow: "Call window",
-  desiredWorkflow: "The idea",
+  approvalPath: "Copy",
+  callWindow: "Reply window",
+  desiredWorkflow: "Question",
   infrastructure: "Runs on",
   currentStack: "Current stack",
   failureDetails: "What breaks",
@@ -71,7 +71,7 @@ export function buildBrief(request, { redact = true, blank = "—" } = {}) {
     const value = r[key];
     return redact ? redactSecrets(value) : value;
   };
-  const lines = ["THE HARNESS LAB · WORK ORDER", ""];
+  const lines = ["THE HARNESS LAB · PRODUCT QUESTION", ""];
   lines.push(`Request:  ${v("requestType") || blank}`);
   lines.push(`From:     ${v("name") || blank}`);
   lines.push(`Reply to: ${v("email") || blank}`);
@@ -104,7 +104,7 @@ export function buildMailto(request, { redact = true, max = 1800 } = {}) {
   const email = safe(r.email);
   const company = safe(r.company);
   const requestType = safe(r.requestType);
-  const subject = `Project enquiry: ${requestType}${company ? ` (${company})` : ""}`;
+  const subject = `Product question: ${requestType}${company ? ` (${company})` : ""}`;
   const text = buildBrief(request, { redact, blank: "" });
   let body = encodeURIComponent(text);
   let overflow = false;

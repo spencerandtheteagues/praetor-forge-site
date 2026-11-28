@@ -26,14 +26,14 @@ export const ENTITY = {
   formedIso: "2026-08-25",
   base: "San Angelo, Texas",
   noticeAddress: "5900 Balcones Drive, Suite 100, Austin, Texas 78731",
-  legalEmail: "sales@theharnesslab.com",
-  salesEmail: "sales@theharnesslab.com",
+  legalEmail: "spencer@theharnesslab.com",
+  salesEmail: "spencer@theharnesslab.com",
   phone: "607-364-7772",
   venue: "Tom Green County, Texas",
 };
 
-const EFFECTIVE = "November 18, 2026";
-const EFFECTIVE_ISO = "2026-11-18";
+const EFFECTIVE = "November 28, 2026";
+const EFFECTIVE_ISO = "2026-11-28";
 const E = ENTITY;
 const mail = (a) => `<a href="mailto:${a}">${a}</a>`;
 
@@ -46,7 +46,7 @@ const footer = `
       <a href="/legal/">Legal notice</a>
       <a href="/legal/terms/">Website terms</a>
       <a href="/legal/privacy/">Privacy policy</a>
-      <a href="/legal/client-terms/">Client services terms</a>
+      <a href="/legal/client-terms/">Order terms</a>
       <a href="/">theharnesslab.com</a>
     </nav>
     <p>${LEGAL_LINE}. Questions: ${mail(E.legalEmail)}</p>
@@ -148,7 +148,7 @@ const notice = page({
         <tr><th scope="row">Formed</th><td>${E.formed}</td></tr>
         <tr><th scope="row">Based in</th><td>${E.base}</td></tr>
         <tr><th scope="row">Mailing address for legal notices</th><td>${E.legalName}, ${E.noticeAddress}</td></tr>
-        <tr><th scope="row">Email</th><td>${mail(E.salesEmail)} (new projects, legal, privacy, contracts and security)</td></tr>
+        <tr><th scope="row">Email</th><td>${mail(E.salesEmail)} (product questions, legal, privacy and security)</td></tr>
       </table>
       <p>The company's registration can be checked in the public records of the Texas Secretary of State and the Texas Comptroller of Public Accounts under file number ${E.sosFile}.</p>`,
     },
@@ -156,10 +156,10 @@ const notice = page({
       id: "names",
       h: "Names and products we operate",
       body: `
-      <p>${E.legalName} does business as <strong>The Harness Lab</strong> and offers the following products and services under its own name:</p>
+      <p>${E.legalName} does business as <strong>The Harness Lab</strong> and sells the following software products under its own name. Every customer uses the same software, paid per run or by subscription:</p>
       <ul>
-        <li><strong>The Harness Lab</strong> — custom software, workflow automation, websites, internal tools and AI systems built for business clients (theharnesslab.com and theharnesslab.dev).</li>
-        <li><strong>Title-Desk</strong> and <strong>Title-Desk Agent</strong> (the Title-Desk desktop app) — Texas mineral title research software and a hosted examination service for independent landmen and abstractors (title-desk.com and desktop.title-desk.com).</li>
+        <li><strong>The Harness Lab</strong> — the company that builds and sells the products below. Spencer Teague, in San Angelo, Texas, wrote the software. ${E.legalName} owns the code and IP (theharnesslab.com). Engineering notes are published at theharnesslab.dev.</li>
+        <li><strong>Title-Desk</strong> and <strong>Title-Desk Agent</strong> (the Title-Desk desktop app) — landman title research software. Upload or request county records. It reads the documents, builds the chain of title and runsheet, resolves mineral ownership and computes net mineral acres. The desktop app is sold by subscription. The hosted web app is paid per run (title-desk.com and desktop.title-desk.com).</li>
         <li><strong>Artificial Landman</strong> — a hosted Texas mineral title examination platform for land teams, brokerages and operators (artificiallandman.io).</li>
         <li><strong>AI Landman</strong> — remote Texas oil and gas mineral title examination across all 254 Texas counties supporting uploaded records and full-service county clerk retrieval (ailandman.io).</li>
       </ul>
@@ -170,7 +170,7 @@ const notice = page({
       h: "Who you contract with",
       body: `
       <p>Every proposal, statement of work, work order, invoice, licence and subscription is made by ${E.legalName} as the contracting party. No member, manager, employee, contractor or agent of the company is a party to any of them in a personal capacity, and none of them is personally liable for the company's obligations.</p>
-      <p>Only a written agreement signed or accepted on behalf of ${E.legalName} binds the company. Nothing on our websites, in a demo, a sample, a case study, a social media post or a conversation is an offer, a guarantee or a promise of any result. Custom work is governed by our <a href="/legal/client-terms/">Client Services Terms</a>; Title-Desk, Artificial Landman and AI Landman are governed by the terms published on their own websites.</p>`,
+      <p>Only a written agreement signed or accepted on behalf of ${E.legalName} binds the company. Nothing on our websites, in a demo, a sample, a case study, a social media post or a conversation is an offer, a guarantee or a promise of any result. Title-Desk, Artificial Landman and AI Landman are governed by the terms published on their own websites. A written order the company has already issued is governed by our <a href="/legal/client-terms/">Order Terms</a>.</p>`,
     },
     {
       id: "advice",
@@ -185,7 +185,7 @@ const notice = page({
       <ul>
         <li><a href="/legal/terms/">Website Terms of Use</a> — rules for using our websites and sending us an enquiry.</li>
         <li><a href="/legal/privacy/">Privacy Policy</a> — what we collect through our websites and email, and what we do with it.</li>
-        <li><a href="/legal/client-terms/">Client Services Terms</a> — the standard terms for custom software, automation and website work.</li>
+        <li><a href="/legal/client-terms/">Order Terms</a> — terms for a written order the company has already issued.</li>
         <li><a href="https://title-desk.com/legal/terms" rel="noopener">Title-Desk Terms of Service</a>, <a href="https://title-desk.com/legal/privacy" rel="noopener">Title-Desk Privacy Policy</a>, and <a href="https://desktop.title-desk.com/" rel="noopener">Title-Desk Agent</a>.</li>
         <li><a href="https://artificiallandman.io/legal/terms" rel="noopener">Artificial Landman terms</a>.</li>
         <li><a href="https://ailandman.io/" rel="noopener">AI Landman</a>.</li>
@@ -219,7 +219,7 @@ const terms = page({
       id: "scope",
       h: "What these terms cover",
       body: `
-      <p>These terms cover the websites only. Custom work we do for a client is governed by a signed proposal or statement of work and our <a href="/legal/client-terms/">Client Services Terms</a>. Title-Desk, Artificial Landman and AI Landman are governed by the terms on their own websites. Our <a href="/legal/privacy/">Privacy Policy</a> explains how we handle personal information.</p>
+      <p>These terms cover the websites only. Title-Desk, Artificial Landman and AI Landman are governed by the terms on their own websites. A written order the company has already issued is governed by our <a href="/legal/client-terms/">Order Terms</a>. Our <a href="/legal/privacy/">Privacy Policy</a> explains how we handle personal information.</p>
       <p>Our websites and services are offered for business purposes. If you use them for a company or other organisation, you confirm that you may accept these terms on its behalf.</p>`,
     },
     {
@@ -227,13 +227,13 @@ const terms = page({
       h: "Website content is general information",
       body: `
       <p>The websites describe our work and how we approach it. Their content is general information. It is not an offer, a quote, a guarantee or professional advice, and it may be incomplete or out of date.</p>
-      <p>Case studies, demonstrations, sample runs, screenshots, timelines, benchmarks and project histories describe particular work under particular conditions. They are not a promise that your project will produce the same result, cost the same or take the same time. Any prices, ranges or package descriptions on the websites are indications only; the price for a project is the one stated in a signed proposal or statement of work.</p>`,
+      <p>Demonstrations, sample runs, screenshots, timelines and benchmarks describe the products under particular conditions. The price of a product is the price published on that product's website.</p>`,
     },
     {
       id: "enquiries",
-      h: "Enquiries and the project intake form",
+      h: "Questions and the contact form",
       body: `
-      <p>Sending an enquiry, filling in the project intake form or booking a call does not create a contract, an engagement or a client relationship, and does not oblige either of us to go further. We are engaged only when a proposal or statement of work is signed or accepted on behalf of ${E.legalName}.</p>
+      <p>Sending a question or filling in the contact form does not buy a product and does not create a contract. Title-Desk, Artificial Landman and AI Landman are sold on their own websites.</p>
       <p><strong>Do not send passwords, API keys, private keys, access tokens, payment card numbers, government identification numbers or confidential client or employer records in an enquiry.</strong> Describe the problem and use redacted examples. We handle what you send as our Privacy Policy describes, but until we have signed an agreement with you we take on no duty of confidentiality for business information in an enquiry.</p>
       <p>If you send us ideas, suggestions or feedback that you did not ask us to keep confidential, we may use them without obligation to you. We may independently develop work that resembles an idea you send us.</p>
       <p>You confirm that the information you send is accurate and that you have the right to share it with us.</p>`,
@@ -263,7 +263,7 @@ const terms = page({
       id: "third-party",
       h: "Other websites and services",
       body: `
-      <p>The websites link to and load services run by others, such as the Cal.com booking tool and Google Fonts. Those services are governed by their own terms and privacy policies, and we are not responsible for them, for their content or for their availability.</p>`,
+      <p>The websites link to and load services run by others, including Google Fonts and the product sites Title-Desk, Artificial Landman and AI Landman. Those services are governed by their own terms and privacy policies, and we are not responsible for them, for their content or for their availability.</p>`,
     },
     {
       id: "disclaimer",
@@ -314,9 +314,9 @@ const privacy = page({
       id: "collect",
       h: "What we collect",
       body: `
-      <p><strong>Information you give us.</strong> When you use the project intake form we receive what you enter: your name, email address and company, and if you choose to provide them, your role, website or repository, the kind of project, urgency, who approves the work, where your systems run, your current tools, a description of the work, what breaks, what success looks like, how access could be arranged and a good time for a call. When you email or call us, we receive your message and contact details. When you book a call, the booking tool passes us your name, email address, the time you chose and anything you write in the booking form.</p>
+      <p><strong>Information you give us.</strong> When you use the contact form we receive what you enter: your name, email address and company, and if you choose to provide them, your role, website, which product you are asking about, when you need a reply, who else should be copied, where systems run, current tools, your question, and anything else you add. When you email or call us, we receive your message and contact details.</p>
       <p><strong>Information collected automatically.</strong> Like any website, ours are delivered by hosting providers that receive your IP address, browser and device type, the pages requested and the time of the request, and keep short-term server logs. Our intake service uses your IP address to limit repeated submissions and block abuse. We do not use analytics, advertising cookies, tracking pixels or session-recording tools on these websites, and we do not set cookies of our own.</p>
-      <p><strong>Information from third-party services the page loads.</strong> Our pages load fonts from Google Fonts and the Cal.com booking tool from Cal.com. Your browser contacts those providers directly, so they receive your IP address and browser information, and Cal.com may use its own cookies or local storage to run its booking tool. Their privacy policies govern that information.</p>
+      <p><strong>Information from third-party services the page loads.</strong> Our pages load fonts from Google Fonts. Your browser contacts Google directly, so Google receives your IP address and browser information. Google's privacy policy governs that information. The voice concierge, when you start it, contacts our intake service and the voice providers it uses to run that session.</p>
       <p>The intake form checks your text in your own browser for things that look like passwords or keys and warns you before you send it. Please do not send that kind of information anyway.</p>`,
     },
     {
@@ -324,8 +324,8 @@ const privacy = page({
       h: "How we use it",
       body: `
       <ul>
-        <li>to reply to you, understand your project, prepare a proposal and schedule calls;</li>
-        <li>to perform and manage work you engage us for, including invoicing and support;</li>
+        <li>to reply to questions about the products;</li>
+        <li>to keep records of those questions;</li>
         <li>to keep our websites and systems secure and to prevent spam and abuse;</li>
         <li>to keep business records and meet our legal, tax and accounting obligations; and</li>
         <li>to establish, exercise or defend legal claims.</li>
@@ -342,8 +342,7 @@ const privacy = page({
         <li>Resend, which delivers intake submissions to us by email;</li>
         <li>our email providers (Namecheap Private Email and Google), which host our mailboxes;</li>
         <li>GitHub, which hosts our websites;</li>
-        <li>Cal.com, which runs call booking; and</li>
-        <li>if you become a client, the payment, accounting and software providers we use to deliver and bill the work.</li>
+        <li>the voice providers used when you start the on-page concierge.</li>
       </ul>
       <p>We may also disclose information when the law requires it, to protect our rights, property or safety or that of others, or as part of a merger, sale, financing or reorganisation of our business, in which case the information remains subject to this policy's protections. We share information for any other purpose only with your consent.</p>`,
     },
@@ -351,7 +350,7 @@ const privacy = page({
       id: "keep",
       h: "How long we keep it",
       body: `
-      <p>We keep personal information for as long as we need it for the purposes above, including the life of any client relationship and the periods our legal, tax and record-keeping obligations require. After that we delete it or keep it in a form that no longer identifies you. Copies in backups are deleted on the backups' normal schedule.</p>`,
+      <p>We keep personal information for as long as we need it for the purposes above, including the life of a product question or a written order and the periods our legal, tax and record-keeping obligations require. After that we delete it or keep it in a form that no longer identifies you. Copies in backups are deleted on the backups' normal schedule.</p>`,
     },
     {
       id: "security",
@@ -391,10 +390,10 @@ const privacy = page({
 // ---------------------------------------------------------------- Client terms
 const client = page({
   slug: "client-terms",
-  title: "Client Services Terms",
-  crumb: "Client services terms",
-  description: `Standard terms of ${E.legalName}, a ${E.kind}, for custom software, workflow automation, AI systems, website and care-plan work.`,
-  intro: `<p class="lead">These terms apply to the custom work ${E.legalName}, a ${E.kind} (“${E.short}”, “we”, “us”), does for a business client (“Client”, “you”): custom software, workflow automation, AI systems and harnesses, websites, integrations, internal tools, audits and ongoing care plans. They form part of every proposal, statement of work, work order, quote and invoice we issue (each an “Order”). An Order and these terms together are the “Agreement”.</p>`,
+  title: "Order Terms",
+  crumb: "Order terms",
+  description: `${E.legalName} sells mineral title software. These order terms apply to a written order the company has already issued. Title-Desk, Artificial Landman and AI Landman are governed by the terms on their own websites.`,
+  intro: `<p class="lead">${E.legalName}, a ${E.kind} (“${E.short}”, “we”, “us”), builds and sells automation products for the oil and gas land and mineral title industry. Every customer uses the same software, paid per run or by subscription. Spencer Teague wrote the software. ${E.legalName} owns the code and IP. Product terms for Title-Desk, Artificial Landman and AI Landman are published on those products' websites. The terms below apply to a written order the company has already issued (each an “Order”). An Order and these terms together are the “Agreement”. In these terms, “Client” and “you” mean the business named in that Order.</p>`,
   sections: [
     {
       id: "agreement",
@@ -402,7 +401,7 @@ const client = page({
       body: `
       <p>An Order is accepted, and the Agreement formed, when you sign or accept it in writing, pay any part of it, or ask us to start the work it describes, whichever happens first. The version of these terms in effect on the date of the Order applies to it, unless the Order names a different version.</p>
       <p>If an Order conflicts with these terms, these terms control, except where the Order expressly states that it overrides a named section of these terms. Terms in your purchase orders, vendor forms, portals or emails do not apply, even if we sign or accept them, unless we agree in a signed writing that expressly says so.</p>
-      <p>You confirm that you are acquiring the services for business purposes and that the person accepting an Order may bind you.</p>`,
+      <p>You confirm that you are accepting the Order for business purposes and that the person accepting an Order may bind you.</p>`,
     },
     {
       id: "parties",

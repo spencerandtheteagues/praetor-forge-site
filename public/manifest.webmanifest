@@ -1,7 +1,7 @@
 {
   "name": "The Harness Lab",
   "short_name": "Harness Lab",
-  "description": "Bespoke workflow automation, custom web and desktop software, and verifiable multi-agent AI harnesses — engineered by Spencer Teague, owned by you.",
+  "description": "The Harness Lab builds and sells automation products for the oil and gas land and mineral title industry. Every customer uses the same software, paid per run or by subscription.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

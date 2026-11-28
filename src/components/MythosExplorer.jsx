@@ -31,10 +31,10 @@ export default function MythosExplorer() {
           />
           <ChapterHead
             numeral="III·C"
-            eyebrow="Mythos OS · The studio operating system"
+            eyebrow="Mythos OS · Internal operating system"
             title={
               <>
-                We don&rsquo;t just sell harnesses. <em>We live inside one.</em>
+                The internal system <em>behind the products.</em>
               </>
             }
             id="our-os-title"
@@ -42,7 +42,7 @@ export default function MythosExplorer() {
             <p>
               Mythos OS is the command cockpit Spencer Teague engineered to run The
               Harness Lab 24/7: coordinating Claude, Codex, Gemini, and Ollama across
-              studio workstations and Linux servers with 20,911 knowledge-graph nodes
+              workstations and Linux servers with 20,911 knowledge-graph nodes
               and zero silent failures.
             </p>
             <TelemetryBadge items={MYTHOS_TELEMETRY} label="Mythos OS build telemetry" />
@@ -50,7 +50,7 @@ export default function MythosExplorer() {
         </div>
 
         <p className="explorer-framing mono">
-          Captured studio environment — 15 production surfaces we operate daily.
+          Captured operating environment — 15 production surfaces we operate daily.
         </p>
 
         <div className="explorer-stats-wrap">

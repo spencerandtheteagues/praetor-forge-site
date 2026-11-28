@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
-  CalendarCheck,
   Check,
   ChevronDown,
   ClipboardCheck,
@@ -12,7 +11,6 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { ChapterHead } from "./ui.jsx";
-import { CalTrigger } from "./Header.jsx";
 import { useIntake, FIELD_LIMITS } from "../lib/intake.js";
 import { buildBrief, buildMailto, buildPayload, copyText, FIELD_LABELS } from "../lib/brief.js";
 import { redactSecrets, scanRequest } from "../lib/secretGuard.js";
@@ -22,6 +20,7 @@ import {
   PHONE_HREF,
   REQUEST_TYPES,
   SALES_EMAIL,
+  TITLE_DESK_URL,
 } from "../data/site.js";
 import { FAILURES } from "../data/narrative.js";
 
@@ -40,7 +39,7 @@ const EMAIL_RE =
   /^[^\s@<>,;:"'\\()[\].]+(?:\.[^\s@<>,;:"'\\()[\].]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+(?:[A-Za-z]{2,63}|[Xx][Nn]--[A-Za-z0-9](?:[A-Za-z0-9-]{0,57}[A-Za-z0-9])?)$/;
 
 const ERROR_COPY = {
-  missing_fields: "Please enter your name, work email, and project idea before sending.",
+  missing_fields: "Please enter your name, work email, and question before sending.",
   invalid_email: "Please enter a valid work email address (for example, you@yourfirm.com) and try again.",
   invalid: "Our intake service couldn’t accept the form as sent. Check your name, email, and project idea, then try again.",
   rate: "Too many enquiries have come from this connection in the last minute. Wait a minute, then try again.",
@@ -58,12 +57,10 @@ const STATUS_LINE = {
 
 // Legacy deep links: #intake?product=X, #contact?tier=Y, ?product=X#contact.
 const TIER_MAP = [
-  [/teardown|fit|call|free/i, "Free teardown & fit call"],
-  [/care|ongoing|retainer|support/i, "Ongoing care"],
-  [/audit|security|reliab/i, "Reliability & security audit"],
-  [/harness|agent/i, "An AI harness"],
-  [/site|web|app|full/i, "A website or full-stack app"],
-  [/autom|workflow/i, "Workflow automation"],
+  [/title-?desk|desktop/i, "Title-Desk"],
+  [/artificial/i, "Artificial Landman"],
+  [/ai[-\s]?landman|ailandman/i, "AI Landman"],
+  [/question|product/i, "A question about the products"],
 ];
 const PREFILL_KEYS = ["product", "tier", "type", "requestType"];
 
@@ -121,7 +118,7 @@ export default function ContactSection() {
     const requestType = requestTypeFor(typeParam);
     if (!product && !typeParam) return;
     const note =
-      !requestType && cleanParam(typeParam) ? `Engagement interest: ${cleanParam(typeParam)} — ` : undefined;
+      !requestType && cleanParam(typeParam) ? `Product interest: ${cleanParam(typeParam)} — ` : undefined;
     prefill({ product: product || undefined, requestType: requestType || undefined, note });
     PREFILL_KEYS.forEach((key) => params.delete(key));
     const rest = params.toString();
@@ -169,7 +166,7 @@ export default function ContactSection() {
     () =>
       redactSecrets(request.company).trim() ||
       redactSecrets(request.name).trim() ||
-      "Your next build",
+      "Your question",
     [request.company, request.name],
   );
 
@@ -305,18 +302,18 @@ export default function ContactSection() {
       <div className="container">
         <ChapterHead
           numeral="VII·D"
-          eyebrow="The close · Intake direct to Spencer Teague"
+          eyebrow="Questions · Spencer Teague · San Angelo, Texas"
           id="contact-title"
           title={
             <>
-              Bring us the problem <em>nobody else could finish.</em>
+              Write Spencer <em>about the products.</em>
             </>
           }
         >
           <p>
-            Tell us what’s manual, fragile, or stuck after someone else’s prototype hit a
-            wall. Your Work Order assembles live on the right as you type, and Spencer
-            replies directly.
+            The Harness Lab builds and sells Title-Desk, AI Landman and Artificial
+            Landman. Every customer uses the same software. Send a question and Spencer
+            replies at {SALES_EMAIL}.
           </p>
         </ChapterHead>
 
@@ -328,21 +325,21 @@ export default function ContactSection() {
                   <Check size={28} />
                 </span>
                 <h3 ref={successRef} tabIndex={-1}>
-                  Your project is on our radar.
+                  Spencer has your question.
                 </h3>
                 <p>
-                  Thanks for the detail. We’ll reply to{" "}
-                  <strong>{redactSecrets(request.email).trim()}</strong> to talk through the next step.
+                  Thanks for the note. We’ll reply to{" "}
+                  <strong>{redactSecrets(request.email).trim()}</strong>.
                 </p>
                 <button type="button" className="button button-outline" onClick={shareAnother}>
-                  Share another idea <ArrowRight aria-hidden="true" />
+                  Send another question <ArrowRight aria-hidden="true" />
                 </button>
               </div>
             ) : (
               <form className="contact-form" method="post" onSubmit={submit}>
                 <fieldset disabled={!ready}>
                   <p className="contact-required">
-                    Name, email and the idea are required. Everything else is optional.
+                    Name, email and your question are required. Everything else is optional.
                   </p>
                   <div className="contact-pair">
                     <div className="contact-field">
@@ -369,7 +366,7 @@ export default function ContactSection() {
                       <input {...fieldProps("company")} autoComplete="organization" placeholder="Firm or team" />
                     </div>
                     <div className="contact-field">
-                      <label htmlFor="field-requestType">What should we build?</label>
+                      <label htmlFor="field-requestType">Which product?</label>
                       <select
                         id="field-requestType"
                         name="requestType"
@@ -388,13 +385,13 @@ export default function ContactSection() {
                     </div>
                   </div>
                   <div className="contact-field">
-                    <label htmlFor="field-desiredWorkflow">The idea, the bottleneck, or the big ambition</label>
+                    <label htmlFor="field-desiredWorkflow">Your question</label>
                     <textarea
                       {...fieldProps("desiredWorkflow")}
                       ref={ideaRef}
                       required
                       rows={5}
-                      placeholder="What does your team do by hand today? What should the software do instead?"
+                      placeholder="Which product, and what do you want to know?"
                     />
                     <span className="contact-count mono" aria-hidden="true">
                       {request.desiredWorkflow.length} / {FIELD_LIMITS.desiredWorkflow}
@@ -426,7 +423,7 @@ export default function ContactSection() {
                       </div>
                       <div className="contact-pair">
                         <div className="contact-field">
-                          <label htmlFor="field-urgency">How urgent is it?</label>
+                          <label htmlFor="field-urgency">When do you need a reply?</label>
                           <select id="field-urgency" name="urgency" value={request.urgency} onChange={onField}>
                             <option value="">Choose one</option>
                             {URGENCY.map((u) => (
@@ -437,7 +434,7 @@ export default function ContactSection() {
                           </select>
                         </div>
                         <div className="contact-field">
-                          <label htmlFor="field-approvalPath">Who approves the work?</label>
+                          <label htmlFor="field-approvalPath">Who else should we copy?</label>
                           <select id="field-approvalPath" name="approvalPath" value={request.approvalPath} onChange={onField}>
                             <option value="">Choose one</option>
                             {APPROVAL.map((a) => (
@@ -487,15 +484,15 @@ export default function ContactSection() {
                         <textarea {...fieldProps("successCriteria")} rows={3} />
                       </div>
                       <div className="contact-field">
-                        <label htmlFor="field-accessPlan">How could we get access safely?</label>
+                        <label htmlFor="field-accessPlan">Anything else we should know?</label>
                         <textarea
                           {...fieldProps("accessPlan")}
                           rows={2}
-                          placeholder="Describe it. Never paste keys or passwords here."
+                          placeholder="Optional. Never paste keys or passwords here."
                         />
                       </div>
                       <div className="contact-field">
-                        <label htmlFor="field-callWindow">Best time for a call</label>
+                        <label htmlFor="field-callWindow">Best time to reply</label>
                         <input {...fieldProps("callWindow")} placeholder="Weekday mornings, Central time" />
                       </div>
                     </div>
@@ -545,14 +542,14 @@ export default function ContactSection() {
                   </div>
 
                   <button className="button button-gold contact-submit" type="submit" disabled={status === "sending"}>
-                    {status === "sending" ? "Sending your enquiry…" : "Let’s talk about your project"}
+                    {status === "sending" ? "Sending your question…" : "Send to Spencer"}
                     <ArrowUpRight aria-hidden="true" />
                   </button>
                   <p className="contact-note">
-                    This sends your details to The Harness Lab LLC so we can reply. Please leave out passwords
-                    and confidential records. An enquiry does not start an engagement; work begins only under a
-                    signed proposal governed by our <a href="/legal/client-terms/">Client Services Terms</a>. See
-                    our <a href="/legal/terms/">Website Terms</a> and <a href="/legal/privacy/">Privacy Policy</a>.
+                    This sends your question to The Harness Lab LLC so Spencer can reply. Please leave out passwords
+                    and confidential records. A message does not buy a product. Title-Desk, Artificial Landman and
+                    AI Landman are sold on their own websites. See our <a href="/legal/terms/">Website Terms</a> and{" "}
+                    <a href="/legal/privacy/">Privacy Policy</a>.
                   </p>
 
                   {status === "error" ? (
@@ -581,7 +578,7 @@ export default function ContactSection() {
             )}
           </div>
 
-          <aside className="work-order-col" aria-label="Work order preview">
+          <aside className="work-order-col" aria-label="Question preview">
             <button
               type="button"
               className="work-order-toggle"
@@ -600,7 +597,7 @@ export default function ContactSection() {
                 <span key={pulse} className="work-order-flash" aria-hidden="true" onAnimationEnd={endFlash} />
               ) : null}
               <div className="work-order-head">
-                <span className="work-order-heading"><span className="mono">The Harness Lab · Project dossier</span><span className="inscription">Work order</span></span>
+                <span className="work-order-heading"><span className="mono">The Harness Lab · Product question</span><span className="inscription">Your question</span></span>
                 <span className={`work-order-status mono is-${status}`}>{STATUS_LINE[status]}</span>
               </div>
               <div className="work-order-register mono">
@@ -612,7 +609,7 @@ export default function ContactSection() {
                 className="work-order-body mono"
                 tabIndex={0}
                 role="region"
-                aria-label="Assembled work order preview"
+                aria-label="Assembled question"
               >
                 {preview}
               </pre>
@@ -630,15 +627,15 @@ export default function ContactSection() {
                 </span>
               </div>
             </div>
-            <CalTrigger className="contact-booking" label="Book a 20-minute teardown call">
-              <span className="contact-booking-icon"><CalendarCheck aria-hidden="true" /></span>
+            <a className="contact-booking" href={TITLE_DESK_URL} target="_blank" rel="noopener noreferrer">
+              <span className="contact-booking-icon"><ArrowUpRight aria-hidden="true" /></span>
               <span className="contact-booking-copy">
-                <span className="mono">Prefer a conversation?</span>
-                <strong>Book a 20-minute teardown call</strong>
-                <span>One workflow. A clear next step. Directly with Spencer.</span>
+                <span className="mono">The product</span>
+                <strong>Try Title-Desk</strong>
+                <span>Desktop by subscription. Hosted web app paid per run.</span>
               </span>
               <ArrowUpRight className="contact-booking-arrow" aria-hidden="true" />
-            </CalTrigger>
+            </a>
           </aside>
         </div>
 
@@ -653,7 +650,7 @@ export default function ContactSection() {
           <a className="contact-rail-item" href={`mailto:${SALES_EMAIL}`}>
             <Mail aria-hidden="true" />
             <span>
-              <span className="contact-rail-label inscription">Direct &amp; new projects</span>
+              <span className="contact-rail-label inscription">Email</span>
               {SALES_EMAIL}
             </span>
           </a>

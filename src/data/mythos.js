@@ -1,4 +1,4 @@
-// Mythos OS: the studio's own operating cockpit. 15 captured surfaces.
+// Mythos OS: the lab's internal operating cockpit. 15 captured surfaces.
 // Copy rules: no dollar figures, no absolute claims. Numbers are "as captured".
 
 const W = 1600;
@@ -34,7 +34,7 @@ export const MYTHOS_GROUPS = [
     label: "Deliver",
     title: "Audit, research, build, ship: one pipeline.",
     intro:
-      "The flow we run for clients runs end to end here too. Tear a system down, research the ground truth, compose a build brief, then account for the work an agent actually completed.",
+      "The flow behind the products runs end to end here. Review a system, research the ground truth, compose a build brief, then account for the work an agent actually completed.",
     screens: ["audit-kit", "research", "forge", "work-ledger"],
   },
   {
@@ -50,7 +50,7 @@ export const MYTHOS_GROUPS = [
     label: "Infrastructure",
     title: "Wired into the machines, files and inboxes.",
     intro:
-      "The harness isn't trapped in a browser tab. It reaches remote filesystems, mailboxes and connected services across the studio from one place.",
+      "The harness isn't trapped in a browser tab. It reaches remote filesystems, mailboxes and connected services across the lab from one place.",
     screens: [
       "connections",
       "vps-files",
@@ -98,9 +98,9 @@ export const MYTHOS_SCREENS = [
     title: "Audit Kit",
     alt: "Audit Kit reliability audit showing a 75/100 score, one critical finding, file and line counts, and a generated report",
     shows:
-      "A reliability teardown of a repo or folder: a score, failed controls and critical findings (here a secrets-in-repo catch), turned into a remediation roadmap and a report.",
+      "A reliability review of a repo or folder: a score, failed controls and critical findings (here a secrets-in-repo catch), turned into a remediation roadmap and a report.",
     matters:
-      "Every engagement starts with evidence. The same audit we run on our own code is the one we run before quoting a client's.",
+      "The products start from evidence. The same audit we run on our own code is the one that checks Title-Desk.",
   }),
   shot("research", {
     title: "Research platform",
@@ -112,9 +112,9 @@ export const MYTHOS_SCREENS = [
   }),
   shot("forge", {
     title: "The Forge",
-    alt: "The Forge build-brief composer with client, audit evidence, service, target harness, and model selectors and a dispatch button",
+    alt: "The Forge build-brief composer with audit evidence, target harness, and model selectors and a dispatch button",
     shows:
-      "A composer that builds an evidence-grounded brief from client and audit data, then dispatches it to a chosen harness on a chosen model.",
+      "A composer that builds an evidence-grounded brief from audit data, then dispatches it to a chosen harness on a chosen model.",
     matters:
       "It's the factory floor between \u201caudited\u201d and \u201cshipped\u201d: builds start from documented findings, not from a vague prompt.",
   }),

@@ -54,11 +54,11 @@ function expectLink(rel, expected) {
   }
 }
 
-const ogTitle = 'Websites, Custom Software &amp; AI Automation | The Harness Lab';
+const ogTitle = 'Mineral Title Software | The Harness Lab';
 const ogDescription =
-  'Four months and 1,662 commits on Title-Desk. Fourteen months and nine generations on BrandStreams. Custom software and AI harnesses built until real work runs end to end — owned by you.';
+  'The Harness Lab builds and sells automation products for the oil and gas land and mineral title industry. Title-Desk, AI Landman and Artificial Landman. Every customer uses the same software.';
 const twitterDescription =
-  'Bespoke workflow automation, full-stack software and verifiable AI harnesses. See Rogue Agents, Perihelion Loop, Title-Desk, Artificial Landman, BrandStreams and APEX.BUILD running for real.';
+  'The Harness Lab builds and sells Title-Desk, AI Landman and Artificial Landman. Every customer uses the same mineral title software, paid per run or by subscription.';
 const cardAlt = 'The Harness Lab copper and marble winged medallion on black';
 
 expectLink('canonical', 'https://theharnesslab.com/');

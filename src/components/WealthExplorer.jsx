@@ -102,21 +102,20 @@ export default function WealthExplorer() {
       <div className="container">
         <ChapterHead
           numeral="V"
-          eyebrow="Client proof · Wealth & Powers OS · Five-star review"
+          eyebrow="Other software · Wealth & Powers OS"
           title={
             <>
-              Built for Jayson Powers: <em>dual-audited firepower.</em>
+              Wealth &amp; Powers OS. <em>Other software Spencer wrote.</em>
             </>
           }
           id="case-study-title"
         >
           <p>
-            Jayson Powers is a private investor in Missouri with an active
-            portfolio across stocks, crypto, precious metals and real estate. We
-            built him the Wealth &amp; Powers OS, a custom investor harness
-            installed remotely, where several AI agents work in parallel, every
-            finding is audited by a second model, and every trade waits for his
-            approval.
+            Wealth &amp; Powers OS is investor software Spencer Teague wrote, covering
+            stocks, crypto, precious metals and real estate. Several agents work in
+            parallel, a second model audits each finding, and a person approves every
+            trade. It is earlier software, separate from Title-Desk, AI Landman and
+            Artificial Landman. Jayson Powers, a private investor in Missouri, reviewed it.
           </p>
           <TelemetryBadge items={WEALTH_TELEMETRY} label="Wealth & Powers OS build telemetry" />
         </ChapterHead>

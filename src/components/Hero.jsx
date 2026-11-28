@@ -1,19 +1,19 @@
-import { ArrowDown, ArrowUpRight, CalendarCheck, Pause, Play } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
 import MedallionStage from "./Medallion/MedallionStage.jsx";
-import { CalTrigger } from "./Header.jsx";
 import { useMotion } from "../lib/motion.js";
 import Raised from "./Raised.jsx";
+import { AI_LANDMAN_URL, ARTIFICIAL_LANDMAN_URL, TITLE_DESK_URL } from "../data/site.js";
 
 const SPECS = [
+  ["Desktop by subscription", "The Title-Desk desktop app. The same software for every customer."],
+  ["Hosted, paid per run", "The hosted web app. Upload or request county records."],
   ["4 Months · 1,662 Commits", "Taking Title-Desk from a desktop workstation to live online Texas county runs (Aug–Nov 2026)"],
-  ["14 Months · 9 Generations", "Rebuilding MyAIMediaMgr into BrandStreams across 1,364 commits until every edge case held"],
-  ["5-Star Client OS", "Wealth & Powers OS, built and installed in a single session for investor Jayson Powers"],
 ];
 
 const OFFERS = [
-  ["Bespoke workflow automation", "Documents, requests and client work turned into tested systems your team owns."],
-  ["Full-stack web & desktop software", "Business websites, internal tools, SaaS platforms and native desktop apps."],
-  ["Verifiable multi-agent AI harnesses", "Agents that are grounded, cross-examined and gated before anything ships."],
+  ["Title-Desk", "Upload or request county records. Chain of title, runsheet, mineral ownership, and net mineral acres."],
+  ["Artificial Landman", "Hosted Texas mineral title examination for land teams, brokerages and operators."],
+  ["AI Landman", "Hosted landman title product on the same platform."],
 ];
 
 export default function Hero() {
@@ -24,46 +24,40 @@ export default function Hero() {
         <div className="hero-copy">
           <p className="hero-eyebrow">
             <span className="chapter-numeral">I</span>
-            <span>The Harness Lab · Custom software studio of Spencer Teague</span>
+            <span>The Harness Lab · Mineral title products · Spencer Teague, San Angelo</span>
           </p>
-          {/* Cast-bronze monument headline: instantly explains what we build
-              (custom software & verified AI) and how we build it (the right way),
-              followed by Spencer's challenge. Each word is raised by <Raised>;
-              DOM text appears once. */}
           <h1 id="hero-title" className="hero-headline">
             <span className="hl-line hl-dare">
               <span className="hl-seg">
-                <Raised>Custom software</Raised>
+                <Raised>Mineral title</Raised>
               </span>{" "}
               <span className="hl-seg">
-                <Raised>&amp; verified AI.</Raised>
+                <Raised>software.</Raised>
               </span>
             </span>{" "}
             <span className="hl-line hl-vow r3d-gold">
               <span className="hl-seg">
-                <Raised>Built the right way.</Raised>
+                <Raised>Every customer.</Raised>
               </span>
             </span>{" "}
             <span className="hl-line hl-us">
               <span className="hl-seg">
-                <Raised>{"Bring us your hardest idea\u00a0\u2014"}</Raised>
+                <Raised>The same products,</Raised>
               </span>{" "}
               <span className="hl-seg">
-                <Raised>we build a working product you own.</Raised>
+                <Raised>paid per run or by subscription.</Raised>
               </span>
             </span>
           </h1>
 
           <div className="hero-manifesto">
             <p className="hero-what-kicker inscription">
-              Who we are · What we build · What we sell
+              Who we are · What we sell · Who runs it
             </p>
             <p className="hero-lede">
-              The Harness Lab is a founder-led engineering studio. Spencer Teague
-              personally designs, builds, verifies and hands over every system: we
-              sell bespoke workflow automation, full-stack web and desktop
-              software, and verifiable multi-agent AI harnesses — engineered
-              against your real data and delivered into accounts you own.
+              The Harness Lab builds and sells automation products for the oil and
+              gas land and mineral title industry. Every customer uses the same
+              software, paid per run or by subscription.
             </p>
             <ul className="hero-offers">
               {OFFERS.map(([title, body]) => (
@@ -74,14 +68,14 @@ export default function Hero() {
               ))}
             </ul>
             <div className="hero-actions">
-              <a className="button button-gold" href="#work">
-                See what we have built <ArrowDown aria-hidden="true" />
+              <a className="button button-gold" href={TITLE_DESK_URL} target="_blank" rel="noopener noreferrer">
+                Try Title-Desk <ArrowUpRight aria-hidden="true" />
               </a>
-              <CalTrigger className="button button-outline">
-                <CalendarCheck aria-hidden="true" /> Book a 20-min teardown
-              </CalTrigger>
-              <a className="button button-ghost" href="#contact">
-                Bring us the hard problem <ArrowUpRight aria-hidden="true" />
+              <a className="button button-outline" href={AI_LANDMAN_URL} target="_blank" rel="noopener noreferrer">
+                See AI Landman <ArrowUpRight aria-hidden="true" />
+              </a>
+              <a className="button button-ghost" href={ARTIFICIAL_LANDMAN_URL} target="_blank" rel="noopener noreferrer">
+                See Artificial Landman <ArrowUpRight aria-hidden="true" />
               </a>
             </div>
             <blockquote className="hero-credo">
@@ -96,7 +90,7 @@ export default function Hero() {
                 actually holds up.”
               </p>
               <footer className="hero-credo-cite mono">
-                — Spencer Teague · Founder &amp; Lead Engineer · Landman title, SaaS &amp; autonomous AI harnesses
+                — Spencer Teague · Founder · San Angelo, Texas
               </footer>
             </blockquote>
           </div>
@@ -136,7 +130,7 @@ export default function Hero() {
           {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
           {paused ? "Resume motion" : "Pause motion"}
         </button>
-        <a className="hero-scroll" href="#method" aria-label="Continue to how we operate">
+        <a className="hero-scroll" href="#method" aria-label="Continue to how the products work">
           <ArrowDown aria-hidden="true" />
         </a>
       </div>

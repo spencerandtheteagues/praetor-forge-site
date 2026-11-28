@@ -18,7 +18,6 @@ const LINK_ALLOWLIST = [
   "ailandman.io",
   "brandstream.my",
   "apex-build.dev",
-  "cal.com",
 ];
 const RETIRED = /happy-homes|Happy Homes|charlie-computer|Charlie Computer|Charlie['’]s Computer/;
 const TEXT_EXT = new Set([".html", ".js", ".mjs", ".css", ".json", ".xml", ".txt", ".svg", ".webmanifest", ".map"]);
@@ -78,7 +77,7 @@ try {
     },
   );
   await page.goto(base, { waitUntil: "networkidle" });
-  assert.match(await page.title(), /Custom Software/);
+  assert.match(await page.title(), /Mineral Title/);
   assert.equal(await page.locator("h1").count(), 1);
   const text = await page.locator("body").innerText();
   for (const phrase of [
@@ -91,7 +90,8 @@ try {
     "APEX.BUILD",
     "completely self-taught",
     "607-364-7772",
-    "sales@theharnesslab.com",
+    "spencer@theharnesslab.com",
+    "The Harness Lab builds and sells automation products for the oil and gas land and mineral title industry.",
   ])
     assert.ok(text.includes(phrase), phrase);
   assert.doesNotMatch(text, /\$\d|fixed fee|founding clients|spots remaining/i);
@@ -130,7 +130,9 @@ try {
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.evaluate(() => window.scrollTo(0, 0));
-  assert.ok((await page.locator("[data-cal-link]").count()) >= 3);
+  assert.ok((await page.locator('a[href="https://title-desk.com/"]').count()) >= 1);
+  assert.ok((await page.locator('a[href="https://ailandman.io/"]').count()) >= 1);
+  assert.ok((await page.locator('a[href="https://artificiallandman.io/"]').count()) >= 1);
   assert.equal(await page.locator(".footer-signature a").count(), 3);
   const brokenAnchors = await page
     .locator('a[href^="#"]')
@@ -165,7 +167,8 @@ try {
   // Copy rules on rendered text, meta, JSON-LD and image alt text.
   const textContent = await page.evaluate(() => document.body.textContent);
   assert.ok(textContent.includes("no-copy reverse-engineering"), "no-copy reverse-engineering");
-  assert.ok(textContent.includes("Custom-built tools") && textContent.includes("to custom-build your product"));
+  assert.ok(textContent.includes("The same tools"));
+  assert.ok(textContent.includes("behind the products we sell"));
   assert.ok(!textContent.includes("$"), "No dollar characters in visible copy");
   const headAndAlts = await page.evaluate(() =>
     [
@@ -221,7 +224,7 @@ try {
       .evaluate((el) => getComputedStyle(el).animationPlayState),
     "running",
   );
-  for (const name of ["Documents", "Operations", "Client work"]) {
+  for (const name of ["Documents", "Operations", "Records"]) {
     await page.getByRole("button", { name, exact: true }).click();
     await page
       .getByRole("button", { name: "Run example", exact: true })
@@ -266,37 +269,37 @@ try {
   );
 
   await page
-    .getByRole("button", { name: "Let’s talk about your project" })
+    .getByRole("button", { name: "Send to Spencer" })
     .click();
   assert.equal(submissions.length, 0, "Empty form must not submit");
   await page.getByLabel("Your name", { exact: true }).fill("Preview Test");
   await page.getByLabel("Work email").fill("preview@example.com");
   await page.getByLabel("Company").fill("Preview Company");
   await page
-    .getByLabel("The idea, the bottleneck, or the big ambition")
+    .getByLabel("Your question")
     .fill("Automate document intake and prepare a report for review.");
   await page
-    .getByRole("button", { name: "Let’s talk about your project" })
+    .getByRole("button", { name: "Send to Spencer" })
     .click();
   await page
-    .getByRole("heading", { name: "Your project is on our radar." })
+    .getByRole("heading", { name: "Spencer has your question." })
     .waitFor();
   assert.equal(submissions.length, 1);
   assert.equal(submissions[0].email, "preview@example.com");
-  assert.equal(submissions[0].requestType, "Workflow automation");
+  assert.equal(submissions[0].requestType, "Title-Desk");
   assert.ok(!("budget" in submissions[0]));
-  await page.getByRole("button", { name: "Share another idea" }).click();
+  await page.getByRole("button", { name: "Send another question" }).click();
   delivery = "failure";
   await page
-    .getByLabel("The idea, the bottleneck, or the big ambition")
+    .getByLabel("Your question")
     .fill("Preserve this enquiry if delivery fails.");
   await page
-    .getByRole("button", { name: "Let’s talk about your project" })
+    .getByRole("button", { name: "Send to Spencer" })
     .click();
   await page.getByRole("alert").waitFor();
   assert.equal(
     await page
-      .getByLabel("The idea, the bottleneck, or the big ambition")
+      .getByLabel("Your question")
       .inputValue(),
     "Preserve this enquiry if delivery fails.",
   );
@@ -304,7 +307,7 @@ try {
     await page
       .getByRole("link", { name: "Open this enquiry in your email app" })
       .getAttribute("href"),
-    /^mailto:sales@theharnesslab.com\?/,
+    /^mailto:spencer@theharnesslab.com\?/,
   );
   results.push(
     "Mocked contact success and server failure pass; native validation blocks empty submission; failure preserves input and offers email fallback. No email sent.",
@@ -325,7 +328,7 @@ try {
       await toggle.click();
       await page
         .getByRole("navigation")
-        .getByRole("link", { name: "Our work", exact: true })
+        .getByRole("link", { name: "Products", exact: true })
         .click();
       assert.equal(await toggle.getAttribute("aria-expanded"), "false");
       assert.equal(new URL(page.url()).hash, "#work");
@@ -410,7 +413,7 @@ try {
   }
   const secRes = await page.goto(`${base}/.well-known/security.txt`);
   assert.equal(secRes?.status(), 200, "/.well-known/security.txt HTTP 200");
-  assert.match(await page.locator("body").innerText(), /Contact: mailto:sales@theharnesslab\.com/);
+  assert.match(await page.locator("body").innerText(), /Contact: mailto:spencer@theharnesslab\.com/);
   results.push("All 6 service pages, 4 legal pages, and /.well-known/security.txt pass HTTP 200, allowlist, and responsive checks.");
 
   assert.deepEqual(errors, []);

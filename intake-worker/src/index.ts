@@ -1,12 +1,12 @@
 // The Harness Lab — intake bridge.
 //
 // The lead form on theharnesslab.com posts here; this emails the lead to
-// sales@theharnesslab.com via Resend.
+// spencer@theharnesslab.com via Resend.
 //
 // Secrets (set with `wrangler secret put`, never committed):
 //   RESEND_API_KEY  — Resend API key
 // Vars (wrangler.jsonc):
-//   LEAD_EMAIL_TO   — verified studio mailbox where leads land
+//   LEAD_EMAIL_TO   — founder mailbox where product questions land
 //   LEAD_EMAIL_FROM — must be on a domain verified in Resend
 //   ALLOWED_ORIGIN  — extra CORS origins, comma-separated
 
@@ -180,7 +180,7 @@ async function readBoundedUtf8(request: Request, maxBytes: number): Promise<{ ok
 function buildEmail(r: Record<string, unknown>): { subject: string; text: string; html: string } {
   const name = clipLine(r.name, 120) || 'Unknown';
   const company = clipLine(r.company, 160);
-  const subject = `New Harness Lab lead — ${name}${company ? ` (${company})` : ''}`;
+  const subject = `Product question — ${name}${company ? ` (${company})` : ''}`;
 
   const rows: Array<[string, string]> = [];
   for (const [key, label, max, multiline] of FIELDS) {
