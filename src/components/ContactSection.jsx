@@ -11,13 +11,12 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { ChapterHead } from "./ui.jsx";
-import { useIntake, FIELD_LIMITS } from "../lib/intake.js";
+import { takeRememberedContact, useIntake, FIELD_LIMITS } from "../lib/intake.js";
 import { buildBrief, buildMailto, buildPayload, copyText, FIELD_LABELS } from "../lib/brief.js";
 import { redactSecrets, scanRequest } from "../lib/secretGuard.js";
 import {
   INTAKE_URL,
   PHONE_DISPLAY,
-  PHONE_HREF,
   REQUEST_TYPES,
   SALES_EMAIL,
   TITLE_DESK_URL,
@@ -73,8 +72,8 @@ function requestTypeFor(raw) {
   return TIER_MAP.find(([re]) => re.test(value))?.[1] || null;
 }
 
-export default function ContactSection() {
-  const { request, update, toggleProblem, prefill, pulse } = useIntake();
+export default function ContactSection({ heading = "h2" }) {
+  const { request, setRequest, update, toggleProblem, prefill, pulse } = useIntake();
   const [ready, setReady] = useState(false);
   const [status, setStatus] = useState("idle");
   const [errorKind, setErrorKind] = useState(null);
@@ -99,6 +98,16 @@ export default function ContactSection() {
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    const stored = takeRememberedContact();
+    if (!stored) return;
+    setRequest((current) => ({
+      ...current,
+      ...stored,
+      problems: Array.isArray(stored.problems) ? stored.problems : current.problems,
+    }));
+  }, [setRequest]);
 
   // Prefill from a legacy deep link once, then tidy the URL.
   useEffect(() => {
@@ -295,17 +304,17 @@ export default function ContactSection() {
       <div className="container">
         <ChapterHead
           numeral="VII·D"
-          eyebrow="Questions · Spencer Teague · San Angelo, Texas"
+          eyebrow="A job to automate · Spencer Teague · San Angelo, Texas"
           id="contact-title"
+          heading={heading}
           title={
             <>
-              Write Spencer <em>about the products.</em>
+              Tell us a job <em>to automate.</em>
             </>
           }
         >
           <p>
-            The Harness Lab is a software company. Mineral title is the first product
-            line: Title-Desk, AI Landman, and Artificial Landman. Send a question and
+            The Harness Lab is a software company. Name a job people still do by hand.
             Spencer replies at {SALES_EMAIL}.
           </p>
         </ChapterHead>
@@ -632,13 +641,13 @@ export default function ContactSection() {
         </div>
 
         <div className="contact-rail">
-          <a className="contact-rail-item" href={PHONE_HREF}>
+          <div className="contact-rail-item">
             <Phone aria-hidden="true" />
             <span>
               <span className="contact-rail-label inscription">Call</span>
               {PHONE_DISPLAY}
             </span>
-          </a>
+          </div>
           <a className="contact-rail-item" href={`mailto:${SALES_EMAIL}`}>
             <Mail aria-hidden="true" />
             <span>

@@ -42,6 +42,28 @@ export const EMPTY_REQUEST = {
   hp: "",
 };
 
+const STORAGE_KEY = "hl-contact-prefill";
+
+function rememberContact(request) {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(request));
+  } catch {
+    /* private mode */
+  }
+}
+
+export function takeRememberedContact() {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    sessionStorage.removeItem(STORAGE_KEY);
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
 export const IntakeContext = createContext(null);
 
 export function useIntake() {
@@ -57,16 +79,24 @@ export function useIntakeState() {
   const [pulse, setPulse] = useState(0); // increments on every external prefill
 
   const update = useCallback((key, value) => {
-    setRequest((r) => ({ ...r, [key]: value }));
+    setRequest((r) => {
+      const next = { ...r, [key]: value };
+      rememberContact(next);
+      return next;
+    });
   }, []);
 
   const toggleProblem = useCallback((problem) => {
-    setRequest((r) => ({
-      ...r,
-      problems: r.problems.includes(problem)
-        ? r.problems.filter((p) => p !== problem)
-        : [...r.problems, problem],
-    }));
+    setRequest((r) => {
+      const next = {
+        ...r,
+        problems: r.problems.includes(problem)
+          ? r.problems.filter((p) => p !== problem)
+          : [...r.problems, problem],
+      };
+      rememberContact(next);
+      return next;
+    });
     setPulse((n) => n + 1);
   }, []);
 
@@ -83,6 +113,7 @@ export function useIntakeState() {
           FIELD_LIMITS.desiredWorkflow,
         );
       }
+      rememberContact(next);
       return next;
     });
     setPulse((n) => n + 1);
@@ -97,7 +128,12 @@ export function useIntakeState() {
 
 // Scroll to the contact cockpit and focus the name field once the scroll lands.
 export function goToContact() {
-  if (typeof document === "undefined") return;
+  if (typeof window === "undefined") return;
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  if (path !== "/contact") {
+    window.location.assign("/contact/");
+    return;
+  }
   const target = document.getElementById("contact");
   if (!target) return;
   target.scrollIntoView({ behavior: "smooth", block: "start" });

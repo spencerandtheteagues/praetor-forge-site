@@ -77,7 +77,7 @@ try {
     },
   );
   await page.goto(base, { waitUntil: "networkidle" });
-  assert.match(await page.title(), /Work Still Done by Hand/);
+  assert.match(await page.title(), /Software for Any Industry/);
   assert.equal(await page.locator("h1").count(), 1);
   const text = await page.locator("body").innerText();
   for (const phrase of [
@@ -92,7 +92,9 @@ try {
     "607-364-7772",
     "spencer@theharnesslab.com",
     "The Harness Lab is a software company.",
-    "First product line: mineral title.",
+    "Live now: Title-Desk, Artificial Landman, and AI Landman automate mineral title work.",
+    "Tell us a job to automate",
+    "Try Title-Desk",
   ])
     assert.ok(text.includes(phrase), phrase);
   assert.doesNotMatch(text, /\$\d|fixed fee|founding clients|spots remaining/i);
@@ -269,6 +271,7 @@ try {
     "Every rendered screenshot preview opens, closes on Escape, and restores keyboard focus.",
   );
 
+  await page.goto(`${base}/contact/`, { waitUntil: "networkidle" });
   await page
     .getByRole("button", { name: "Send to Spencer" })
     .click();
@@ -314,6 +317,7 @@ try {
     "Mocked contact success and server failure pass; native validation blocks empty submission; failure preserves input and offers email fallback. No email sent.",
   );
 
+  await page.goto(base, { waitUntil: "networkidle" });
   await page.reload({ waitUntil: "networkidle" });
   for (const width of [320, 390, 768, 1024, 1440, 2560, 3840]) {
     await page.setViewportSize({ width, height: 900 });
@@ -365,13 +369,19 @@ try {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `${output}/desktop-hero.png` });
   await page.screenshot({ path: `${output}/desktop-full.png`, fullPage: true });
-  for (const id of ["workflow", "work", "about", "contact"])
+  for (const id of ["workflow", "work", "about"])
     await page
       .locator(`#${id}`)
       .screenshot({
         path: `${output}/desktop-${id}.png`,
         style: ".site-header, .skip-link { visibility: hidden !important; }",
       });
+  await page.goto(`${base}/contact/`, { waitUntil: "networkidle" });
+  await page.locator("#contact").screenshot({
+    path: `${output}/desktop-contact.png`,
+    style: ".site-header, .skip-link { visibility: hidden !important; }",
+  });
+  await page.goto(base, { waitUntil: "networkidle" });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `${output}/mobile-hero.png` });
@@ -389,6 +399,7 @@ try {
     "/legal/terms/",
     "/legal/privacy/",
     "/legal/client-terms/",
+    "/contact/",
   ];
   for (const path of subpages) {
     const res = await page.goto(`${base}${path}`, { waitUntil: "networkidle" });

@@ -143,6 +143,29 @@ export const DELIVERABLES = [
   ["Hosted, paid per run", "The hosted web app is paid per run."],
 ];
 
+export const PROCESS_STEPS = [
+  {
+    step: "01",
+    title: "Spot the manual job",
+    body: "Find a job an industry still does by hand.",
+  },
+  {
+    step: "02",
+    title: "Prove it on real samples",
+    body: "Run the software on real examples of that job until the result holds.",
+  },
+  {
+    step: "03",
+    title: "Ship the product",
+    body: "The Harness Lab owns the software and sells the same product to every customer.",
+  },
+  {
+    step: "04",
+    title: "Customers pay",
+    body: "Per run, or by subscription.",
+  },
+];
+
 export const PROCESS = [
   {
     step: "01",
@@ -206,7 +229,7 @@ export const ENGAGEMENTS = [
       "The same software for every customer",
     ],
     href: "https://ailandman.io/",
-    cta: "See AI Landman",
+    cta: "AI Landman",
     tag: "Hosted product",
     note: "ailandman.io",
   },
@@ -221,7 +244,7 @@ export const ENGAGEMENTS = [
       "The same software for every customer",
     ],
     href: "https://artificiallandman.io/",
-    cta: "See Artificial Landman",
+    cta: "Artificial Landman",
     tag: "Hosted product",
     note: "artificiallandman.io",
   },

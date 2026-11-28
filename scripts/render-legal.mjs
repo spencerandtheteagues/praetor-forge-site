@@ -156,7 +156,7 @@ const notice = page({
       id: "names",
       h: "Names and products we operate",
       body: `
-      <p>${E.legalName} does business as <strong>The Harness Lab</strong>, a software company. Spencer Teague, a self-taught software engineer in San Angelo, Texas, finds industries still doing expensive work by hand and builds products that automate it. Mineral title is the first product line. Every customer of a product uses the same software, paid per run or by subscription:</p>
+      <p>${E.legalName} does business as <strong>The Harness Lab</strong>, a software company. Spencer Teague, a self-taught software engineer in San Angelo, Texas, finds a job in any industry that can be automated, then builds software that does it better, cheaper and faster than a person. The company owns the software and sells the same product to every customer, paid per run or by subscription. Live now, Title-Desk, Artificial Landman and AI Landman automate mineral title work:</p>
       <ul>
         <li><strong>The Harness Lab</strong> — the software company. Spencer Teague wrote the software. ${E.legalName} owns the code and IP (theharnesslab.com). Engineering notes are published at theharnesslab.dev.</li>
         <li><strong>Title-Desk</strong> and <strong>Title-Desk Agent</strong> (the Title-Desk desktop app) — landman title research software. Upload or request county records. It reads the documents, builds the chain of title and runsheet, resolves mineral ownership and computes net mineral acres. The desktop app is sold by subscription. The hosted web app is paid per run (title-desk.com and desktop.title-desk.com).</li>
@@ -392,8 +392,8 @@ const client = page({
   slug: "client-terms",
   title: "Order Terms",
   crumb: "Order terms",
-  description: `${E.legalName} is a software company. Mineral title is the first product line. These order terms apply to a written order the company has already issued. Title-Desk, Artificial Landman and AI Landman are governed by the terms on their own websites.`,
-  intro: `<p class="lead">${E.legalName}, a ${E.kind} (“${E.short}”, “we”, “us”), is a software company. Spencer Teague, a self-taught software engineer in San Angelo, Texas, finds industries still doing expensive work by hand and builds products that automate it. Mineral title is the first product line. Every customer of a product uses the same software, paid per run or by subscription. ${E.legalName} owns the code and IP. Product terms for Title-Desk, Artificial Landman and AI Landman are published on those products' websites. The terms below apply to a written order the company has already issued (each an “Order”). An Order and these terms together are the “Agreement”. In these terms, “Client” and “you” mean the business named in that Order.</p>`,
+  description: `${E.legalName} is a software company. These order terms apply to a written order the company has already issued. Title-Desk, Artificial Landman and AI Landman are governed by the terms on their own websites.`,
+  intro: `<p class="lead">${E.legalName}, a ${E.kind} (“${E.short}”, “we”, “us”), is a software company. Spencer Teague, a self-taught software engineer in San Angelo, Texas, finds a job in any industry that can be automated, then builds software that does it better, cheaper and faster than a person. The company owns the software and sells the same product to every customer, paid per run or by subscription. Live now, Title-Desk, Artificial Landman and AI Landman automate mineral title work. ${E.legalName} owns the code and IP. Product terms for Title-Desk, Artificial Landman and AI Landman are published on those products' websites. The terms below apply to a written order the company has already issued (each an “Order”). An Order and these terms together are the “Agreement”. In these terms, “Client” and “you” mean the business named in that Order.</p>`,
   sections: [
     {
       id: "agreement",

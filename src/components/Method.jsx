@@ -213,7 +213,7 @@ function FaultLedger() {
               {open ? (
                 <div className="fault-control">
                   <p><span className="mono">Control</span> {fault.control}</p>
-                  <a href="#contact" className="fault-brief-link">Ask about the products <ArrowRight aria-hidden="true" /></a>
+                  <a href="/contact/" className="fault-brief-link">Tell us a job to automate <ArrowRight aria-hidden="true" /></a>
                 </div>
               ) : null}
             </li>
@@ -226,7 +226,7 @@ function FaultLedger() {
             <span>
               {selectedCount} symptom{selectedCount === 1 ? "" : "s"} added to your brief.
             </span>
-            <a className="text-link" href="#contact">
+            <a className="text-link" href="/contact/">
               Review your brief <ArrowRight aria-hidden="true" />
             </a>
           </>
@@ -241,7 +241,7 @@ function FaultLedger() {
 export default function Method() {
   const runner = useWorkflowRunner();
   return (
-    <section className="section method" id="method" aria-labelledby="method-title">
+    <section className="section method" id="verification" aria-labelledby="method-title">
       <span id="failures" className="anchor-alias" aria-hidden="true" />
       <span id="diagram" className="anchor-alias" aria-hidden="true" />
       <div className="container">
@@ -256,11 +256,12 @@ export default function Method() {
           }
         >
           <p>
-            Raw model output is not a title product. Title-Desk reads the county
-            records, then checks the chain before a person reviews the result:
-            primary-source grounding, an independent check, hard limits and a human
-            gate. Across 3,900+ authored commits through November 2026 on courthouse
-            deeds, that is how the same software holds up for every customer.
+            In plain terms: the software has to hold up on real records before it
+            ships. Title-Desk reads the county records, then checks the chain before
+            a person reviews the result: primary-source grounding, an independent
+            check, hard limits and a human gate. Across 3,900+ authored commits
+            through November 2026 on courthouse deeds, that is how the same software
+            holds up for every customer.
           </p>
         </ChapterHead>
         <aside className="credibility-card" aria-labelledby="credibility-title">

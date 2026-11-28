@@ -1,5 +1,6 @@
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
+import { Buyer, HowItWorks } from "./components/Buyer.jsx";
 import Method from "./components/Method.jsx";
 import { HarnessBridge, RogueAgentsSection } from "./components/Harnesses.jsx";
 import PerihelionSection from "./components/PerihelionSection.jsx";
@@ -13,40 +14,47 @@ import HarnessConcierge from "./components/HarnessConcierge.jsx";
 import { Capabilities, ClosingQuote, Footer, Founder, Ownership } from "./components/Chapters.jsx";
 import { IntakeProvider, MotionProvider } from "./lib/providers.jsx";
 
-// Chapter order (Spencer, 2026-11-17):
-//   I    Hero — who we are, what we build and sell
-//   II   How we operate + credibility bridge to .dev
-//   III  Our custom-built harnesses: Rogue Agents, Perihelion Loop, Mythos OS
-//   IV   Evidence: Studio Cinema + four live product showcases
-//   V    Client proof: Jayson Powers & Wealth & Powers OS
-//   VI   Landing pages gallery
-//   VII  Ownership, engagement options, founder & the close
-export default function App() {
+function isContactPath(pathname) {
+  return (pathname || "/").replace(/\/+$/, "") === "/contact";
+}
+
+// Buyer sections come first. Engineering sections stay on the page, lower down.
+export default function App({ page = "auto" }) {
+  const contact =
+    page === "contact" ||
+    (page === "auto" && typeof window !== "undefined" && isContactPath(window.location.pathname));
   return (
     <MotionProvider>
       <IntakeProvider>
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <Header />
+        <Header contact={contact} />
         <main id="main">
-          <Hero />
-          <Method />
-          <RogueAgentsSection />
-          <PerihelionSection />
-          <MythosExplorer />
-          <HarnessBridge />
-          <CinemaStage />
-          <Forge />
-          <WealthExplorer />
-          <LandingGallery />
-          <Ownership />
-          <Capabilities />
-          <Founder />
-          <ClosingQuote />
-          <ContactSection />
+          {contact ? (
+            <ContactSection heading="h1" />
+          ) : (
+            <>
+              <Hero />
+              <Buyer />
+              <HowItWorks />
+              <Capabilities />
+              <CinemaStage />
+              <Forge />
+              <Method />
+              <RogueAgentsSection />
+              <PerihelionSection />
+              <MythosExplorer />
+              <HarnessBridge />
+              <WealthExplorer />
+              <LandingGallery />
+              <Ownership />
+              <Founder />
+              <ClosingQuote />
+            </>
+          )}
         </main>
-        <Footer />
+        <Footer contact={contact} />
         <HarnessConcierge />
       </IntakeProvider>
     </MotionProvider>

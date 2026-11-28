@@ -1,7 +1,7 @@
 {
   "name": "The Harness Lab",
   "short_name": "Harness Lab",
-  "description": "The Harness Lab is a software company. Spencer Teague finds industries still doing expensive work by hand and builds products that automate it. Mineral title is the first product line.",
+  "description": "The Harness Lab is a software company. Spencer Teague finds a job in any industry that can be automated, then builds software that does it better, cheaper and faster than a person.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

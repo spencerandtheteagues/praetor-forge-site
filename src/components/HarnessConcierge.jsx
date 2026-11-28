@@ -227,8 +227,8 @@ export default function HarnessConcierge() {
           note: desiredWorkflow ? `${desiredWorkflow}\n` : undefined,
         });
         goToContact();
-        pushItem({ kind: "action", text: "Pre-filled the contact form", href: "#contact", linkText: "Review question" });
-        return "Pre-filled the product-question form on theharnesslab.com and scrolled the visitor down so they can review and submit it themselves. The Harness Lab is a software company. Mineral title is the first product line: Title-Desk, AI Landman, and Artificial Landman.";
+        pushItem({ kind: "action", text: "Pre-filled the contact form", href: "/contact/", linkText: "Review question" });
+        return "Pre-filled the contact form and opened /contact/ so the visitor can review and submit it. The Harness Lab is a software company. It finds a job that can be automated and sells the software. Live now: Title-Desk, AI Landman, and Artificial Landman.";
       },
       openTeardownBooking: async () => {
         pushItem({ kind: "action", text: "Opened Title-Desk", href: TITLE_DESK_URL, linkText: "Try Title-Desk" });
@@ -572,7 +572,7 @@ export default function HarnessConcierge() {
                 <button
                   type="button"
                   className="hl-vc-chip"
-                  onClick={() => sendTyped("Who are the mineral title products for?")}
+                  onClick={() => sendTyped("What jobs can the software automate?")}
                 >
                   Who it is for
                 </button>

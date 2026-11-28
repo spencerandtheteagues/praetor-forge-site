@@ -29,10 +29,11 @@ export function RogueAgentsSection() {
           }
         >
           <p>
-            Off-the-shelf agent tools stalled, lied about passing tests, or lost work
-            between runs — so we built our own. Three in-house systems carry the
-            work of building the title products: Rogue Agents coordinates the team,
-            Perihelion Loop proves or reverts every change, and Mythos OS runs the lab.
+            In plain terms: these are the tools we use to build our own products.
+            They are not for sale. Off-the-shelf agent tools stalled, lied about
+            passing tests, or lost work between runs, so we built our own. Rogue
+            Agents coordinates the team, Perihelion Loop proves or reverts every
+            change, and Mythos OS runs the lab.
           </p>
         </ChapterHead>
 

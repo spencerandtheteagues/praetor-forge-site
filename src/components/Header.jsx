@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { AI_LANDMAN_URL, DEV_URL, TITLE_DESK_URL } from "../data/site.js";
+import { DEV_URL, TITLE_DESK_URL } from "../data/site.js";
 
 const NAV = [
   { href: "#method", numeral: "II", label: "How it works", ids: ["method"] },
@@ -17,11 +17,11 @@ const NAV = [
   { href: "#about", numeral: "VII·C", label: "The founder", ids: ["about"] },
 ];
 
-export function Brand({ footer = false }) {
+export function Brand({ footer = false, contact = false }) {
   return (
     <a
       className={`brand ${footer ? "brand--footer" : ""}`}
-      href="#top"
+      href={contact || footer ? "/" : "#top"}
       aria-label="The Harness Lab home"
     >
       <img
@@ -42,7 +42,7 @@ export function Brand({ footer = false }) {
   );
 }
 
-export default function Header() {
+export default function Header({ contact = false }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -140,7 +140,7 @@ export default function Header() {
       style={{ "--scroll-progress": progress.toFixed(4) }}
     >
       <div className="header-inner">
-        <Brand />
+        <Brand contact={contact} />
         <button
           ref={toggleRef}
           type="button"
@@ -159,7 +159,7 @@ export default function Header() {
               return (
                 <li key={item.href}>
                   <a
-                    href={item.href}
+                    href={contact ? `/${item.href}` : item.href}
                     className={isCurrent ? "is-active" : undefined}
                     aria-current={isCurrent ? "true" : undefined}
                     onClick={close}
@@ -183,14 +183,8 @@ export default function Header() {
             >
               .dev Foundry <ArrowUpRight aria-hidden="true" />
             </a>
-            <a
-              className="button button-outline button-small nav-cal"
-              href={AI_LANDMAN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={close}
-            >
-              See AI Landman <ArrowUpRight aria-hidden="true" />
+            <a className="button button-outline button-small nav-cal" href="/contact/" onClick={close}>
+              Tell us a job to automate
             </a>
             <a
               className="button button-gold button-small nav-cta"

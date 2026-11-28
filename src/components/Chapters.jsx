@@ -4,7 +4,7 @@ import Raised from "./Raised.jsx";
 import { Brand } from "./Header.jsx";
 import { BUILT_FOR, DELIVERABLES, ENGAGEMENTS, PROCESS } from "../data/narrative.js";
 import { JAYSON } from "../data/wealth.js";
-import { DEV_URL, PHONE_DISPLAY, SALES_EMAIL, SERVICE_PAGES, SPENCER_EMAIL, LEGAL_NAME, SOS_FILE_NO } from "../data/site.js";
+import { DEV_URL, PHONE_DISPLAY, PHONE_HREF, SALES_EMAIL, SERVICE_PAGES, SPENCER_EMAIL, LEGAL_NAME, SOS_FILE_NO } from "../data/site.js";
 
 /* ------------------------------------------------------------------------ */
 /* VII · Ownership vault + streamlined engagement process                    */
@@ -40,20 +40,20 @@ export function Ownership() {
         <div className="container ownership-inner">
           <ChapterHead
             numeral="VII"
-            eyebrow="The company · The first product line · Who owns the code"
+            eyebrow="The company · Who owns the code · Who the live products are for"
             id="ownership-title"
             title={
               <>
-                Find the manual work. <em>Build the product.</em>
+                Find the job. <em>Sell the product.</em>
               </>
             }
           >
             <p>
-              The Harness Lab is a software company. Spencer Teague finds industries
-              still doing expensive work by hand and builds products that automate it.
-              Mineral title is the first product line. The Harness Lab LLC owns the
-              code and IP. Every customer of a product uses the same software, paid
-              per run or by subscription.
+              The Harness Lab is a software company. Spencer Teague finds a job in any
+              industry that can be automated, then builds software that does it better,
+              cheaper and faster than a person. The Harness Lab LLC owns the code and
+              IP. Every customer of a product uses the same software, paid per run or
+              by subscription.
             </p>
           </ChapterHead>
           <ol className="deliverables">
@@ -90,7 +90,7 @@ export function Ownership() {
           </div>
           <div className="built-for" id="who">
             <div className="built-for-head">
-              <h3 className="inscription">Who uses the first product line</h3>
+              <h3 className="inscription">Who uses the live mineral title products</h3>
               <p className="mono">Land teams, brokerages, and operators</p>
             </div>
             <ul>
@@ -129,9 +129,9 @@ export function Capabilities() {
           }
         >
           <p>
-            Mineral title is the first product line. Title-Desk, AI Landman, and
-            Artificial Landman are live. Every customer of a product uses the same
-            software, paid per run or by subscription.
+            Live now: Title-Desk, Artificial Landman, and AI Landman automate mineral
+            title work. Every customer of a product uses the same software, paid per
+            run or by subscription.
           </p>
         </ChapterHead>
         <ol className="engagements">
@@ -153,7 +153,7 @@ export function Capabilities() {
               <div className="engagement-foot">
                 <p className="engagement-scope mono">{tier.note}</p>
                 <a
-                  className="button button-gold button-small engagement-action"
+                  className={`button button-small engagement-action ${tier.cta === "Try Title-Desk" ? "button-gold" : "button-outline"}`}
                   href={tier.href}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -220,13 +220,15 @@ export function Founder() {
             </Raised>
           </h2>
           <p className="founder-lead">
-            I’m a completely self-taught software engineer. I look for industries still
-            doing expensive work by hand, then I build the product that does that work.
+            I’m a completely self-taught software engineer. I find a job in an industry
+            that can be automated, then I build the software that does it better,
+            cheaper and faster than a person.
           </p>
           <p>
             I’m Spencer Teague, founder of The Harness Lab, in San Angelo, Texas. The
-            Harness Lab LLC owns the code and IP. Mineral title is the first product
-            line. Taking Title-Desk Agent from an offline desktop workstation to live
+            Harness Lab LLC owns the code and IP. Mineral title is one live product
+            line: Title-Desk, Artificial Landman, and AI Landman. Taking Title-Desk
+            Agent from an offline desktop workstation to live
             online Texas county runs on Title-Desk, Artificial Landman and AI Landman
             took four straight months from August through November 2026 across 1,662
             commits and 305+ git branches. BrandStreams and APEX.BUILD are earlier
@@ -329,7 +331,7 @@ export function ClosingQuote() {
 /* ------------------------------------------------------------------------ */
 /* Footer signature and studio links                                         */
 /* ------------------------------------------------------------------------ */
-export function Footer() {
+export function Footer({ contact = false }) {
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -351,7 +353,7 @@ export function Footer() {
               <a href={`mailto:${SALES_EMAIL}`}>{SALES_EMAIL}</a>
             </li>
             <li>
-              <span>{PHONE_DISPLAY}</span>
+              <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
             </li>
           </ul>
         </div>
@@ -369,7 +371,7 @@ export function Footer() {
           <p className="inscription">Engineering</p>
           <ul>
             <li>
-              <a href="#perihelion-loop">Perihelion Loop</a>
+              <a href={contact ? "/#perihelion-loop" : "#perihelion-loop"}>Perihelion Loop</a>
             </li>
             <li>
               <a
@@ -386,7 +388,7 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a href="#top">Back to top</a>
+              <a href={contact ? "/" : "#top"}>Back to top</a>
             </li>
           </ul>
         </div>
@@ -395,8 +397,8 @@ export function Footer() {
         <span>
           © 2026 {LEGAL_NAME}, a Texas limited liability company · Texas SOS File No. {SOS_FILE_NO}
         </span>
-        <span>Software company · First product line: mineral title</span>
-        <span>Title-Desk · AI Landman · Artificial Landman</span>
+        <span>Software company · Any industry</span>
+        <span>Title-Desk · AI Landman · Artificial Landman · BrandStreams · APEX.BUILD</span>
       </div>
       <nav className="container footer-legal" aria-label="Legal">
         <a href="/legal/">Legal notice</a>

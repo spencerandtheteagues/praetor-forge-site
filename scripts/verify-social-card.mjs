@@ -54,11 +54,11 @@ function expectLink(rel, expected) {
   }
 }
 
-const ogTitle = 'Software for Work Still Done by Hand | The Harness Lab';
+const ogTitle = 'Software for Any Industry | The Harness Lab';
 const ogDescription =
-  'Spencer Teague, a self-taught software engineer in San Angelo, Texas, builds software for work industries still do by hand. First product line: Title-Desk, AI Landman, and Artificial Landman.';
+  'Spencer Teague, a self-taught software engineer in San Angelo, Texas, builds software for jobs people still do by hand. Live now: Title-Desk, Artificial Landman, and AI Landman.';
 const twitterDescription =
-  'The Harness Lab builds software products. Mineral title is the first product line: Title-Desk, AI Landman, and Artificial Landman, paid per run or by subscription.';
+  'The Harness Lab sells software products. Live now, Title-Desk, Artificial Landman, and AI Landman automate mineral title work. Also shipped: BrandStreams, APEX.BUILD, and Wealth and Powers OS.';
 const cardAlt = 'The Harness Lab copper and marble winged medallion on black';
 
 expectLink('canonical', 'https://theharnesslab.com/');
