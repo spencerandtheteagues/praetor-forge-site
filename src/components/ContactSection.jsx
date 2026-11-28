@@ -27,13 +27,6 @@ import { FAILURES } from "../data/narrative.js";
 const PROBLEM_TAGS = FAILURES.map((f) => f.tag);
 
 const URGENCY = ["Exploring for now", "This quarter", "This month", "It’s broken right now"];
-const APPROVAL = [
-  "I decide",
-  "I decide with a partner",
-  "An owner or manager signs off",
-  "A committee or board",
-  "Not sure yet",
-];
 
 const EMAIL_RE =
   /^[^\s@<>,;:"'\\()[\].]+(?:\.[^\s@<>,;:"'\\()[\].]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+(?:[A-Za-z]{2,63}|[Xx][Nn]--[A-Za-z0-9](?:[A-Za-z0-9-]{0,57}[A-Za-z0-9])?)$/;
@@ -41,7 +34,7 @@ const EMAIL_RE =
 const ERROR_COPY = {
   missing_fields: "Please enter your name, work email, and question before sending.",
   invalid_email: "Please enter a valid work email address (for example, you@yourfirm.com) and try again.",
-  invalid: "Our intake service couldn’t accept the form as sent. Check your name, email, and project idea, then try again.",
+  invalid: "Our intake service couldn’t accept the form as sent. Check your name, email, and question, then try again.",
   rate: "Too many enquiries have come from this connection in the last minute. Wait a minute, then try again.",
   server: "Our intake service didn’t confirm delivery.",
   network: "We couldn’t reach our intake service. Check your connection, then try again.",
@@ -435,14 +428,13 @@ export default function ContactSection() {
                         </div>
                         <div className="contact-field">
                           <label htmlFor="field-approvalPath">Who else should we copy?</label>
-                          <select id="field-approvalPath" name="approvalPath" value={request.approvalPath} onChange={onField}>
-                            <option value="">Choose one</option>
-                            {APPROVAL.map((a) => (
-                              <option key={a} value={a}>
-                                {a}
-                              </option>
-                            ))}
-                          </select>
+                          <input
+                            {...fieldProps("approvalPath")}
+                            type="email"
+                            inputMode="email"
+                            autoComplete="email"
+                            placeholder="colleague@example.com"
+                          />
                         </div>
                       </div>
                       <div className="contact-field">
