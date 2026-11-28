@@ -1,4 +1,4 @@
-Contact: mailto:sales@theharnesslab.com
+Contact: mailto:spencer@theharnesslab.com
 Expires: 2027-11-18T00:00:00Z
 Preferred-Languages: en
 Canonical: https://theharnesslab.com/.well-known/security.txt
