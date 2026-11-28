@@ -69,7 +69,7 @@ export default function HarnessConcierge() {
       return undefined;
     }
     const observer = new IntersectionObserver(
-      ([entry]) => setHeroInView(entry.isIntersecting && entry.intersectionRatio > 0.12),
+      ([entry]) => setHeroInView(entry.isIntersecting),
       { threshold: [0, 0.12, 0.4] },
     );
     observer.observe(hero);

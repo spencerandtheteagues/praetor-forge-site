@@ -426,19 +426,31 @@
 }
 
 @media (max-width: 800px) {
-  .hero-offers,
-  .hero-actions,
-  .engagement-foot,
-  .studio-band-actions,
-  .founder-links {
-    padding-right: 76px;
+  /* The chip is hidden on the hero. Below it, inset the page so the 62px
+     button sits in empty space. vw widths ignore padding, so this is a margin. */
+  main > :not(.hero),
+  .site-footer {
+    margin-left: 16px;
+    margin-right: 84px;
+  }
+  main > :not(.hero) .container,
+  main > :not(.hero) .container-media,
+  .site-footer .container,
+  .cinema-stage,
+  .conduit-gates {
+    width: 100%;
+    max-width: 100%;
+  }
+  .studio-band,
+  .engagement:last-child .engagement-foot {
+    padding-right: 0;
   }
 }
 
 @media (max-width: 480px) {
   .hl-vc {
-    right: 12px;
-    bottom: 12px;
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
   }
   .hl-vc-panel {
     width: calc(100vw - 24px);
