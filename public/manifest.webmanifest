@@ -1,7 +1,7 @@
 {
   "name": "The Harness Lab",
   "short_name": "Harness Lab",
-  "description": "The Harness Lab builds and sells automation products for the oil and gas land and mineral title industry. Every customer uses the same software, paid per run or by subscription.",
+  "description": "The Harness Lab is a software company. Spencer Teague finds industries still doing expensive work by hand and builds products that automate it. Mineral title is the first product line.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

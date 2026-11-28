@@ -31,6 +31,7 @@ function loadPublicModule(relPath) {
 export default function HarnessConcierge() {
   const { prefill } = useIntake();
   const [open, setOpen] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
   const [status, setStatus] = useState("disconnected"); // disconnected | connecting | connected
   const [sessionMode, setSessionMode] = useState("idle"); // idle | voice | text
   const [micMuted, setMicMuted] = useState(false);
@@ -60,6 +61,20 @@ export default function HarnessConcierge() {
       transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight;
     }
   }, [items]);
+
+  useEffect(() => {
+    const hero = document.getElementById("top");
+    if (!hero || typeof IntersectionObserver === "undefined") {
+      setHeroInView(false);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting && entry.intersectionRatio > 0.12),
+      { threshold: [0, 0.12, 0.4] },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
 
   const stopMeter = useCallback(() => {
     if (typeof cancelAnimationFrame === "function" && rafRef.current) {
@@ -213,7 +228,7 @@ export default function HarnessConcierge() {
         });
         goToContact();
         pushItem({ kind: "action", text: "Pre-filled the contact form", href: "#contact", linkText: "Review question" });
-        return "Pre-filled the product-question form on theharnesslab.com and scrolled the visitor down so they can review and submit it themselves. The Harness Lab sells Title-Desk, AI Landman and Artificial Landman. Every customer uses the same software.";
+        return "Pre-filled the product-question form on theharnesslab.com and scrolled the visitor down so they can review and submit it themselves. The Harness Lab is a software company. Mineral title is the first product line: Title-Desk, AI Landman, and Artificial Landman.";
       },
       openTeardownBooking: async () => {
         pushItem({ kind: "action", text: "Opened Title-Desk", href: TITLE_DESK_URL, linkText: "Try Title-Desk" });
@@ -412,13 +427,24 @@ export default function HarnessConcierge() {
           ? "Speaking…"
           : micMuted
             ? "Mic muted — type below anytime"
-            : "Listening — ask about builds, harnesses, or fit"
+            : "Listening — ask about the products"
         : "Ask Spencer's AI concierge about the products";
 
   return (
-    <aside ref={rootRef} className="hl-vc" aria-label="The Harness Lab Concierge">
+    <aside
+      ref={rootRef}
+      className="hl-vc"
+      data-dock={heroInView && !open ? "away" : "in"}
+      aria-label="The Harness Lab Concierge"
+    >
       {!open ? (
-        <button type="button" className="hl-vc-fab" onClick={() => setOpen(true)} aria-expanded="false">
+        <button
+          type="button"
+          className="hl-vc-fab"
+          onClick={() => setOpen(true)}
+          aria-expanded="false"
+          aria-label="Ask Spencer AI. Ask about the products."
+        >
           <span className="hl-vc-fab-avatar">
             <img src="/avatar/poster.jpg" alt="Spencer Teague AI Concierge" width="48" height="48" decoding="async" />
             <span className="hl-vc-fab-dot" aria-hidden="true" />
@@ -546,7 +572,7 @@ export default function HarnessConcierge() {
                 <button
                   type="button"
                   className="hl-vc-chip"
-                  onClick={() => sendTyped("Who is the mineral title software for?")}
+                  onClick={() => sendTyped("Who are the mineral title products for?")}
                 >
                   Who it is for
                 </button>

@@ -1,13 +1,13 @@
 # The Harness Lab — Products and Engineering Reference
 
-> The Harness Lab (https://theharnesslab.com/) builds and sells automation products for the oil and gas land and mineral title industry. Every customer uses the same software, paid per run or by subscription. Spencer Teague, in San Angelo, Texas, wrote the software. The Harness Lab LLC owns the code and IP.
+> The Harness Lab (https://theharnesslab.com/) is a software company. Spencer Teague, a self-taught software engineer in San Angelo, Texas, finds industries still doing expensive work by hand and builds products that automate it. Mineral title is the first product line. Title-Desk, Artificial Landman, and AI Landman are live today. Every customer of a product uses the same software, paid per run or by subscription. The Harness Lab LLC owns the code and IP.
 
 ## 1. Identity, Founder & Contact
 
 - **Organization:** The Harness Lab LLC, a Texas limited liability company (Texas SOS File No. 806765129), doing business as The Harness Lab
 - **Commercial Site (White Carrara Marble Seal):** https://theharnesslab.com/
 - **Engineering R&D Foundry (Black Marble Seal):** https://theharnesslab.dev/
-- **Founder & Lead Engineer:** Spencer Teague (completely self-taught software engineer with 3,900+ authored production commits through November 2026 across oil and gas title engines, multi-model SaaS platforms, and autonomous AI harnesses)
+- **Founder:** Spencer Teague, a self-taught software engineer in San Angelo, Texas. He finds industries still doing expensive work by hand and builds products that automate it. Mineral title is the first product line. 3,900+ authored production commits through November 2026.
 - **Founder contact:** `spencer@theharnesslab.com`
 - **Telephone:** `+1-607-364-7772` (`607-364-7772`)
 - **Product question form:** https://theharnesslab.com/#contact (includes client-side and server-side credential detection and redaction; never send passwords, API keys, or confidential records in a question)
@@ -117,11 +117,11 @@ Off-the-shelf agent frameworks stalled or misreported test state on multi-month 
 3. **AI Landman (`https://ailandman.io/`):** Hosted landman title product on the same platform.
 4. **Artificial Landman (`https://artificiallandman.io/`):** Hosted Texas mineral title examination for land teams, brokerages and operators.
 
-Every customer uses the same software. Spencer Teague wrote it. The Harness Lab LLC owns the code and IP.
+Mineral title is the first product line. Every customer of a product uses the same software. Spencer Teague wrote it. The Harness Lab LLC owns the code and IP.
 
 ### Pages on this site
 - [Landman title software](https://theharnesslab.com/landman-title-workflow-automation/)
-- [Mineral title products](https://theharnesslab.com/custom-software-development/)
+- [First product line](https://theharnesslab.com/custom-software-development/)
 - [Title-Desk desktop and web](https://theharnesslab.com/internal-tools-development/)
 - [How the products read title](https://theharnesslab.com/ai-workflow-automation/)
 - [Same software, every customer](https://theharnesslab.com/api-integrations/)
@@ -130,7 +130,7 @@ Every customer uses the same software. Spencer Teague wrote it. The Harness Lab 
 ## 6. Buyer & Technical FAQ
 
 **Q: Who owns the software?**
-A: Spencer Teague, in San Angelo, Texas, wrote the software. The Harness Lab LLC owns the code and IP. Every customer uses the same products, paid per run or by subscription.
+A: Spencer Teague, a self-taught software engineer in San Angelo, Texas, wrote the software. The Harness Lab LLC owns the code and IP. Mineral title is the first product line. Every customer of a product uses the same software, paid per run or by subscription.
 
 **Q: How do customers pay, and how do they ask a question?**
 A: The Title-Desk desktop app is sold by subscription. The hosted web app is paid per run. Questions go to spencer@theharnesslab.com or https://theharnesslab.com/#contact. Try Title-Desk at https://title-desk.com/, AI Landman at https://ailandman.io/, and Artificial Landman at https://artificiallandman.io/.

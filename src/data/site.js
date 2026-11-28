@@ -29,7 +29,7 @@ export const DEFAULT_REQUEST_TYPE = "Title-Desk";
 // Crawlable product pages that live in public/ and must stay linked.
 export const SERVICE_PAGES = [
   { href: "/landman-title-workflow-automation/", label: "Landman title software" },
-  { href: "/custom-software-development/", label: "Mineral title products" },
+  { href: "/custom-software-development/", label: "First product line" },
   { href: "/internal-tools-development/", label: "Title-Desk desktop and web" },
   { href: "/ai-workflow-automation/", label: "How the products read title" },
   { href: "/api-integrations/", label: "Same software, every customer" },

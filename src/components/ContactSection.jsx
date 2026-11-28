@@ -304,9 +304,9 @@ export default function ContactSection() {
           }
         >
           <p>
-            The Harness Lab builds and sells Title-Desk, AI Landman and Artificial
-            Landman. Every customer uses the same software. Send a question and Spencer
-            replies at {SALES_EMAIL}.
+            The Harness Lab is a software company. Mineral title is the first product
+            line: Title-Desk, AI Landman, and Artificial Landman. Send a question and
+            Spencer replies at {SALES_EMAIL}.
           </p>
         </ChapterHead>
 

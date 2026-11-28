@@ -40,19 +40,20 @@ export function Ownership() {
         <div className="container ownership-inner">
           <ChapterHead
             numeral="VII"
-            eyebrow="The products · Who owns the code · Who it's for"
+            eyebrow="The company · The first product line · Who owns the code"
             id="ownership-title"
             title={
               <>
-                One product line. <em>Every customer.</em>
+                Find the manual work. <em>Build the product.</em>
               </>
             }
           >
             <p>
-              The Harness Lab builds and sells automation products for the oil and
-              gas land and mineral title industry. Spencer Teague wrote the software.
-              The Harness Lab LLC owns the code and IP. Every customer uses the same
-              software, paid per run or by subscription.
+              The Harness Lab is a software company. Spencer Teague finds industries
+              still doing expensive work by hand and builds products that automate it.
+              Mineral title is the first product line. The Harness Lab LLC owns the
+              code and IP. Every customer of a product uses the same software, paid
+              per run or by subscription.
             </p>
           </ChapterHead>
           <ol className="deliverables">
@@ -89,8 +90,8 @@ export function Ownership() {
           </div>
           <div className="built-for" id="who">
             <div className="built-for-head">
-              <h3 className="inscription">Who runs it</h3>
-              <p className="mono">Oil and gas land and mineral title teams</p>
+              <h3 className="inscription">Who uses the first product line</h3>
+              <p className="mono">Land teams, brokerages, and operators</p>
             </div>
             <ul>
               {BUILT_FOR.map((item, idx) => (
@@ -128,8 +129,9 @@ export function Capabilities() {
           }
         >
           <p>
-            Every customer uses the same software, paid per run or by subscription.
-            Spencer Teague wrote it. The Harness Lab LLC owns the code and IP.
+            Mineral title is the first product line. Title-Desk, AI Landman, and
+            Artificial Landman are live. Every customer of a product uses the same
+            software, paid per run or by subscription.
           </p>
         </ChapterHead>
         <ol className="engagements">
@@ -200,7 +202,7 @@ export function Founder() {
               srcSet="/spencer-teague-640.webp 640w, /spencer-teague.webp 1024w"
               sizes="(min-width: 1024px) 34vw, 86vw"
               fallback="/spencer-teague.jpg"
-              alt="Spencer Teague, founder and lead engineer of The Harness Lab"
+              alt="Spencer Teague, founder and software engineer of The Harness Lab"
               width="1024"
               height="1032"
             />
@@ -214,23 +216,22 @@ export function Founder() {
           </p>
           <h2 id="about-title" className="r3d-title">
             <Raised>
-              Hi, I’m Spencer. <span className="gold-3d">I wrote the software.</span>
+              Hi, I’m Spencer. <span className="gold-3d">I build the product.</span>
             </Raised>
           </h2>
           <p className="founder-lead">
-            I’m a completely self-taught builder who learned the only way that sticks:
-            staying in the chair through every broken build, edge case, and 3 a.m. bug
-            until the title products held up on real county records.
+            I’m a completely self-taught software engineer. I look for industries still
+            doing expensive work by hand, then I build the product that does that work.
           </p>
           <p>
-            I’m Spencer Teague, founder of The Harness Lab, in San Angelo, Texas. I
-            wrote the software. The Harness Lab LLC owns the code and IP. Taking
-            Title-Desk Agent from an offline desktop workstation to live online Texas
-            county runs on Title-Desk, Artificial Landman and AI Landman took four
-            straight months from August through November 2026 across 1,662 commits and
-            305+ git branches. BrandStreams and APEX.BUILD are earlier products: nine
-            generations and 1,364 commits for BrandStreams, and five months and 1,064
-            commits for APEX.BUILD.
+            I’m Spencer Teague, founder of The Harness Lab, in San Angelo, Texas. The
+            Harness Lab LLC owns the code and IP. Mineral title is the first product
+            line. Taking Title-Desk Agent from an offline desktop workstation to live
+            online Texas county runs on Title-Desk, Artificial Landman and AI Landman
+            took four straight months from August through November 2026 across 1,662
+            commits and 305+ git branches. BrandStreams and APEX.BUILD are earlier
+            products: nine generations and 1,364 commits for BrandStreams, and five
+            months and 1,064 commits for APEX.BUILD.
           </p>
           <p>
             When a courthouse scan is crooked, an index row is missing, or a model
@@ -238,12 +239,12 @@ export function Founder() {
             of title, the runsheet, the ownership and the net mineral acres hold.
           </p>
           <p>
-            Every customer uses that same software, paid per run or by subscription.
-            Questions come straight to me at {SPENCER_EMAIL}.
+            Every customer of a product uses that same software, paid per run or by
+            subscription. Questions come straight to me at {SPENCER_EMAIL}.
           </p>
           <div className="founder-signoff">
             <span className="signature">Spencer Teague</span>
-            <span className="mono">Founder &amp; Lead Engineer</span>
+            <span className="mono">Founder · Software engineer</span>
           </div>
           <ul className="founder-links">
             <li>
@@ -394,8 +395,8 @@ export function Footer() {
         <span>
           © 2026 {LEGAL_NAME}, a Texas limited liability company · Texas SOS File No. {SOS_FILE_NO}
         </span>
-        <span>Mineral title software · Title-Desk · AI Landman · Artificial Landman</span>
-        <span>Every customer uses the same software.</span>
+        <span>Software company · First product line: mineral title</span>
+        <span>Title-Desk · AI Landman · Artificial Landman</span>
       </div>
       <nav className="container footer-legal" aria-label="Legal">
         <a href="/legal/">Legal notice</a>

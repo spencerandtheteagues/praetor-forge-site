@@ -54,11 +54,11 @@ function expectLink(rel, expected) {
   }
 }
 
-const ogTitle = 'Mineral Title Software | The Harness Lab';
+const ogTitle = 'Software for Work Still Done by Hand | The Harness Lab';
 const ogDescription =
-  'The Harness Lab builds and sells automation products for the oil and gas land and mineral title industry. Title-Desk, AI Landman and Artificial Landman. Every customer uses the same software.';
+  'Spencer Teague, a self-taught software engineer in San Angelo, Texas, builds software for work industries still do by hand. First product line: Title-Desk, AI Landman, and Artificial Landman.';
 const twitterDescription =
-  'The Harness Lab builds and sells Title-Desk, AI Landman and Artificial Landman. Every customer uses the same mineral title software, paid per run or by subscription.';
+  'The Harness Lab builds software products. Mineral title is the first product line: Title-Desk, AI Landman, and Artificial Landman, paid per run or by subscription.';
 const cardAlt = 'The Harness Lab copper and marble winged medallion on black';
 
 expectLink('canonical', 'https://theharnesslab.com/');

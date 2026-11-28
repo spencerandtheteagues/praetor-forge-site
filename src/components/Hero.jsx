@@ -24,40 +24,41 @@ export default function Hero() {
         <div className="hero-copy">
           <p className="hero-eyebrow">
             <span className="chapter-numeral">I</span>
-            <span>The Harness Lab · Mineral title products · Spencer Teague, San Angelo</span>
+            <span>The Harness Lab · Software company · Spencer Teague, San Angelo</span>
           </p>
           <h1 id="hero-title" className="hero-headline">
             <span className="hl-line hl-dare">
               <span className="hl-seg">
-                <Raised>Mineral title</Raised>
+                <Raised>We find the work</Raised>
               </span>{" "}
               <span className="hl-seg">
-                <Raised>software.</Raised>
+                <Raised>still by hand.</Raised>
               </span>
             </span>{" "}
             <span className="hl-line hl-vow r3d-gold">
               <span className="hl-seg">
-                <Raised>Every customer.</Raised>
+                <Raised>Then we build it.</Raised>
               </span>
             </span>{" "}
             <span className="hl-line hl-us">
               <span className="hl-seg">
-                <Raised>The same products,</Raised>
+                <Raised>First product line: mineral title.</Raised>
               </span>{" "}
               <span className="hl-seg">
-                <Raised>paid per run or by subscription.</Raised>
+                <Raised>Paid per run or by subscription.</Raised>
               </span>
             </span>
           </h1>
 
           <div className="hero-manifesto">
             <p className="hero-what-kicker inscription">
-              Who we are · What we sell · Who runs it
+              Software company · First product line · Live today
             </p>
             <p className="hero-lede">
-              The Harness Lab builds and sells automation products for the oil and
-              gas land and mineral title industry. Every customer uses the same
-              software, paid per run or by subscription.
+              The Harness Lab is a software company. Spencer Teague, a self-taught
+              software engineer in San Angelo, Texas, finds industries still doing
+              expensive work by hand and builds products that automate it. Title-Desk,
+              Artificial Landman, and AI Landman are live today.
             </p>
             <ul className="hero-offers">
               {OFFERS.map(([title, body]) => (
@@ -90,7 +91,7 @@ export default function Hero() {
                 actually holds up.”
               </p>
               <footer className="hero-credo-cite mono">
-                — Spencer Teague · Founder · San Angelo, Texas
+                — Spencer Teague · Software engineer · San Angelo, Texas
               </footer>
             </blockquote>
           </div>

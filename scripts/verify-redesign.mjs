@@ -77,7 +77,7 @@ try {
     },
   );
   await page.goto(base, { waitUntil: "networkidle" });
-  assert.match(await page.title(), /Mineral Title/);
+  assert.match(await page.title(), /Work Still Done by Hand/);
   assert.equal(await page.locator("h1").count(), 1);
   const text = await page.locator("body").innerText();
   for (const phrase of [
@@ -91,7 +91,8 @@ try {
     "completely self-taught",
     "607-364-7772",
     "spencer@theharnesslab.com",
-    "The Harness Lab builds and sells automation products for the oil and gas land and mineral title industry.",
+    "The Harness Lab is a software company.",
+    "First product line: mineral title.",
   ])
     assert.ok(text.includes(phrase), phrase);
   assert.doesNotMatch(text, /\$\d|fixed fee|founding clients|spots remaining/i);
