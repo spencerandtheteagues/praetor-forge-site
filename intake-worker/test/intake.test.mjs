@@ -13,7 +13,7 @@ const worker = mod.default;
 function makeEnv(overrides = {}) {
   return {
     RESEND_API_KEY: "re_test_dummy",
-    LEAD_EMAIL_TO: "sales@theharnesslab.com",
+    LEAD_EMAIL_TO: "spencer@theharnesslab.com",
     LEAD_EMAIL_FROM: "The Harness Lab <intake@theharnesslab.com>",
     ...overrides,
   };
@@ -123,7 +123,7 @@ test("intake-worker: enforces INTAKE_LIMIT 429, required desiredWorkflow 400, an
   assert.equal((await worker.fetch(reqBadEmail, makeEnv())).status, 400);
 });
 
-test("intake-worker: redacts leaked secrets, caps problems at 20, strips control chars, and sends to sales@theharnesslab.com", async () => {
+test("intake-worker: redacts leaked secrets, caps problems at 20, strips control chars, and sends to spencer@theharnesslab.com", async () => {
   let capturedBody = null;
   const origFetch = globalThis.fetch;
   globalThis.fetch = async (url, init) => {
@@ -148,7 +148,7 @@ test("intake-worker: redacts leaked secrets, caps problems at 20, strips control
     const res = await worker.fetch(req, makeEnv());
     assert.equal(res.status, 200);
     assert.ok(capturedBody);
-    assert.deepEqual(capturedBody.to, ["sales@theharnesslab.com"]);
+    assert.deepEqual(capturedBody.to, ["spencer@theharnesslab.com"]);
     assert.ok(!capturedBody.subject.includes("\n") && !capturedBody.subject.includes("\r"));
     assert.ok(!capturedBody.text.includes(fakeKey), "Raw API key must never reach Resend");
     assert.ok(capturedBody.text.includes("[REDACTED API key]"));

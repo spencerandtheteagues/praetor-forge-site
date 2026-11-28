@@ -216,7 +216,7 @@ export default function CinemaStage() {
       <div className="container">
         <ChapterHead
           numeral="IV"
-          eyebrow="Evidence of what we built · Studio cinema"
+          eyebrow="The products running"
           id="cinema-title"
           title={
             <>
@@ -226,9 +226,9 @@ export default function CinemaStage() {
         >
           <p>
             Start with the 2m 29s Title-Desk walkthrough — a sample
-            twelve-instrument demonstration from scope check to delivered draft workbook, with
-            the run shortened — then the studio showcase and our
-            verification-to-handover reel. Sound stays off until you ask for it.
+            twelve-instrument demonstration from scope check to the draft workbook, with
+            the run shortened — then the product film and the verification reel.
+            Sound stays off until you ask for it.
           </p>
         </ChapterHead>
 
@@ -272,7 +272,7 @@ export default function CinemaStage() {
       >
         <div className="cinema-frame bezel">
           {cut.archival ? (
-            <span className="cinema-archival inscription">Archival studio promo reel</span>
+            <span className="cinema-archival inscription">Archival product reel</span>
           ) : null}
           <div
             ref={screenRef}

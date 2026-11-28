@@ -1,49 +1,27 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, CalendarCheck, Menu, X } from "lucide-react";
-import { CALENDAR_URL, CAL_LINK, CAL_NAMESPACE, DEV_URL } from "../data/site.js";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { DEV_URL, TITLE_DESK_URL } from "../data/site.js";
 
 const NAV = [
-  { href: "#method", numeral: "II", label: "How we work", ids: ["method"] },
+  { href: "#method", numeral: "II", label: "How it works", ids: ["method"] },
   {
     href: "#harnesses",
     numeral: "III",
-    label: "Our harnesses",
+    label: "How it's built",
     ids: ["harnesses", "perihelion-loop", "our-os", "custom-built"],
   },
-  { href: "#work", numeral: "IV", label: "Our work", ids: ["cinema", "work"] },
-  { href: "#case-study", numeral: "V", label: "Client proof", ids: ["case-study"] },
-  { href: "#landing-gallery", numeral: "VI", label: "Landing pages", ids: ["landing-gallery"] },
-  { href: "#capabilities", numeral: "VII", label: "Engage", ids: ["ownership", "capabilities"] },
+  { href: "#work", numeral: "IV", label: "Products", ids: ["cinema", "work"] },
+  { href: "#case-study", numeral: "V", label: "Wealth OS", ids: ["case-study"] },
+  { href: "#landing-gallery", numeral: "VI", label: "Earlier sites", ids: ["landing-gallery"] },
+  { href: "#capabilities", numeral: "VII", label: "The software", ids: ["ownership", "capabilities"] },
   { href: "#about", numeral: "VII·C", label: "The founder", ids: ["about"] },
 ];
 
-// Cal.com triggers: a real link to the booking page that the deferred embed
-// upgrades into a modal once it has loaded (see index.html).
-export function CalTrigger({ className = "button button-outline", children, label }) {
-  return (
-    <a
-      className={className}
-      href={CALENDAR_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-cal-namespace={CAL_NAMESPACE}
-      data-cal-link={CAL_LINK}
-      data-cal-config='{"layout":"month_view"}'
-      aria-label={label}
-      onClick={(e) => {
-        if (typeof window !== "undefined" && window.__calReady) e.preventDefault();
-      }}
-    >
-      {children}
-    </a>
-  );
-}
-
-export function Brand({ footer = false }) {
+export function Brand({ footer = false, contact = false }) {
   return (
     <a
       className={`brand ${footer ? "brand--footer" : ""}`}
-      href="#top"
+      href={contact || footer ? "/" : "#top"}
       aria-label="The Harness Lab home"
     >
       <img
@@ -64,7 +42,7 @@ export function Brand({ footer = false }) {
   );
 }
 
-export default function Header() {
+export default function Header({ contact = false }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -162,7 +140,7 @@ export default function Header() {
       style={{ "--scroll-progress": progress.toFixed(4) }}
     >
       <div className="header-inner">
-        <Brand />
+        <Brand contact={contact} />
         <button
           ref={toggleRef}
           type="button"
@@ -181,7 +159,7 @@ export default function Header() {
               return (
                 <li key={item.href}>
                   <a
-                    href={item.href}
+                    href={contact ? `/${item.href}` : item.href}
                     className={isCurrent ? "is-active" : undefined}
                     aria-current={isCurrent ? "true" : undefined}
                     onClick={close}
@@ -205,11 +183,17 @@ export default function Header() {
             >
               .dev Foundry <ArrowUpRight aria-hidden="true" />
             </a>
-            <CalTrigger className="button button-outline button-small nav-cal">
-              <CalendarCheck aria-hidden="true" /> Book a teardown
-            </CalTrigger>
-            <a className="button button-gold button-small nav-cta" href="#contact" onClick={close}>
-              Let’s build <ArrowUpRight aria-hidden="true" />
+            <a className="button button-outline button-small nav-cal" href="/contact/" onClick={close}>
+              Tell us a job to automate
+            </a>
+            <a
+              className="button button-gold button-small nav-cta"
+              href={TITLE_DESK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={close}
+            >
+              Try Title-Desk <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
         </nav>

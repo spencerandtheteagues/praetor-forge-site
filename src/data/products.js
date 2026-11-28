@@ -102,7 +102,7 @@ export const PRODUCT_SHOWCASES = [
     ],
     serviceLink: {
       href: "/landman-title-workflow-automation/",
-      label: "Landman title workflow automation",
+      label: "Landman title software",
     },
     groups: [
       {
@@ -191,7 +191,7 @@ export const PRODUCT_SHOWCASES = [
     ],
     serviceLink: {
       href: "/landman-title-workflow-automation/",
-      label: "Landman title workflow automation",
+      label: "Landman title software",
     },
     groups: [
       {
@@ -236,7 +236,7 @@ export const PRODUCT_SHOWCASES = [
         label: "Running workspace",
         shots: [
           shot("brandstreams/08-brandstreams-workspace-campaign-board", ...WIDE, "Campaign board", "Coordinated multi-slot campaigns: each slot is generated, scheduled and approved as part of one launch.", "BrandStreams campaign workspace with scheduled campaign slots"),
-          shot("brandstreams/11-brandstreams-workspace-ai-brainstorm", ...WIDE, "AI brainstorm studio", "A multi-model brainstorm studio for campaign concepts before anything is drafted.", "BrandStreams multi-model AI brainstorm studio"),
+          shot("brandstreams/11-brandstreams-workspace-ai-brainstorm", ...WIDE, "AI brainstorm", "A multi-model brainstorm for campaign concepts before anything is drafted.", "BrandStreams multi-model AI brainstorm"),
           shot("brandstreams/13-brandstreams-workspace-calendar", ...WIDE, "Content calendar", "Draft calendar for intended use dates; entries never publish externally on their own.", "BrandStreams draft content calendar"),
           shot("brandstreams/14-brandstreams-workspace-approval-queue", ...WIDE, "Approval queue", "Every post waits in the approval queue for a person before it can be published.", "BrandStreams content approval queue"),
         ],
@@ -272,7 +272,7 @@ export const PRODUCT_SHOWCASES = [
         shots: [
           shot("apex-build/03-landing-latest-blue-steel-1440x900", ...WIDE, "Blue-steel landing", "The current APEX.BUILD landing page.", "APEX.BUILD blue-steel landing page"),
           shot("apex-build/04-landing-latest-9agent-system-1440x900", ...WIDE, "Nine-agent system", "How the nine-agent build team divides planning, implementation, testing and verification.", "APEX.BUILD nine-agent system overview"),
-          shot("apex-build/08-workspace-builder-command-studio-1440x900", ...WIDE, "Builder command studio", "Describe the app; the command studio turns it into a staged build plan.", "APEX.BUILD builder command studio"),
+          shot("apex-build/08-workspace-builder-command-studio-1440x900", ...WIDE, "Builder command", "Describe the app; the command screen turns it into a staged build plan.", "APEX.BUILD builder command screen"),
           shot("apex-build/09-workspace-active-9agent-build-1440x900", ...WIDE, "Active nine-agent build", "A live build with every agent's lane, heartbeat and verification status on one screen.", "APEX.BUILD active nine-agent build"),
           shot("apex-build/11-workspace-cloud-ide-monaco-editor-1440x900", ...WIDE, "Cloud IDE", "The Monaco-based cloud IDE where generated code can be inspected and edited.", "APEX.BUILD cloud IDE with Monaco editor"),
           shot("apex-build/14-workspace-settings-byok-routing-1440x900", ...WIDE, "Bring-your-own-key routing", "Users can route builds through their own provider keys, encrypted at rest and never shown again after saving.", "APEX.BUILD bring-your-own-key provider routing settings"),
@@ -319,8 +319,8 @@ export const LANDING_GALLERY = [
   {
     id: "samara",
     name: "Samara",
-    kind: "Research studio",
-    body: "Source-grounded research studio with live web-page ingestion, so every answer can point back to what it read.",
+    kind: "Research workspace",
+    body: "Source-grounded research workspace with live web-page ingestion, so every answer can point back to what it read.",
     src: "/showcase/samara/01-landing.webp",
     thumb: "/showcase/samara/01-landing-640.webp",
     width: 2880,
@@ -329,8 +329,8 @@ export const LANDING_GALLERY = [
   {
     id: "voxscript",
     name: "VoxScript",
-    kind: "Transcription studio",
-    body: "AI-powered video and audio transcription studio built on Whisper — turning recordings into searchable transcripts and structured summaries.",
+    kind: "Transcription workspace",
+    body: "AI-powered video and audio transcription workspace built on Whisper — turning recordings into searchable transcripts and structured summaries.",
     src: "/showcase/voxscript/01-landing.webp",
     thumb: "/showcase/voxscript/01-landing-640.webp",
     width: 2880,
@@ -340,7 +340,7 @@ export const LANDING_GALLERY = [
     id: "davis",
     name: "Davis Moore Electric",
     kind: "Licensed electricians · Lubbock, Texas",
-    body: "Full-length custom commercial website shipped for licensed electricians in Lubbock, Texas.",
+    body: "Website for licensed electricians in Lubbock, Texas.",
     src: "/davis-site.webp",
     width: 1280,
     height: 3536,
@@ -350,7 +350,7 @@ export const LANDING_GALLERY = [
     id: "dooley",
     name: "Dooley A/C & Heating",
     kind: "HVAC contractor · San Angelo, Texas",
-    body: "Full-length custom commercial website shipped for an HVAC contractor in San Angelo, Texas.",
+    body: "Website for an HVAC contractor in San Angelo, Texas.",
     src: "/dooley-site.webp",
     width: 720,
     height: 4373,
@@ -360,7 +360,7 @@ export const LANDING_GALLERY = [
     id: "freds",
     name: "Fred’s Radiator & Auto",
     kind: "Automotive shop · Waco, Texas",
-    body: "Full-length custom commercial website shipped for an automotive shop in Waco, Texas.",
+    body: "Website for an automotive shop in Waco, Texas.",
     src: "/freds-site.webp",
     width: 1280,
     height: 3693,
@@ -393,7 +393,7 @@ export const CINEMA_CUTS = [
   },
   {
     id: "showcase",
-    tab: "Studio Showcase",
+    tab: "Product film",
     meta: "16:9 · 22s",
     src: "/video/harnesslab-showcase-2027.mp4",
     poster: "/video/harnesslab-showcase-poster.webp",
@@ -402,7 +402,7 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "The studio film: our zero-quit thesis, Title-Desk & Artificial Landman, Mythos OS & Rogue Agents, and BrandStreams & APEX.BUILD.",
+      "Product film: Title-Desk and Artificial Landman, then BrandStreams and APEX.BUILD.",
     chapters: [
       { t: 0, label: "Zero-Quit Thesis" },
       { t: 6.2, label: "Title-Desk & Artificial Landman" },
@@ -412,7 +412,7 @@ export const CINEMA_CUTS = [
   },
   {
     id: "architecture",
-    tab: "Verification & Handover",
+    tab: "Verification",
     meta: "16:9 · 22s",
     src: "/video/verification-handover-2027.mp4",
     poster: "/video/verification-handover-poster.webp",
@@ -421,12 +421,12 @@ export const CINEMA_CUTS = [
     shape: "wide",
     hasAudio: true,
     caption:
-      "Primary-source verification gates, 20,911 knowledge-graph nodes, private operator desks, and 100% client-owned handover.",
+      "Primary-source verification gates, 20,911 knowledge-graph nodes, and private operator desks.",
     chapters: [
       { t: 0, label: "Primary-Source Gates" },
       { t: 6.2, label: "Operator Desks" },
       { t: 11.4, label: "Seven Harnesses" },
-      { t: 16.6, label: "Customer-Owned Vault" },
+      { t: 16.6, label: "Closing frame" },
     ],
   },
 ];

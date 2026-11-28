@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { CAL_LINK, CALENDAR_URL, SALES_EMAIL, VOICE_SESSION_URL } from "../data/site.js";
+import { SALES_EMAIL, TITLE_DESK_URL, VOICE_SESSION_URL } from "../data/site.js";
 import { goToContact, useIntake } from "../lib/intake.js";
 
 const WORKLET_PATHS = {
@@ -31,6 +31,7 @@ function loadPublicModule(relPath) {
 export default function HarnessConcierge() {
   const { prefill } = useIntake();
   const [open, setOpen] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
   const [status, setStatus] = useState("disconnected"); // disconnected | connecting | connected
   const [sessionMode, setSessionMode] = useState("idle"); // idle | voice | text
   const [micMuted, setMicMuted] = useState(false);
@@ -60,6 +61,20 @@ export default function HarnessConcierge() {
       transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight;
     }
   }, [items]);
+
+  useEffect(() => {
+    const hero = document.getElementById("top");
+    if (!hero || typeof IntersectionObserver === "undefined") {
+      setHeroInView(false);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: [0, 0.12, 0.4] },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
 
   const stopMeter = useCallback(() => {
     if (typeof cancelAnimationFrame === "function" && rafRef.current) {
@@ -212,25 +227,17 @@ export default function HarnessConcierge() {
           note: desiredWorkflow ? `${desiredWorkflow}\n` : undefined,
         });
         goToContact();
-        pushItem({ kind: "action", text: "Pre-filled your Work Order below", href: "#contact", linkText: "Review brief" });
-        return "Pre-filled the Work Order form on theharnesslab.com and scrolled the visitor down so they can review and submit it themselves.";
+        pushItem({ kind: "action", text: "Pre-filled the contact form", href: "/contact/", linkText: "Review question" });
+        return "Pre-filled the contact form and opened /contact/ so the visitor can review and submit it. The Harness Lab is a software company. It finds a job that can be automated and sells the software. Live now: Title-Desk, AI Landman, and Artificial Landman.";
       },
       openTeardownBooking: async () => {
-        let openedModal = false;
+        pushItem({ kind: "action", text: "Opened Title-Desk", href: TITLE_DESK_URL, linkText: "Try Title-Desk" });
         try {
-          if (window.Cal?.ns?.teardown) {
-            window.Cal.ns.teardown("modal", { calLink: CAL_LINK });
-            openedModal = true;
-          } else {
-            window.open(CALENDAR_URL, "_blank", "noopener,noreferrer");
-          }
+          window.open(TITLE_DESK_URL, "_blank", "noopener,noreferrer");
         } catch {
-          /* fallback link below */
+          /* link still visible */
         }
-        pushItem({ kind: "action", text: "20-minute teardown call", href: CALENDAR_URL, linkText: "Open calendar" });
-        return openedModal
-          ? "Opened the 20-minute teardown call booking modal directly with Spencer."
-          : "Opened the Cal.com 20-minute teardown scheduler.";
+        return "There is no booking call. Opened Title-Desk at https://title-desk.com/ — landman title research software. The desktop app is sold by subscription and the hosted web app is paid per run. Every customer uses the same software.";
       },
       focusShowcase: async ({ section } = {}) => {
         const targetId = SECTION_ANCHORS[String(section || "").toLowerCase()] || "forge";
@@ -243,7 +250,7 @@ export default function HarnessConcierge() {
         return "Section anchor not found on this page.";
       },
       contactSales: async () => {
-        const href = `mailto:${SALES_EMAIL}?subject=${encodeURIComponent("The Harness Lab Inquiry")}`;
+        const href = `mailto:${SALES_EMAIL}?subject=${encodeURIComponent("Product question")}`;
         pushItem({ kind: "action", text: "Direct email to Spencer Teague", href, linkText: SALES_EMAIL });
         try {
           window.location.href = href;
@@ -420,20 +427,31 @@ export default function HarnessConcierge() {
           ? "Speaking…"
           : micMuted
             ? "Mic muted — type below anytime"
-            : "Listening — ask about builds, harnesses, or fit"
-        : "Ask Spencer's AI concierge about your build";
+            : "Listening — ask about the products"
+        : "Ask Spencer's AI concierge about the products";
 
   return (
-    <aside ref={rootRef} className="hl-vc" aria-label="The Harness Lab Concierge">
+    <aside
+      ref={rootRef}
+      className="hl-vc"
+      data-dock={heroInView && !open ? "away" : "in"}
+      aria-label="The Harness Lab Concierge"
+    >
       {!open ? (
-        <button type="button" className="hl-vc-fab" onClick={() => setOpen(true)} aria-expanded="false">
+        <button
+          type="button"
+          className="hl-vc-fab"
+          onClick={() => setOpen(true)}
+          aria-expanded="false"
+          aria-label="Ask Spencer AI. Ask about the products."
+        >
           <span className="hl-vc-fab-avatar">
             <img src="/avatar/poster.jpg" alt="Spencer Teague AI Concierge" width="48" height="48" decoding="async" />
             <span className="hl-vc-fab-dot" aria-hidden="true" />
           </span>
           <span className="hl-vc-fab-copy">
             <span className="hl-vc-fab-kicker">Ask Spencer AI</span>
-            <span className="hl-vc-fab-title">Talk through your build</span>
+            <span className="hl-vc-fab-title">Ask about the products</span>
           </span>
         </button>
       ) : (
@@ -547,23 +565,23 @@ export default function HarnessConcierge() {
                 <button
                   type="button"
                   className="hl-vc-chip"
-                  onClick={() => sendTyped("How is an AI harness different from a standard AI wrapper?")}
+                  onClick={() => sendTyped("What does Title-Desk do?")}
                 >
-                  Harnesses vs. wrappers
+                  What Title-Desk does
                 </button>
                 <button
                   type="button"
                   className="hl-vc-chip"
-                  onClick={() => sendTyped("Walk me through what The Harness Lab has shipped in production.")}
+                  onClick={() => sendTyped("What jobs can the software automate?")}
                 >
-                  Shipped systems
+                  Who it is for
                 </button>
                 <button
                   type="button"
                   className="hl-vc-chip"
-                  onClick={() => sendTyped("How does a 20-minute teardown call work?")}
+                  onClick={() => sendTyped("How do customers pay for Title-Desk, AI Landman and Artificial Landman?")}
                 >
-                  20-min teardown
+                  How you pay
                 </button>
               </div>
             ) : null}

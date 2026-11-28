@@ -103,7 +103,9 @@ export default function PerihelionSection() {
             }
           >
             <p>
-              To build, repair, and re-engineer complex software without guessing, we
+              In plain terms: Perihelion Loop checks a change and keeps it only when
+              the check passes. To build, repair, and re-engineer complex software
+              without guessing, we
               forged <strong>Perihelion Loop</strong> on{" "}
               <a
                 className="text-link"

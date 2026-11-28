@@ -31,18 +31,20 @@ export default function MythosExplorer() {
           />
           <ChapterHead
             numeral="III·C"
-            eyebrow="Mythos OS · The studio operating system"
+            eyebrow="Mythos OS · Internal operating system"
             title={
               <>
-                We don&rsquo;t just sell harnesses. <em>We live inside one.</em>
+                The internal system <em>behind the products.</em>
               </>
             }
             id="our-os-title"
           >
             <p>
-              Mythos OS is the command cockpit Spencer Teague engineered to run The
+              In plain terms: Mythos OS is the internal system that runs the lab. It
+              is not a product for sale. Mythos OS is the command cockpit Spencer
+              Teague engineered to run The
               Harness Lab 24/7: coordinating Claude, Codex, Gemini, and Ollama across
-              studio workstations and Linux servers with 20,911 knowledge-graph nodes
+              workstations and Linux servers with 20,911 knowledge-graph nodes
               and zero silent failures.
             </p>
             <TelemetryBadge items={MYTHOS_TELEMETRY} label="Mythos OS build telemetry" />
@@ -50,7 +52,7 @@ export default function MythosExplorer() {
         </div>
 
         <p className="explorer-framing mono">
-          Captured studio environment — 15 production surfaces we operate daily.
+          Captured operating environment — 15 production surfaces we operate daily.
         </p>
 
         <div className="explorer-stats-wrap">
@@ -76,8 +78,8 @@ export default function MythosExplorer() {
           Every screen here was engineered around how we actually operate. That
           is the point of a harness: it&rsquo;s shaped to the business, not the
           other way around.{" "}
-          <a className="text-link" href="#contact">
-            Tell us what your operation needs
+          <a className="text-link" href="/contact/">
+            Tell us a job to automate
           </a>
           .
         </p>

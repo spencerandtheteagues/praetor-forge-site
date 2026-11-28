@@ -1,11 +1,10 @@
-import { ArrowRight, ArrowUpRight, CalendarCheck, Mail, Star } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Mail, Star } from "lucide-react";
 import { ChapterHead, Picture } from "./ui.jsx";
 import Raised from "./Raised.jsx";
-import { Brand, CalTrigger } from "./Header.jsx";
+import { Brand } from "./Header.jsx";
 import { BUILT_FOR, DELIVERABLES, ENGAGEMENTS, PROCESS } from "../data/narrative.js";
 import { JAYSON } from "../data/wealth.js";
-import { DEV_URL, PHONE_DISPLAY, SALES_EMAIL, SERVICE_PAGES, SPENCER_EMAIL, LEGAL_NAME, SOS_FILE_NO } from "../data/site.js";
-import { goToContact, useIntake } from "../lib/intake.js";
+import { DEV_URL, PHONE_DISPLAY, PHONE_HREF, SALES_EMAIL, SERVICE_PAGES, SPENCER_EMAIL, LEGAL_NAME, SOS_FILE_NO } from "../data/site.js";
 
 /* ------------------------------------------------------------------------ */
 /* VII · Ownership vault + streamlined engagement process                    */
@@ -41,19 +40,20 @@ export function Ownership() {
         <div className="container ownership-inner">
           <ChapterHead
             numeral="VII"
-            eyebrow="Customer ownership · Engagement options · The close"
+            eyebrow="The company · Who owns the code · Who the live products are for"
             id="ownership-title"
             title={
               <>
-                You own <em>every single line.</em>
+                Find the job. <em>Sell the product.</em>
               </>
             }
           >
             <p>
-              Remote delivery. Customer-owned Git repositories. Zero hosted secrets.
-              When the build finishes, the software lives in your accounts, runs on
-              your machines, and ships with the tests and runbook to operate it
-              without us.
+              The Harness Lab is a software company. Spencer Teague finds a job in any
+              industry that can be automated, then builds software that does it better,
+              cheaper and faster than a person. The Harness Lab LLC owns the code and
+              IP. Every customer of a product uses the same software, paid per run or
+              by subscription.
             </p>
           </ChapterHead>
           <ol className="deliverables">
@@ -70,10 +70,10 @@ export function Ownership() {
           <div className="process-strip" id="how">
             <span id="process" className="anchor-alias" aria-hidden="true" />
             <header className="process-strip-head">
-              <p className="inscription">How an engagement runs</p>
+              <p className="inscription">How a run works</p>
               <h3 id="how-title" className="r3d-title r3d-sub">
                 <Raised>
-                  Four stages. <span className="gold-3d">Handover when you can run it without us.</span>
+                  Four stages. <span className="gold-3d">The same software every time.</span>
                 </Raised>
               </h3>
             </header>
@@ -90,8 +90,8 @@ export function Ownership() {
           </div>
           <div className="built-for" id="who">
             <div className="built-for-head">
-              <h3 className="inscription">Built for</h3>
-              <p className="mono">Operations where accuracy and ownership matter</p>
+              <h3 className="inscription">Who uses the live mineral title products</h3>
+              <p className="mono">Land teams, brokerages, and operators</p>
             </div>
             <ul>
               {BUILT_FOR.map((item, idx) => (
@@ -114,43 +114,34 @@ export function Ownership() {
 /* VII·B · Capabilities / engagements (no prices — scoped on the call)        */
 /* ------------------------------------------------------------------------ */
 export function Capabilities() {
-  const { prefill } = useIntake();
   return (
     <section className="section capabilities" id="capabilities" aria-labelledby="capabilities-title">
       <span id="services" className="anchor-alias" aria-hidden="true" />
       <div className="container">
         <ChapterHead
           numeral="VII·B"
-          eyebrow="Engagement options · What we take on"
+          eyebrow="Products for sale"
           id="capabilities-title"
           title={
             <>
-              Tear it down. Prove it. <em>Build it to last.</em>
+              Title-Desk. AI Landman. <em>Artificial Landman.</em>
             </>
           }
         >
           <p>
-            Every engagement is custom-scoped directly with Spencer around one real
-            bottleneck and what “working in production” actually requires. Pick the
-            closest fit to pre-fill your Work Order below.
+            Live now: Title-Desk, Artificial Landman, and AI Landman automate mineral
+            title work. Every customer of a product uses the same software, paid per
+            run or by subscription.
           </p>
         </ChapterHead>
         <ol className="engagements">
-          {ENGAGEMENTS.map((tier, idx) => (
-            <li key={tier.name} className={`engagement ${tier.cal ? "engagement--entry" : ""}`}>
+          {ENGAGEMENTS.map((tier) => (
+            <li key={tier.name} className="engagement engagement--entry">
               <div className="engagement-top">
                 <span className="engagement-numeral" aria-hidden="true">
                   {tier.numeral}
                 </span>
-                <span className="engagement-tag mono">
-                  {tier.cal
-                    ? "Entry point · 20 min"
-                    : idx === 1
-                      ? "Diagnostic wedge"
-                      : idx === 5
-                        ? "Continuous care"
-                        : "Custom build"}
-                </span>
+                <span className="engagement-tag mono">{tier.tag}</span>
               </div>
               <h3>{tier.name}</h3>
               <p>{tier.summary}</p>
@@ -160,31 +151,23 @@ export function Capabilities() {
                 ))}
               </ul>
               <div className="engagement-foot">
-                <p className="engagement-scope mono">Scoped on the call</p>
-                {tier.cal ? (
-                  <CalTrigger className="button button-gold button-small engagement-action">
-                    <CalendarCheck aria-hidden="true" /> Book the teardown
-                  </CalTrigger>
-                ) : (
-                  <button
-                    type="button"
-                    className="button button-outline button-small engagement-action"
-                    onClick={() => {
-                      prefill({ requestType: tier.requestType });
-                      goToContact();
-                    }}
-                  >
-                    Scope this <ArrowRight aria-hidden="true" />
-                  </button>
-                )}
+                <p className="engagement-scope mono">{tier.note}</p>
+                <a
+                  className={`button button-small engagement-action ${tier.cta === "Try Title-Desk" ? "button-gold" : "button-outline"}`}
+                  href={tier.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {tier.cta} <ArrowUpRight aria-hidden="true" />
+                </a>
               </div>
             </li>
           ))}
         </ol>
         <div className="service-pages">
           <div className="service-pages-head">
-            <p className="inscription">Go deeper</p>
-            <span className="mono">Dedicated practice specifications</span>
+            <p className="inscription">Product notes</p>
+            <span className="mono">The same software, explained</span>
           </div>
           <ul>
             {SERVICE_PAGES.map((page, idx) => (
@@ -219,55 +202,51 @@ export function Founder() {
               srcSet="/spencer-teague-640.webp 640w, /spencer-teague.webp 1024w"
               sizes="(min-width: 1024px) 34vw, 86vw"
               fallback="/spencer-teague.jpg"
-              alt="Spencer Teague, founder and lead engineer of The Harness Lab"
+              alt="Spencer Teague, founder and software engineer of The Harness Lab"
               width="1024"
               height="1032"
             />
           </div>
-          <figcaption className="mono">The person behind the build · Spencer Teague</figcaption>
+          <figcaption className="mono">Spencer Teague · San Angelo, Texas</figcaption>
         </figure>
         <div className="founder-copy">
           <p className="chapter-eyebrow">
             <span className="chapter-numeral">VII·C</span>
-            <span>The founder · Completely self-taught · 3,900+ commits</span>
+            <span>The founder · San Angelo, Texas · Completely self-taught · 3,900+ commits</span>
           </p>
           <h2 id="about-title" className="r3d-title">
             <Raised>
-              Hi, I’m Spencer. <span className="gold-3d">I ground the hard builds out.</span>
+              Hi, I’m Spencer. <span className="gold-3d">I build the product.</span>
             </Raised>
           </h2>
           <p className="founder-lead">
-            I’m a completely self-taught builder who learned the only way that sticks:
-            staying in the chair through every broken build, edge case, and 3 a.m. bug
-            until ambitious ideas turn into working production software.
+            I’m a completely self-taught software engineer. I find a job in an industry
+            that can be automated, then I build the software that does it better,
+            cheaper and faster than a person.
           </p>
           <p>
-            I’m Spencer Teague, founder and lead engineer of The Harness Lab. Taking
-            Title-Desk Agent from an offline desktop workstation to live online Texas
-            county runs on Title-Desk, Artificial Landman and AI Landman took four straight months
-            from August through November 2026 across 1,662 commits and 305+ git
-            branches. Evolving MyAIMediaMgr into BrandStreams took fourteen months,
-            nine architectural generations and 1,364 commits — alongside five months
-            and 1,064 commits building APEX.BUILD.
+            I’m Spencer Teague, founder of The Harness Lab, in San Angelo, Texas. The
+            Harness Lab LLC owns the code and IP. Mineral title is one live product
+            line: Title-Desk, Artificial Landman, and AI Landman. Taking Title-Desk
+            Agent from an offline desktop workstation to live
+            online Texas county runs on Title-Desk, Artificial Landman and AI Landman
+            took four straight months from August through November 2026 across 1,662
+            commits and 305+ git branches. BrandStreams and APEX.BUILD are earlier
+            products: nine generations and 1,364 commits for BrandStreams, and five
+            months and 1,064 commits for APEX.BUILD.
           </p>
           <p>
-            Most software projects fail not because the idea was wrong, but because the
-            builder quit the third time reality punched the prototype in the mouth. I
-            don’t quit. When a courthouse scan is crooked, an index row is missing, or a
-            model hallucinates a mineral fraction, I build the harness, the fallback,
-            and the verification gate until it works.
+            When a courthouse scan is crooked, an index row is missing, or a model
+            misreads a mineral fraction, the product gets another check until the chain
+            of title, the runsheet, the ownership and the net mineral acres hold.
           </p>
           <p>
-            At The Harness Lab, there is no account-manager telephone game. You work
-            directly with the engineer writing, testing, and handing over your system —
-            and because every engagement delivers into your private Git repository with
-            reproducible setup scripts, automated smoke tests, and a plain-language
-            runbook, your team can operate, audit, or extend it without ever being
-            locked to a single vendor.
+            Every customer of a product uses that same software, paid per run or by
+            subscription. Questions come straight to me at {SPENCER_EMAIL}.
           </p>
           <div className="founder-signoff">
             <span className="signature">Spencer Teague</span>
-            <span className="mono">Founder &amp; Lead Engineer</span>
+            <span className="mono">Founder · Software engineer</span>
           </div>
           <ul className="founder-links">
             <li>
@@ -284,7 +263,7 @@ export function Founder() {
           srcSet="/brand/harness-lab-black-marble-512.webp 512w, /brand/harness-lab-black-marble.webp 1024w"
           sizes="(min-width: 768px) 220px, 160px"
           fallback="/brand/harness-lab-black-marble.png"
-          alt="The Harness Lab engineering studio emblem in black marble"
+          alt="The Harness Lab engineering foundry emblem in black marble"
           width="1024"
           height="1024"
         />
@@ -329,7 +308,7 @@ export function Founder() {
 /* ------------------------------------------------------------------------ */
 export function ClosingQuote() {
   return (
-    <section className="closing-quote" aria-label="Client review">
+    <section className="closing-quote" aria-label="Review">
       <div className="container">
         <figure className="closing-quote-figure">
           <p className="closing-quote-stars" aria-label="Five out of five stars">
@@ -352,7 +331,7 @@ export function ClosingQuote() {
 /* ------------------------------------------------------------------------ */
 /* Footer signature and studio links                                         */
 /* ------------------------------------------------------------------------ */
-export function Footer() {
+export function Footer({ contact = false }) {
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -374,12 +353,12 @@ export function Footer() {
               <a href={`mailto:${SALES_EMAIL}`}>{SALES_EMAIL}</a>
             </li>
             <li>
-              <span>{PHONE_DISPLAY}</span>
+              <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
             </li>
           </ul>
         </div>
         <div>
-          <p className="inscription">Services</p>
+          <p className="inscription">Products</p>
           <ul>
             {SERVICE_PAGES.map((page) => (
               <li key={page.href}>
@@ -389,10 +368,10 @@ export function Footer() {
           </ul>
         </div>
         <div>
-          <p className="inscription">Studio</p>
+          <p className="inscription">Engineering</p>
           <ul>
             <li>
-              <a href="#perihelion-loop">Perihelion Loop</a>
+              <a href={contact ? "/#perihelion-loop" : "#perihelion-loop"}>Perihelion Loop</a>
             </li>
             <li>
               <a
@@ -409,7 +388,7 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a href="#top">Back to top</a>
+              <a href={contact ? "/" : "#top"}>Back to top</a>
             </li>
           </ul>
         </div>
@@ -418,14 +397,14 @@ export function Footer() {
         <span>
           © 2026 {LEGAL_NAME}, a Texas limited liability company · Texas SOS File No. {SOS_FILE_NO}
         </span>
-        <span>Custom software · AI automation · Intelligent systems</span>
-        <span>The first call is for fit and scope — never for credentials.</span>
+        <span>Software company · Any industry</span>
+        <span>Title-Desk · AI Landman · Artificial Landman · BrandStreams · APEX.BUILD</span>
       </div>
       <nav className="container footer-legal" aria-label="Legal">
         <a href="/legal/">Legal notice</a>
         <a href="/legal/terms/">Website terms</a>
         <a href="/legal/privacy/">Privacy policy</a>
-        <a href="/legal/client-terms/">Client services terms</a>
+        <a href="/legal/client-terms/">Order terms</a>
       </nav>
     </footer>
   );

@@ -44,7 +44,7 @@ const FORBIDDEN = [
   [/signed workbook/i, "Banned 'signed workbook' phrase"],
   [/DNS cutover in progress/i, "Stale 'DNS cutover in progress' note (brandstream.my is live)"],
   [/spencerandtheteagues@gmail\.com/i, "Personal Gmail address leak"],
-  [/spencer@theharnesslab\.com/i, "Unverified mailbox 'spencer@theharnesslab.com' (use 'sales@theharnesslab.com')"],
+  [/sales@theharnesslab\.com/i, "Retired mailbox 'sales@theharnesslab.com' (use 'spencer@theharnesslab.com')"],
 ];
 
 async function* walk(dir) {
@@ -108,7 +108,7 @@ if (cname !== "theharnesslab.com") {
 
 const secTxt = await readFile(join(distDir, ".well-known/security.txt"), "utf8");
 for (const expected of [
-  "Contact: mailto:sales@theharnesslab.com",
+  "Contact: mailto:spencer@theharnesslab.com",
   "Expires: 2027-11-18T00:00:00Z",
   "Preferred-Languages: en",
   "Canonical: https://theharnesslab.com/.well-known/security.txt",
@@ -149,7 +149,7 @@ const wranglerCfg = await readFile(join(root, "intake-worker/wrangler.jsonc"), "
 assert.ok(workerSrc.includes("MAX_BODY") && workerSrc.includes("readBoundedUtf8"), "intake-worker must enforce bounded streaming body cap");
 assert.ok(workerSrc.includes("redactSecrets"), "intake-worker must enforce server-side secret redaction");
 assert.ok(!wranglerCfg.includes("gmail.com"), "wrangler.jsonc must not route leads to personal Gmail");
-assert.ok(wranglerCfg.includes("sales@theharnesslab.com"), "wrangler.jsonc must route leads to sales@theharnesslab.com");
+assert.ok(wranglerCfg.includes("spencer@theharnesslab.com"), "wrangler.jsonc must route product questions to spencer@theharnesslab.com");
 
 if (failures.length > 0) {
   console.error("Claims & OPSEC verification failed:");

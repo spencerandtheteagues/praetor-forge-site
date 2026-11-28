@@ -54,11 +54,11 @@ function expectLink(rel, expected) {
   }
 }
 
-const ogTitle = 'Websites, Custom Software &amp; AI Automation | The Harness Lab';
+const ogTitle = 'Software for Any Industry | The Harness Lab';
 const ogDescription =
-  'Four months and 1,662 commits on Title-Desk. Fourteen months and nine generations on BrandStreams. Custom software and AI harnesses built until real work runs end to end — owned by you.';
+  'Spencer Teague, a self-taught software engineer in San Angelo, Texas, builds software for jobs people still do by hand. Live now: Title-Desk, Artificial Landman, and AI Landman.';
 const twitterDescription =
-  'Bespoke workflow automation, full-stack software and verifiable AI harnesses. See Rogue Agents, Perihelion Loop, Title-Desk, Artificial Landman, BrandStreams and APEX.BUILD running for real.';
+  'The Harness Lab sells software products. Live now, Title-Desk, Artificial Landman, and AI Landman automate mineral title work. Also shipped: BrandStreams, APEX.BUILD, and Wealth and Powers OS.';
 const cardAlt = 'The Harness Lab copper and marble winged medallion on black';
 
 expectLink('canonical', 'https://theharnesslab.com/');

@@ -143,7 +143,7 @@ export default function Forge() {
       <div className="container forge-inner">
         <ChapterHead
           numeral="IV·B"
-          eyebrow="Evidence of what we built · Three live flagships & two prior platforms"
+          eyebrow="Products for sale · Title-Desk, Artificial Landman, AI Landman"
           id="forge-title"
           title={
             <>

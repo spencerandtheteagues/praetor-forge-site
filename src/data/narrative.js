@@ -1,30 +1,30 @@
-// Workflow explorer examples (kept from the live site; verify-redesign.mjs
-// clicks "Documents", "Operations", "Client work"). Each example has exactly
-// three steps, which map onto the three optical gates of the conduit plate.
+// Workflow explorer examples (verify-redesign.mjs clicks "Documents",
+// "Operations", "Records"). Each example has exactly three steps, which map
+// onto the three optical gates of the conduit plate.
 export const WORKFLOWS = [
   {
     name: "Documents",
-    input: "A folder full of documents",
-    steps: ["Read & extract", "Check the details", "Prepare the report"],
-    output: "A report ready for review",
+    input: "County records",
+    steps: ["Read the documents", "Check the details", "Prepare the runsheet"],
+    output: "A runsheet ready for review",
     description:
-      "Turn scattered PDFs, scans, and spreadsheets into organized information your team can actually use.",
+      "Title-Desk reads the documents it is given and organizes them for the chain of title.",
   },
   {
     name: "Operations",
-    input: "A new work request",
-    steps: ["Understand the job", "Update your systems", "Prepare the handoff"],
-    output: "The next step, already prepared",
+    input: "A requested record set",
+    steps: ["Take the request", "Read the records", "Prepare the chain"],
+    output: "The chain of title, prepared",
     description:
-      "Connect the handoffs between your inbox, business software, and team so the same details are entered once.",
+      "The same software runs for every customer, whether the records were uploaded or requested.",
   },
   {
-    name: "Client work",
-    input: "A new client enquiry",
-    steps: ["Organize the brief", "Create the project", "Draft the response"],
-    output: "A client response ready to approve",
+    name: "Records",
+    input: "Uploaded or requested county records",
+    steps: ["Read the documents", "Build the chain", "Compute net acres"],
+    output: "Ownership and net mineral acres",
     description:
-      "Give every enquiry a clear next step, with the context and draft your team needs to respond.",
+      "Title-Desk builds the chain of title and runsheet, resolves mineral ownership and computes net mineral acres.",
   },
 ];
 
@@ -115,7 +115,7 @@ export const FAILURES = [
     title: "No recovery path",
     tag: "No backup/recovery",
     body: "Backups are missing, stale, or impossible to restore during an incident.",
-    control: "Tested restore drills and a written recovery playbook handed over with the system.",
+    control: "Tested restore drills and a written recovery playbook for the software.",
   },
   {
     title: "Model mismatch",
@@ -127,102 +127,125 @@ export const FAILURES = [
     title: "No handoff proof",
     tag: "No runbook",
     body: "No runbook, no smoke test, and no evidence that the owner can operate it.",
-    control: "A runbook, smoke tests, and an evidence bundle you run yourself before sign-off.",
+    control: "A runbook, smoke tests, and an evidence bundle for the software before it ships.",
   },
 ];
 
 export const DELIVERABLES = [
-  ["Private Git repository", "The code, configuration, and history belong to you from day one."],
-  ["Reproducible setup", "One script brings the system up on your machine or your cloud."],
-  ["Secrets stay yours", "Bring your own keys. An env template and redaction checks keep them out of code and logs."],
-  ["Operator runbook", "Plain-language instructions for running, changing, and recovering the system."],
-  ["Automated smoke tests", "Checks that prove the real workflow completes, not just that it starts."],
-  ["Evidence bundle", "What was tested, what failed, what was fixed, and how it was verified."],
-  ["Human approval gates", "You approve anything that spends money, sends messages, or deletes data."],
-  ["Cost & rate-limit breakers", "Budget caps, backoff, and fallback lanes so a loop never becomes a bill."],
-  ["Recovery playbook", "Backups, restore steps, and incident notes you have already rehearsed."],
+  ["Title-Desk", "Landman title research software. Every customer runs the same product."],
+  ["Upload or request", "Bring county records you already hold, or request them through the product."],
+  ["Reads the documents", "The software reads the records for the assignment."],
+  ["Chain of title", "It builds the chain of title from those documents."],
+  ["Runsheet", "It builds the runsheet from the same records."],
+  ["Mineral ownership", "It resolves mineral ownership from the chain."],
+  ["Net mineral acres", "It computes net mineral acres."],
+  ["Desktop by subscription", "The Title-Desk desktop app is sold by subscription."],
+  ["Hosted, paid per run", "The hosted web app is paid per run."],
+];
+
+export const PROCESS_STEPS = [
+  {
+    step: "01",
+    title: "Spot the manual job",
+    body: "Find a job an industry still does by hand.",
+  },
+  {
+    step: "02",
+    title: "Prove it on real samples",
+    body: "Run the software on real examples of that job until the result holds.",
+  },
+  {
+    step: "03",
+    title: "Ship the product",
+    body: "The Harness Lab owns the software and sells the same product to every customer.",
+  },
+  {
+    step: "04",
+    title: "Customers pay",
+    body: "Per run, or by subscription.",
+  },
 ];
 
 export const PROCESS = [
   {
     step: "01",
-    title: "Understand & tear down",
-    body: "We map the workflow, the tools you already use, where it breaks today, and what “done” has to mean.",
-    artifact: "Written scope & acceptance criteria",
+    title: "Upload or request records",
+    body: "Every customer starts the same way: upload county records, or request them.",
+    artifact: "The same Title-Desk software",
   },
   {
     step: "02",
-    title: "Engineer the system",
-    body: "Spencer builds the software, automation, or harness against that scope, in a repository you own.",
-    artifact: "Customer-owned repo & setup",
+    title: "The software reads the documents",
+    body: "Title-Desk reads the documents. The same product does this for every customer.",
+    artifact: "Documents in, text out",
   },
   {
     step: "03",
-    title: "Prove it against failure",
-    body: "We test the happy path and the hard ones: rejection, restart, budget limits, bad input, and secret handling.",
-    artifact: "Smoke tests & evidence notes",
+    title: "Chain of title and runsheet",
+    body: "It builds the chain of title and the runsheet from those records.",
+    artifact: "Chain of title · runsheet",
   },
   {
     step: "04",
-    title: "Hand over full ownership",
-    body: "You run the setup and the tests on your own machine. Handoff happens when you can operate it without us.",
-    artifact: "Runbook & acceptance sign-off",
+    title: "Ownership and net mineral acres",
+    body: "It resolves mineral ownership and computes net mineral acres.",
+    artifact: "Ownership · net mineral acres",
   },
 ];
 
 export const BUILT_FOR = [
-  "Owner-operated businesses with repeated paperwork",
-  "Oil & gas, land, and title teams",
-  "Agencies delivering automation to their clients",
-  "SaaS teams shipping AI features",
-  "Support and operations teams",
-  "Founders turning a prototype into a product",
+  "Independent landmen and abstractors",
+  "Oil and gas land teams",
+  "Mineral title brokerages",
+  "Operators",
+  "Teams who upload county records",
+  "Teams who request county records",
 ];
 
-// Engagement tiers. Deliberately no prices or scarcity language: every
-// engagement is scoped on a call (verify-redesign.mjs forbids $ figures).
+// Products for sale. No prices in visible copy (verify-redesign.mjs forbids $ figures).
 export const ENGAGEMENTS = [
   {
     numeral: "I",
-    name: "Free teardown & fit call",
-    requestType: "Free teardown & fit call",
-    summary: "Twenty focused minutes on your workflow, where it breaks, and whether we are the right fit.",
-    includes: ["Likely failure points named", "The right next step", "No credentials, no pressure"],
-    cal: true,
+    name: "Title-Desk",
+    summary:
+      "Landman title research software. Upload or request county records. It reads the documents, builds the chain of title and runsheet, resolves mineral ownership and computes net mineral acres.",
+    includes: [
+      "Desktop app by subscription",
+      "Hosted web app paid per run",
+      "The same software for every customer",
+    ],
+    href: "https://title-desk.com/",
+    cta: "Try Title-Desk",
+    tag: "Subscription and per run",
+    note: "title-desk.com",
   },
   {
     numeral: "II",
-    name: "Reliability & security audit",
-    requestType: "Reliability & security audit",
-    summary: "A structured teardown of an existing automation or agent system: failures, cost exposure, security gaps.",
-    includes: ["Written failure map", "Prioritized fix list", "Walkthrough call"],
+    name: "AI Landman",
+    summary: "Hosted landman title product on the same platform.",
+    includes: [
+      "Hosted title product",
+      "Same platform as Title-Desk",
+      "The same software for every customer",
+    ],
+    href: "https://ailandman.io/",
+    cta: "AI Landman",
+    tag: "Hosted product",
+    note: "ailandman.io",
   },
   {
     numeral: "III",
-    name: "Workflow automation",
-    requestType: "Workflow automation",
-    summary: "One repeated workflow, from documents, requests, or client work, turned into a tested, owned system.",
-    includes: ["Connected to your tools", "Human approval where it matters", "Runbook & smoke tests"],
-  },
-  {
-    numeral: "IV",
-    name: "Custom websites & full-stack apps",
-    requestType: "A website or full-stack app",
-    summary: "Business websites, internal tools, and full products, designed and engineered end to end.",
-    includes: ["Design & build", "API integrations", "Deployment you control"],
-  },
-  {
-    numeral: "V",
-    name: "Foundation & multi-agent AI harnesses",
-    requestType: "An AI harness",
-    summary: "The operating layer for AI agents: routing, model lanes, approvals, budgets, verification, and recovery.",
-    includes: ["One agent or a fleet", "Multi-model verification", "Evidence bundle & handoff"],
-  },
-  {
-    numeral: "VI",
-    name: "Ongoing care",
-    requestType: "Ongoing care",
-    summary: "Health checks, model and provider updates, small fixes, and a regular reliability review.",
-    includes: ["Scheduled checks", "Provider change review", "A clear support lane"],
+    name: "Artificial Landman",
+    summary:
+      "Hosted Texas mineral title examination for land teams, brokerages and operators.",
+    includes: [
+      "For land teams, brokerages and operators",
+      "Hosted examination",
+      "The same software for every customer",
+    ],
+    href: "https://artificiallandman.io/",
+    cta: "Artificial Landman",
+    tag: "Hosted product",
+    note: "artificiallandman.io",
   },
 ];

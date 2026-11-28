@@ -148,16 +148,17 @@ export function ImageViewer({ image, onClose }) {
 }
 
 /** Engraved chapter heading: Roman numeral + eyebrow + H2 + optional lede. */
-export function ChapterHead({ numeral, eyebrow, title, children, align = "left", id }) {
+export function ChapterHead({ numeral, eyebrow, title, children, align = "left", id, heading = "h2" }) {
+  const Title = heading;
   return (
     <header className={`chapter-head chapter-head--${align}`}>
       <p className="chapter-eyebrow">
         {numeral ? <span className="chapter-numeral">{numeral}</span> : null}
         <span>{eyebrow}</span>
       </p>
-      <h2 id={id} className="r3d-title">
+      <Title id={id} className="r3d-title">
         <Raised>{title}</Raised>
-      </h2>
+      </Title>
       {children ? <div className="chapter-lede">{children}</div> : null}
     </header>
   );

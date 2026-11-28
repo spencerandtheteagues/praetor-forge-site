@@ -3,7 +3,6 @@ import { ChapterHead, Picture } from "./ui.jsx";
 import Raised from "./Raised.jsx";
 import { ShotGallery, TelemetryBadge } from "./Showcase.jsx";
 import { useImageViewer } from "../lib/useImageViewer.js";
-import { goToContact, useIntake } from "../lib/intake.js";
 import { ROGUE_AGENTS } from "../data/products.js";
 import { DEV_URL } from "../data/site.js";
 
@@ -16,25 +15,25 @@ const ROGUE_POINTS = [
 /** Chapter III opener + III·A Rogue Agents. */
 export function RogueAgentsSection() {
   const [viewer, openImage] = useImageViewer();
-  const { prefill } = useIntake();
   return (
     <section id="harnesses" className="section harnesses" aria-labelledby="harnesses-title">
       <div className="container">
         <ChapterHead
           numeral="III"
-          eyebrow="Our custom-built harnesses · The tools we built to build products"
+          eyebrow="How the products are built"
           id="harnesses-title"
           title={
             <>
-              We built our own machinery <em>to build yours.</em>
+              Machinery we built <em>for our own products.</em>
             </>
           }
         >
           <p>
-            Off-the-shelf agent tools stalled, lied about passing tests, or lost work
-            between runs — so we built our own. Three in-house harnesses now carry
-            the heavy lifting on our current builds: Rogue Agents coordinates the team,
-            Perihelion Loop proves or reverts every change, and Mythos OS runs the studio.
+            In plain terms: these are the tools we use to build our own products.
+            They are not for sale. Off-the-shelf agent tools stalled, lied about
+            passing tests, or lost work between runs, so we built our own. Rogue
+            Agents coordinates the team, Perihelion Loop proves or reverts every
+            change, and Mythos OS runs the lab.
           </p>
         </ChapterHead>
 
@@ -81,16 +80,9 @@ export function RogueAgentsSection() {
           <ShotGallery name="Rogue Agents" groups={[{ label: "Rogue Agents cockpit", shots: ROGUE_AGENTS.shots }]} onOpen={openImage} />
 
           <div className="harness-actions">
-            <button
-              type="button"
-              className="button button-outline button-small"
-              onClick={() => {
-                prefill({ requestType: "An AI harness", product: "Rogue Agents" });
-                goToContact();
-              }}
-            >
-              Scope a multi-agent harness <ArrowRight aria-hidden="true" />
-            </button>
+            <a className="button button-outline button-small" href="#work">
+              See the products <ArrowRight aria-hidden="true" />
+            </a>
           </div>
         </div>
       </div>
@@ -105,7 +97,7 @@ const BRIDGE_STEPS = [
   ["Mythos OS", "remembers, schedules and gates the work."],
 ];
 
-/** End of Chapter III: the explicit bridge from our tools to customer work. */
+/** End of Chapter III: from internal tools to the products we sell. */
 export function HarnessBridge() {
   return (
     <section id="custom-built" className="section harness-bridge" aria-labelledby="custom-built-title">
@@ -113,21 +105,17 @@ export function HarnessBridge() {
         <div className="bridge-plate">
           <div className="bridge-copy">
             <p className="inscription">
-              <Cpu aria-hidden="true" /> From our bench to your business
+              <Cpu aria-hidden="true" /> From the bench to the products
             </p>
             <h2 id="custom-built-title" className="r3d-title">
               <Raised>
-                Custom-built tools <span className="gold-3d">to custom-build your product.</span>
+                The same tools <span className="gold-3d">behind the products we sell.</span>
               </Raised>
             </h2>
             <p>
-              We point the same three harnesses straight at customer problems — and at our
-              own flagship platforms. Perihelion Loop repaired and verified all 7,070
-              Title-Desk engine tests and the 730-test Rogue Agents suite, and produced the
-              29-feature specification, 15-screen macOS design, and Phase-1 SwiftUI
-              foundation for Kiln. BrandStreams and APEX.BUILD are the long campaigns that
-              taught us why these harnesses had to exist — and the next chapter shows all
-              of it running, not mocked up.
+              These systems build and check our products. Perihelion Loop repaired and
+              verified all 7,070 Title-Desk engine tests. BrandStreams and APEX.BUILD are
+              earlier platforms. The next chapter shows the title products running.
             </p>
           </div>
           <ol className="bridge-steps">
